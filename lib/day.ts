@@ -1,8 +1,8 @@
 // Brand + sales clock. Day 1 = launch of the @revengineee 30-day plan.
-export const LAUNCH_DATE = "2026-05-20";
-// Day-21 hard milestone: land the first pilot Jaipur clinic.
-export const MILESTONE_DATE = "2026-06-09";
-export const MILESTONE_LABEL = "Land 1 pilot Jaipur clinic";
+export const LAUNCH_DATE = "2026-05-31";
+// Day-21 hard milestone: clinic live on its real number.
+export const MILESTONE_DATE = "2026-06-20";
+export const MILESTONE_LABEL = "Land 1 pilot Jaipur clinic (live on real number)";
 
 /** Local (not UTC) YYYY-MM-DD for a given date, defaulting to now. */
 export function isoDate(d: Date = new Date()): string {

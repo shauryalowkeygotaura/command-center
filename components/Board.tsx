@@ -7,6 +7,7 @@ import { store } from "@/lib/storage";
 import { buildSeedTasks } from "@/lib/seed";
 import { rolloverIncompleteTasks, mergeSeed } from "@/lib/rollover";
 import { StatusBar } from "./StatusBar";
+import { CallList } from "./CallList";
 
 export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -63,7 +64,7 @@ export function Board() {
         {/* progress meter */}
         <div className="mb-6 h-1 w-full overflow-hidden rounded bg-line">
           <div
-            className="h-full bg-term transition-all duration-300"
+            className="h-full bg-burgundy-bright transition-all duration-300"
             style={{
               width: todays.length ? `${(doneCount / todays.length) * 100}%` : "0%",
             }}
@@ -89,6 +90,8 @@ export function Board() {
             ))}
           </div>
         )}
+
+        {mounted && <CallList today={today} />}
       </main>
     </div>
   );
@@ -172,7 +175,9 @@ function TaskRow({
         <button
           aria-label={task.done ? "mark not done" : "mark done"}
           onClick={() => onToggle(task.id, !task.done)}
-          className="mt-0.5 font-mono text-sm leading-none text-term"
+          className={`mt-0.5 font-mono text-sm leading-none ${
+            task.done ? "text-burgundy-bright" : "text-cream-dim"
+          }`}
         >
           {task.done ? "[█]" : "[ ]"}
         </button>

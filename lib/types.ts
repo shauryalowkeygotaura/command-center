@@ -19,5 +19,5 @@ export interface Task {
 export const LANES: { id: Lane; label: string; accent: string }[] = [
   { id: "brand", label: "BRAND", accent: "var(--color-burgundy-bright)" },
   { id: "leads", label: "LEADS", accent: "var(--color-indigo)" },
-  { id: "ops", label: "OPS", accent: "var(--color-amber)" },
+  { id: "ops", label: "OPS", accent: "var(--color-cream-dim)" },
 ];

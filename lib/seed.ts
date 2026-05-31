@@ -1,6 +1,6 @@
 import { Task, Lane } from "./types";
 import { dayNumber } from "./day";
-import { brandDay, LINKEDIN_NOTE } from "./brandPlan";
+import { brandDay } from "./brandPlan";
 
 interface SeedDef {
   key: string;
@@ -21,50 +21,39 @@ function dailyDefs(dateISO: string): SeedDef[] {
     defs.push({
       key: "reel",
       lane: "brand",
-      title: `Reel ${plan.reel}`,
-      note: plan.series
-        ? `${plan.series}. ≤5 min: reuse the status-bar template.`
-        : "≤5 min: reuse the status-bar template, slot in new cuts.",
+      title: `Reel — ${plan.reel}`,
+      note: "Quick Reel: 8–10 one-sec clips, 15–25s, text on screen.",
     });
-    if (plan.carousel) {
-      defs.push({
-        key: "carousel",
-        lane: "brand",
-        title: `Carousel ${plan.carousel}`,
-        note: plan.series,
-      });
-    }
+    (plan.posts ?? []).forEach((p, i) =>
+      defs.push({ key: `post-${i}`, lane: "brand", title: p }),
+    );
     if (plan.linkedin) {
       defs.push({
         key: "linkedin",
         lane: "brand",
-        title: "LinkedIn document mirror of today's carousel",
-        note: LINKEDIN_NOTE,
+        title: "Post today's slide as a LinkedIn PDF",
+        note: "Upload the slides natively; link (if any) in the FIRST comment.",
       });
     }
     if (plan.milestone) {
-      defs.push({
-        key: "milestone",
-        lane: "brand",
-        title: `★ ${plan.milestone}`,
-      });
+      defs.push({ key: "milestone", lane: "brand", title: `★ ${plan.milestone}` });
     }
   } else {
     // Outside the 30-day window — keep the daily reel habit alive.
     defs.push({
       key: "reel",
       lane: "brand",
-      title: "Ship daily Reel (Format A) from this week's source artifact",
-      note: "Plan day 31+ — rewrite the next 30-day plan from the Day-30 retro.",
+      title: "Ship a quick Reel from a real thing you built today",
+      note: "Plan day 31+ — rewrite next month's plan from the Day-30 review.",
     });
   }
 
   // ---- BRAND — standing daily protocol (every day, all 30) ----
   defs.push({
-    key: "notes",
+    key: "lazy",
     lane: "brand",
-    title: "Post 1–3 raw stills to @revengine.notes",
-    note: "Terminal scroll / traceback / cost sheet. Unpolished on purpose.",
+    title: "🛋️ Lazy backup: film 20–30s of what you're building → @revengine.notes",
+    note: "Counts as showing up. Never skip two days in a row.",
   });
   defs.push({
     key: "engage",
