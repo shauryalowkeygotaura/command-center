@@ -9,7 +9,8 @@ export interface Store {
   save(tasks: Task[]): void;
 }
 
-const KEY = "revengine.command-center.v1";
+// Bump this version to discard a stale local cache after a seed/plan change.
+const KEY = "revengine.command-center.v2";
 
 class LocalStore implements Store {
   load(): Task[] {

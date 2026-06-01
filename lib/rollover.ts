@@ -27,8 +27,17 @@ export function rolloverIncompleteTasks(tasks: Task[], todayISO: string): Task[]
   });
 }
 
-/** Add today's seed tasks that aren't already present (idempotent merge). */
+/** Merge today's seed into existing tasks:
+ *  - existing seeded tasks get their title/note refreshed from the current
+ *    seed (so plan edits show up) while keeping their done state
+ *  - brand-new seeds are appended
+ *  - user-added tasks are left untouched */
 export function mergeSeed(existing: Task[], seeds: Task[]): Task[] {
+  const seedById = new Map(seeds.map((s) => [s.id, s]));
+  const refreshed = existing.map((t) => {
+    const s = seedById.get(t.id);
+    return s ? { ...t, title: s.title, note: s.note } : t;
+  });
   const ids = new Set(existing.map((t) => t.id));
-  return [...existing, ...seeds.filter((s) => !ids.has(s.id))];
+  return [...refreshed, ...seeds.filter((s) => !ids.has(s.id))];
 }
