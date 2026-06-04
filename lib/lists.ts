@@ -62,15 +62,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-voice-confirm",
-    text: "Listen to the deep philosopher voice + tell me deeper / lighter",
-    note: "output/smoketest-kinetic-v2.mp4 — now an elder-sage 82 Hz (was 87). Locked to STYLE=kinetic on the live cron.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-client-private",
-    text: "Decide how client-acquisition metrics reach the dashboard (the repo is PRIVATE)",
-    note: "philosopher-pipeline is public so its row is live. client-acquisition-pipeline is private (404 to anonymous fetch), so its row stays 'no data'. Options: (a) make it public — risky, outreach code + possible secrets in history; or (b) tell me to wire a cross-repo push of just runs/latest.json into this public repo via a PAT (keeps the repo private). I recommend (b).",
+    text: "Listen to the philosopher voice + tell me deeper / lighter still",
+    note: "output/smoketest-kinetic-v2.mp4 — tuned deep 82 Hz then lighter to ~89 Hz (current). Live on STYLE=kinetic. Say the word for -2/-1.5 (lighter) or back toward -4 (deeper).",
     done: false,
     seeded: true,
   },
