@@ -68,9 +68,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
-    id: "h-repos-public",
-    text: "Confirm philosopher-pipeline + client-acquisition-pipeline repos are PUBLIC",
-    note: "The dashboard fetches each repo's runs/latest.json over raw.githubusercontent — private repos return 404 and the rows show 'no data'.",
+    id: "h-client-private",
+    text: "Decide how client-acquisition metrics reach the dashboard (the repo is PRIVATE)",
+    note: "philosopher-pipeline is public so its row is live. client-acquisition-pipeline is private (404 to anonymous fetch), so its row stays 'no data'. Options: (a) make it public — risky, outreach code + possible secrets in history; or (b) tell me to wire a cross-repo push of just runs/latest.json into this public repo via a PAT (keeps the repo private). I recommend (b).",
     done: false,
     seeded: true,
   },
