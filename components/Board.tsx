@@ -10,7 +10,8 @@ import { StatusBar } from "./StatusBar";
 import { CallList } from "./CallList";
 import { PipelineOps } from "./PipelineOps";
 import { Checklist } from "./Checklist";
-import { lifeStore, handoffStore, HANDOFF_SEED } from "@/lib/lists";
+import { KeysPanel } from "./KeysPanel";
+import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
 export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -97,6 +98,18 @@ export function Board() {
         {mounted && <PipelineOps />}
         {mounted && <CallList today={today} />}
         {mounted && (
+          <Checklist
+            title="INBOX · DROP IDEAS"
+            store={inboxStore}
+            placeholder="+ drop an idea or task for Claude to file"
+            emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
+            exportForClaude
+          />
+        )}
+
+        {mounted && <KeysPanel />}
+
+        {mounted && (
           <div className="grid gap-5 md:grid-cols-2">
             <Checklist
               title="LIFE"
@@ -110,6 +123,7 @@ export function Board() {
               seed={HANDOFF_SEED}
               placeholder="+ add your own note"
               emptyText="Things only you can do for me show up here."
+              replies
             />
           </div>
         )}

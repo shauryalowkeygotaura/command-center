@@ -10,6 +10,11 @@ export interface ChecklistItem {
   done: boolean;
   note?: string;
   seeded?: boolean; // true = comes from a code seed (HANDOFF_SEED), not hand-added
+  // Your answer back to me on a handoff. replyStatus is the one-tap verdict;
+  // reply is optional free text. Both survive seed refreshes and are surfaced
+  // by the "Copy replies for Claude" button so I can act on them next session.
+  replyStatus?: "done" | "wontdo" | "needinfo";
+  reply?: string;
 }
 
 function makeStore(key: string) {
@@ -32,6 +37,9 @@ function makeStore(key: string) {
 
 export const lifeStore = makeStore("revengine.command-center.life.v1");
 export const handoffStore = makeStore("revengine.command-center.handoffs.v1");
+// Mirror of the vault Inbox: drop raw ideas/tasks here, then "Copy for Claude"
+// to hand them to me so I file them into Vault/Inbox + Notes/todos.
+export const inboxStore = makeStore("revengine.command-center.inbox.v1");
 
 // Merge the curated seed into stored items: refresh seeded text/note from the
 // current seed (so my edits show up) while keeping each item's done state, and
@@ -85,13 +93,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     id: "h-serpapi",
     text: "SerpAPI free quota is exhausted — wait for the monthly reset, or switch to free Apollo source",
     note: "That's why client-acq found 0 leads. MAX_CITIES_PER_RUN=2 now stops it re-exhausting. For leads sooner free: LEAD_SOURCE=apollo with saved cookies.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-profile-repo",
-    text: "Rename the GitHub profile-README repo to `shauryalowkeygotaura`",
-    note: "GitHub doesn't auto-rename it on username change, so your profile README stays dark until you do.",
     done: false,
     seeded: true,
   },
