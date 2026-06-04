@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   PIPELINES,
   PipelineState,
@@ -40,17 +40,16 @@ export function PipelineOps() {
   );
   const [cc, setCc] = useState<CCUsage | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+  const alive = useRef(true);
 
-  useEffect(() => {
-    let cancelled = false;
-    setMounted(true);
-
+  const refresh = useCallback(() => {
     PIPELINES.forEach(async (cfg, i) => {
       const [actions, metrics] = await Promise.all([
         fetchActions(cfg),
         fetchMetrics(cfg),
       ]);
-      if (cancelled) return;
+      if (!alive.current) return;
       setStates((prev) => {
         const next = [...prev];
         next[i] = { cfg, actions, metrics };
@@ -60,13 +59,31 @@ export function PipelineOps() {
 
     fetch(`${BASE}/status/cc-usage.json`, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((d: CCUsage | null) => !cancelled && d && setCc(d))
+      .then((d: CCUsage | null) => alive.current && d && setCc(d))
       .catch(() => {});
 
-    return () => {
-      cancelled = true;
-    };
+    setUpdatedAt(new Date().toISOString());
   }, []);
+
+  useEffect(() => {
+    alive.current = true;
+    setMounted(true);
+    refresh();
+
+    // Poll every 60s, and refresh immediately when the tab regains focus so
+    // the board is current the moment you look at it.
+    const id = setInterval(refresh, 60_000);
+    const onVis = () => {
+      if (document.visibilityState === "visible") refresh();
+    };
+    document.addEventListener("visibilitychange", onVis);
+
+    return () => {
+      alive.current = false;
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [refresh]);
 
   return (
     <section className="mt-6 rounded-lg border border-line bg-panel">
@@ -74,9 +91,20 @@ export function PipelineOps() {
         <span className="font-mono text-sm font-bold text-burgundy-bright">
           PIPELINES
         </span>
-        <span className="font-mono text-[10px] text-cream-dim">
-          live from GitHub Actions + run metrics
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[10px] text-cream-dim">
+            {mounted && updatedAt
+              ? `auto · updated ${relTime(updatedAt)}`
+              : "live from GitHub Actions"}
+          </span>
+          <button
+            onClick={refresh}
+            aria-label="refresh now"
+            className="rounded border border-line px-1.5 py-0.5 font-mono text-[10px] text-cream hover:border-burgundy-bright"
+          >
+            ↻
+          </button>
+        </div>
       </div>
 
       <ul className="divide-y divide-line">
