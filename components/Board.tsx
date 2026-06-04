@@ -8,6 +8,9 @@ import { buildSeedTasks } from "@/lib/seed";
 import { rolloverIncompleteTasks, mergeSeed } from "@/lib/rollover";
 import { StatusBar } from "./StatusBar";
 import { CallList } from "./CallList";
+import { PipelineOps } from "./PipelineOps";
+import { Checklist } from "./Checklist";
+import { lifeStore, handoffStore, HANDOFF_SEED } from "@/lib/lists";
 
 export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -91,7 +94,25 @@ export function Board() {
           </div>
         )}
 
+        {mounted && <PipelineOps />}
         {mounted && <CallList today={today} />}
+        {mounted && (
+          <div className="grid gap-5 md:grid-cols-2">
+            <Checklist
+              title="LIFE"
+              store={lifeStore}
+              placeholder="+ add a real-life to-do"
+              emptyText="Your personal real-life to-dos go here. Type below to add."
+            />
+            <Checklist
+              title="HANDOFFS · CLAUDE → YOU"
+              store={handoffStore}
+              seed={HANDOFF_SEED}
+              placeholder="+ add your own note"
+              emptyText="Things only you can do for me show up here."
+            />
+          </div>
+        )}
       </main>
     </div>
   );
