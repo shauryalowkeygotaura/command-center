@@ -1,23 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  SyncedHabitState,
+  loadSyncToken,
+  saveSyncToken,
+  clearSync,
+  findOrCreateGist,
+  pullRemote,
+  pushRemote,
+  mergeStates,
+} from "@/lib/habitsSync";
 
 // Replicates the "Automated Habit Tracker" Google Sheet (Drive): the same 12
 // habits, a habit × day-of-month checkbox grid, Done/Left counters and a
 // monthly completion % — plus per-habit streaks the sheet doesn't have.
-// localStorage-backed like every other panel: no backend, marks live in this
-// browser. The sheet stays the long-term archive; this is the daily surface.
+// localStorage-first like every other panel; optional cross-device sync via a
+// secret GitHub Gist (free, no backend) — paste a gist-scoped PAT once per
+// device. The sheet stays the long-term archive; this is the daily surface.
 
 interface Habit {
   id: string;
   name: string;
 }
 
-interface HabitState {
-  habits: Habit[];
-  // marks["2026-06-05"] = ids of habits done that day.
-  marks: Record<string, string[]>;
-}
+type HabitState = SyncedHabitState;
+
+type SyncStatus = "off" | "syncing" | "synced" | "error";
 
 const KEY = "revengine.command-center.habits.v1";
 
@@ -67,21 +76,79 @@ export function HabitTracker() {
   const [state, setState] = useState<HabitState>({ habits: [], marks: {} });
   const [mounted, setMounted] = useState(false);
   const [draft, setDraft] = useState("");
+  const [tokenDraft, setTokenDraft] = useState("");
+  const [sync, setSync] = useState<SyncStatus>("off");
+  const tokenRef = useRef("");
+  const gistRef = useRef("");
+  const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Guards the debounced push: skip while the initial pull-merge is in flight
+  // so we never overwrite the gist with a not-yet-merged local state.
+  const readyToPush = useRef(false);
 
-  useEffect(() => {
-    setState(loadState());
-    setMounted(true);
+  // Pull remote, merge with whatever is local, adopt + push the result.
+  const startSync = useCallback(async (token: string, local: HabitState) => {
+    setSync("syncing");
+    try {
+      const gistId = await findOrCreateGist(token);
+      tokenRef.current = token;
+      gistRef.current = gistId;
+      const remote = await pullRemote(token, gistId);
+      const merged = remote ? mergeStates(local, remote) : local;
+      setState(merged);
+      await pushRemote(token, gistId, merged);
+      readyToPush.current = true;
+      setSync("synced");
+    } catch {
+      readyToPush.current = false;
+      setSync("error");
+    }
   }, []);
 
   useEffect(() => {
-    if (mounted) {
-      try {
-        window.localStorage.setItem(KEY, JSON.stringify(state));
-      } catch {
-        /* storage full/blocked — panel still works in-memory */
-      }
+    const local = loadState();
+    setState(local);
+    setMounted(true);
+    const token = loadSyncToken();
+    if (token) void startSync(token, local);
+  }, [startSync]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+    } catch {
+      /* storage full/blocked — panel still works in-memory */
     }
+    // Debounced cloud push: batch rapid toggles into one gist write.
+    if (readyToPush.current && tokenRef.current && gistRef.current) {
+      if (pushTimer.current) clearTimeout(pushTimer.current);
+      pushTimer.current = setTimeout(() => {
+        setSync("syncing");
+        pushRemote(tokenRef.current, gistRef.current, state)
+          .then(() => setSync("synced"))
+          .catch(() => setSync("error"));
+      }, 2500);
+    }
+    return () => {
+      if (pushTimer.current) clearTimeout(pushTimer.current);
+    };
   }, [state, mounted]);
+
+  function connectSync() {
+    const token = tokenDraft.trim();
+    if (!token) return;
+    saveSyncToken(token);
+    setTokenDraft("");
+    void startSync(token, state);
+  }
+
+  function disconnectSync() {
+    clearSync();
+    tokenRef.current = "";
+    gistRef.current = "";
+    readyToPush.current = false;
+    setSync("off");
+  }
 
   const now = new Date();
   const year = now.getFullYear();
@@ -100,7 +167,12 @@ export function HabitTracker() {
       const next = cur.includes(habitId)
         ? cur.filter((id) => id !== habitId)
         : [...cur, habitId];
-      return { ...prev, marks: { ...prev.marks, [k]: next } };
+      return {
+        ...prev,
+        marks: { ...prev.marks, [k]: next },
+        // Day-level stamp drives the cross-device merge (newer day wins).
+        stamps: { ...prev.stamps, [k]: new Date().toISOString() },
+      };
     });
   }
 
@@ -126,6 +198,7 @@ export function HabitTracker() {
     setState((prev) => ({
       ...prev,
       habits: [...prev.habits, { id: crypto.randomUUID(), name }],
+      habitsStamp: new Date().toISOString(),
     }));
     setDraft("");
   }
@@ -134,6 +207,7 @@ export function HabitTracker() {
     setState((prev) => ({
       ...prev,
       habits: prev.habits.filter((h) => h.id !== id),
+      habitsStamp: new Date().toISOString(),
     }));
   }
 
@@ -154,11 +228,28 @@ export function HabitTracker() {
         <span className="font-mono text-sm font-bold text-burgundy-bright">
           HABITS · {monthName} {year}
         </span>
-        <span className="font-mono text-xs tabular-nums text-cream-dim">
-          {mounted
-            ? `today ${todayDone}/${state.habits.length} · month ${monthDone}/${monthTotal}`
-            : "loading…"}
-        </span>
+        <div className="flex items-center gap-3">
+          {mounted && sync !== "off" && (
+            <button
+              onClick={disconnectSync}
+              title="Synced to a secret GitHub Gist — click to disconnect this device"
+              className={`font-mono text-[10px] uppercase tracking-wide transition hover:text-burgundy-bright ${
+                sync === "synced"
+                  ? "text-indigo"
+                  : sync === "syncing"
+                    ? "text-cream-dim"
+                    : "text-amber"
+              }`}
+            >
+              {sync === "synced" ? "cloud ✓" : sync === "syncing" ? "syncing…" : "sync error"}
+            </button>
+          )}
+          <span className="font-mono text-xs tabular-nums text-cream-dim">
+            {mounted
+              ? `today ${todayDone}/${state.habits.length} · month ${monthDone}/${monthTotal}`
+              : "loading…"}
+          </span>
+        </div>
       </div>
 
       {/* month completion meter — same visual language as the board's progress bar */}
@@ -261,6 +352,32 @@ export function HabitTracker() {
           className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
         />
       </form>
+
+      {/* Cross-device sync: paste a gist-scoped GitHub PAT once per device.
+          Same trust model as the KEYS panel: localStorage only, never deployed. */}
+      {mounted && sync === "off" && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            connectSync();
+          }}
+          className="flex items-center gap-2 border-t border-line p-2"
+        >
+          <input
+            value={tokenDraft}
+            onChange={(e) => setTokenDraft(e.target.value)}
+            type="password"
+            placeholder="sync across devices: paste a GitHub token (classic, gist scope only)"
+            className="flex-1 rounded bg-ink px-2 py-1.5 font-mono text-[11px] text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
+          />
+          <button
+            type="submit"
+            className="rounded border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-cream-dim transition hover:border-burgundy-bright hover:text-cream"
+          >
+            connect
+          </button>
+        </form>
+      )}
     </section>
   );
 }
