@@ -23,6 +23,7 @@ export interface PipelineCfg {
 export const PIPELINES: PipelineCfg[] = [
   { key: "philosopher", label: "Philosopher reels", repo: "philosopher-pipeline", branch: "master" },
   { key: "client", label: "Client acquisition", repo: "client-acquisition-pipeline", branch: "master" },
+  { key: "football", label: "Football shorts", repo: "football-shorts-autopilot", branch: "main" },
 ];
 
 export interface RunMetrics {
