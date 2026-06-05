@@ -13,19 +13,48 @@ import { Checklist } from "./Checklist";
 import { KeysPanel } from "./KeysPanel";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
+// Section groups surfaced as a sticky tab bar so the board stops being one
+// long scroll. Only the active group mounts at a time.
+const TABS = [
+  { id: "board", label: "BOARD" },
+  { id: "calls", label: "CALL LIST" },
+  { id: "pipelines", label: "PIPELINES" },
+  { id: "drops", label: "INBOX · KEYS" },
+  { id: "life", label: "LIFE · HANDOFFS" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+const TAB_KEY = "cc.activeTab.v1";
+
 export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [tab, setTab] = useState<TabId>("board");
   const today = useMemo(() => isoDate(), []);
 
   // Load → roll over yesterday's loose ends → seed today → persist.
+  // Also restore the last-viewed tab (kept out of initial render to avoid a
+  // hydration mismatch on the static export).
   useEffect(() => {
     const loaded = store.load();
     const rolled = rolloverIncompleteTasks(loaded, today);
     const merged = mergeSeed(rolled, buildSeedTasks(today));
     setTasks(merged);
+
+    const saved = localStorage.getItem(TAB_KEY);
+    const match = TABS.find((t) => t.id === saved);
+    if (match) setTab(match.id);
+
     setMounted(true);
   }, [today]);
+
+  function selectTab(id: TabId) {
+    setTab(id);
+    try {
+      localStorage.setItem(TAB_KEY, id);
+    } catch {
+      /* private mode / quota — tab just won't persist */
+    }
+  }
 
   // Persist on every change (but not the empty pre-mount state).
   useEffect(() => {
@@ -64,70 +93,131 @@ export function Board() {
     <div className="flex min-h-screen flex-col">
       <StatusBar todayISO={today} done={doneCount} total={todays.length} />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
-        {/* progress meter */}
-        <div className="mb-6 h-1 w-full overflow-hidden rounded bg-line">
-          <div
-            className="h-full bg-burgundy-bright transition-all duration-300"
-            style={{
-              width: todays.length ? `${(doneCount / todays.length) * 100}%` : "0%",
-            }}
-          />
-        </div>
+      {mounted && (
+        <TabNav
+          tab={tab}
+          onSelect={selectTab}
+          boardBadge={`${doneCount}/${todays.length}`}
+        />
+      )}
 
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
         {!mounted ? (
           <p className="font-mono text-sm text-cream-dim">loading board…</p>
         ) : (
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-5 md:grid-cols-3">
-              {LANES.map((lane) => (
-                <LaneColumn
-                  key={lane.id}
-                  lane={lane.id}
-                  label={lane.label}
-                  accent={lane.accent}
-                  tasks={todays.filter((t) => t.lane === lane.id)}
-                  onToggle={(id, done) => update(id, { done })}
-                  onEdit={(id, title) => update(id, { title })}
-                  onDelete={remove}
-                  onAdd={(title) => add(lane.id, title)}
+          <>
+            {tab === "board" && (
+              <div className="flex flex-col gap-6">
+                {/* progress meter */}
+                <div className="h-1 w-full overflow-hidden rounded bg-line">
+                  <div
+                    className="h-full bg-burgundy-bright transition-all duration-300"
+                    style={{
+                      width: todays.length
+                        ? `${(doneCount / todays.length) * 100}%`
+                        : "0%",
+                    }}
+                  />
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-3">
+                  {LANES.map((lane) => (
+                    <LaneColumn
+                      key={lane.id}
+                      lane={lane.id}
+                      label={lane.label}
+                      accent={lane.accent}
+                      tasks={todays.filter((t) => t.lane === lane.id)}
+                      onToggle={(id, done) => update(id, { done })}
+                      onEdit={(id, title) => update(id, { title })}
+                      onDelete={remove}
+                      onAdd={(title) => add(lane.id, title)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {tab === "pipelines" && <PipelineOps />}
+
+            {tab === "calls" && <CallList today={today} />}
+
+            {tab === "drops" && (
+              <div className="flex flex-col gap-6">
+                <Checklist
+                  title="INBOX · DROP IDEAS"
+                  store={inboxStore}
+                  placeholder="+ drop an idea or task for Claude to file"
+                  emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
+                  exportForClaude
                 />
-              ))}
-            </div>
+                <KeysPanel />
+              </div>
+            )}
 
-            <PipelineOps />
-            <CallList today={today} />
-
-            <Checklist
-              title="INBOX · DROP IDEAS"
-              store={inboxStore}
-              placeholder="+ drop an idea or task for Claude to file"
-              emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
-              exportForClaude
-            />
-
-            <KeysPanel />
-
-            <div className="grid gap-5 md:grid-cols-2">
-              <Checklist
-                title="LIFE"
-                store={lifeStore}
-                placeholder="+ add a real-life to-do"
-                emptyText="Your personal real-life to-dos go here. Type below to add."
-              />
-              <Checklist
-                title="HANDOFFS · CLAUDE → YOU"
-                store={handoffStore}
-                seed={HANDOFF_SEED}
-                placeholder="+ add your own note"
-                emptyText="Things only you can do for me show up here."
-                replies
-              />
-            </div>
-          </div>
+            {tab === "life" && (
+              <div className="grid gap-5 md:grid-cols-2">
+                <Checklist
+                  title="LIFE"
+                  store={lifeStore}
+                  placeholder="+ add a real-life to-do"
+                  emptyText="Your personal real-life to-dos go here. Type below to add."
+                />
+                <Checklist
+                  title="HANDOFFS · CLAUDE → YOU"
+                  store={handoffStore}
+                  seed={HANDOFF_SEED}
+                  placeholder="+ add your own note"
+                  emptyText="Things only you can do for me show up here."
+                  replies
+                />
+              </div>
+            )}
+          </>
         )}
       </main>
     </div>
+  );
+}
+
+function TabNav({
+  tab,
+  onSelect,
+  boardBadge,
+}: {
+  tab: TabId;
+  onSelect: (id: TabId) => void;
+  boardBadge: string;
+}) {
+  return (
+    <nav className="sticky top-0 z-20 border-b border-line bg-ink/95 backdrop-blur">
+      <div className="mx-auto flex w-full max-w-6xl gap-1 overflow-x-auto px-3 py-2 font-mono text-xs">
+        {TABS.map((t) => {
+          const active = t.id === tab;
+          return (
+            <button
+              key={t.id}
+              onClick={() => onSelect(t.id)}
+              aria-current={active ? "page" : undefined}
+              className={`flex shrink-0 items-center gap-1.5 rounded px-3 py-1.5 transition ${
+                active
+                  ? "bg-burgundy font-bold text-cream"
+                  : "text-cream-dim hover:bg-panel-2 hover:text-cream"
+              }`}
+            >
+              <span>{t.label}</span>
+              {t.id === "board" && (
+                <span
+                  className={`tabular-nums ${active ? "text-cream/80" : "text-cream-dim"}`}
+                >
+                  {boardBadge}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </nav>
   );
 }
 
