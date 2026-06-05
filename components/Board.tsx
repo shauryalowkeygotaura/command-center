@@ -10,6 +10,7 @@ import { StatusBar } from "./StatusBar";
 import { CallList } from "./CallList";
 import { PipelineOps } from "./PipelineOps";
 import { Checklist } from "./Checklist";
+import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -156,7 +157,9 @@ export function Board() {
             )}
 
             {tab === "life" && (
-              <div className="grid gap-5 md:grid-cols-2">
+              <div className="flex flex-col gap-5">
+                <HabitTracker />
+                <div className="grid gap-5 md:grid-cols-2">
                 <Checklist
                   title="LIFE"
                   store={lifeStore}
@@ -171,6 +174,7 @@ export function Board() {
                   emptyText="Things only you can do for me show up here."
                   replies
                 />
+                </div>
               </div>
             )}
           </>

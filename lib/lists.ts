@@ -51,10 +51,15 @@ export function mergeChecklistSeed(
   seed: ChecklistItem[],
 ): ChecklistItem[] {
   const seedById = new Map(seed.map((s) => [s.id, s]));
-  const refreshed = existing.map((it) => {
-    const s = seedById.get(it.id);
-    return s ? { ...it, text: s.text, note: s.note, seeded: true } : it;
-  });
+  const refreshed = existing
+    // A seeded item no longer in the seed was retired in code — drop it from
+    // the stored list too, so retired asks don't linger forever. Hand-added
+    // items (seeded: false/undefined) are never touched.
+    .filter((it) => !it.seeded || seedById.has(it.id))
+    .map((it) => {
+      const s = seedById.get(it.id);
+      return s ? { ...it, text: s.text, note: s.note, seeded: true } : it;
+    });
   const ids = new Set(existing.map((it) => it.id));
   return [...seed.filter((s) => !ids.has(s.id)), ...refreshed];
 }
@@ -70,13 +75,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
-  {
-    id: "h-habit-script",
-    text: "Send me your habit-tracker app script so I can replicate it here",
-    note: "The habit tracker is waiting on this — I'll match your existing app, not guess.",
-    done: false,
-    seeded: true,
-  },
+  // h-habit-script retired 2026-06-05: found the "Automated Habit Tracker"
+  // sheet in Drive myself; the HABITS panel on the LIFE tab replicates it.
   {
     id: "h-voice-confirm",
     text: "Listen to the philosopher voice + tell me deeper / lighter still",
