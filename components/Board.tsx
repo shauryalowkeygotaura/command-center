@@ -78,53 +78,52 @@ export function Board() {
         {!mounted ? (
           <p className="font-mono text-sm text-cream-dim">loading board…</p>
         ) : (
-          <div className="grid gap-5 md:grid-cols-3">
-            {LANES.map((lane) => (
-              <LaneColumn
-                key={lane.id}
-                lane={lane.id}
-                label={lane.label}
-                accent={lane.accent}
-                tasks={todays.filter((t) => t.lane === lane.id)}
-                onToggle={(id, done) => update(id, { done })}
-                onEdit={(id, title) => update(id, { title })}
-                onDelete={remove}
-                onAdd={(title) => add(lane.id, title)}
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-5 md:grid-cols-3">
+              {LANES.map((lane) => (
+                <LaneColumn
+                  key={lane.id}
+                  lane={lane.id}
+                  label={lane.label}
+                  accent={lane.accent}
+                  tasks={todays.filter((t) => t.lane === lane.id)}
+                  onToggle={(id, done) => update(id, { done })}
+                  onEdit={(id, title) => update(id, { title })}
+                  onDelete={remove}
+                  onAdd={(title) => add(lane.id, title)}
+                />
+              ))}
+            </div>
+
+            <PipelineOps />
+            <CallList today={today} />
+
+            <Checklist
+              title="INBOX · DROP IDEAS"
+              store={inboxStore}
+              placeholder="+ drop an idea or task for Claude to file"
+              emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
+              exportForClaude
+            />
+
+            <KeysPanel />
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <Checklist
+                title="LIFE"
+                store={lifeStore}
+                placeholder="+ add a real-life to-do"
+                emptyText="Your personal real-life to-dos go here. Type below to add."
               />
-            ))}
-          </div>
-        )}
-
-        {mounted && <PipelineOps />}
-        {mounted && <CallList today={today} />}
-        {mounted && (
-          <Checklist
-            title="INBOX · DROP IDEAS"
-            store={inboxStore}
-            placeholder="+ drop an idea or task for Claude to file"
-            emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
-            exportForClaude
-          />
-        )}
-
-        {mounted && <KeysPanel />}
-
-        {mounted && (
-          <div className="grid gap-5 md:grid-cols-2">
-            <Checklist
-              title="LIFE"
-              store={lifeStore}
-              placeholder="+ add a real-life to-do"
-              emptyText="Your personal real-life to-dos go here. Type below to add."
-            />
-            <Checklist
-              title="HANDOFFS · CLAUDE → YOU"
-              store={handoffStore}
-              seed={HANDOFF_SEED}
-              placeholder="+ add your own note"
-              emptyText="Things only you can do for me show up here."
-              replies
-            />
+              <Checklist
+                title="HANDOFFS · CLAUDE → YOU"
+                store={handoffStore}
+                seed={HANDOFF_SEED}
+                placeholder="+ add your own note"
+                emptyText="Things only you can do for me show up here."
+                replies
+              />
+            </div>
           </div>
         )}
       </main>

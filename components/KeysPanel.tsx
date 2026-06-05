@@ -70,7 +70,7 @@ export function KeysPanel() {
   const pendingCount = keys.filter((k) => !k.integrated).length;
 
   return (
-    <section className="mt-6 rounded-lg border border-line bg-panel">
+    <section className="rounded-lg border border-line bg-panel">
       <div className="flex items-center justify-between border-b border-line px-3 py-2">
         <span className="font-mono text-sm font-bold text-burgundy-bright">
           🔑 KEYS · DROP &amp; INTEGRATE
