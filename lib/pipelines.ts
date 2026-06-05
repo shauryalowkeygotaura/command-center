@@ -16,14 +16,23 @@ export interface PipelineCfg {
   label: string;
   repo: string;
   branch: string;
+  site?: string; // deployed app URL, rendered as an "open" link on the card
 }
 
 // The pipelines wired into the board. Add a row here to track a new pipeline;
-// it just needs to commit a runs/latest.json in the shared schema.
+// it just needs to commit a runs/latest.json in the shared schema. Deployed
+// apps (no runs/latest.json) still get Actions deploy status + an open link.
 export const PIPELINES: PipelineCfg[] = [
   { key: "philosopher", label: "Philosopher reels", repo: "philosopher-pipeline", branch: "master" },
   { key: "client", label: "Client acquisition", repo: "client-acquisition-pipeline", branch: "master" },
   { key: "football", label: "Football shorts", repo: "football-shorts-autopilot", branch: "main" },
+  {
+    key: "resume",
+    label: "Resume autopilot",
+    repo: "resume-autopilot",
+    branch: "main",
+    site: "https://shauryalowkeygotaura.github.io/resume-autopilot/",
+  },
 ];
 
 export interface RunMetrics {

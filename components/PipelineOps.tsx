@@ -143,6 +143,16 @@ export function PipelineOps() {
                 <span className="ml-auto font-mono text-[10px] text-cream-dim">
                   {relTime(m?.ts || s.actions?.createdAt)}
                 </span>
+                {s.cfg.site && (
+                  <a
+                    href={s.cfg.site}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-mono text-[10px] text-cream-dim underline hover:text-burgundy-bright"
+                  >
+                    open
+                  </a>
+                )}
                 {s.actions?.url && (
                   <a
                     href={s.actions.url}
