@@ -72,6 +72,7 @@ def main() -> None:
     live5h_cost = 0.0
     burn_tokens = 0  # input+output (NOT cache) in the last BURN_WINDOW
     burn_cost = 0.0  # USD in the last BURN_WINDOW
+    events: list[tuple[datetime, int]] = []  # (ts, total) this week, for the peak-5h scan
 
     if PROJECTS.exists():
         for jsonl in PROJECTS.glob("**/*.jsonl"):
@@ -110,6 +111,7 @@ def main() -> None:
 
                     if ts >= week_ago:
                         week_tokens += total
+                        events.append((ts, total))
                     if ts.date() == today:
                         today_tokens += total
                         today_cost += _cost(usage, msg.get("model", ""))
@@ -126,6 +128,21 @@ def main() -> None:
             except Exception:
                 continue
 
+    # Peak rolling-5h burn this week: the de facto rate-limit ceiling (we hit
+    # the limit often enough that the weekly max ~= the cap), used by the panel
+    # to scale the live gauge bar. Two-pointer sweep over time-sorted events.
+    events.sort(key=lambda e: e[0])
+    peak5h_tokens = 0
+    window_sum = 0
+    lo = 0
+    for hi, (ts_hi, tok_hi) in enumerate(events):
+        window_sum += tok_hi
+        # lo can't pass hi (events[hi] always fails the age test), but bound it anyway.
+        while lo < hi and events[lo][0] < ts_hi - LIVE_WINDOW:
+            window_sum -= events[lo][1]
+            lo += 1
+        peak5h_tokens = max(peak5h_tokens, window_sum)
+
     burn_minutes = BURN_WINDOW.total_seconds() / 60
     # Token rate excludes cache (readable indicator); cost rate includes every
     # billed token at its own rate (the honest $/hr) -- the asymmetry is deliberate.
@@ -140,6 +157,8 @@ def main() -> None:
         # Live burn: the rolling 5-hour window + a fast-reacting trailing rate.
         "live5hTokens": live5h_tokens,
         "live5hCostUsd": round(live5h_cost, 2),
+        # Scale for the gauge bar: this week's max rolling-5h burn.
+        "peak5hTokens": peak5h_tokens,
         "burnTokPerMin": burn_per_min,
         "burnCostPerHour": burn_cost_per_hour,
         "limitNote": "Estimated from local transcripts (list-price cost). Rate limits reset on a rolling 5h + weekly window.",

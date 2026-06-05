@@ -69,6 +69,9 @@ export interface CCUsage {
   // token at its rate (the honest $/hr). See scripts/update_cc_usage.py.
   live5hTokens?: number;
   live5hCostUsd?: number;
+  // This week's max rolling-5h burn — the de facto rate-limit ceiling that
+  // scales the gauge bar (live5hTokens / peak5hTokens).
+  peak5hTokens?: number;
   burnTokPerMin?: number;
   burnCostPerHour?: number;
   limitNote?: string;

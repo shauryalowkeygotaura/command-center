@@ -211,31 +211,58 @@ export function PipelineOps() {
 
         {/* Live 5-hour token burn — the headline gauge, polled every 15s. */}
         {cc?.live5hTokens != null && (
-          <div className="mt-1.5 flex items-baseline justify-between gap-2 rounded border border-line bg-ink px-2 py-1.5">
-            <div className="flex items-baseline gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-wide text-cream-dim">
-                5h burn
-              </span>
-              <span className="font-mono text-base font-bold tabular-nums text-cream">
-                {fmt(cc.live5hTokens)} tok
-              </span>
-              {cc.live5hCostUsd != null && (
-                <span className="font-mono text-[11px] tabular-nums text-cream-dim">
-                  ${cc.live5hCostUsd.toFixed(2)}
+          <div className="mt-1.5 rounded border border-line bg-ink px-2 py-1.5">
+            <div className="flex items-baseline justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-[10px] uppercase tracking-wide text-cream-dim">
+                  5h burn
+                </span>
+                <span className="font-mono text-base font-bold tabular-nums text-cream">
+                  {fmt(cc.live5hTokens)} tok
+                </span>
+                {cc.live5hCostUsd != null && (
+                  <span className="font-mono text-[11px] tabular-nums text-cream-dim">
+                    ${cc.live5hCostUsd.toFixed(2)}
+                  </span>
+                )}
+              </div>
+              {cc.burnTokPerMin != null && (
+                <span
+                  className={`font-mono text-[11px] tabular-nums ${
+                    cc.burnTokPerMin > 0 ? "text-amber" : "text-cream-dim"
+                  }`}
+                >
+                  ↑ {fmt(cc.burnTokPerMin)}/min
+                  {cc.burnCostPerHour != null && cc.burnCostPerHour > 0
+                    ? ` · $${cc.burnCostPerHour.toFixed(0)}/hr`
+                    : ""}
                 </span>
               )}
             </div>
-            {cc.burnTokPerMin != null && (
-              <span
-                className={`font-mono text-[11px] tabular-nums ${
-                  cc.burnTokPerMin > 0 ? "text-amber" : "text-cream-dim"
-                }`}
-              >
-                ↑ {fmt(cc.burnTokPerMin)}/min
-                {cc.burnCostPerHour != null && cc.burnCostPerHour > 0
-                  ? ` · $${cc.burnCostPerHour.toFixed(0)}/hr`
-                  : ""}
-              </span>
+
+            {/* Gauge bar: current 5h window vs this week's peak 5h burn (the
+                de facto rate-limit ceiling). Amber from 70%, burgundy from 90%. */}
+            {cc.peak5hTokens != null && cc.peak5hTokens > 0 && (
+              <div className="mt-1.5 flex items-center gap-2">
+                <div className="h-1.5 flex-1 overflow-hidden rounded bg-line">
+                  <div
+                    className={`h-full transition-all duration-500 ${
+                      cc.live5hTokens / cc.peak5hTokens >= 0.9
+                        ? "bg-burgundy-bright"
+                        : cc.live5hTokens / cc.peak5hTokens >= 0.7
+                          ? "bg-amber"
+                          : "bg-term"
+                    }`}
+                    style={{
+                      width: `${Math.min(100, (cc.live5hTokens / cc.peak5hTokens) * 100)}%`,
+                    }}
+                  />
+                </div>
+                <span className="font-mono text-[10px] tabular-nums text-cream-dim">
+                  {Math.min(100, Math.round((cc.live5hTokens / cc.peak5hTokens) * 100))}%
+                  <span className="text-cream-dim/60"> of wk peak</span>
+                </span>
+              </div>
             )}
           </div>
         )}
