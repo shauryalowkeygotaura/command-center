@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath: basePath || undefined,
   assetPrefix: basePath || undefined,
+  env: {
+    // Stamped when the config is evaluated, i.e. when `npm run build` starts
+    // (within seconds of the artifacts in this ~45s CI build — good enough to
+    // tell deploys apart). Rendered as a footer stamp so a glance at the live
+    // page settles every "is it deployed or is it my cache?" debate.
+    NEXT_PUBLIC_BUILD_STAMP: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC",
+  },
 };
 
 export default nextConfig;

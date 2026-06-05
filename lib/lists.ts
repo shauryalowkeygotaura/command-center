@@ -43,7 +43,9 @@ export const inboxStore = makeStore("revengine.command-center.inbox.v1");
 
 // Merge the curated seed into stored items: refresh seeded text/note from the
 // current seed (so my edits show up) while keeping each item's done state, and
-// append brand-new seeds. Hand-added items are left untouched.
+// PREPEND brand-new seeds — a fresh ask is the most urgent thing on the list,
+// so it must surface on top, not get buried under old items. Hand-added items
+// and your saved order are left untouched.
 export function mergeChecklistSeed(
   existing: ChecklistItem[],
   seed: ChecklistItem[],
@@ -54,7 +56,7 @@ export function mergeChecklistSeed(
     return s ? { ...it, text: s.text, note: s.note, seeded: true } : it;
   });
   const ids = new Set(existing.map((it) => it.id));
-  return [...refreshed, ...seed.filter((s) => !ids.has(s.id))];
+  return [...seed.filter((s) => !ids.has(s.id)), ...refreshed];
 }
 
 // ── Claude's standing asks of you (curated; newest concerns first) ───────────

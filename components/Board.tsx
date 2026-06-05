@@ -176,6 +176,10 @@ export function Board() {
           </>
         )}
       </main>
+
+      <footer className="mx-auto w-full max-w-6xl px-4 pb-3 text-right font-mono text-[10px] text-cream-dim/60">
+        build {process.env.NEXT_PUBLIC_BUILD_STAMP ?? "dev"}
+      </footer>
     </div>
   );
 }
