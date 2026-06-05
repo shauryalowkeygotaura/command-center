@@ -5,6 +5,7 @@ import {
   PIPELINES,
   PipelineState,
   CCUsage,
+  CC_RAW_URL,
   fetchActions,
   fetchMetrics,
   severity,
@@ -43,6 +44,27 @@ export function PipelineOps() {
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const alive = useRef(true);
 
+  // Token usage comes from raw GitHub (the Stop hook pushes cc-usage.json after
+  // your Claude turns), so the live deployed site stays current without a Pages
+  // rebuild. Fall back to the file baked into this build if raw is unreachable.
+  const refreshCc = useCallback(() => {
+    (async () => {
+      for (const url of [CC_RAW_URL, `${BASE}/status/cc-usage.json`]) {
+        try {
+          const r = await fetch(url, { cache: "no-store" });
+          if (!r.ok) continue;
+          const d: CCUsage = await r.json();
+          if (alive.current && d) {
+            setCc(d);
+            return;
+          }
+        } catch {
+          /* try next source */
+        }
+      }
+    })();
+  }, []);
+
   const refresh = useCallback(() => {
     PIPELINES.forEach(async (cfg, i) => {
       const [actions, metrics] = await Promise.all([
@@ -57,22 +79,19 @@ export function PipelineOps() {
       });
     });
 
-    fetch(`${BASE}/status/cc-usage.json`, { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d: CCUsage | null) => alive.current && d && setCc(d))
-      .catch(() => {});
-
+    refreshCc();
     setUpdatedAt(new Date().toISOString());
-  }, []);
+  }, [refreshCc]);
 
   useEffect(() => {
     alive.current = true;
     setMounted(true);
     refresh();
 
-    // Poll every 60s, and refresh immediately when the tab regains focus so
-    // the board is current the moment you look at it.
-    const id = setInterval(refresh, 60_000);
+    // Everything is now a remote GitHub fetch (raw cc-usage caches ~5min), so a
+    // single 60s poll is plenty; refresh() already pulls the token feed too. Also
+    // refresh on tab focus so the board is current the moment you look at it.
+    const pipeId = setInterval(refresh, 60_000);
     const onVis = () => {
       if (document.visibilityState === "visible") refresh();
     };
@@ -80,7 +99,7 @@ export function PipelineOps() {
 
     return () => {
       alive.current = false;
-      clearInterval(id);
+      clearInterval(pipeId);
       document.removeEventListener("visibilitychange", onVis);
     };
   }, [refresh]);
@@ -179,6 +198,38 @@ export function PipelineOps() {
             {cc ? `Claude Code · as of ${relTime(cc.ts)}` : "Claude Code · no data"}
           </span>
         </div>
+
+        {/* Live 5-hour token burn — the headline gauge, polled every 15s. */}
+        {cc?.live5hTokens != null && (
+          <div className="mt-1.5 flex items-baseline justify-between gap-2 rounded border border-line bg-ink px-2 py-1.5">
+            <div className="flex items-baseline gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-wide text-cream-dim">
+                5h burn
+              </span>
+              <span className="font-mono text-base font-bold tabular-nums text-cream">
+                {fmt(cc.live5hTokens)} tok
+              </span>
+              {cc.live5hCostUsd != null && (
+                <span className="font-mono text-[11px] tabular-nums text-cream-dim">
+                  ${cc.live5hCostUsd.toFixed(2)}
+                </span>
+              )}
+            </div>
+            {cc.burnTokPerMin != null && (
+              <span
+                className={`font-mono text-[11px] tabular-nums ${
+                  cc.burnTokPerMin > 0 ? "text-amber" : "text-cream-dim"
+                }`}
+              >
+                ↑ {fmt(cc.burnTokPerMin)}/min
+                {cc.burnCostPerHour != null && cc.burnCostPerHour > 0
+                  ? ` · $${cc.burnCostPerHour.toFixed(0)}/hr`
+                  : ""}
+              </span>
+            )}
+          </div>
+        )}
+
         <div className="mt-1.5 grid gap-1 font-mono text-[11px] text-cream-dim sm:grid-cols-2">
           <div className="flex justify-between gap-2">
             <span>Claude Code · today</span>

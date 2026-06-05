@@ -54,11 +54,25 @@ export interface CCUsage {
   todayTokens: number;
   todayCostUsd: number;
   weekTokens?: number;
+  // Live "token burn" gauge: rolling 5-hour window + a fast trailing rate.
+  // burnTokPerMin excludes cache tokens (readable); burnCostPerHour bills every
+  // token at its rate (the honest $/hr). See scripts/update_cc_usage.py.
+  live5hTokens?: number;
+  live5hCostUsd?: number;
+  burnTokPerMin?: number;
+  burnCostPerHour?: number;
   limitNote?: string;
 }
 
 const rawUrl = (p: PipelineCfg) =>
   `https://raw.githubusercontent.com/${GH_OWNER}/${p.repo}/${p.branch}/runs/latest.json`;
+
+// Claude Code token usage, read from the committed cc-usage.json via raw GitHub
+// (same pattern as pipeline metrics) so the LIVE deployed site shows it without a
+// Pages rebuild — the Stop hook pushes the file, raw serves the latest commit.
+// Note: raw.githubusercontent has a ~5-min CDN cache, so freshness tops out there.
+export const CC_RAW_URL =
+  `https://raw.githubusercontent.com/${GH_OWNER}/command-center/main/public/status/cc-usage.json`;
 
 const actionsUrl = (p: PipelineCfg) =>
   `https://api.github.com/repos/${GH_OWNER}/${p.repo}/actions/runs?branch=${p.branch}&per_page=1`;

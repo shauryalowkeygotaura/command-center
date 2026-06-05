@@ -40,3 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 out/
+
+# token-feed publish state (local only — never commit)
+public/status/.last_push
+public/status/.push_lock

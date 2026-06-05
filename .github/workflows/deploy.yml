@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # The Stop hook pushes the token feed every ~5min; the live panel reads it
+    # from raw GitHub, so those commits must NOT trigger a full Pages rebuild.
+    paths-ignore:
+      - "public/status/cc-usage.json"
   workflow_dispatch:
 
 permissions:
