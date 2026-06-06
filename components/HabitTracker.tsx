@@ -78,6 +78,7 @@ export function HabitTracker() {
   const [draft, setDraft] = useState("");
   const [tokenDraft, setTokenDraft] = useState("");
   const [sync, setSync] = useState<SyncStatus>("off");
+  const [range, setRange] = useState<"daily" | "monthly" | "yearly">("monthly");
   const tokenRef = useRef("");
   const gistRef = useRef("");
   const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -159,6 +160,13 @@ export function HabitTracker() {
 
   const isDone = (habitId: string, day: number) =>
     (state.marks[dayKey(new Date(year, month, day))] ?? []).includes(habitId);
+
+  // How many of the CURRENT roster's habits were done on a given date (ids of
+  // since-removed habits in old marks don't count).
+  const doneOn = (d: Date): number => {
+    const ids = state.marks[dayKey(d)] ?? [];
+    return state.habits.filter((h) => ids.includes(h.id)).length;
+  };
 
   function toggle(habitId: string, day: number) {
     const k = dayKey(new Date(year, month, day));
@@ -264,38 +272,182 @@ export function HabitTracker() {
         </div>
       </div>
 
-      {/* Daily completion graph: one bar per day, height = share of habits
-          done that day. Today burns bright; past days fade; future days are
-          ghost stubs so the month's runway stays visible. */}
+      {/* ── Completion graphs: DAILY (last 14d bars) · MONTHLY (bar per day of
+          month) · YEARLY (GitHub-style heatmap). Gradient burgundy fills, the
+          current day glows; future days are ghost stubs. ── */}
       {mounted && state.habits.length > 0 && (
         <div className="px-3 pt-2">
-          <div className="flex h-14 items-end gap-[3px]">
-            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => {
-              const done = state.habits.filter((h) => isDone(h.id, d)).length;
-              const pct = done / state.habits.length;
-              return (
-                <div
-                  key={d}
-                  title={`${monthName.slice(0, 3)} ${d}: ${done}/${state.habits.length}`}
-                  className={`flex-1 rounded-t-sm transition-all duration-300 ${
-                    d === todayDay
-                      ? "bg-burgundy-bright"
-                      : done > 0
-                        ? "bg-burgundy-bright/45"
-                        : d < todayDay
-                          ? "bg-line"
-                          : "bg-line/40"
-                  }`}
-                  style={{ height: `${Math.max(6, pct * 100)}%` }}
-                />
-              );
-            })}
+          <div className="mb-1.5 flex items-center gap-1">
+            {(["daily", "monthly", "yearly"] as const).map((r) => (
+              <button
+                key={r}
+                onClick={() => setRange(r)}
+                className={`rounded border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wide transition ${
+                  range === r
+                    ? "border-burgundy-bright bg-burgundy-bright/20 text-cream"
+                    : "border-line text-cream-dim hover:border-burgundy-bright/60 hover:text-cream"
+                }`}
+              >
+                {r}
+              </button>
+            ))}
           </div>
-          <div className="mt-0.5 flex justify-between font-mono text-[9px] text-cream-dim/60">
-            <span>1</span>
-            <span className="text-burgundy-bright">{todayDay}</span>
-            <span>{daysInMonth}</span>
-          </div>
+
+          {range === "daily" && (
+            <div>
+              <div className="flex h-16 items-end gap-1">
+                {Array.from({ length: 14 }, (_, i) => {
+                  const d = new Date(now);
+                  d.setDate(d.getDate() - (13 - i));
+                  const done = doneOn(d);
+                  const pct = done / state.habits.length;
+                  const isToday = i === 13;
+                  return (
+                    <div
+                      key={i}
+                      title={`${d.toLocaleDateString("en", { day: "numeric", month: "short" })}: ${done}/${state.habits.length}`}
+                      className="flex-1 rounded-t transition-all duration-300"
+                      style={{
+                        height: `${Math.max(5, pct * 100)}%`,
+                        background: isToday
+                          ? "linear-gradient(to top, #722f37, #ff7a1a)"
+                          : pct > 0
+                            ? "linear-gradient(to top, #722f37, #9a3f4a)"
+                            : "rgba(154,63,74,0.12)",
+                        boxShadow: isToday ? "0 0 10px rgba(255,122,26,0.45)" : undefined,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <div className="mt-0.5 flex gap-1">
+                {Array.from({ length: 14 }, (_, i) => {
+                  const d = new Date(now);
+                  d.setDate(d.getDate() - (13 - i));
+                  return (
+                    <span
+                      key={i}
+                      className={`flex-1 text-center font-mono text-[8px] ${
+                        i === 13 ? "text-amber" : "text-cream-dim/60"
+                      }`}
+                    >
+                      {d.getDate()}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {range === "monthly" && (
+            <div>
+              <div className="flex h-16 items-end gap-[3px]">
+                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => {
+                  const done = state.habits.filter((h) => isDone(h.id, d)).length;
+                  const pct = done / state.habits.length;
+                  const isToday = d === todayDay;
+                  return (
+                    <div
+                      key={d}
+                      title={`${monthName.slice(0, 3)} ${d}: ${done}/${state.habits.length}`}
+                      className="flex-1 rounded-t-sm transition-all duration-300"
+                      style={{
+                        height: `${Math.max(5, pct * 100)}%`,
+                        background: isToday
+                          ? "linear-gradient(to top, #722f37, #ff7a1a)"
+                          : pct > 0
+                            ? "linear-gradient(to top, #722f37, #9a3f4a)"
+                            : d < todayDay
+                              ? "rgba(154,63,74,0.12)"
+                              : "rgba(154,63,74,0.05)",
+                        boxShadow: isToday ? "0 0 10px rgba(255,122,26,0.45)" : undefined,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <div className="mt-0.5 flex justify-between font-mono text-[9px] text-cream-dim/60">
+                <span>1</span>
+                <span className="text-amber">{todayDay}</span>
+                <span>{daysInMonth}</span>
+              </div>
+            </div>
+          )}
+
+          {range === "yearly" && (
+            <div className="overflow-x-auto pb-1">
+              {(() => {
+                // GitHub-style heatmap: one column per week, Sun→Sat rows.
+                const jan1 = new Date(year, 0, 1);
+                const start = new Date(jan1);
+                start.setDate(start.getDate() - start.getDay()); // back to Sunday
+                const weeks: Date[][] = [];
+                const cur = new Date(start);
+                while (cur.getFullYear() <= year && !(cur.getFullYear() > year)) {
+                  const col: Date[] = [];
+                  for (let r = 0; r < 7; r++) {
+                    col.push(new Date(cur));
+                    cur.setDate(cur.getDate() + 1);
+                  }
+                  weeks.push(col);
+                  if (cur.getFullYear() > year) break;
+                }
+                const monthStarts = new Map<number, string>();
+                weeks.forEach((col, wi) => {
+                  const firstInYear = col.find((d) => d.getFullYear() === year);
+                  if (firstInYear && firstInYear.getDate() <= 7) {
+                    const label = firstInYear.toLocaleString("en", { month: "short" });
+                    if (![...monthStarts.values()].includes(label)) monthStarts.set(wi, label);
+                  }
+                });
+                return (
+                  <div>
+                    <div className="mb-0.5 flex gap-[2px] font-mono text-[8px] text-cream-dim/60">
+                      {weeks.map((_, wi) => (
+                        <span key={wi} className="w-[9px] shrink-0">
+                          {monthStarts.get(wi)?.[0] ?? ""}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-[2px]">
+                      {weeks.map((col, wi) => (
+                        <div key={wi} className="flex shrink-0 flex-col gap-[2px]">
+                          {col.map((d, ri) => {
+                            const inYear = d.getFullYear() === year;
+                            const future = d > now;
+                            const done = inYear && !future ? doneOn(d) : 0;
+                            const pct = done / state.habits.length;
+                            const isToday = inYear && dayKey(d) === todayKey;
+                            return (
+                              <div
+                                key={ri}
+                                title={
+                                  inYear
+                                    ? `${d.toLocaleDateString("en", { day: "numeric", month: "short" })}: ${done}/${state.habits.length}`
+                                    : undefined
+                                }
+                                className="h-[9px] w-[9px] rounded-[2px]"
+                                style={{
+                                  background: !inYear
+                                    ? "transparent"
+                                    : future
+                                      ? "rgba(154,63,74,0.06)"
+                                      : pct > 0
+                                        ? `rgba(255,122,26,${0.25 + 0.75 * pct})`
+                                        : "rgba(154,63,74,0.15)",
+                                  outline: isToday ? "1px solid #ff7a1a" : undefined,
+                                }}
+                              />
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
         </div>
       )}
 

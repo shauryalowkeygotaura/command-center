@@ -311,7 +311,7 @@ function TaskRow({
             task.done ? "text-burgundy-bright" : "text-cream-dim"
           }`}
         >
-          {task.done ? "[█]" : "[ ]"}
+          {task.done ? "[x]" : "[ ]"}
         </button>
 
         {editing ? (

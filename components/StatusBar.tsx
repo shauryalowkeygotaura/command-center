@@ -21,7 +21,8 @@ export function StatusBar({
     <header className="font-mono">
       {/* The trademark visual tic: burgundy bar, cream mono text. */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 bg-burgundy px-4 py-2 text-cream">
-        <span className="font-bold tracking-tight">█ [REVENGINE]</span>
+        {/* ASCII prompt instead of █: the block glyph tofus on phone fallback fonts */}
+        <span className="font-bold tracking-tight">&gt; [REVENGINE]</span>
         <span className="opacity-90">day {String(day).padStart(3, "0")}</span>
         <span className="opacity-70">command-center</span>
         <span className="ml-auto tabular-nums opacity-90">

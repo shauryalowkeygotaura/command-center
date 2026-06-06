@@ -147,7 +147,9 @@ export function Checklist({
                     it.done ? "text-burgundy-bright" : "text-cream-dim"
                   }`}
                 >
-                  {it.done ? "[█]" : "[ ]"}
+                  {/* ASCII on purpose: █ renders as a tofu box on phones whose
+                      fallback font lacks the FULL BLOCK glyph */}
+                  {it.done ? "[x]" : "[ ]"}
                 </button>
                 <span
                   className={`flex-1 font-sans text-sm leading-snug ${
