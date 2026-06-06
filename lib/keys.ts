@@ -140,6 +140,19 @@ export interface SmartDropResult {
   note: string;
 }
 
+// Thrown when the router needs a better description — the panel keeps the key
+// and asks the user to rephrase, offering the live project list as chips.
+export class SmartDropClarify extends Error {
+  projects: string[];
+  envName?: string; // env var name, if that half was inferred fine
+  constructor(message: string, projects: string[], envName?: string) {
+    super(message);
+    Object.setPrototypeOf(this, SmartDropClarify.prototype);
+    this.projects = projects;
+    this.envName = envName;
+  }
+}
+
 // The smart endpoint lives next to the keys endpoint: .../api/keys -> .../api/smart
 export function smartEndpoint(keysEndpoint: string): string {
   return keysEndpoint.replace(/\/keys\/?$/, "/smart");
@@ -165,8 +178,20 @@ export async function smartDrop(
   }
 
   const body = (await res.json().catch(() => null)) as
-    | (Partial<SmartDropResult> & { ok?: boolean; error?: string })
+    | (Partial<SmartDropResult> & {
+        ok?: boolean;
+        error?: string;
+        clarify?: boolean;
+        projects?: string[];
+      })
     | null;
+  if (body?.clarify) {
+    throw new SmartDropClarify(
+      body.error || "say it more explicitly",
+      Array.isArray(body.projects) ? body.projects : [],
+      body.name,
+    );
+  }
   if (!res.ok || !body?.ok || !body.name || !body.project) {
     throw new Error(body?.error || `smart drop failed (HTTP ${res.status})`);
   }

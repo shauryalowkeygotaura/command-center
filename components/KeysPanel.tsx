@@ -12,6 +12,7 @@ import {
   saveDropSettings,
   pushToDoppler,
   smartDrop,
+  SmartDropClarify,
 } from "@/lib/keys";
 
 export function KeysPanel() {
@@ -28,6 +29,9 @@ export function KeysPanel() {
   const [smartDesc, setSmartDesc] = useState("");
   const [smartValue, setSmartValue] = useState("");
   const [smartBusy, setSmartBusy] = useState(false);
+  // Set when the router needs a better description — panel keeps the key,
+  // states what's missing, and offers the live project list as chips.
+  const [clarify, setClarify] = useState<{ projects: string[]; envName?: string } | null>(null);
   // setState is async — a ref guards against double-push from rapid clicks.
   const pushingRef = useRef(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -126,14 +130,14 @@ export function KeysPanel() {
 
   // Smart drop: plain-language description + key -> Groq names and routes it
   // -> Doppler. The key value never touches the LLM, only the description.
-  async function dropSmart() {
+  async function dropSmart(descOverride?: string) {
     if (smartBusy) return;
     if (!drop.endpoint || !drop.token) {
       setShowSettings(true);
       setStatus({ ok: false, msg: "set the endpoint + passphrase first (⚙)" });
       return;
     }
-    const description = smartDesc.trim();
+    const description = (descOverride ?? smartDesc).trim();
     const value = smartValue.trim();
     if (description.length < 3 || !value) {
       setStatus({ ok: false, msg: "describe the key and paste its value" });
@@ -141,6 +145,7 @@ export function KeysPanel() {
     }
     setSmartBusy(true);
     setStatus(null);
+    setClarify(null);
     try {
       const r = await smartDrop(drop, description, value);
       // Record it in the list, already integrated — Doppler has it.
@@ -161,10 +166,23 @@ export function KeysPanel() {
         msg: `${r.name} → ${r.project}/${r.config} ✓${r.note ? ` · ${r.note}` : ""}`,
       });
     } catch (e) {
-      setStatus({ ok: false, msg: e instanceof Error ? e.message : "smart drop failed" });
+      if (e instanceof SmartDropClarify) {
+        // Ask again: keep the key, surface what's missing + project chips.
+        setClarify({ projects: e.projects, envName: e.envName });
+        setStatus({ ok: false, msg: e.message });
+      } else {
+        setStatus({ ok: false, msg: e instanceof Error ? e.message : "smart drop failed" });
+      }
     } finally {
       setSmartBusy(false);
     }
+  }
+
+  // Chip tap = the user picked the project; complete the description and retry.
+  function retryWithProject(p: string) {
+    const completed = `${smartDesc.trim()} for ${p}`;
+    setSmartDesc(completed);
+    void dropSmart(completed);
   }
 
   // Manual fallback: copy pending keys as a paste-ready block for chat.
@@ -357,6 +375,30 @@ export function KeysPanel() {
         >
           {smartBusy ? "routing…" : "⚡ drop smart"}
         </button>
+        {clarify && (
+          <div className="space-y-1.5 rounded border border-amber/40 bg-amber/10 p-2">
+            <p className="font-mono text-[10px] leading-snug text-amber">
+              {clarify.envName ? (
+                <>got <b>{clarify.envName}</b> — tap where it goes, key is still loaded:</>
+              ) : (
+                <>couldn&apos;t route that — rephrase above, or tap a project:</>
+              )}
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {clarify.projects.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  disabled={smartBusy}
+                  onClick={() => retryWithProject(p)}
+                  className="rounded border border-line px-1.5 py-0.5 font-mono text-[10px] text-indigo transition hover:border-burgundy-bright hover:text-cream disabled:opacity-50"
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </form>
 
       <form
