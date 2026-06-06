@@ -11,6 +11,7 @@ import {
   loadDropSettings,
   saveDropSettings,
   pushToDoppler,
+  smartDrop,
 } from "@/lib/keys";
 
 export function KeysPanel() {
@@ -24,6 +25,9 @@ export function KeysPanel() {
   const [showSettings, setShowSettings] = useState(false);
   const [pushing, setPushing] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; msg: string } | null>(null);
+  const [smartDesc, setSmartDesc] = useState("");
+  const [smartValue, setSmartValue] = useState("");
+  const [smartBusy, setSmartBusy] = useState(false);
   // setState is async — a ref guards against double-push from rapid clicks.
   const pushingRef = useRef(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -117,6 +121,49 @@ export function KeysPanel() {
           `${savedIds.size} key${savedIds.size === 1 ? "" : "s"} → Doppler ✓` +
           (skipped > 0 ? ` (${skipped} skipped: no project)` : ""),
       });
+    }
+  }
+
+  // Smart drop: plain-language description + key -> Groq names and routes it
+  // -> Doppler. The key value never touches the LLM, only the description.
+  async function dropSmart() {
+    if (smartBusy) return;
+    if (!drop.endpoint || !drop.token) {
+      setShowSettings(true);
+      setStatus({ ok: false, msg: "set the endpoint + passphrase first (⚙)" });
+      return;
+    }
+    const description = smartDesc.trim();
+    const value = smartValue.trim();
+    if (description.length < 3 || !value) {
+      setStatus({ ok: false, msg: "describe the key and paste its value" });
+      return;
+    }
+    setSmartBusy(true);
+    setStatus(null);
+    try {
+      const r = await smartDrop(drop, description, value);
+      // Record it in the list, already integrated — Doppler has it.
+      setKeys((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          name: r.name,
+          value,
+          project: r.config === "dev" ? r.project : `${r.project}/${r.config}`,
+          integrated: true,
+        },
+      ]);
+      setSmartDesc("");
+      setSmartValue("");
+      setStatus({
+        ok: true,
+        msg: `${r.name} → ${r.project}/${r.config} ✓${r.note ? ` · ${r.note}` : ""}`,
+      });
+    } catch (e) {
+      setStatus({ ok: false, msg: e instanceof Error ? e.message : "smart drop failed" });
+    } finally {
+      setSmartBusy(false);
     }
   }
 
@@ -242,7 +289,7 @@ export function KeysPanel() {
                 }`}
                 title={k.integrated ? "integrated" : "pending — push or click when wired in"}
               >
-                {k.integrated ? "[█]" : "[ ]"}
+                {k.integrated ? "[x]" : "[ ]"}
               </button>
               <span className="font-mono text-xs font-bold text-cream">
                 {k.name}
@@ -283,10 +330,45 @@ export function KeysPanel() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          dropSmart();
+        }}
+        className="space-y-2 border-t border-line p-2"
+      >
+        <p className="font-mono text-[10px] uppercase tracking-wide text-burgundy-bright">
+          smart drop — describe it, it gets named + routed
+        </p>
+        <input
+          value={smartDesc}
+          onChange={(e) => setSmartDesc(e.target.value)}
+          placeholder="e.g. pexels key for football autopilot"
+          className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
+        />
+        <input
+          value={smartValue}
+          onChange={(e) => setSmartValue(e.target.value)}
+          type="password"
+          placeholder="the key itself"
+          className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
+        />
+        <button
+          type="submit"
+          disabled={smartBusy}
+          className="rounded border border-burgundy-bright px-3 py-1 font-mono text-xs text-cream transition hover:bg-burgundy-bright/20 disabled:opacity-50"
+        >
+          {smartBusy ? "routing…" : "⚡ drop smart"}
+        </button>
+      </form>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
           addBatch();
         }}
         className="space-y-2 border-t border-line p-2"
       >
+        <p className="font-mono text-[10px] uppercase tracking-wide text-cream-dim">
+          manual — NAME=value lines
+        </p>
         <input
           value={project}
           onChange={(e) => setProject(e.target.value)}

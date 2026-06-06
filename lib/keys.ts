@@ -130,3 +130,50 @@ export async function pushToDoppler(
   }
   return body.saved ?? entries.map((e) => e.name);
 }
+
+// ---- smart drop: plain-language description -> Groq routes it -> Doppler ----
+
+export interface SmartDropResult {
+  name: string;
+  project: string;
+  config: string;
+  note: string;
+}
+
+// The smart endpoint lives next to the keys endpoint: .../api/keys -> .../api/smart
+export function smartEndpoint(keysEndpoint: string): string {
+  return keysEndpoint.replace(/\/keys\/?$/, "/smart");
+}
+
+export async function smartDrop(
+  settings: DropSettings,
+  description: string,
+  value: string,
+): Promise<SmartDropResult> {
+  let res: Response;
+  try {
+    res = await fetch(smartEndpoint(settings.endpoint), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-drop-token": settings.token,
+      },
+      body: JSON.stringify({ description, value }),
+    });
+  } catch {
+    throw new Error("endpoint unreachable — check the URL in settings");
+  }
+
+  const body = (await res.json().catch(() => null)) as
+    | (Partial<SmartDropResult> & { ok?: boolean; error?: string })
+    | null;
+  if (!res.ok || !body?.ok || !body.name || !body.project) {
+    throw new Error(body?.error || `smart drop failed (HTTP ${res.status})`);
+  }
+  return {
+    name: body.name,
+    project: body.project,
+    config: body.config || "dev",
+    note: body.note || "",
+  };
+}
