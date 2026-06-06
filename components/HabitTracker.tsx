@@ -264,6 +264,41 @@ export function HabitTracker() {
         </div>
       </div>
 
+      {/* Daily completion graph: one bar per day, height = share of habits
+          done that day. Today burns bright; past days fade; future days are
+          ghost stubs so the month's runway stays visible. */}
+      {mounted && state.habits.length > 0 && (
+        <div className="px-3 pt-2">
+          <div className="flex h-14 items-end gap-[3px]">
+            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => {
+              const done = state.habits.filter((h) => isDone(h.id, d)).length;
+              const pct = done / state.habits.length;
+              return (
+                <div
+                  key={d}
+                  title={`${monthName.slice(0, 3)} ${d}: ${done}/${state.habits.length}`}
+                  className={`flex-1 rounded-t-sm transition-all duration-300 ${
+                    d === todayDay
+                      ? "bg-burgundy-bright"
+                      : done > 0
+                        ? "bg-burgundy-bright/45"
+                        : d < todayDay
+                          ? "bg-line"
+                          : "bg-line/40"
+                  }`}
+                  style={{ height: `${Math.max(6, pct * 100)}%` }}
+                />
+              );
+            })}
+          </div>
+          <div className="mt-0.5 flex justify-between font-mono text-[9px] text-cream-dim/60">
+            <span>1</span>
+            <span className="text-burgundy-bright">{todayDay}</span>
+            <span>{daysInMonth}</span>
+          </div>
+        </div>
+      )}
+
       {!mounted ? (
         <p className="p-3 font-mono text-xs text-cream-dim">loading…</p>
       ) : (

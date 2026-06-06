@@ -21,7 +21,7 @@ const TABS = [
   { id: "calls", label: "CALL LIST" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "drops", label: "INBOX · KEYS" },
-  { id: "life", label: "LIFE · HANDOFFS" },
+  { id: "life", label: "TO DOS · HANDOFFS" },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 const TAB_KEY = "cc.activeTab.v1";
@@ -161,7 +161,7 @@ export function Board() {
                 <HabitTracker />
                 <div className="grid gap-5 md:grid-cols-2">
                 <Checklist
-                  title="LIFE"
+                  title="TO DOS"
                   store={lifeStore}
                   placeholder="+ add a real-life to-do"
                   emptyText="Your personal real-life to-dos go here. Type below to add."

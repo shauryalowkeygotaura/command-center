@@ -42,26 +42,22 @@ export const handoffStore = makeStore("revengine.command-center.handoffs.v1");
 export const inboxStore = makeStore("revengine.command-center.inbox.v1");
 
 // Merge the curated seed into stored items: refresh seeded text/note from the
-// current seed (so my edits show up) while keeping each item's done state, and
-// PREPEND brand-new seeds — a fresh ask is the most urgent thing on the list,
-// so it must surface on top, not get buried under old items. Hand-added items
-// and your saved order are left untouched.
+// current seed (so my edits show up) while keeping each item's done/reply
+// state. Display order for seeded items = SEED ARRAY ORDER (newest asks are
+// listed first in the seed, so they always render on top); hand-added items
+// follow in their saved order. Seeded items dropped from the seed were retired
+// in code and are removed from storage too; hand-added items are never touched.
 export function mergeChecklistSeed(
   existing: ChecklistItem[],
   seed: ChecklistItem[],
 ): ChecklistItem[] {
-  const seedById = new Map(seed.map((s) => [s.id, s]));
-  const refreshed = existing
-    // A seeded item no longer in the seed was retired in code — drop it from
-    // the stored list too, so retired asks don't linger forever. Hand-added
-    // items (seeded: false/undefined) are never touched.
-    .filter((it) => !it.seeded || seedById.has(it.id))
-    .map((it) => {
-      const s = seedById.get(it.id);
-      return s ? { ...it, text: s.text, note: s.note, seeded: true } : it;
-    });
-  const ids = new Set(existing.map((it) => it.id));
-  return [...seed.filter((s) => !ids.has(s.id)), ...refreshed];
+  const byId = new Map(existing.map((it) => [it.id, it]));
+  const seeded = seed.map((s) => {
+    const it = byId.get(s.id);
+    return it ? { ...it, text: s.text, note: s.note, seeded: true } : s;
+  });
+  const handAdded = existing.filter((it) => !it.seeded && !seed.some((s) => s.id === it.id));
+  return [...seeded, ...handAdded];
 }
 
 // ── Claude's standing asks of you (curated; newest concerns first) ───────────
@@ -77,20 +73,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   // h-habit-script retired 2026-06-05: found the "Automated Habit Tracker"
   // sheet in Drive myself; the HABITS panel on the LIFE tab replicates it.
-  {
-    id: "h-voice-confirm",
-    text: "Listen to the philosopher voice + tell me deeper / lighter still",
-    note: "output/smoketest-kinetic-v2.mp4 — tuned deep 82 Hz then lighter to ~89 Hz (current). Live on STYLE=kinetic. Say the word for -2/-1.5 (lighter) or back toward -4 (deeper).",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-cc-usage",
-    text: "Run `python scripts/update_cc_usage.py` then commit, to refresh the TOKENS panel",
-    note: "I can't read your local Claude Code transcripts from CI, so this is a manual local refresh (free, nothing leaves your machine).",
-    done: false,
-    seeded: true,
-  },
+  // h-voice-confirm retired 2026-06-06: philosopher voice finalized 2026-06-05.
+  // h-cc-usage retired 2026-06-06: the Stop hook auto-publishes cc-usage now.
   {
     id: "h-client-secrets",
     text: "Add the email-finder secrets to the client-acquisition-pipeline repo (Actions → Secrets)",
@@ -98,13 +82,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
-  {
-    id: "h-serpapi",
-    text: "SerpAPI free quota is exhausted — wait for the monthly reset, or switch to free Apollo source",
-    note: "That's why client-acq found 0 leads. MAX_CITIES_PER_RUN=2 now stops it re-exhausting. For leads sooner free: LEAD_SOURCE=apollo with saved cookies.",
-    done: false,
-    seeded: true,
-  },
+  // h-serpapi retired 2026-06-06: June quota reset + Apollo is the lead source.
   {
     id: "h-dental-phones",
     text: "Fill the +91FILL_ phone numbers in the dental clinic configs",
