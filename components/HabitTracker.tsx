@@ -454,7 +454,8 @@ export function HabitTracker() {
       {!mounted ? (
         <p className="p-3 font-mono text-xs text-cream-dim">loading…</p>
       ) : (
-        <div className="overflow-x-auto p-2">
+        <div className="flex gap-3 p-2">
+        <div className="min-w-0 flex-1 overflow-x-auto">
           <table className="border-separate border-spacing-0.5">
             <thead>
               <tr>
@@ -522,6 +523,93 @@ export function HabitTracker() {
               })}
             </tbody>
           </table>
+        </div>
+
+        {/* Stats rail — fills the dead space beside the grid on desktop.
+            Mirrors the Drive sheet's TOP PERFORMING HABITS pane. */}
+        <aside className="hidden w-56 shrink-0 space-y-3 lg:block">
+          {(() => {
+            const monthCount = (id: string) => {
+              let c = 0;
+              for (let d = 1; d <= daysInMonth; d++) if (isDone(id, d)) c += 1;
+              return c;
+            };
+            const ranked = state.habits
+              .map((h) => ({ h, n: monthCount(h.id) }))
+              .sort((a, b) => b.n - a.n)
+              .slice(0, 5);
+            const maxN = Math.max(1, ranked[0]?.n ?? 0);
+            const best = state.habits
+              .map((h) => ({ h, s: streak(h.id) }))
+              .sort((a, b) => b.s - a.s)[0];
+            let perfect = 0;
+            for (let d = 1; d <= todayDay; d++) {
+              const done = state.habits.filter((h) => isDone(h.id, d)).length;
+              if (done === state.habits.length && done > 0) perfect += 1;
+            }
+            let weekDone = 0;
+            for (let i = 0; i < 7; i++) {
+              const d = new Date(now);
+              d.setDate(d.getDate() - i);
+              weekDone += doneOn(d);
+            }
+            return (
+              <>
+                <div>
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-wide text-cream-dim">
+                    top habits · {monthName.slice(0, 3)}
+                  </p>
+                  {ranked.map(({ h, n }) => (
+                    <div key={h.id} className="mb-1">
+                      <div className="flex justify-between gap-2">
+                        <span className="truncate font-sans text-[11px] text-cream">
+                          {h.name}
+                        </span>
+                        <span className="font-mono text-[11px] tabular-nums text-cream-dim">
+                          {n}
+                        </span>
+                      </div>
+                      <div className="h-1 w-full overflow-hidden rounded bg-line">
+                        <div
+                          className="h-full transition-all duration-300"
+                          style={{
+                            width: `${(n / maxN) * 100}%`,
+                            background: "linear-gradient(to right, #722f37, #9a3f4a)",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded border border-line bg-ink px-2 py-1.5">
+                    <p className="font-mono text-[9px] uppercase text-cream-dim">best streak</p>
+                    <p className="font-mono text-sm font-bold tabular-nums text-cream">
+                      {best && best.s > 0 ? `${best.s}d` : "—"}
+                    </p>
+                    {best && best.s > 0 && (
+                      <p className="truncate font-sans text-[10px] text-cream-dim">{best.h.name}</p>
+                    )}
+                  </div>
+                  <div className="rounded border border-line bg-ink px-2 py-1.5">
+                    <p className="font-mono text-[9px] uppercase text-cream-dim">perfect days</p>
+                    <p className="font-mono text-sm font-bold tabular-nums text-cream">{perfect}</p>
+                    <p className="font-sans text-[10px] text-cream-dim">all habits done</p>
+                  </div>
+                  <div className="col-span-2 rounded border border-line bg-ink px-2 py-1.5">
+                    <p className="font-mono text-[9px] uppercase text-cream-dim">this week</p>
+                    <p className="font-mono text-sm font-bold tabular-nums text-cream">
+                      {weekDone}
+                      <span className="text-[10px] font-normal text-cream-dim">
+                        {" "}/ {state.habits.length * 7} ticks
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+        </aside>
         </div>
       )}
 
