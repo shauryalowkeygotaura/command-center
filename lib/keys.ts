@@ -1,8 +1,6 @@
-// Local-only API-key drop. NOTHING here is ever committed or sent anywhere by
-// the app itself — it lives purely in this browser's localStorage. The only way
-// a key leaves is when YOU press "Copy for Claude" and paste it to me, at which
-// point I route it into Doppler / the project's .env. Treat the copy block like
-// a plaintext secret: paste it to me, then clear this panel.
+// API-key drop. Keys are staged in this browser's localStorage, then pushed
+// straight to Doppler via the key-drop proxy (Code/key-drop on Vercel) — no
+// secrets ever transit chat. "Copy for Claude" remains as a manual fallback.
 
 export interface KeyEntry {
   id: string;
@@ -56,4 +54,79 @@ export function parseKeyLines(text: string, project?: string): KeyEntry[] {
 export function maskValue(value: string): string {
   if (value.length <= 8) return "•".repeat(value.length);
   return value.slice(0, 4) + "•".repeat(Math.max(4, value.length - 8)) + value.slice(-4);
+}
+
+// ---- key-drop proxy (browser -> Vercel -> Doppler) ----
+
+export const DROP_SETTINGS_STORAGE = "revengine.command-center.keydrop.v1";
+
+// Threat model note: the drop token below IS stored in localStorage, on
+// purpose. It is a low-value, write-only credential — possessing it only lets
+// someone ADD secrets to Doppler via the proxy, never read or list them. The
+// powerful credential (DOPPLER_TOKEN) never leaves the Vercel server env. If
+// this passphrase leaks, rotate it in Vercel; nothing is exposed.
+export interface DropSettings {
+  endpoint: string; // e.g. https://key-drop.vercel.app/api/keys
+  token: string; // the x-drop-token passphrase
+}
+
+export function loadDropSettings(): DropSettings {
+  if (typeof window === "undefined") return { endpoint: "", token: "" };
+  try {
+    const raw = window.localStorage.getItem(DROP_SETTINGS_STORAGE);
+    return raw ? (JSON.parse(raw) as DropSettings) : { endpoint: "", token: "" };
+  } catch {
+    return { endpoint: "", token: "" };
+  }
+}
+
+export function saveDropSettings(s: DropSettings): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(DROP_SETTINGS_STORAGE, JSON.stringify(s));
+}
+
+// The project field may carry an explicit Doppler config: "jio-outbound/prd".
+// Bare names default to the "dev" config.
+export function splitProjectConfig(raw: string): { project: string; config: string } {
+  const trimmed = raw.trim();
+  const slash = trimmed.indexOf("/");
+  if (slash < 1) return { project: trimmed, config: "dev" };
+  return {
+    project: trimmed.slice(0, slash).trim(),
+    config: trimmed.slice(slash + 1).trim() || "dev",
+  };
+}
+
+// Push one project's pending keys through the proxy into Doppler.
+// Throws with a readable message on any failure so the panel can surface it.
+export async function pushToDoppler(
+  settings: DropSettings,
+  projectField: string,
+  entries: KeyEntry[],
+): Promise<string[]> {
+  const { project, config } = splitProjectConfig(projectField);
+  const secrets: Record<string, string> = {};
+  for (const e of entries) secrets[e.name] = e.value;
+
+  let res: Response;
+  try {
+    res = await fetch(settings.endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-drop-token": settings.token,
+      },
+      body: JSON.stringify({ project, config, secrets }),
+    });
+  } catch {
+    throw new Error("endpoint unreachable — check the URL in settings");
+  }
+
+  const body = (await res.json().catch(() => null)) as
+    | { ok?: boolean; saved?: string[]; error?: string }
+    | null;
+  if (!res.ok || !body?.ok) {
+    throw new Error(body?.error || `push failed (HTTP ${res.status})`);
+  }
+  return body.saved ?? entries.map((e) => e.name);
 }

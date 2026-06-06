@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   KeyEntry,
   loadKeys,
   saveKeys,
   parseKeyLines,
   maskValue,
+  DropSettings,
+  loadDropSettings,
+  saveDropSettings,
+  pushToDoppler,
 } from "@/lib/keys";
 
 export function KeysPanel() {
@@ -16,10 +20,21 @@ export function KeysPanel() {
   const [draft, setDraft] = useState("");
   const [reveal, setReveal] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
+  const [drop, setDrop] = useState<DropSettings>({ endpoint: "", token: "" });
+  const [showSettings, setShowSettings] = useState(false);
+  const [pushing, setPushing] = useState(false);
+  const [status, setStatus] = useState<{ ok: boolean; msg: string } | null>(null);
+  // setState is async — a ref guards against double-push from rapid clicks.
+  const pushingRef = useRef(false);
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setKeys(loadKeys());
+    setDrop(loadDropSettings());
     setMounted(true);
+    return () => {
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -31,6 +46,7 @@ export function KeysPanel() {
     if (parsed.length === 0) return;
     setKeys((prev) => [...prev, ...parsed]);
     setDraft("");
+    setStatus(null);
   }
 
   function remove(id: string) {
@@ -43,17 +59,79 @@ export function KeysPanel() {
     );
   }
 
+  function updateSettings(next: DropSettings) {
+    setDrop(next);
+    saveDropSettings(next);
+  }
+
+  // Push every pending key straight into Doppler via the key-drop proxy.
+  // Keys without a project can't be routed — they stay pending with a hint.
+  async function pushPending() {
+    if (pushingRef.current) return;
+    if (!drop.endpoint || !drop.token) {
+      setShowSettings(true);
+      setStatus({ ok: false, msg: "set the endpoint + passphrase first (⚙)" });
+      return;
+    }
+    const pending = keys.filter((k) => !k.integrated);
+    const routable = pending.filter((k) => k.project);
+    const skipped = pending.length - routable.length;
+    if (routable.length === 0) {
+      setStatus({ ok: false, msg: "pending keys need a project to route to Doppler" });
+      return;
+    }
+
+    const byProject = new Map<string, KeyEntry[]>();
+    for (const k of routable) {
+      const p = k.project!;
+      if (!byProject.has(p)) byProject.set(p, []);
+      byProject.get(p)!.push(k);
+    }
+
+    pushingRef.current = true;
+    setPushing(true);
+    setStatus(null);
+    const savedIds = new Set<string>();
+    const errors: string[] = [];
+    for (const [p, list] of byProject) {
+      try {
+        await pushToDoppler(drop, p, list);
+        for (const k of list) savedIds.add(k.id);
+      } catch (e) {
+        errors.push(`${p}: ${e instanceof Error ? e.message : "failed"}`);
+      }
+    }
+    if (savedIds.size > 0) {
+      setKeys((prev) =>
+        prev.map((k) => (savedIds.has(k.id) ? { ...k, integrated: true } : k)),
+      );
+    }
+    pushingRef.current = false;
+    setPushing(false);
+    if (errors.length > 0) {
+      setStatus({ ok: false, msg: errors.join(" · ") });
+    } else {
+      setStatus({
+        ok: true,
+        msg:
+          `${savedIds.size} key${savedIds.size === 1 ? "" : "s"} → Doppler ✓` +
+          (skipped > 0 ? ` (${skipped} skipped: no project)` : ""),
+      });
+    }
+  }
+
+  // Manual fallback: copy pending keys as a paste-ready block for chat.
   async function copyForClaude() {
     const pending = keys.filter((k) => !k.integrated);
     if (pending.length === 0) return;
-    // Group by project so I can route each batch to the right Doppler config.
     const byProject = new Map<string, KeyEntry[]>();
     for (const k of pending) {
       const p = k.project || "unassigned";
       if (!byProject.has(p)) byProject.set(p, []);
       byProject.get(p)!.push(k);
     }
-    let text = "Integrate these API keys (from Command Center). Route each into Doppler / the project .env, then tell me to mark them integrated:\n";
+    let text =
+      "Integrate these API keys (from Command Center). Route each into Doppler / the project .env, then tell me to mark them integrated:\n";
     for (const [p, list] of byProject) {
       text += `\n[project: ${p}]\n`;
       text += list.map((k) => `${k.name}=${k.value}`).join("\n") + "\n";
@@ -61,7 +139,8 @@ export function KeysPanel() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+      copiedTimer.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       // clipboard unavailable — no-op
     }
@@ -73,30 +152,74 @@ export function KeysPanel() {
     <section className="rounded-lg border border-line bg-panel">
       <div className="flex items-center justify-between border-b border-line px-3 py-2">
         <span className="font-mono text-sm font-bold text-burgundy-bright">
-          🔑 KEYS · DROP &amp; INTEGRATE
+          🔑 KEYS · DROP &amp; PUSH
         </span>
         <div className="flex items-center gap-3">
           {mounted && pendingCount > 0 && (
-            <button
-              onClick={copyForClaude}
-              className="font-mono text-[10px] uppercase tracking-wide text-indigo transition hover:text-burgundy-bright"
-              title="Copy pending keys to paste to Claude for integration"
-            >
-              {copied ? "copied ✓" : "copy for claude"}
-            </button>
+            <>
+              <button
+                onClick={pushPending}
+                disabled={pushing}
+                className="font-mono text-[10px] uppercase tracking-wide text-burgundy-bright transition hover:text-cream disabled:opacity-50"
+                title="Push pending keys straight into Doppler"
+              >
+                {pushing ? "pushing…" : "push to doppler"}
+              </button>
+              <button
+                onClick={copyForClaude}
+                className="font-mono text-[10px] uppercase tracking-wide text-indigo transition hover:text-burgundy-bright"
+                title="Fallback: copy pending keys to paste to Claude"
+              >
+                {copied ? "copied ✓" : "copy for claude"}
+              </button>
+            </>
           )}
+          <button
+            onClick={() => setShowSettings((s) => !s)}
+            className="font-mono text-xs text-cream-dim transition hover:text-cream"
+            title="key-drop endpoint settings"
+            aria-label="settings"
+          >
+            ⚙
+          </button>
           <span className="font-mono text-xs tabular-nums text-cream-dim">
             {pendingCount} pending
           </span>
         </div>
       </div>
 
-      <div className="border-b border-line bg-amber/10 px-3 py-2 font-mono text-[11px] leading-snug text-amber">
-        Local to this browser only — never committed, never deployed. Drop a key,
-        hit “Copy for Claude”, paste it to me, and I wire it into Doppler. Clear
-        the entry after. Anything you paste into chat should be rotated if it’s
-        long-lived.
-      </div>
+      {showSettings && (
+        <div className="space-y-2 border-b border-line bg-ink/40 p-3">
+          <input
+            value={drop.endpoint}
+            onChange={(e) => updateSettings({ ...drop, endpoint: e.target.value })}
+            placeholder="key-drop endpoint, e.g. https://key-drop-xyz.vercel.app/api/keys"
+            className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
+          />
+          <input
+            value={drop.token}
+            onChange={(e) => updateSettings({ ...drop, token: e.target.value })}
+            type="password"
+            placeholder="drop passphrase (x-drop-token)"
+            className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
+          />
+          <p className="font-mono text-[10px] leading-snug text-cream-dim">
+            Keys go browser → key-drop (Vercel) → Doppler. Nothing transits chat.
+            Project field accepts <code>name</code> (config defaults to dev) or{" "}
+            <code>name/config</code>.
+          </p>
+        </div>
+      )}
+
+      {status && (
+        <div
+          className={`border-b border-line px-3 py-2 font-mono text-[11px] leading-snug ${
+            status.ok ? "bg-burgundy-bright/10 text-cream" : "bg-amber/10 text-amber"
+          }`}
+        >
+          {status.msg}
+        </div>
+      )}
 
       {!mounted ? (
         <p className="p-3 font-mono text-xs text-cream-dim">loading…</p>
@@ -117,23 +240,30 @@ export function KeysPanel() {
                 className={`font-mono text-sm leading-none ${
                   k.integrated ? "text-burgundy-bright" : "text-cream-dim"
                 }`}
-                title={k.integrated ? "integrated" : "pending — click when wired in"}
+                title={k.integrated ? "integrated" : "pending — push or click when wired in"}
               >
                 {k.integrated ? "[█]" : "[ ]"}
               </button>
               <span className="font-mono text-xs font-bold text-cream">
                 {k.name}
               </span>
-              {k.project && (
+              {k.project ? (
                 <span className="rounded border border-line px-1 font-mono text-[10px] text-indigo">
                   {k.project}
                 </span>
+              ) : (
+                !k.integrated && (
+                  <span
+                    className="rounded border border-amber/40 px-1 font-mono text-[10px] text-amber"
+                    title="no project — can't auto-push to Doppler"
+                  >
+                    no project
+                  </span>
+                )
               )}
               <code
                 className="flex-1 cursor-pointer truncate font-mono text-[11px] text-cream-dim"
-                onClick={() =>
-                  setReveal((r) => ({ ...r, [k.id]: !r[k.id] }))
-                }
+                onClick={() => setReveal((r) => ({ ...r, [k.id]: !r[k.id] }))}
                 title="click to reveal/hide"
               >
                 {reveal[k.id] ? k.value : maskValue(k.value)}
@@ -160,7 +290,7 @@ export function KeysPanel() {
         <input
           value={project}
           onChange={(e) => setProject(e.target.value)}
-          placeholder="project (e.g. philosopher-pipeline) — optional"
+          placeholder="doppler project (e.g. philosopher-pipeline or jio/prd)"
           className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
         />
         <textarea
