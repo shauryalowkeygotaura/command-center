@@ -1,9 +1,9 @@
 name: Classroom deadlines sync
 
+# SHELVED 2026-06-08: school admin blocks third-party OAuth and the user
+# decided Classroom sync isn't worth pursuing. Manual trigger only; the
+# scraper fallback (scripts/classroom_scrape.py) also stays dormant.
 on:
-  schedule:
-    # 06:53 / 12:53 / 18:53 IST — around school hand-out times.
-    - cron: "23 1,7,13 * * *"
   workflow_dispatch:
 
 permissions:
