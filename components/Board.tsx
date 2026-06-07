@@ -12,12 +12,14 @@ import { PipelineOps } from "./PipelineOps";
 import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
+import { Planner } from "./Planner";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
 // Section groups surfaced as a sticky tab bar so the board stops being one
 // long scroll. Only the active group mounts at a time.
 const TABS = [
   { id: "board", label: "BOARD" },
+  { id: "planner", label: "PLANNER" },
   { id: "calls", label: "CALL LIST" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "drops", label: "INBOX · KEYS" },
@@ -137,6 +139,16 @@ export function Board() {
                   ))}
                 </div>
               </div>
+            )}
+
+            {/* Planner reads tasks through props and toggles via update() —
+                Board owns the task store; a second writer would clobber it. */}
+            {tab === "planner" && (
+              <Planner
+                today={today}
+                tasks={tasks}
+                onToggleTask={(id, done) => update(id, { done })}
+              />
             )}
 
             {tab === "pipelines" && <PipelineOps />}

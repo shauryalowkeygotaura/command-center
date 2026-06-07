@@ -65,6 +65,13 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-planner-template",
+    text: "Tune DAY_TEMPLATE in lib/planner.ts to your real timetable",
+    note: "The PLANNER tab seeds every weekday from 5 guessed rows (school 08:00–14:30 Mon–Fri, calls 16:00, deep work 17:30, content 20:30). Edit the rows or tell me the real slots and I'll set them.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-football-yt-oauth",
     text: "Run `python auth_youtube.py` in Code/football-shorts-autopilot, put the 3 YT secrets in Doppler, flip YT_DRY_RUN=0",
     note: "The ONLY step left for real uploads. CI is already green daily in dry mode (renders everything, burns no quota). One browser login, then the factory goes live.",
