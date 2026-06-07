@@ -7,6 +7,9 @@ on:
     # from raw GitHub, so those commits must NOT trigger a full Pages rebuild.
     paths-ignore:
       - "public/status/cc-usage.json"
+      # Classroom sync commits its feed on a cron; the rail reads it from raw
+      # GitHub, so it must not trigger a rebuild either.
+      - "public/status/classroom-deadlines.json"
   workflow_dispatch:
 
 permissions:

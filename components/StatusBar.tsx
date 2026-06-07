@@ -44,6 +44,17 @@ export function StatusBar({
               : `${Math.abs(toMilestone)} days overdue`}
         </span>
       </div>
+
+      {/* elapsed share of the 21-day runway, glowing as it fills */}
+      <div className="h-px w-full bg-line">
+        <div
+          className="h-full bg-amber transition-all duration-500"
+          style={{
+            width: `${Math.min(Math.max((day / 21) * 100, 0), 100)}%`,
+            boxShadow: "0 0 6px rgba(255, 122, 26, 0.5)",
+          }}
+        />
+      </div>
     </header>
   );
 }

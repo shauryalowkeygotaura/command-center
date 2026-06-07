@@ -13,6 +13,7 @@ import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
 import { Planner } from "./Planner";
+import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
 // Section groups surfaced as a sticky tab bar so the board stops being one
@@ -111,14 +112,15 @@ export function Board() {
           <>
             {tab === "board" && (
               <div className="flex flex-col gap-6">
-                {/* progress meter */}
+                {/* progress meter — burgundy→amber gradient with a soft glow */}
                 <div className="h-1 w-full overflow-hidden rounded bg-line">
                   <div
-                    className="h-full bg-burgundy-bright transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-burgundy to-amber transition-all duration-300"
                     style={{
                       width: todays.length
                         ? `${(doneCount / todays.length) * 100}%`
                         : "0%",
+                      boxShadow: "0 0 8px rgba(255, 122, 26, 0.35)",
                     }}
                   />
                 </div>
@@ -196,6 +198,9 @@ export function Board() {
       <footer className="mx-auto w-full max-w-6xl px-4 pb-3 text-right font-mono text-[10px] text-cream-dim/60">
         build {process.env.NEXT_PUBLIC_BUILD_STAMP ?? "dev"}
       </footer>
+
+      {/* deadlines rail rides the right edge of EVERY tab */}
+      {mounted && <DeadlineRail today={today} />}
     </div>
   );
 }
@@ -261,7 +266,7 @@ function LaneColumn({
 }) {
   const done = tasks.filter((t) => t.done).length;
   return (
-    <section className="flex flex-col rounded-lg border border-line bg-panel">
+    <section className="hud flex flex-col rounded-lg border border-line bg-panel">
       <div
         className="flex items-center justify-between border-b border-line px-3 py-2 font-mono text-sm font-bold"
         style={{ color: accent }}
@@ -358,6 +363,18 @@ function TaskRow({
           </button>
         )}
 
+        {!editing && (
+          <button
+            aria-label="edit task"
+            onClick={() => {
+              setDraft(task.title);
+              setEditing(true);
+            }}
+            className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-amber"
+          >
+            ✎
+          </button>
+        )}
         <button
           aria-label="delete"
           onClick={() => onDelete(task.id)}

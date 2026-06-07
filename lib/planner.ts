@@ -322,27 +322,70 @@ export function validTime(h: number, m: number): boolean {
   return h >= 0 && h <= 23 && m >= 0 && m <= 59;
 }
 
-/** Parse "16:30-17:15 follow up jaipur" → {start, end, title}. Accepts
- *  "1630-1715", "16.30 - 17.15" too. No (or invalid) time prefix → the
- *  whole line becomes an untimed block. */
-export function parseQuickAdd(raw: string): {
+export interface QuickAdd {
   start?: string;
   end?: string;
   title: string;
-} {
-  const match = raw.match(
+  /** present only when the text carried an @kind token */
+  kind?: BlockKind;
+}
+
+const hhmm = (h: number, m: number) =>
+  `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+
+/** One grammar for both adding AND editing blocks:
+ *    "16:30-17:15 follow up jaipur @calls"
+ *  - time range: "16:30-17:15", "1630-1715", "16.30 - 17.15"
+ *  - single time "16:30 title" → one-hour block (colon/dot required so plain
+ *    numbers inside titles don't get eaten)
+ *  - trailing "@kind" prefix-matches deep/school/calls/content/ops/life
+ *  - no (or invalid) time prefix → untimed block */
+export function parseQuickAdd(raw: string): QuickAdd {
+  let text = raw.trim();
+
+  let kind: BlockKind | undefined;
+  const at = text.match(/\s@(\w+)$/);
+  if (at) {
+    const token = at[1].toLowerCase();
+    kind = KINDS.find((k) => k.startsWith(token));
+    if (kind) text = text.slice(0, at.index).trim();
+  }
+
+  const range = text.match(
     /^(\d{1,2})[:.]?(\d{2})\s*[-–]\s*(\d{1,2})[:.]?(\d{2})\s+(.+)$/,
   );
-  if (!match) return { title: raw.trim() };
-  const [startH, startM, endH, endM] = match.slice(1, 5).map(Number);
-  if (!validTime(startH, startM) || !validTime(endH, endM)) {
-    return { title: raw.trim() };
+  if (range) {
+    const [startH, startM, endH, endM] = range.slice(1, 5).map(Number);
+    if (validTime(startH, startM) && validTime(endH, endM)) {
+      return {
+        start: hhmm(startH, startM),
+        end: hhmm(endH, endM),
+        title: range[5].trim(),
+        kind,
+      };
+    }
   }
-  const hhmm = (h: number, m: number) =>
-    `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-  return {
-    start: hhmm(startH, startM),
-    end: hhmm(endH, endM),
-    title: match[5].trim(),
-  };
+
+  const single = text.match(/^(\d{1,2})[:.](\d{2})\s+(.+)$/);
+  if (single) {
+    const [h, m] = single.slice(1, 3).map(Number);
+    if (validTime(h, m)) {
+      const endMin = Math.min(h * 60 + m + 60, 23 * 60 + 59);
+      return {
+        start: hhmm(h, m),
+        end: hhmm(Math.floor(endMin / 60), endMin % 60),
+        title: single[3].trim(),
+        kind,
+      };
+    }
+  }
+
+  return { title: text, kind };
+}
+
+/** Inverse of parseQuickAdd: a block as editable text, so editing reuses the
+ *  exact grammar you type to create one. */
+export function formatBlockForEdit(b: PlanBlock): string {
+  const time = b.start ? `${b.start}-${b.end ?? b.start} ` : "";
+  return `${time}${b.title} @${b.kind}`;
 }

@@ -23,6 +23,8 @@ import {
   plannedCount,
   toMin,
   parseQuickAdd,
+  formatBlockForEdit,
+  QuickAdd,
 } from "@/lib/planner";
 import { Task, LANES } from "@/lib/types";
 import {
@@ -42,12 +44,13 @@ import {
   severity,
 } from "@/lib/pipelines";
 
-type View = "intraday" | "day" | "month";
+type View = "intraday" | "day" | "month" | "year";
 const VIEW_KEY = "cc.plannerView.v1";
 const VIEWS: { id: View; label: string }[] = [
   { id: "intraday", label: "INTRADAY" },
   { id: "day", label: "DAY" },
   { id: "month", label: "MONTH" },
+  { id: "year", label: "YEAR" },
 ];
 
 // ── date math (local, same convention as lib/day.ts) ─────────────────────────
@@ -59,6 +62,10 @@ function addDays(iso: string, n: number): string {
 function addMonths(iso: string, n: number): string {
   const d = new Date(iso + "T00:00:00");
   return isoDate(new Date(d.getFullYear(), d.getMonth() + n, 1));
+}
+function addYears(iso: string, n: number): string {
+  const d = new Date(iso + "T00:00:00");
+  return isoDate(new Date(d.getFullYear() + n, 0, 1));
 }
 function human(iso: string): string {
   return new Date(iso + "T00:00:00")
@@ -134,17 +141,34 @@ export function Planner({
     else setBlocks((prev) => prev.filter((x) => x.id !== b.id));
   }
   function addBlock(raw: string, kind: BlockKind) {
-    const { start, end, title } = parseQuickAdd(raw);
-    if (!title) return;
+    const parsed = parseQuickAdd(raw);
+    if (!parsed.title) return;
     upsert({
       id: crypto.randomUUID(),
       date,
-      start,
-      end,
-      title,
-      kind,
+      start: parsed.start,
+      end: parsed.end,
+      title: parsed.title,
+      kind: parsed.kind ?? kind, // typed @kind beats the selected chip
       done: false,
     });
+  }
+  /** Re-parse the edit text with the same grammar used to add blocks. */
+  function editBlock(b: PlanBlock, raw: string) {
+    const parsed = parseQuickAdd(raw);
+    if (!parsed.title) return;
+    upsert({
+      ...b,
+      start: parsed.start,
+      end: parsed.end,
+      title: parsed.title,
+      kind: parsed.kind ?? b.kind,
+    });
+  }
+  /** Click the kind tag to cycle through kinds — no menu needed. */
+  function cycleKind(b: PlanBlock) {
+    const next = KINDS[(KINDS.indexOf(b.kind) + 1) % KINDS.length];
+    upsert({ ...b, kind: next });
   }
 
   const dayBlocks = useMemo(() => blocksForDate(blocks, date), [blocks, date]);
@@ -172,7 +196,7 @@ export function Planner({
           ))}
         </div>
 
-        {view !== "month" && (
+        {(view === "intraday" || view === "day") && (
           <div className="flex items-center gap-2 font-mono text-xs">
             <button
               onClick={() => setDate(addDays(date, -1))}
@@ -221,6 +245,8 @@ export function Planner({
             onToggle={toggleBlock}
             onRemove={removeBlock}
             onAdd={addBlock}
+            onEdit={editBlock}
+            onCycleKind={cycleKind}
           />
         )}
         {view === "day" && (
@@ -232,6 +258,8 @@ export function Planner({
             onToggle={toggleBlock}
             onRemove={removeBlock}
             onAdd={addBlock}
+            onEdit={editBlock}
+            onCycleKind={cycleKind}
             onToggleTask={onToggleTask}
           />
         )}
@@ -245,6 +273,23 @@ export function Planner({
             onPick={(iso) => {
               setDate(iso);
               selectView("day");
+            }}
+          />
+        )}
+        {view === "year" && (
+          <YearView
+            cursor={date}
+            today={today}
+            blocks={blocks}
+            tasks={tasks}
+            onNav={(n) => setDate(addYears(date, n))}
+            onPickDay={(iso) => {
+              setDate(iso);
+              selectView("day");
+            }}
+            onPickMonth={(iso) => {
+              setDate(iso);
+              selectView("month");
             }}
           />
         )}
@@ -265,6 +310,8 @@ function IntradayView({
   onToggle,
   onRemove,
   onAdd,
+  onEdit,
+  onCycleKind,
 }: {
   blocks: PlanBlock[];
   isToday: boolean;
@@ -272,12 +319,33 @@ function IntradayView({
   onToggle: (b: PlanBlock) => void;
   onRemove: (b: PlanBlock) => void;
   onAdd: (raw: string, kind: BlockKind) => void;
+  onEdit: (b: PlanBlock, raw: string) => void;
+  onCycleKind: (b: PlanBlock) => void;
 }) {
   const timed = blocks.filter((b) => b.start);
   const untimed = blocks.filter((b) => !b.start);
   const height = (DAY_END - DAY_START) * PX_PER_MIN;
   const nowTop = (nowMin - DAY_START) * PX_PER_MIN;
   const hours = Array.from({ length: 19 }, (_, i) => i + 5);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [prefill, setPrefill] = useState<{ text: string; nonce: number }>({
+    text: "",
+    nonce: 0,
+  });
+
+  /** Click an empty slot → pre-fill the add bar with that half-hour. */
+  function clickCanvas(e: React.MouseEvent<HTMLDivElement>) {
+    if ((e.target as HTMLElement).closest("[data-block]")) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const min = DAY_START + (e.clientY - rect.top) / PX_PER_MIN;
+    const snapped = Math.max(DAY_START, Math.min(Math.round(min / 30) * 30, DAY_END - 30));
+    const fmt = (m: number) =>
+      `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+    setPrefill((p) => ({
+      text: `${fmt(snapped)}-${fmt(Math.min(snapped + 60, DAY_END - 1))} `,
+      nonce: p.nonce + 1,
+    }));
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -289,8 +357,13 @@ function IntradayView({
         </div>
       )}
 
-      <section className="rounded-lg border border-line bg-panel p-3">
-        <div className="relative" style={{ height }}>
+      <section className="hud rounded-lg border border-line bg-panel p-3">
+        <div
+          className="relative cursor-copy"
+          style={{ height }}
+          onClick={clickCanvas}
+          title="click an empty slot to add a block there"
+        >
           {/* hour grid */}
           {hours.map((h) => (
             <div
@@ -314,46 +387,71 @@ function IntradayView({
             return (
               <div
                 key={b.id}
-                className={`group absolute left-14 right-1 overflow-hidden rounded-r border-l-2 bg-panel-2/90 px-2 py-0.5 transition hover:bg-panel-2 ${
+                data-block
+                className={`group absolute left-14 right-1 cursor-default overflow-hidden rounded-r border-l-2 bg-panel-2/90 px-2 py-0.5 transition hover:bg-panel-2 ${
                   b.done ? "opacity-45" : ""
                 }`}
                 style={{ top, height: h, borderColor: meta.color }}
               >
-                <div className="flex items-start gap-1.5">
-                  <button
-                    aria-label={b.done ? "mark not done" : "mark done"}
-                    onClick={() => onToggle(b)}
-                    className={`font-mono text-xs leading-snug ${
-                      b.done ? "text-burgundy-bright" : "text-cream-dim hover:text-cream"
-                    }`}
-                  >
-                    {b.done ? "[x]" : "[ ]"}
-                  </button>
-                  <span
-                    className={`flex-1 truncate font-sans text-xs leading-snug ${
-                      b.done ? "text-cream-dim line-through" : "text-cream"
-                    }`}
-                  >
-                    {b.title}
-                  </span>
-                  <span
-                    className="hidden font-mono text-[9px] sm:inline"
-                    style={{ color: meta.color }}
-                  >
-                    {meta.label}
-                  </span>
-                  <button
-                    aria-label="delete block"
-                    onClick={() => onRemove(b)}
-                    className="font-mono text-[10px] text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
-                  >
-                    ✕
-                  </button>
-                </div>
-                {h >= 34 && (
-                  <span className="font-mono text-[9px] text-cream-dim">
-                    {b.start}–{b.end ?? "…"}
-                  </span>
+                {editingId === b.id ? (
+                  <BlockEditor
+                    block={b}
+                    onCommit={(raw) => {
+                      onEdit(b, raw);
+                      setEditingId(null);
+                    }}
+                    onCancel={() => setEditingId(null)}
+                  />
+                ) : (
+                  <>
+                    <div className="flex items-start gap-1.5">
+                      <button
+                        aria-label={b.done ? "mark not done" : "mark done"}
+                        onClick={() => onToggle(b)}
+                        className={`font-mono text-xs leading-snug ${
+                          b.done ? "text-burgundy-bright" : "text-cream-dim hover:text-cream"
+                        }`}
+                      >
+                        {b.done ? "[x]" : "[ ]"}
+                      </button>
+                      <button
+                        onDoubleClick={() => setEditingId(b.id)}
+                        className={`flex-1 truncate text-left font-sans text-xs leading-snug ${
+                          b.done ? "text-cream-dim line-through" : "text-cream"
+                        }`}
+                        title="double-click (or ✎) to edit"
+                      >
+                        {b.title}
+                      </button>
+                      <button
+                        onClick={() => onCycleKind(b)}
+                        title="click to change type"
+                        className="hidden font-mono text-[9px] sm:inline"
+                        style={{ color: meta.color }}
+                      >
+                        {meta.label}
+                      </button>
+                      <button
+                        aria-label="edit block"
+                        onClick={() => setEditingId(b.id)}
+                        className="font-mono text-[10px] text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-amber"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        aria-label="delete block"
+                        onClick={() => onRemove(b)}
+                        className="font-mono text-[10px] text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    {h >= 34 && (
+                      <span className="font-mono text-[9px] text-cream-dim">
+                        {b.start}–{b.end ?? "…"}
+                      </span>
+                    )}
+                  </>
                 )}
               </div>
             );
@@ -378,8 +476,34 @@ function IntradayView({
         </div>
       </section>
 
-      <AddBlockForm onAdd={onAdd} />
+      <AddBlockForm onAdd={onAdd} prefill={prefill} />
     </div>
+  );
+}
+
+/** Inline editor: the block as quick-add text — same grammar as adding. */
+function BlockEditor({
+  block,
+  onCommit,
+  onCancel,
+}: {
+  block: PlanBlock;
+  onCommit: (raw: string) => void;
+  onCancel: () => void;
+}) {
+  const [draft, setDraft] = useState(() => formatBlockForEdit(block));
+  return (
+    <input
+      autoFocus
+      value={draft}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={() => onCommit(draft)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") onCommit(draft);
+        if (e.key === "Escape") onCancel();
+      }}
+      className="w-full rounded border border-line bg-ink px-1.5 py-0.5 font-mono text-xs text-cream outline-none focus:border-amber"
+    />
   );
 }
 
@@ -392,6 +516,8 @@ function DayView({
   onToggle,
   onRemove,
   onAdd,
+  onEdit,
+  onCycleKind,
   onToggleTask,
 }: {
   date: string;
@@ -401,9 +527,12 @@ function DayView({
   onToggle: (b: PlanBlock) => void;
   onRemove: (b: PlanBlock) => void;
   onAdd: (raw: string, kind: BlockKind) => void;
+  onEdit: (b: PlanBlock, raw: string) => void;
+  onCycleKind: (b: PlanBlock) => void;
   onToggleTask: (id: string, done: boolean) => void;
 }) {
   const plan = brandDay(dayNumber(date));
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [calls, setCalls] = useState({ called: 0, total: 0 });
   useEffect(() => {
     const entries = callStore.load().filter((c) => c.dueDate === date);
@@ -413,7 +542,7 @@ function DayView({
   return (
     <div className="grid gap-5 md:grid-cols-2">
       {/* schedule column */}
-      <section className="flex flex-col rounded-lg border border-line bg-panel">
+      <section className="hud flex flex-col rounded-lg border border-line bg-panel">
         <header className="border-b border-line px-3 py-2 font-mono text-sm font-bold text-burgundy-bright">
           SCHEDULE
         </header>
@@ -425,41 +554,65 @@ function DayView({
           )}
           {blocks.map((b) => (
             <li key={b.id} className="group flex items-start gap-2 rounded px-2 py-1.5 hover:bg-panel-2">
-              <button
-                aria-label={b.done ? "mark not done" : "mark done"}
-                onClick={() => onToggle(b)}
-                className={`mt-0.5 font-mono text-sm leading-none ${
-                  b.done ? "text-burgundy-bright" : "text-cream-dim"
-                }`}
-              >
-                {b.done ? "[x]" : "[ ]"}
-              </button>
-              <span className="w-20 shrink-0 pt-0.5 font-mono text-[11px] tabular-nums text-cream-dim">
-                {b.start ? `${b.start}–${b.end ?? "…"}` : "anytime"}
-              </span>
-              <span
-                className={`flex-1 font-sans text-sm leading-snug ${
-                  b.done ? "text-cream-dim line-through" : "text-cream"
-                }`}
-              >
-                {b.title}
-                {b.note && (
-                  <span className="block font-mono text-[10px] text-cream-dim">{b.note}</span>
-                )}
-              </span>
-              <span
-                className="pt-0.5 font-mono text-[9px]"
-                style={{ color: kindMeta(b.kind).color }}
-              >
-                {kindMeta(b.kind).label}
-              </span>
-              <button
-                aria-label="delete block"
-                onClick={() => onRemove(b)}
-                className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
-              >
-                ✕
-              </button>
+              {editingId === b.id ? (
+                <BlockEditor
+                  block={b}
+                  onCommit={(raw) => {
+                    onEdit(b, raw);
+                    setEditingId(null);
+                  }}
+                  onCancel={() => setEditingId(null)}
+                />
+              ) : (
+                <>
+                  <button
+                    aria-label={b.done ? "mark not done" : "mark done"}
+                    onClick={() => onToggle(b)}
+                    className={`mt-0.5 font-mono text-sm leading-none ${
+                      b.done ? "text-burgundy-bright" : "text-cream-dim"
+                    }`}
+                  >
+                    {b.done ? "[x]" : "[ ]"}
+                  </button>
+                  <span className="w-20 shrink-0 pt-0.5 font-mono text-[11px] tabular-nums text-cream-dim">
+                    {b.start ? `${b.start}–${b.end ?? "…"}` : "anytime"}
+                  </span>
+                  <button
+                    onDoubleClick={() => setEditingId(b.id)}
+                    className={`flex-1 text-left font-sans text-sm leading-snug ${
+                      b.done ? "text-cream-dim line-through" : "text-cream"
+                    }`}
+                    title="double-click (or ✎) to edit"
+                  >
+                    {b.title}
+                    {b.note && (
+                      <span className="block font-mono text-[10px] text-cream-dim">{b.note}</span>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => onCycleKind(b)}
+                    title="click to change type"
+                    className="pt-0.5 font-mono text-[9px]"
+                    style={{ color: kindMeta(b.kind).color }}
+                  >
+                    {kindMeta(b.kind).label}
+                  </button>
+                  <button
+                    aria-label="edit block"
+                    onClick={() => setEditingId(b.id)}
+                    className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-amber"
+                  >
+                    ✎
+                  </button>
+                  <button
+                    aria-label="delete block"
+                    onClick={() => onRemove(b)}
+                    className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
+                  >
+                    ✕
+                  </button>
+                </>
+              )}
             </li>
           ))}
         </ul>
@@ -470,7 +623,7 @@ function DayView({
 
       {/* context column */}
       <div className="flex flex-col gap-5">
-        <section className="rounded-lg border border-line bg-panel">
+        <section className="hud rounded-lg border border-line bg-panel">
           <header className="flex items-center justify-between border-b border-line px-3 py-2 font-mono text-sm font-bold text-burgundy-bright">
             <span>BRAND PLAN</span>
             {plan && <span className="text-cream-dim">{plan.label}</span>}
@@ -504,7 +657,7 @@ function DayView({
           </div>
         </section>
 
-        <section className="rounded-lg border border-line bg-panel">
+        <section className="hud rounded-lg border border-line bg-panel">
           <header className="flex items-center justify-between border-b border-line px-3 py-2 font-mono text-sm font-bold text-burgundy-bright">
             <span>BOARD · {human(date)}</span>
             <span className="tabular-nums text-cream-dim">
@@ -547,7 +700,7 @@ function DayView({
         </section>
 
         <div className="grid grid-cols-2 gap-5">
-          <section className="rounded-lg border border-line bg-panel p-3">
+          <section className="hud rounded-lg border border-line bg-panel p-3">
             <p className="font-mono text-[10px] text-cream-dim">CALLS</p>
             <p className="font-mono text-2xl font-bold tabular-nums text-amber">
               {calls.called}
@@ -560,7 +713,7 @@ function DayView({
           {date === today ? (
             <PipelineStrip />
           ) : (
-            <section className="rounded-lg border border-line bg-panel p-3">
+            <section className="hud rounded-lg border border-line bg-panel p-3">
               <p className="font-mono text-[10px] text-cream-dim">PIPELINES</p>
               <p className="font-mono text-xs text-cream-dim">live status shows on today</p>
             </section>
@@ -608,7 +761,7 @@ function MonthView({
   }, [tasks]);
 
   return (
-    <section className="rounded-lg border border-line bg-panel p-3">
+    <section className="hud rounded-lg border border-line bg-panel p-3">
       <div className="mb-3 flex items-center justify-between font-mono text-sm">
         <button
           onClick={() => onNav(-1)}
@@ -685,6 +838,140 @@ function MonthView({
   );
 }
 
+// ── YEAR ─────────────────────────────────────────────────────────────────────
+// 12 mini-month heat grids: cell intensity = open board tasks + planned
+// blocks. Click a day → DAY view; click a month label → MONTH view.
+function YearView({
+  cursor,
+  today,
+  blocks,
+  tasks,
+  onNav,
+  onPickDay,
+  onPickMonth,
+}: {
+  cursor: string;
+  today: string;
+  blocks: PlanBlock[];
+  tasks: Task[];
+  onNav: (n: number) => void;
+  onPickDay: (iso: string) => void;
+  onPickMonth: (iso: string) => void;
+}) {
+  const year = new Date(cursor + "T00:00:00").getFullYear();
+
+  const loadMap = useMemo(() => {
+    const m = new Map<string, { open: number; done: number }>();
+    for (const t of tasks) {
+      const e = m.get(t.dueDate) ?? { open: 0, done: 0 };
+      if (t.done) e.done += 1;
+      else e.open += 1;
+      m.set(t.dueDate, e);
+    }
+    return m;
+  }, [tasks]);
+
+  const totals = useMemo(() => {
+    let open = 0;
+    let done = 0;
+    for (const [d, v] of loadMap) {
+      if (d.startsWith(`${year}-`)) {
+        open += v.open;
+        done += v.done;
+      }
+    }
+    return { open, done };
+  }, [loadMap, year]);
+
+  function cellColor(iso: string): string {
+    const load = loadMap.get(iso);
+    const n = (load?.open ?? 0) + plannedCount(blocks, iso);
+    if (n >= 3) return "var(--color-burgundy-bright)";
+    if (n === 2) return "var(--color-burgundy)";
+    if (n === 1) return "rgba(114, 47, 55, 0.55)";
+    if ((load?.done ?? 0) > 0) return "var(--color-line)"; // cleared day
+    return "var(--color-panel-2)";
+  }
+
+  return (
+    <section className="hud rounded-lg border border-line bg-panel p-3">
+      <div className="mb-3 flex items-center justify-between font-mono text-sm">
+        <button
+          onClick={() => onNav(-1)}
+          className="rounded border border-line px-2 py-1 text-cream-dim hover:text-cream"
+          aria-label="previous year"
+        >
+          ‹
+        </button>
+        <span className="font-bold tracking-widest text-cream">{year}</span>
+        <button
+          onClick={() => onNav(1)}
+          className="rounded border border-line px-2 py-1 text-cream-dim hover:text-cream"
+          aria-label="next year"
+        >
+          ›
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 lg:grid-cols-4">
+        {Array.from({ length: 12 }, (_, m) => {
+          const first = new Date(year, m, 1);
+          const offset = (first.getDay() + 6) % 7; // Monday-start
+          const daysIn = new Date(year, m + 1, 0).getDate();
+          const monthISO = isoDate(first);
+          const isCurrent = today.startsWith(monthISO.slice(0, 7));
+          return (
+            <div key={m}>
+              <button
+                onClick={() => onPickMonth(monthISO)}
+                className={`mb-1.5 font-mono text-[10px] font-bold tracking-widest transition hover:text-amber ${
+                  isCurrent ? "text-burgundy-bright" : "text-cream-dim"
+                }`}
+                title="open month view"
+              >
+                {first.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}
+              </button>
+              <div className="grid grid-cols-7 gap-[3px]">
+                {Array.from({ length: 42 }, (_, i) => {
+                  const dayNum = i - offset + 1;
+                  if (dayNum < 1 || dayNum > daysIn)
+                    return <span key={i} className="h-2 w-2" />;
+                  const iso = isoDate(new Date(year, m, dayNum));
+                  const isMilestone = iso === MILESTONE_DATE;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => onPickDay(iso)}
+                      title={isMilestone ? `${iso} · ${MILESTONE_LABEL}` : iso}
+                      className="h-2 w-2 rounded-[1px] transition hover:scale-150"
+                      style={{
+                        background: isMilestone
+                          ? "var(--color-amber)"
+                          : cellColor(iso),
+                        ...(iso === today
+                          ? {
+                              outline: "1px solid var(--color-amber)",
+                              outlineOffset: "1px",
+                            }
+                          : {}),
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <p className="mt-3 font-mono text-[9px] text-cream-dim">
+        {totals.open} open · {totals.done} done in {year} · darker = heavier day · amber = milestone ·
+        click a day to drill in
+      </p>
+    </section>
+  );
+}
+
 // ── shared bits ──────────────────────────────────────────────────────────────
 function BlockPill({
   block,
@@ -727,13 +1014,30 @@ function BlockPill({
 function AddBlockForm({
   onAdd,
   bare,
+  prefill,
 }: {
   onAdd: (raw: string, kind: BlockKind) => void;
   bare?: boolean;
+  prefill?: { text: string; nonce: number };
 }) {
   const [value, setValue] = useState("");
   const [kind, setKind] = useState<BlockKind>("deep");
   const ref = useRef<HTMLInputElement>(null);
+
+  // Consume click-a-slot prefills; the nonce marks each new click even when
+  // the text is identical (clicking the same slot twice).
+  useEffect(() => {
+    if (prefill && prefill.nonce > 0) {
+      setValue(prefill.text);
+      ref.current?.focus();
+    }
+  }, [prefill]);
+
+  // Live preview of what the grammar understood — teaches the syntax by
+  // showing it, instead of documenting it.
+  const parsed: QuickAdd = parseQuickAdd(value);
+  const previewKind = parsed.kind ?? kind;
+  const showPreview = value.trim().length > 0;
 
   const form = (
     <form
@@ -750,9 +1054,19 @@ function AddBlockForm({
         ref={ref}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="+ 16:30-17:15 block title  ·  time prefix optional"
+        placeholder="+ 16:30-17:15 block title @calls  ·  time + @kind optional"
         className="w-full rounded bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:ring-1 focus:ring-burgundy-bright"
       />
+      {showPreview && (
+        <p className="font-mono text-[10px] text-cream-dim">
+          →{" "}
+          <span className="text-cream">
+            {parsed.start ? `${parsed.start}–${parsed.end}` : "anytime"}
+          </span>{" "}
+          · <span style={{ color: kindMeta(previewKind).color }}>{kindMeta(previewKind).label}</span>{" "}
+          · {parsed.title || "…"}
+        </p>
+      )}
       <div className="flex flex-wrap gap-1">
         {KINDS.map((k) => (
           <button
@@ -772,7 +1086,7 @@ function AddBlockForm({
   );
 
   if (bare) return form;
-  return <section className="rounded-lg border border-line bg-panel p-2">{form}</section>;
+  return <section className="hud rounded-lg border border-line bg-panel p-2">{form}</section>;
 }
 
 function PipelineStrip() {
@@ -805,7 +1119,7 @@ function PipelineStrip() {
   };
 
   return (
-    <section className="rounded-lg border border-line bg-panel p-3">
+    <section className="hud rounded-lg border border-line bg-panel p-3">
       <p className="font-mono text-[10px] text-cream-dim">PIPELINES</p>
       <ul className="mt-1 space-y-1">
         {states.map((s) => (

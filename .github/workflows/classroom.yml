@@ -1,0 +1,63 @@
+name: Classroom deadlines sync
+
+on:
+  schedule:
+    # 06:53 / 12:53 / 18:53 IST — around school hand-out times.
+    - cron: "23 1,7,13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: classroom-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Crash-proof until configured: without the token secret the job is a
+      # green no-op (same pattern as the football autopilot dry mode).
+      - name: Check secret
+        id: gate
+        env:
+          CLASSROOM_TOKEN_JSON: ${{ secrets.CLASSROOM_TOKEN_JSON }}
+        run: |
+          if [ -z "$CLASSROOM_TOKEN_JSON" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "CLASSROOM_TOKEN_JSON not set — skipping sync (rail still works with manual + seeded deadlines)"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.gate.outputs.configured == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync deadlines
+        if: steps.gate.outputs.configured == 'true'
+        env:
+          CLASSROOM_TOKEN_JSON: ${{ secrets.CLASSROOM_TOKEN_JSON }}
+        run: |
+          pip install --quiet google-api-python-client google-auth
+          python scripts/classroom_sync.py
+
+      - name: Commit feed if changed
+        if: steps.gate.outputs.configured == 'true'
+        run: |
+          git config user.name "classroom-sync[bot]"
+          git config user.email "actions@github.com"
+          git add public/status/classroom-deadlines.json
+          if git diff --cached --quiet; then
+            echo "feed unchanged — nothing to commit"
+          else
+            git commit -m "chore: refresh classroom deadlines"
+            # the cc-usage Stop hook pushes to this repo often — rebase first
+            git pull --rebase origin main
+            git push
+          fi
