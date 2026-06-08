@@ -65,6 +65,27 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-dental-demo-clip",
+    text: "Record ONE 50-sec VAPI demo clip with a real clinic's name in it",
+    note: "The whole edge. Clone the dental agent, swap in a Tier-A clinic's name + 2 services, call it after their closing time, record 45-60s of it booking a cleaning. This clip is what you send after a 'yes'. Without it you're just another text pitch.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-dental-verify-bios",
+    text: "Open the 8 Tier-A Jaipur dental IG bios, confirm each WhatsApp/number",
+    note: "Never DM blind. The 8 Tier-A handles are in the CALL LIST + Projects/client-acquisition-pipeline/jaipur-dental-outreach-2026-06-08.md. 2 min each.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-dental-send-8",
+    text: "Send the 8 Tier-A Jaipur dental DMs (openers are written, paste-ready)",
+    note: "Line-1 openers per clinic are in jaipur-dental-outreach-2026-06-08.md. One DM, one question ('want the clip?'), zero links in msg 1. Log each in the same doc's send-log so the funnel stops reading 0/0/0.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-planner-template",
     text: "Tune DAY_TEMPLATE in lib/planner.ts to your real timetable",
     note: "The PLANNER tab seeds every weekday from 5 guessed rows (school 08:00–14:30 Mon–Fri, calls 16:00, deep work 17:30, content 20:30). Edit the rows or tell me the real slots and I'll set them.",

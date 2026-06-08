@@ -54,6 +54,15 @@ export const deadlineStore = {
 // ── CLAUDE'S SIDE: hard external dates (newest concerns first) ───────────────
 export const DEADLINE_SEED: Deadline[] = [
   {
+    id: "dl:dental-sprint",
+    title: "Dental outreach sprint: 8 DMs + 1 demo clip out",
+    date: "2026-06-12",
+    note: "Interim checkpoint toward the clinic-live milestone. Actions are in HANDOFFS; named target list stays in the private vault doc, not this public repo.",
+    done: false,
+    seeded: true,
+    source: "seed",
+  },
+  {
     id: "dl:worldcup",
     title: "World Cup kicks off — football autopilot uploading for real",
     date: "2026-06-11",
