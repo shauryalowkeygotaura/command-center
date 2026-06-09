@@ -75,10 +75,15 @@ export function toMin(hhmm: string): number {
 
 // ── CLAUDE'S SIDE: recurring baseline + dated one-offs ───────────────────────
 // DAY_TEMPLATE renders on every matching weekday. `days` uses JS getDay()
-// (0 = Sun … 6 = Sat); omit it for every day.
+// (0 = Sun … 6 = Sat); omit it for every day. `from`/`until` (ISO dates,
+// inclusive) bound a block to an era — that's how June (summer break, Jaipur
+// sprint) and July+ (school) coexist in one template.
 //
-// ⚠ TIMINGS ARE MY BEST GUESS — edit the rows below to your real timetable
-// (or tell me the real slots and I'll set them). See the HANDOFFS tab.
+// June timing is NOT a guess: it mirrors the dental two-session windows in
+// Projects/client-acquisition-pipeline/jaipur-summer-sprint-2026-06.md
+// (owners reachable 11:30–13:30 and 17:00–19:30; clinics shut 2–5 PM).
+// ⚠ The July+ school row is still my guess — real Class-11 timetable pending
+// (see HANDOFFS tab).
 interface TemplateBlock {
   key: string;
   start: string;
@@ -87,12 +92,23 @@ interface TemplateBlock {
   kind: BlockKind;
   days?: number[];
   note?: string;
+  from?: string; // ISO date, block active on/after this date
+  until?: string; // ISO date, block active on/before this date
 }
 
+const SPRINT_END = "2026-06-30"; // Jaipur sprint / summer break boundary
+const SCHOOL_FROM = "2026-07-01";
+
 export const DAY_TEMPLATE: TemplateBlock[] = [
-  { key: "school", start: "08:00", end: "14:30", title: "School", kind: "school", days: [1, 2, 3, 4, 5] },
-  { key: "calls", start: "16:00", end: "17:00", title: "Call list — clinics (target 50)", kind: "calls", note: "Numbers live on the CALL LIST tab." },
-  { key: "deep", start: "17:30", end: "19:30", title: "Deep work — build / pipelines", kind: "deep" },
+  // ── June: summer break + Jaipur clinic sprint ──────────────────────────────
+  { key: "sprint-am", start: "11:00", end: "13:30", title: "Clinic outreach — morning session", kind: "calls", until: SPRINT_END, note: "In Jaipur = walk the day's locality route; in Delhi = DMs + calls. Owners free 11:30–13:30." },
+  { key: "sprint-log", start: "14:00", end: "16:30", title: "Clinics shut — log touches, follow-ups, build", kind: "deep", until: SPRINT_END, note: "Append every touch to jaipur-sends-log.md. WhatsApp the flyer to misses." },
+  { key: "sprint-pm", start: "17:00", end: "19:30", title: "Clinic outreach — evening session", kind: "calls", until: SPRINT_END, note: "Session opens 5pm, rush hasn't built. 5–7 clinics." },
+  // ── July+: school term ──────────────────────────────────────────────────────
+  { key: "school", start: "08:00", end: "14:30", title: "School", kind: "school", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM, note: "Guessed slot — give me the real Class-11 timetable and I'll fix it." },
+  { key: "calls", start: "16:00", end: "17:00", title: "Call list — clinics (target 50)", kind: "calls", from: SCHOOL_FROM, note: "Numbers live on the CALL LIST tab." },
+  { key: "deep", start: "17:30", end: "19:30", title: "Deep work — build / pipelines", kind: "deep", from: SCHOOL_FROM },
+  // ── every era ───────────────────────────────────────────────────────────────
   { key: "content", start: "20:30", end: "21:30", title: "Reel + posts — today's brand-plan row", kind: "content" },
   { key: "plan", start: "22:30", end: "22:45", title: "Plan tomorrow (set blocks for D+1)", kind: "ops" },
 ];
@@ -270,6 +286,9 @@ export function blocksForDate(all: PlanBlock[], dateISO: string): PlanBlock[] {
 
   for (const t of DAY_TEMPLATE) {
     if (t.days && !t.days.includes(dow)) continue;
+    // ISO date strings order lexicographically, so plain comparison works.
+    if (t.from && dateISO < t.from) continue;
+    if (t.until && dateISO > t.until) continue;
     const id = `tpl:${dateISO}:${t.key}`;
     const stored = byId.get(id);
     if (stored) {

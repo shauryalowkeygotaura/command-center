@@ -65,37 +65,37 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
-    id: "h-dental-demo-clip",
-    text: "Record ONE 50-sec VAPI demo clip with a real clinic's name in it",
-    note: "The whole edge. Clone the dental agent, swap in a Tier-A clinic's name + 2 services, call it after their closing time, record 45-60s of it booking a cleaning. This clip is what you send after a 'yes'. Without it you're just another text pitch.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-dental-verify-bios",
-    text: "Open the 8 Tier-A Jaipur dental IG bios, confirm each WhatsApp/number",
-    note: "Never DM blind. The 8 Tier-A handles are in the CALL LIST + Projects/client-acquisition-pipeline/jaipur-dental-outreach-2026-06-08.md. 2 min each.",
+    id: "h-apollo-cookies",
+    text: "Run `python scripts/save_apollo_cookies.py` in Code/client-acquisition-pipeline (one Apollo login)",
+    note: "FOUND 2026-06-10: the APOLLO_COOKIES_JSON repo secret was never set, so the daily pipeline scrapes 0 leads. The script opens a browser, you log in to Apollo once, it writes apollo_cookies.json — then paste it: gh secret set APOLLO_COOKIES_JSON -R shauryalowkeygotaura/client-acquisition-pipeline --body (Get-Content apollo_cookies.json -Raw). Or just run the script and tell me — I'll do the gh part.",
     done: false,
     seeded: true,
   },
   {
     id: "h-dental-send-8",
-    text: "Send the 8 Tier-A Jaipur dental DMs (openers are written, paste-ready)",
-    note: "Line-1 openers per clinic are in jaipur-dental-outreach-2026-06-08.md. One DM, one question ('want the clip?'), zero links in msg 1. Log each in the same doc's send-log so the funnel stops reading 0/0/0.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-planner-template",
-    text: "Tune DAY_TEMPLATE in lib/planner.ts to your real timetable",
-    note: "The PLANNER tab seeds every weekday from 5 guessed rows (school 08:00–14:30 Mon–Fri, calls 16:00, deep work 17:30, content 20:30). Edit the rows or tell me the real slots and I'll set them.",
+    text: "Send the 8 Tier-A Jaipur dental DMs — fully assembled, just paste",
+    note: "I verified all 8 bios via web (2026-06-10, table in jaipur-dental-outreach-2026-06-08.md) and assembled the complete DMs with honesty guardrails applied — scroll to 'Paste-ready DMs'. The 57-sec demo clip for Dr. Ruby is rendered and ready to send after her 'yes' (Code/dental-receptionist/demo_clips/). Use @dr_ankurgoyal_ (personal) for #4, and tap each bio in the IG app once for WhatsApp buttons. Log sends in jaipur-sends-log.md.",
     done: false,
     seeded: true,
   },
   {
     id: "h-football-yt-oauth",
-    text: "Run `python auth_youtube.py` in Code/football-shorts-autopilot, put the 3 YT secrets in Doppler, flip YT_DRY_RUN=0",
-    note: "The ONLY step left for real uploads. CI is already green daily in dry mode (renders everything, burns no quota). One browser login, then the factory goes live.",
+    text: "World Cup is HERE: 3-min Google Cloud step + `python auth_youtube.py`, then I flip YT_DRY_RUN=0",
+    note: "Verified 2026-06-10: every other piece is wired (DOPPLER_TOKEN in GH, doppler.yaml → youtube-title-autoresearch/dev, CI green daily in dry mode). Missing ONLY: console.cloud.google.com → enable YouTube Data API v3 → OAuth client (Desktop) → save client_secret.json next to auth_youtube.py → run it; it prints the exact doppler commands. I left YT_DRY_RUN=1 on purpose — flipping early would crash tomorrow's scheduled run.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-planner-template",
+    text: "Send me your real Class-11 timetable (July onward)",
+    note: "DONE for June (2026-06-10): the planner now mirrors the Jaipur sprint doc's dental two-session windows (11:00–13:30 / 17:00–19:30) through Jun 30 — not a guess. School rows resume Jul 1 but the 08:00–14:30 slot is still my guess; reply with the real DPS RK Puram timing and I'll set it.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-client-secrets",
+    text: "Sign up free at hunter.io (2 min) and paste the API key back to me",
+    note: "Shrunk 2026-06-10: I wired the workflow to pass HUNTER_API_KEY / SNOV_* into the job (it never did before) — the only missing piece is a key, and key signup needs your email. Free tier = 50 finds/month. Paste it in the reply box here and I'll set Doppler + the repo secret.",
     done: false,
     seeded: true,
   },
@@ -103,19 +103,14 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   // sheet in Drive myself; the HABITS panel on the LIFE tab replicates it.
   // h-voice-confirm retired 2026-06-06: philosopher voice finalized 2026-06-05.
   // h-cc-usage retired 2026-06-06: the Stop hook auto-publishes cc-usage now.
-  {
-    id: "h-client-secrets",
-    text: "Add the email-finder secrets to the client-acquisition-pipeline repo (Actions → Secrets)",
-    note: "HUNTER_API_KEY / SNOV keys (or a DOPPLER_TOKEN). Without them the email cascade can't find addresses even once SerpAPI resets.",
-    done: false,
-    seeded: true,
-  },
   // h-serpapi retired 2026-06-06: June quota reset + Apollo is the lead source.
-  {
-    id: "h-dental-phones",
-    text: "Fill the +91FILL_ phone numbers in the dental clinic configs",
-    note: "emergency / human-transfer / owner numbers in Marudhar + Olive Green JSON.",
-    done: false,
-    seeded: true,
-  },
+  // h-dental-demo-clip retired 2026-06-10: Claude rendered the 57.6s clip itself
+  //   (edge-tts production voices + ffmpeg phone EQ) for Your Dentist Jaipur —
+  //   Code/dental-receptionist/demo_clips/, script reusable per clinic.
+  // h-dental-verify-bios retired 2026-06-10: all 8 Tier-A handles web-verified;
+  //   corrections (Maharishi=Sanganer, @dr_ankurgoyal_ personal IG, @vivan_dental
+  //   found) + numbers in jaipur-dental-outreach-2026-06-08.md.
+  // h-dental-phones retired 2026-06-10: all FILL_ slots filled with each clinic's
+  //   verified public front-desk line (safe by construction); swap owner_callback
+  //   for the doctors' direct mobiles when they share them.
 ];
