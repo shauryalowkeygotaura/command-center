@@ -12,6 +12,12 @@ on:
       - "public/status/classroom-deadlines.json"
   workflow_dispatch:
 
+# Run the bundled JS actions (checkout, setup-node, *-pages) on Node 24
+# instead of the deprecated Node 20 runtime. GitHub forces this from
+# 2026-06-16; opting in early silences the deprecation warning.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write
@@ -28,7 +34,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
       - name: Build static export
