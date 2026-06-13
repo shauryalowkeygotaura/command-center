@@ -400,12 +400,31 @@ function LearnPanel({
                 className="min-h-36 w-full resize-y rounded border border-line bg-ink p-2 font-mono text-xs leading-relaxed text-term outline-none placeholder:text-cream-dim focus:border-amber"
               />
               <div className="mt-2 flex flex-wrap items-center gap-2">
-                <button
-                  onClick={() => onPatch({ revealed: !p.revealed })}
-                  className="rounded border border-line px-3 py-1.5 font-mono text-xs text-cream-dim transition hover:border-amber hover:text-cream"
-                >
-                  {p.revealed ? "hide solution" : "reveal solution"}
-                </button>
+                {!p.submitted ? (
+                  <button
+                    onClick={() => onPatch({ submitted: true, revealed: true })}
+                    disabled={!canComplete}
+                    title={
+                      canComplete
+                        ? "submit your answer and reveal the solution"
+                        : "type your answer first — the solution stays hidden until you do"
+                    }
+                    className={`rounded px-3 py-1.5 font-mono text-xs font-bold transition ${
+                      canComplete
+                        ? "bg-amber/20 text-amber hover:bg-amber/30"
+                        : "cursor-not-allowed bg-panel text-cream-dim"
+                    }`}
+                  >
+                    submit answer →
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => onPatch({ revealed: !p.revealed })}
+                    className="rounded border border-line px-3 py-1.5 font-mono text-xs text-cream-dim transition hover:border-amber hover:text-cream"
+                  >
+                    {p.revealed ? "hide solution" : "show solution"}
+                  </button>
+                )}
                 {!done ? (
                   <button
                     onClick={() =>
@@ -427,14 +446,16 @@ function LearnPanel({
                   </button>
                 ) : (
                   <button
-                    onClick={() => onPatch({ done: false })}
+                    onClick={() =>
+                      onPatch({ done: false, submitted: false, revealed: false })
+                    }
                     className="rounded border border-line px-3 py-1.5 font-mono text-xs text-cream-dim transition hover:text-burgundy-bright"
                   >
                     reset node
                   </button>
                 )}
               </div>
-              {p.revealed && (
+              {p.submitted && p.revealed && (
                 <pre className="mt-3 overflow-x-auto rounded-lg border border-burgundy bg-ink p-3 font-mono text-xs leading-relaxed text-term">
                   {node.solution}
                 </pre>

@@ -60,7 +60,8 @@ export interface NodeProgress {
   done?: boolean;
   doneAt?: string;
   draft?: string; // the answer typed in the panel textarea
-  revealed?: boolean; // solution shown
+  submitted?: boolean; // answer submitted — unlocks the solution
+  revealed?: boolean; // solution currently shown (only after submit)
   checks?: number[]; // ticked checklist indexes
 }
 export type Progress = Record<string, NodeProgress>;

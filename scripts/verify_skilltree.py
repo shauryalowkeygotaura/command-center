@@ -43,7 +43,21 @@ with sync_playwright() as pw:
     assert complete.is_disabled(), "complete button should be gated on empty draft"
     page.get_by_placeholder("type your answer").fill("nums = [3, 1, 4]\nprint(nums[0])")
     assert complete.is_enabled(), "complete should enable after typing"
-    page.get_by_role("button", name="reveal solution").click()
+    # solution stays hidden until the answer is submitted
+    submit = page.get_by_role("button", name="submit answer", exact=False)
+    submit.wait_for(state="visible")
+    assert submit.is_enabled(), "submit should be enabled once an answer is typed"
+    # the panel has exactly one solution toggle, labelled "hide/show solution".
+    # Before submitting it must not exist (solution is gated behind submit).
+    solution_toggle = page.get_by_role("button", name="hide solution").or_(
+        page.get_by_role("button", name="show solution")
+    )
+    assert solution_toggle.count() == 0, (
+        "solution toggle present before the answer was submitted"
+    )
+    submit.click()
+    # after submit the solution is revealed and its toggle becomes visible
+    solution_toggle.wait_for(state="visible")
     complete.click()
     page.wait_for_timeout(300)
     assert page.get_by_text("✓ DONE").is_visible(), "done badge missing"
