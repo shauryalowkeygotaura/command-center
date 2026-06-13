@@ -1,0 +1,431 @@
+[
+  {
+    "id": "ml-what-is-a-model",
+    "track": "ml",
+    "title": "What Is a Model?",
+    "subtitle": "a function with adjustable knobs",
+    "level": 0,
+    "parents": [
+      "root"
+    ],
+    "minutes": 10,
+    "explain": "Normal programming: you write the rules, the computer follows them. Machine learning flips it: you show the computer examples (inputs paired with correct answers) and it adjusts internal numbers, called weights, until its outputs match the answers. A model is just a function with those adjustable knobs.\n\nYou have already built two. In week 1 your model was a function from a person (age, bmi, smoker status...) to a dollar amount of insurance charges. In week 2 it was a function from a 96x96 grid of pixels to one of 15 butterfly species. Same idea, wildly different inputs.\n\nTraining means: make a prediction, measure how wrong it is, nudge the weights in the direction that makes it less wrong, repeat thousands of times. That is the whole game. Everything else in this tree (losses, optimizers, layers) is machinery for doing those nudges well.\n\nCommon mistake: believing the model understands anything. It does not know what a smoker or a butterfly is. It only fits patterns in the examples it was shown, which is exactly why it can fail badly on data that looks different from training data.",
+    "example": "# the world's tiniest 'model': one weight, one bias\nw, b = 300.0, 500.0          # the knobs\n\ndef predict_charges(age):\n    return w * age + b        # prediction = function of input\n\nprint(predict_charges(30))    # 9500.0\n# training would compare 9500 to the REAL charges,\n# then adjust w and b to shrink the gap. repeat.",
+    "exercise": "In 2-3 sentences, answer: (1) What is the difference between a normal program and an ML model? (2) For the model y = w*age + b with w=300 and b=500, what does it predict for age 40? (3) During training, which of these change: the inputs, the weights, or the true answers?",
+    "solution": "(1) A normal program follows rules a human wrote; an ML model learns its own internal numbers (weights) from example input/answer pairs. (2) 300*40 + 500 = 12500. (3) Only the weights change. The inputs and true answers stay fixed; training adjusts w and b so predictions get closer to the true answers.",
+    "checklist": [
+      "Can you explain 'training' in one sentence without using the word 'learn'?",
+      "What were the input and the output of your week 1 model? Of your week 2 model?",
+      "Why can a trained model still fail on new data?"
+    ]
+  },
+  {
+    "id": "ml-numpy-arrays",
+    "track": "ml",
+    "title": "NumPy Arrays",
+    "subtitle": "the grid that holds everything",
+    "level": 1,
+    "parents": [
+      "ml-what-is-a-model"
+    ],
+    "minutes": 15,
+    "explain": "Every dataset you have touched eventually became a NumPy array: week 1 features became a (1070, 9) float32 array, week 2 images became a (1489, 96, 96, 3) uint8 array. An array is a grid of numbers with two key properties: shape (how many items along each axis) and dtype (what kind of number each cell holds).\n\nWhy arrays instead of Python lists? Speed and whole-array math. X * 2 multiplies every element at once in fast C code instead of a slow Python loop. Your week 1 split used np.random.permutation(len(X)) to shuffle indices, and your standardisation used X_train.mean(axis=0), which averages down each column in one call.\n\nDtype matters more than beginners expect. Your butterfly images are uint8, meaning each pixel is 0 to 255 and CANNOT go outside that range. In your gaussian_noise function you had to convert to float32, add noise, then np.clip back to [0, 255] before converting back to uint8.\n\nCommon mistake: doing math on uint8 directly. 200 + 100 in uint8 wraps around to 44 instead of clipping to 255, which silently corrupts images. Convert to float first, clip, convert back.",
+    "example": "import numpy as np\nnp.random.seed(42)            # same 'random' every run, like your notebooks\n\nX = np.zeros((1489, 96, 96, 3), dtype=np.uint8)  # week 2 image stack\nprint(X.shape)                # (1489, 96, 96, 3)\n\nidx = np.random.permutation(5)\nprint(idx)                    # shuffled [0..4], used for splitting\n\na = np.array([200, 50], dtype=np.uint8)\nprint((a.astype(np.float32) + 100).clip(0, 255).astype(np.uint8))  # [255 150]",
+    "exercise": "Without running it, predict the output of each line, then explain line 3:\n\nimport numpy as np\nX = np.ones((4, 96, 96, 3), dtype=np.uint8)\nprint(X.shape[0])\nprint((X * 255).dtype)\na = np.array([250], dtype=np.uint8)\nprint(a + 10)\n\nWhy is the last result dangerous in image code?",
+    "solution": "X.shape[0] is 4 (number of images). (X * 255).dtype stays uint8. a + 10 prints [4] because 250 + 10 = 260 wraps around past 255 in uint8 (260 - 256 = 4). It is dangerous because adding brightness or noise to a uint8 image silently wraps bright pixels to dark values instead of clipping at 255, exactly why your gaussian_noise function used astype(np.float32) then np.clip then astype(np.uint8).",
+    "checklist": [
+      "What do shape and dtype tell you about an array?",
+      "Why did your noise augmentation convert to float32 before adding noise?",
+      "What does np.random.seed(42) buy you when re-running a notebook?"
+    ]
+  },
+  {
+    "id": "ml-dataframes",
+    "track": "ml",
+    "title": "Pandas DataFrames",
+    "subtitle": "spreadsheets you can program",
+    "level": 2,
+    "parents": [
+      "ml-numpy-arrays"
+    ],
+    "minutes": 20,
+    "explain": "A DataFrame is a table with named columns, like Excel but driven by code. Your week 1 notebook started with pd.read_csv('insurance.csv'), giving 1338 rows and 7 columns, and the first three subtasks were pure pandas: df.head(20) to peek, boolean filtering, and a groupby.\n\nThe filter pattern is the one to burn in: df[(df['bmi'] > 30) & (df['smoker'] == 'yes')]. Each comparison produces a column of True/False, the & combines them, and the outer df[...] keeps only the True rows. In your notebook that returned exactly 144 high-risk rows.\n\nGroupby is 'split, apply, combine': df.groupby('region')['charges'].mean() splits rows into the four regions, takes the mean of charges inside each group, and returns one number per region, which you then plotted as a bar chart.\n\nIn week 2 pandas came back for the labels CSV: df['label'].value_counts() to count images per species, df.isna().sum() to check for missing labels, and .map(label_to_id) to turn species names into class ids.\n\nCommon mistake: writing df[df['bmi'] > 30 and df['smoker'] == 'yes']. Python's 'and' does not work on whole columns; you must use & with parentheses around EACH condition, or you get a confusing ValueError.",
+    "example": "import pandas as pd\ndf = pd.read_csv('insurance.csv')\nprint(df.shape)                     # (1338, 7)\n\n# subtask 2 from your week1 notebook: high-risk filter\nhigh_risk = df[(df['bmi'] > 30) & (df['smoker'] == 'yes')]\nprint(len(high_risk))               # 144\n\n# subtask 3: average charges per region\nprint(df.groupby('region')['charges'].mean().sort_values())",
+    "exercise": "Using the insurance DataFrame columns (age, sex, bmi, children, smoker, region, charges), write two lines of pandas:\n(1) select all rows where smoker is 'yes' AND age is over 50,\n(2) compute the average bmi per region.\nThen answer: why does df[df['smoker'] == 'yes' and df['age'] > 50] crash?",
+    "solution": "(1) old = df[(df['smoker'] == 'yes') & (df['age'] > 50)]\n(2) df.groupby('region')['bmi'].mean()\nIt crashes because 'and' tries to convert each whole True/False column to a single True or False, which is ambiguous for a column with many rows. Use & instead, and wrap each comparison in parentheses because & binds tighter than ==.",
+    "checklist": [
+      "What does a boolean mask actually contain, and what does df[mask] do?",
+      "Describe groupby as 'split, apply, combine' using your region chart as the example.",
+      "Why & and parentheses instead of 'and'?"
+    ]
+  },
+  {
+    "id": "ml-images-as-arrays",
+    "track": "ml",
+    "title": "Images Are Arrays",
+    "subtitle": "a photo is just numbers",
+    "level": 2,
+    "parents": [
+      "ml-numpy-arrays"
+    ],
+    "minutes": 15,
+    "explain": "To a computer, a colour photo is a 3D array: height x width x 3 channels (red, green, blue), each cell an integer 0 to 255. Your butterfly images came off disk as (224, 224, 3) uint8 arrays, and after resizing your whole dataset was one big (1489, 96, 96, 3) array. One 96x96 colour image is 96*96*3 = 27648 numbers. That is what the CNN actually eats: numbers, never 'a picture'.\n\nThis is why everything downstream works: resizing is array resampling, flipping is reversing an axis, noise is adding random numbers, and a convolution is sliding arithmetic over the grid.\n\nOne trap you already dodged: OpenCV's cv2.imread loads channels in BGR order, not RGB. Your preprocessing notebook called cv2.cvtColor(img, cv2.COLOR_BGR2RGB) immediately after every read. Skip that and matplotlib shows orange monarchs as blue, and worse, your model trains on swapped colour channels while colour is the main signal separating species.\n\nAlso note cv2.imread returns None (not an error!) for corrupt files, which is why your notebook checked 'if img is None' and counted bad files before trusting the data.\n\nCommon mistake: assuming the library errors out on a bad file. OpenCV silently gives you None, and a None that slips through becomes a black square with a real label, quietly poisoning training.",
+    "example": "import cv2, numpy as np\n\nimg = cv2.imread('Image_3.jpg')        # BGR or None, never an exception\nif img is None:\n    print('corrupt file, skip it')      # your notebook counted these\nelse:\n    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\n    print(img.shape, img.dtype)         # (224, 224, 3) uint8\n    print(img[0, 0])                    # one pixel: [R G B], each 0-255",
+    "exercise": "Answer three quick ones:\n(1) How many individual numbers make up one 96x96 RGB image?\n(2) Your dataset array was (1489, 96, 96, 3). What does each of the four dimensions mean?\n(3) You load an image with cv2.imread and plt.imshow it without any conversion. The butterfly's orange wings look blue. What happened and what one line fixes it?",
+    "solution": "(1) 96 * 96 * 3 = 27648 numbers. (2) 1489 images, each 96 pixels tall, 96 wide, 3 colour channels (RGB). (3) OpenCV loaded the channels in BGR order while matplotlib assumes RGB, so red and blue are swapped. Fix: img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) right after imread, exactly as in week2_preprocessing.",
+    "checklist": [
+      "What is stored at img[i, j] for a colour image?",
+      "Why must corrupt files be dropped rather than left as zeros?",
+      "BGR vs RGB: who uses which, and where in your pipeline did you convert?"
+    ]
+  },
+  {
+    "id": "ml-train-test-split",
+    "track": "ml",
+    "title": "Train/Test Split",
+    "subtitle": "never grade on homework",
+    "level": 3,
+    "parents": [
+      "ml-dataframes"
+    ],
+    "minutes": 15,
+    "explain": "If you quiz a student on the exact homework problems they memorised, a perfect score proves nothing. Models are the same: accuracy measured on training data is meaningless because the model has seen the answers. So you hide part of the data before training and grade on that.\n\nWeek 1: you shuffled indices with np.random.permutation, cut at 80%, and got 1070 training rows and 268 test rows. Week 2 went further with an 80/10/10 three-way split (1185 train, 141 val, 163 test), and it was STRATIFIED: you split inside each species separately so every class appears in every split. Without stratification a rare class can land entirely in train and never get tested.\n\nWhy the extra val set? Test must be touched exactly once, at the very end. But during training you need a 'practice exam' to watch for overfitting and to pick the best epoch. That is val's job. Your week 2 notebook also had to IGNORE the dataset's shipped test folder because its CSV had no labels, so you cut your own splits from labelled data, a genuinely real-world move.\n\nCommon mistake: letting any information flow from test into training, including computing means, choosing features, or augmenting before splitting. The test set must simulate data the model has truly never seen.",
+    "example": "# week1.ipynb: shuffle then cut at 80%\nidx = np.random.permutation(len(X))\nsplit = int(0.8 * len(X))\ntrain_idx, test_idx = idx[:split], idx[split:]\nX_train, X_test = X[train_idx], X[test_idx]\nprint(X_train.shape, X_test.shape)   # (1070, 9) (268, 9)\n\n# week2: stratified, per class\nfor c in range(15):\n    idx = np.where(y == c)[0]\n    rng.shuffle(idx)\n    n_tr = int(0.8 * len(idx))       # 80% of THIS species to train",
+    "exercise": "You have 1000 labelled images across 10 classes, but one class has only 30 images. (1) Write pseudocode (4-6 lines) for an 80/10/10 stratified split. (2) Explain in one sentence what could go wrong with a plain random split for the 30-image class. (3) State the one rule about how often the test set may be evaluated.",
+    "solution": "(1) for each class c: collect indices where y == c; shuffle them; put first 80% in train, next 10% in val, rest in test; concatenate across classes.\n(2) By bad luck the 30 rare-class images could land almost entirely in train (or entirely in test), so that class is never fairly tested (or never learned).\n(3) Exactly once, at the very end, after all decisions are final; val is for every in-between check.",
+    "checklist": [
+      "Why is training accuracy not evidence the model works?",
+      "What does 'stratified' add over a plain shuffle-and-cut?",
+      "What is val for that test must never be used for?"
+    ],
+    "loophole": "The dataset's official 'test' folder was unlabelled (a competition leftover), so it was useless for measuring accuracy. Rather than fight that, I ignored it and cut my OWN 80/10/10 stratified split out of the labelled training data. The deliverable needs a number you can stand behind; if the provided data can't give you one, make a clean split that can. Stratified so every class keeps its proportion in each split."
+  },
+  {
+    "id": "ml-feature-encoding",
+    "track": "ml",
+    "title": "Feature Encoding",
+    "subtitle": "models eat numbers, not words",
+    "level": 3,
+    "parents": [
+      "ml-dataframes"
+    ],
+    "minutes": 15,
+    "explain": "A linear model computes w * x, and you cannot multiply a weight by the string 'southwest'. Every text column must become numbers before training, and HOW you convert matters.\n\nYour week 1 notebook used two techniques. For binary columns, a simple 0/1: sex became (sex == 'male').astype(float), smoker became (smoker == 'yes').astype(float). For region, with four values and no natural order, you used ONE-HOT encoding via pd.get_dummies: region became four columns (region_northeast, region_northwest, region_southeast, region_southwest), exactly one of which is 1.0 per row. After encoding you had 9 feature columns feeding the model.\n\nWhy not just region = 1, 2, 3, 4? Because a linear model would treat that as a quantity: it would be forced to learn one weight implying southwest (4) has exactly twice the effect of northwest (2), and that southeast sits 'between' them. That ordering is fiction; one-hot gives each region its own independent weight instead, which is why your weights table could show northeast adding ~$2541 and southeast ~$1364 separately.\n\nWeek 2 had encoding too: species names mapped to class ids 0-14 with label_to_id. That IS allowed for labels in classification because the id is just a class index, never multiplied by a weight.\n\nCommon mistake: integer-encoding an unordered category as an input feature, smuggling a fake ranking into the model.",
+    "example": "# week1.ipynb step 1: text -> numbers\ndata = df.copy()\ndata['sex'] = (data['sex'] == 'male').astype(float)      # 0/1\ndata['smoker'] = (data['smoker'] == 'yes').astype(float)  # 0/1\ndata = pd.get_dummies(data, columns=['region'], dtype=float)  # one-hot\n\nfeature_cols = [c for c in data.columns if c != 'charges']\nprint(feature_cols)\n# ['age','sex','bmi','children','smoker',\n#  'region_northeast','region_northwest','region_southeast','region_southwest']",
+    "exercise": "A dataset has a column 'plan' with values 'basic', 'plus', 'pro' (no meaningful order for the model). (1) Write the pandas line that one-hot encodes it. (2) How many new columns appear and what does one encoded row look like for 'plus'? (3) Why would plan = 0/1/2 as a single input column mislead a linear model?",
+    "solution": "(1) data = pd.get_dummies(data, columns=['plan'], dtype=float)\n(2) Three columns: plan_basic, plan_plus, plan_pro. A 'plus' row is [0.0, 1.0, 0.0].\n(3) A single weight w on plan = 0/1/2 forces the model to claim pro's effect is exactly double plus's and that the categories sit on an evenly spaced line, an ordering you invented. One-hot gives each plan its own weight so effects are learned independently.",
+    "checklist": [
+      "When is 0/1 enough and when do you need one-hot?",
+      "Why is mapping class names to ids 0-14 fine for LABELS but risky for input features?",
+      "How many feature columns did your insurance model end up with, and why 9?"
+    ]
+  },
+  {
+    "id": "ml-linear-regression",
+    "track": "ml",
+    "title": "Linear Regression",
+    "subtitle": "charges = w*x + b, literally",
+    "level": 4,
+    "parents": [
+      "ml-feature-encoding",
+      "ml-train-test-split"
+    ],
+    "minutes": 20,
+    "explain": "Linear regression predicts a number as a weighted sum of inputs: y = w1*x1 + w2*x2 + ... + b. Each weight says 'per unit of this feature, add this much to the prediction'. Your week 1 model was exactly torch.nn.Linear(9, 1): nine encoded features in, one dollar amount out, 10 learnable numbers total (9 weights + 1 bias).\n\nThe beautiful part is interpretability. After training, you converted the weights back to dollars and read the model like a sentence: being a smoker adds about $23,616 to predicted charges, each bmi point adds ~$326, each year of age ~$261, and sex barely matters (-$42). The model SHOWED you that smoking dominates, matching the two clouds you saw in your bmi-vs-charges scatter plot.\n\nOne practical detail from your notebook: before training you standardised features and target (subtract mean, divide by std, using TRAIN statistics only). Features like age (18-64) and smoker (0/1) live on wildly different scales; without scaling, gradient descent crawls because one weight needs huge steps and another tiny ones.\n\nLimits matter too: a straight line cannot bend. Your R^2 of 0.75 left real structure on the table (the smoker-times-bmi interaction is non-linear), which is exactly the gap neural networks exist to close.\n\nCommon mistake: feeding raw unscaled features and wondering why the loss barely moves or explodes.",
+    "example": "# week1.ipynb: this IS linear regression\nmodel = torch.nn.Linear(len(feature_cols), 1)   # 9 in, 1 out\n\n# after training: weights back in dollars\nw = model.weight.detach().numpy().flatten()\ndollars_per_unit = w * y_std / x_std\n# smoker   +23616.21   <- dominates\n# bmi        +325.99\n# age        +260.84\n# sex         -41.84   <- basically noise",
+    "exercise": "A trained insurance model has weights (in dollars per unit): age +260, bmi +326, smoker +23616, bias such that a 30-year-old non-smoker with bmi 25 is predicted at $4000.\n(1) Estimate the prediction for the SAME person if they smoke.\n(2) Estimate for a 31-year-old non-smoker with bmi 26.\n(3) Why can this model never capture 'smoking is extra deadly only when bmi is high'?",
+    "solution": "(1) 4000 + 23616 = $27,616 (smoker flips 0 to 1, adding one unit of the smoker weight).\n(2) 4000 + 260 + 326 = $4,586 (one extra unit each of age and bmi).\n(3) A linear model adds each feature's effect independently; the smoker weight is the same constant regardless of bmi. Capturing 'effect of smoking grows with bmi' needs an interaction or non-linearity, which is what neural networks add.",
+    "checklist": [
+      "How many learnable numbers does Linear(9, 1) have?",
+      "Which feature dominated your insurance model and by roughly how many dollars?",
+      "Why standardise features before gradient descent?"
+    ]
+  },
+  {
+    "id": "ml-mse-loss",
+    "track": "ml",
+    "title": "MSE Loss",
+    "subtitle": "how wrong, on average, squared",
+    "level": 5,
+    "parents": [
+      "ml-linear-regression"
+    ],
+    "minutes": 15,
+    "explain": "Training needs a single number that says 'how wrong is the model right now', called the loss. For regression the default is Mean Squared Error: take every prediction's error (pred minus actual), square it, average over all examples. Your week 1 notebook used torch.nn.MSELoss() and watched it fall to about 0.2495 on train and 0.2693 on test (in standardised units).\n\nWhy square instead of just averaging the raw errors? Two reasons. First, raw errors cancel: predicting +5000 on one person and -5000 on another averages to zero error, which is a lie. Squaring makes every miss positive. Second, squaring punishes big misses disproportionately: an error of 10 costs 100 while two errors of 5 cost only 50, so the model prioritises fixing its worst predictions. Squaring also makes the loss a smooth bowl shape, which gradient descent loves.\n\nThe units trap: squared dollars are unreadable, so for reporting you take the square root, RMSE, which your notebook converted back to real money: $6,230. MAE ($4,047) is the average absolute miss, more intuitive but less punishing of outliers.\n\nCommon mistake: comparing MSE values across differently scaled data. Your 0.2495 was on standardised targets; the same model in raw dollars has an MSE in the tens of millions. The number only means something relative to its own scale.",
+    "example": "# week1.ipynb\nloss_fn = torch.nn.MSELoss()\nloss = loss_fn(model(Xtr), ytr)     # one number: mean of squared errors\n\n# by hand, same thing:\nimport numpy as np\npred   = np.array([10.0, 20.0, 30.0])\nactual = np.array([12.0, 18.0, 36.0])\nmse = np.mean((pred - actual) ** 2)  # ((-2)^2 + 2^2 + (-6)^2) / 3\nprint(mse)                            # 14.666...",
+    "exercise": "Model A's errors on 4 test people (predicted minus actual, in $1000s): [+2, -2, +2, -2]. Model B's errors: [0, 0, 0, +8].\n(1) Compute the MSE of each by hand.\n(2) Compute the MAE of each.\n(3) Which model does MSE prefer, which does MAE prefer, and what property of squaring explains the disagreement?",
+    "solution": "(1) MSE A = (4+4+4+4)/4 = 4. MSE B = (0+0+0+64)/4 = 16.\n(2) MAE A = (2+2+2+2)/4 = 2. MAE B = (0+0+0+8)/4 = 2.\n(3) MSE strongly prefers A (4 vs 16); MAE rates them equal (2 vs 2). Squaring punishes one big miss (8^2 = 64) far more than many small ones, so MSE-trained models avoid catastrophic individual errors.",
+    "checklist": [
+      "Why would averaging raw (unsquared) errors be a useless loss?",
+      "What is RMSE and why did your notebook report $6,230 instead of an MSE?",
+      "When do MSE and MAE disagree about which model is better?"
+    ]
+  },
+  {
+    "id": "ml-gradient-descent",
+    "track": "ml",
+    "title": "Gradient Descent Training Loop",
+    "subtitle": "roll downhill to better weights",
+    "level": 6,
+    "parents": [
+      "ml-mse-loss"
+    ],
+    "minutes": 25,
+    "explain": "You have a model with knobs and a loss measuring wrongness. Training is finding knob settings that minimise the loss. Picture the loss as a hilly landscape where each location is a weight setting and altitude is the loss: gradient descent is standing blindfolded on a hill, feeling which way is downhill (the gradient), and taking a small step that way, thousands of times.\n\nYour week 1 loop is the canonical five-step dance, and you will write it for the rest of your ML life:\n1. pred = model(Xtr) (forward pass)\n2. loss = loss_fn(pred, ytr) (measure wrongness)\n3. optimizer.zero_grad() (clear old slopes)\n4. loss.backward() (compute the slope of loss with respect to every weight)\n5. optimizer.step() (nudge every weight downhill)\n\nYou used Adam with lr=0.01, a smarter variant that adapts step size per weight. The learning rate is the step size: too big and you overshoot the valley and bounce; too small and training takes forever. Your loss curve flattened at 0.2495 and stayed there for a thousand epochs, the signature of reaching the bottom of the bowl (for a linear model, there is only one valley).\n\nCommon mistake: forgetting optimizer.zero_grad(). PyTorch ACCUMULATES gradients on purpose, so without zeroing, each step uses the sum of every slope ever computed, and training quietly goes haywire.",
+    "example": "# week1.ipynb: the loop you will write forever\noptimizer = torch.optim.Adam(model.parameters(), lr=0.01)\n\nfor epoch in range(1500):\n    pred = model(Xtr)            # 1 forward\n    loss = loss_fn(pred, ytr)    # 2 measure\n    optimizer.zero_grad()        # 3 clear old gradients\n    loss.backward()              # 4 compute slopes\n    optimizer.step()             # 5 nudge weights downhill",
+    "exercise": "These five lines of a training loop are shuffled:\nA) optimizer.step()\nB) loss = loss_fn(pred, ytr)\nC) pred = model(Xtr)\nD) optimizer.zero_grad()\nE) loss.backward()\n\n(1) Write the correct order as five letters.\n(2) In one sentence each: what do backward() and step() do?\n(3) Predict the symptom if D is deleted entirely.",
+    "solution": "(1) C B D E A (zero_grad anywhere before backward works; the classic order is forward, loss, zero_grad, backward, step).\n(2) backward() computes the gradient (slope) of the loss with respect to every weight; step() moves each weight a small amount against its gradient.\n(3) Gradients from every previous step keep accumulating, so steps grow based on stale summed slopes; the loss bounces or diverges instead of settling, often without an error message.",
+    "checklist": [
+      "Recite the five steps of the loop from memory.",
+      "What does the learning rate control, and what happens at each extreme?",
+      "Why does PyTorch require zero_grad() at all?"
+    ]
+  },
+  {
+    "id": "ml-regression-metrics",
+    "track": "ml",
+    "title": "Evaluating Regression",
+    "subtitle": "judge the model in real dollars",
+    "level": 7,
+    "parents": [
+      "ml-gradient-descent"
+    ],
+    "minutes": 15,
+    "explain": "After training, the question is 'how good is it, in units a human cares about?' Your week 1 notebook un-standardised the test predictions back to dollars (pred * y_std + y_mean) and reported three numbers, each answering a different question.\n\nRMSE $6,230: the typical miss, weighted toward big errors. MAE $4,047: the plain average miss, what 'off by X dollars on average' really means. R^2 0.751: the fraction of the variation in charges the model explains. R^2 = 1 means perfect, 0 means no better than always predicting the mean, and it can go negative for models worse than that. Yours: a straight line explains about 75% of why charges differ between people.\n\nYou also made an actual-vs-predicted scatter with a diagonal 'perfect prediction' line, and a table of 10 real test people. That table is gold for honesty: one person was off by $21,011, a reminder that aggregate metrics hide individual failures. The big misses clustered where linearity breaks (the smoker-bmi interaction).\n\nAll of this was computed on the TEST set, data the model never trained on, which is the only reason the numbers are trustworthy.\n\nCommon mistake: reporting metrics on the training set. Train R^2 is always flattering; it measures memory, not skill. The week 1 numbers above are honest because they came from the held-out 268 rows.",
+    "example": "# week1.ipynb: back to dollars, then score\nwith torch.no_grad():\n    pred_test = (model(Xte).numpy() * y_std) + y_mean\n\nrmse = float(np.sqrt(np.mean((predicted - actual) ** 2)))   # $6,230.46\nmae  = float(np.mean(np.abs(predicted - actual)))            # $4,047.53\nss_res = np.sum((actual - predicted) ** 2)\nss_tot = np.sum((actual - actual.mean()) ** 2)\nr2 = 1 - ss_res / ss_tot                                      # 0.751",
+    "exercise": "A model's test set gives ss_res = 25 and ss_tot = 100 (in squared $1000s).\n(1) Compute R^2.\n(2) A second model always predicts the mean of the actual test charges. What is its R^2, and why?\n(3) Your week 1 model scored R^2 = 0.751 on test. Your friend brags theirs got 0.95, measured on training data. Give the one-sentence rebuttal.",
+    "solution": "(1) R^2 = 1 - 25/100 = 0.75.\n(2) R^2 = 0: predicting the mean makes ss_res equal ss_tot by definition, so 1 - 1 = 0. R^2 measures improvement OVER that baseline.\n(3) Training R^2 measures how well the model memorised data it already saw; only a held-out test score is evidence it generalises, so 0.95-on-train and 0.751-on-test are not comparable claims.",
+    "checklist": [
+      "What different question does each of RMSE, MAE, R^2 answer?",
+      "What does R^2 = 0 mean concretely?",
+      "Why did the notebook convert predictions back to dollars before computing metrics?"
+    ]
+  },
+  {
+    "id": "ml-image-preprocessing",
+    "track": "ml",
+    "title": "Image Preprocessing & Normalization",
+    "subtitle": "same size, sane scale",
+    "level": 4,
+    "parents": [
+      "ml-images-as-arrays",
+      "ml-train-test-split"
+    ],
+    "minutes": 20,
+    "explain": "A neural network has a fixed input shape, so every image must be made identical before training. Your week 2 pipeline did this in stages.\n\nFirst, cleaning: check every file exists and decodes (cv2.imread returning None means corrupt), check the labels CSV for missing values and duplicates. Yours was clean: 0 corrupt files out of 1489.\n\nSecond, resizing: cv2.resize(img, (96, 96), interpolation=cv2.INTER_AREA). The raw images were 224x224, but your machine is CPU-only, so 96x96 was a deliberate trade: wing patterns stay visible while training gets roughly 5x cheaper. INTER_AREA is the right interpolation for shrinking.\n\nThird, normalization, in the CNN notebook: pixels go from uint8 [0, 255] to float [0, 1] by dividing by 255, then get standardised per colour channel using the TRAIN set's mean and std only, the same no-leakage rule as week 1. Networks train far better on small centred numbers than on raw 0-255 values.\n\nFourth, layout: .permute(0, 3, 1, 2) flips arrays from HWC (height, width, channels) to CHW, because PyTorch conv layers expect channels first.\n\nCommon mistake: computing the normalisation mean/std over ALL data including val/test. That leaks test statistics into preprocessing, and it also breaks deployment: at inference time you must apply the exact train-time mean/std to every new image, so those two tensors are part of the model.",
+    "example": "# week2_cnn.ipynb: tensors + normalisation\ndef to_tensor(X):\n    return torch.tensor(X, dtype=torch.float32).permute(0, 3, 1, 2) / 255.0\n\nXtr  = to_tensor(data['X_train'])   # (5925, 3, 96, 96), values in [0,1]\nmean = Xtr.mean(dim=(0, 2, 3), keepdim=True)   # TRAIN stats only\nstd  = Xtr.std(dim=(0, 2, 3), keepdim=True)\nXtr, Xval, Xte = (Xtr - mean)/std, (Xval - mean)/std, (Xte - mean)/std",
+    "exercise": "Your dataset is (2000, 128, 128, 3) uint8.\n(1) What shape comes out of to_tensor (with the permute above) and what value range?\n(2) Which split's mean/std normalises Xval and Xte, and why not their own?\n(3) Your week 2 notebook resized 224x224 originals down to 96x96. Name the cost and the benefit of that decision in one sentence each.",
+    "solution": "(1) (2000, 3, 128, 128), float32 in [0, 1] after the /255.\n(2) The TRAIN set's mean/std. Using val/test's own statistics leaks information about those sets into preprocessing, and a deployed model could never compute 'test set statistics' for a single new image anyway, so train stats must be reused everywhere.\n(3) Cost: fine wing detail is lost at 96px, capping achievable accuracy. Benefit: roughly 5x cheaper training, which made 15 epochs feasible on a CPU-only machine.",
+    "checklist": [
+      "Why divide by 255 and then ALSO standardise with mean/std?",
+      "What does permute(0, 3, 1, 2) change and which library demands it?",
+      "Where do the train-time mean/std tensors need to live after deployment?"
+    ],
+    "loophole": "The butterfly task said use a MINIMUM of 15 species. So I used EXACTLY 15, and not a random 15: the 15 species with the MOST labelled images. More images per class is an easier, higher-accuracy model, and nothing in the spec said the choice had to be random or representative. Choosing your own inputs to favour the metric is allowed unless the rules forbid it. Just be ready to say WHY in the interview (max data per class), because a defensible reason is what separates a smart choice from a fluke."
+  },
+  {
+    "id": "ml-augmentation",
+    "track": "ml",
+    "title": "Data Augmentation",
+    "subtitle": "free extra training photos",
+    "level": 5,
+    "parents": [
+      "ml-image-preprocessing"
+    ],
+    "minutes": 20,
+    "explain": "With only ~80 base images per species, a from-scratch CNN will memorise instead of generalise. Augmentation manufactures extra training examples by transforming images in ways that DO NOT change the label: a mirrored monarch is still a monarch.\n\nYour week 2 notebook implemented the full menu (flips, rotations, gaussian noise, salt and pepper, blur, invert, grayscale, colour filter) and then made the interesting move: choosing per-domain. Kept: horizontal flip (butterflies are symmetric), rotate 90 (photos happen at any angle), gaussian noise and blur (simulate sensor noise and out-of-focus shots). Skipped: invert, grayscale, and colour filter, because wing COLOUR is the main signal separating species; destroying colour teaches the model to ignore its best feature. That reasoning is exactly what the interview round probes: not 'what did you apply' but 'why these'.\n\nResult: each train image got 4 augmented copies, growing train from 1185 to 5925 images, then a shuffle so batches are not five blocks of the same transform.\n\nThe iron rule: split FIRST, augment ONLY the train split. If you augment before splitting, a rotated copy of a photo can land in train while the original sits in test; the model has effectively seen the test answers and your accuracy becomes a lie. Val and test stay untouched because they must represent reality, not augmented reality.\n\nCommon mistake: exactly that, augment-then-split data leakage.",
+    "example": "# week2_preprocessing.ipynb: chosen transforms, train split ONLY\nAPPLY = [flip_horizontal, rotate90, gaussian_noise, blur]\n\naug_imgs, aug_labels = [X_train], [y_train]\nfor fn in APPLY:\n    aug_imgs.append(np.stack([fn(img) for img in X_train]))\n    aug_labels.append(y_train)            # label unchanged: that's the point\n\nX_train_aug = np.concatenate(aug_imgs)    # 1185 -> 5925\nperm = rng.permutation(len(X_train_aug))  # shuffle the 5 blocks together\nX_train_aug = X_train_aug[perm]",
+    "exercise": "You are now classifying handwritten digits 0-9 instead of butterflies. For each transform, say KEEP or SKIP and give the one-line why: (a) horizontal flip, (b) rotate 90, (c) gaussian noise, (d) grayscale. Then state the iron rule about the ORDER of splitting and augmenting, and what breaks if you reverse it.",
+    "solution": "(a) SKIP: a flipped 3 is not a valid digit and a flipped 2 looks wrong; digits are not mirror-symmetric. (b) SKIP: a 6 rotated can become a 9, which CHANGES the label, the cardinal sin of augmentation. (c) KEEP: noise does not change which digit it is. (d) KEEP (or harmless): digits carry no colour signal, unlike butterflies where colour separates species. Rule: split first, augment only train. Reversed, transformed copies of one image land on both sides of the split, so the model has seen near-duplicates of test images and test accuracy is inflated (data leakage).",
+    "checklist": [
+      "What single property must every augmentation preserve?",
+      "Why were invert/grayscale/colour-filter wrong for butterflies specifically?",
+      "Why do val and test stay un-augmented?"
+    ]
+  },
+  {
+    "id": "ml-cnn-layers",
+    "track": "ml",
+    "title": "CNN Layers",
+    "subtitle": "filters that learn to see",
+    "level": 5,
+    "parents": [
+      "ml-image-preprocessing"
+    ],
+    "minutes": 25,
+    "explain": "A dense layer on a 96x96 image would connect every pixel to every neuron, ignoring the fact that nearby pixels are related. A Conv2d layer instead slides small learnable filters (yours were 3x3) across the image; each filter learns to fire on one local pattern. Early filters catch edges and colour blobs; deeper layers combine those into wing spots and stripe patterns.\n\nYour ButterflyCNN stacked three blocks of Conv -> BatchNorm -> ReLU -> MaxPool. BatchNorm keeps activations in a sane range so training converges in fewer epochs (which mattered on your CPU). ReLU(x) = max(0, x) is the non-linearity that lets stacked layers express curves a linear model cannot. MaxPool(2) keeps the strongest response in each 2x2 patch, halving resolution: 96 -> 48 -> 24 -> 12, while channels grew 32 -> 64 -> 128. Your notebook's phrase for it: trade WHERE for WHAT. Deep in the network the model knows strongly THAT an orange-banded wing pattern exists, only roughly where.\n\nThen the classifier head: Flatten turns the (128, 12, 12) feature maps into a 128*12*12 = 18432-long vector, Dropout(0.5) randomly silences half the units during training to fight overfitting, then Linear(18432, 256) -> ReLU -> Linear(256, 15) produces one score per species. Total: ~4.8M parameters.\n\nCommon mistake: miscomputing the flatten size. Change the input size or pooling and 18432 changes too; the resulting shape-mismatch error is a rite of passage.",
+    "example": "# week2_cnn.ipynb\ndef block(c_in, c_out):\n    return nn.Sequential(\n        nn.Conv2d(c_in, c_out, kernel_size=3, padding=1),\n        nn.BatchNorm2d(c_out),\n        nn.ReLU(),\n        nn.MaxPool2d(2))                  # halves H and W\n\nself.features = nn.Sequential(block(3, 32), block(32, 64), block(64, 128))\n# 96x96 -> 48 -> 24 -> 12 spatial, 3 -> 32 -> 64 -> 128 channels\nself.classifier = nn.Sequential(\n    nn.Flatten(), nn.Dropout(0.5),\n    nn.Linear(128 * 12 * 12, 256), nn.ReLU(), nn.Linear(256, 15))",
+    "exercise": "You feed 64x64 RGB images into the exact same 3-block architecture (each block ends in MaxPool2d(2), convs use padding=1 so they do not shrink the image).\n(1) What is the spatial size after each of the three blocks?\n(2) What number must replace 18432 in the first Linear layer?\n(3) In one sentence: why do channels grow (32 -> 64 -> 128) while the image shrinks?",
+    "solution": "(1) 64 -> 32 -> 16 -> 8. (2) 128 * 8 * 8 = 8192. (3) Each pooling step throws away WHERE-precision, so the network compensates by growing WHAT-capacity: more channels means more distinct learned patterns it can detect at each (now coarser) location.",
+    "checklist": [
+      "What does one 3x3 conv filter actually do as it slides?",
+      "What is each layer's one-line job: BatchNorm, ReLU, MaxPool, Dropout?",
+      "Recompute your network's flatten size (128 * 12 * 12) from the 96px input, out loud."
+    ]
+  },
+  {
+    "id": "ml-softmax-crossentropy",
+    "track": "ml",
+    "title": "Softmax & Cross-Entropy",
+    "subtitle": "turn scores into confidence",
+    "level": 6,
+    "parents": [
+      "ml-cnn-layers",
+      "ml-mse-loss"
+    ],
+    "minutes": 15,
+    "explain": "Your CNN's last layer outputs 15 raw scores called logits, one per species, on no particular scale: [2.1, -0.3, 5.7, ...]. Softmax converts them into probabilities: exponentiate each score, divide by the sum, so all 15 values become positive and sum to 1. The biggest logit becomes the biggest probability, and gaps get exaggerated: a logit lead of a few points becomes near-certainty. The model's prediction is simply the argmax, which is exactly what your code did with out.argmax(1).\n\nCross-entropy is the matching loss for classification: it looks ONLY at the probability assigned to the correct class and charges -log of it. Probability 1.0 on the right answer costs 0; probability 0.1 costs about 2.3; probability near 0 costs an enormous amount. So the loss brutally punishes being confidently wrong, which is the failure mode you most want trained away. MSE on class ids would be nonsense here: it would claim predicting class 4 instead of 5 is 'closer' than predicting class 0, but species ids have no order.\n\nA PyTorch quirk you relied on: nn.CrossEntropyLoss takes RAW logits and applies log-softmax internally.\n\nCommon mistake: adding nn.Softmax as the network's last layer while also using CrossEntropyLoss. Softmax then runs twice, gradients flatten, and the model trains badly with no error message. Your ButterflyCNN correctly ends at the bare Linear(256, 15).",
+    "example": "# week2_cnn.ipynb\nloss_fn = nn.CrossEntropyLoss()      # expects RAW logits + integer labels\nout = model(xb)                       # shape (batch, 15), no softmax layer!\nloss = loss_fn(out, yb)               # yb holds class ids 0-14\npred = out.argmax(1)                  # predicted species id per image\n\n# softmax by hand, for intuition:\n# logits [2.0, 1.0, 0.1] -> exp -> [7.39, 2.72, 1.11] -> /11.21\n# -> [0.66, 0.24, 0.10]  (positive, sums to 1)",
+    "exercise": "A 3-class model outputs logits [4.0, 1.0, 1.0] for an image whose TRUE class is index 1.\n(1) Which class does the model predict?\n(2) Without exact math, is the softmax probability of the true class closer to 0.05 or 0.5? Is the cross-entropy loss for this image small or large, and why?\n(3) Why would using MSE between predicted class id and true class id be conceptually wrong for the 15 butterfly species?",
+    "solution": "(1) Class 0 (largest logit). (2) Closer to 0.05: exp(4) dwarfs exp(1), so class 0 soaks up most probability mass (about 0.91), leaving roughly 0.045 each for the others. The loss is LARGE, about -log(0.045) = 3.1, because cross-entropy punishes confident wrongness hard. (3) Class ids are arbitrary names, not quantities: MSE would treat predicting id 4 for true id 5 as 'less wrong' than predicting id 0, inventing an ordering between species that does not exist.",
+    "checklist": [
+      "What two properties does softmax guarantee about its output?",
+      "What single number does cross-entropy look at, and what makes it explode?",
+      "Why must your network NOT end with a softmax layer when using nn.CrossEntropyLoss?"
+    ]
+  },
+  {
+    "id": "ml-epochs-batches",
+    "track": "ml",
+    "title": "Epochs, Batches & Checkpoints",
+    "subtitle": "many small steps, many passes",
+    "level": 7,
+    "parents": [
+      "ml-softmax-crossentropy",
+      "ml-gradient-descent"
+    ],
+    "minutes": 20,
+    "explain": "Week 1 fed all 1070 rows to the model at once, fine for tiny data. Week 2's 5925 images of 27648 numbers each will not fit comfortably, and full-batch steps waste time anyway. So training goes in BATCHES: your DataLoader served shuffled chunks of 64 images, giving 93 weight updates per pass. One full pass over the training set is an EPOCH; you ran 15.\n\nShuffle matters: shuffle=True on the train loader means each epoch sees a different batch order, so the model cannot latch onto an accidental sequence (remember your .npz was 5 stacked augmentation blocks before shuffling).\n\nYour loop added two crucial habits beyond week 1. First, mode switching: model.train() before training batches, model.eval() plus torch.no_grad() for scoring, because Dropout and BatchNorm literally behave differently in each mode (dropout must be ON while learning, OFF while judging). Second, checkpointing: after every epoch you scored the val set, and whenever val accuracy hit a new best you saved copy.deepcopy(model.state_dict()). The best came at epoch 12 (val 0.879), and you restored those weights at the end, so the later, slightly-overfit epochs could not hurt the final model.\n\nCommon mistake: evaluating without model.eval(). Dropout keeps randomly killing neurons during scoring, so reported accuracy is noisy and too low, and BatchNorm uses batch statistics instead of its learned running averages.",
+    "example": "# week2_cnn.ipynb\ntrain_dl = DataLoader(TensorDataset(Xtr, ytr), batch_size=64, shuffle=True)\nprint(len(train_dl))                       # 93 batches per epoch\n\nfor epoch in range(15):\n    model.train()                          # dropout ON\n    for xb, yb in train_dl:                # 93 small gradient steps\n        ...                                 # the 5-step dance per batch\n    val_loss, val_acc = evaluate(val_dl)   # model.eval() + no_grad inside\n    if val_acc > best_val_acc:\n        best_val_acc = val_acc\n        best_state = copy.deepcopy(model.state_dict())   # keep the champ\nmodel.load_state_dict(best_state)          # restore epoch-12 weights",
+    "exercise": "Training set: 5925 images, batch_size 64, 15 epochs.\n(1) How many batches per epoch (round up) and how many weight updates in the whole run?\n(2) Val accuracy peaks at epoch 12 then drops for epochs 13-15. With best-val checkpointing, which epoch's weights does the final model carry, and why is that better than just keeping the last epoch?\n(3) Name the two layers in your CNN that change behaviour between model.train() and model.eval().",
+    "solution": "(1) ceil(5925/64) = 93 batches per epoch; 93 * 15 = 1395 weight updates.\n(2) Epoch 12's. The last epoch's weights are the most overfit ones (train acc kept climbing while val sagged); checkpointing means you walk away with the version that generalised best, regardless of when training stopped.\n(3) Dropout (randomly zeroes units only in train mode) and BatchNorm (uses batch statistics in train mode, learned running averages in eval mode).",
+    "checklist": [
+      "Define epoch vs batch vs weight update in one line each.",
+      "Why shuffle the train loader but not val/test?",
+      "What exactly did copy.deepcopy(model.state_dict()) save, and when was it restored?"
+    ]
+  },
+  {
+    "id": "ml-overfitting-accuracy",
+    "track": "ml",
+    "title": "Overfitting & Honest Accuracy",
+    "subtitle": "memorising vs learning",
+    "level": 8,
+    "parents": [
+      "ml-epochs-batches",
+      "ml-augmentation"
+    ],
+    "minutes": 25,
+    "explain": "Overfitting is when a model memorises its training data instead of learning the pattern, like a student who memorises last year's paper and bombs the real exam. The tell is the GAP between curves: by epoch 15 your CNN scored 99.4% on train but only 86.5% on val, and val loss was drifting up while train loss fell. Train climbing while val stalls means memorisation has begun.\n\nYour pipeline fought it on three fronts: augmentation (5x more varied training data makes memorising harder), Dropout(0.5) before the dense layer (the network cannot rely on any single neuron), and best-val checkpointing (you submitted epoch 12's weights, val 87.9%, not the more-overfit epoch 15).\n\nThen the final, honest grade: the test set, touched exactly once, with the checkpointed weights: 82.8%, against a random-guess baseline of 6.7% for 15 classes. Always state the baseline; 82.8% means little until you know chance is 6.7%.\n\nA single accuracy number also hides structure, so you computed per-class accuracy and a confusion matrix: four species hit 100% (BANDED ORANGE HELICONIAN, EASTERN PINE ELFIN, BROWN SIPROETA, SCARCE SWALLOW) while COPPER TAIL managed 50% and IPHICLUS SISTER 60%. That tells you WHERE the model fails, which is where any improvement work should start.\n\nCommon mistake: re-running against the test set after every tweak. Tweak-test-repeat slowly fits your choices to the test data, turning it into a second val set, and your reported accuracy stops being honest.",
+    "example": "# week2_cnn.ipynb training log, the overfitting gap in the wild:\n# epoch  5/15 | train acc 0.968 | val acc 0.844\n# epoch 12/15 | train acc 0.995 | val acc 0.879  <- best, checkpointed\n# epoch 15/15 | train acc 0.994 | val acc 0.865  (val loss rising)\n\ntest_loss, test_acc = evaluate(test_dl)   # touched ONCE, best weights\n# TEST accuracy: 0.828 (82.8%) vs 6.7% random baseline\n\nper_class = conf.diagonal() / conf.sum(axis=1)\n# COPPER TAIL 0.50 ... SCARCE SWALLOW 1.00",
+    "exercise": "A training log reads:\nepoch 2: train 0.70 val 0.68 | epoch 4: train 0.85 val 0.80 | epoch 6: train 0.95 val 0.82 | epoch 8: train 0.99 val 0.78\n(1) At which epoch does overfitting clearly set in, and what is the evidence?\n(2) With best-val checkpointing, which epoch's weights ship?\n(3) The shipped model then scores 76% on the test set, run once. Your friend says 'just keep tweaking until test hits 85%'. Explain in two sentences why that destroys the meaning of the test score.",
+    "solution": "(1) Around epoch 6-8: train keeps climbing (0.95 -> 0.99) while val stalls then falls (0.82 -> 0.78), the widening gap that signals memorisation. (2) Epoch 6's (best val, 0.82). (3) Each tweak-then-test cycle uses test feedback to make decisions, so your choices gradually fit the test set itself, exactly like training on it slowly. The number will rise, but it no longer predicts performance on genuinely unseen data; that is what the val set was for.",
+    "checklist": [
+      "What pattern in train/val curves diagnoses overfitting?",
+      "Name the three anti-overfitting weapons in your butterfly pipeline.",
+      "Why report 82.8% next to the 6.7% baseline, and what did the confusion matrix add that the single number hid?"
+    ]
+  },
+  {
+    "id": "ml-dropout-batchnorm",
+    "track": "ml",
+    "title": "Dropout & BatchNorm",
+    "subtitle": "fight overfitting inside the net",
+    "level": 9,
+    "parents": [
+      "ml-overfitting-accuracy"
+    ],
+    "minutes": 30,
+    "explain": "You can see overfitting on the curves: training accuracy climbs while validation stalls or drops. Two layers you drop into the network itself push back.\n\nDropout randomly zeroes a fraction of activations DURING TRAINING (say 30 percent). The network can no longer lean on any single neuron, so it learns redundant, more general features. At inference time dropout turns off and nothing is zeroed. That train-versus-eval difference is exactly why `model.train()` and `model.eval()` exist and why forgetting to switch is a real bug.\n\nBatchNorm normalizes a layer's inputs across the batch (zero mean, unit variance, then a learned scale and shift). It smooths the loss surface, lets you train faster with a higher learning rate, and adds a little regularization for free. Like dropout it behaves differently in train and eval mode, because in eval it uses running statistics it gathered during training, not the current batch.\n\nThe headline: these are not magic accuracy buttons. They trade a bit of training fit for better generalization, which is the whole point when your butterfly dataset is small.",
+    "example": "import torch.nn as nn\n# a small classifier head with both regularizers\nhead = nn.Sequential(\n    nn.Linear(512, 256),\n    nn.BatchNorm1d(256),   # normalize across the batch\n    nn.ReLU(),\n    nn.Dropout(0.3),       # zero 30% of activations in training\n    nn.Linear(256, 10),    # 10 butterfly classes\n)\n# remember: head.train() during training, head.eval() before testing",
+    "exercise": "Given a plain head `nn.Sequential(nn.Linear(512, 128), nn.ReLU(), nn.Linear(128, 5))`, rewrite it to add BatchNorm1d after the first Linear and Dropout(0.4) after the ReLU. Then write the one line you must call before running validation so dropout/batchnorm switch to eval behaviour.",
+    "solution": "import torch.nn as nn\nhead = nn.Sequential(\n    nn.Linear(512, 128),\n    nn.BatchNorm1d(128),\n    nn.ReLU(),\n    nn.Dropout(0.4),\n    nn.Linear(128, 5),\n)\n# before validating / testing:\nhead.eval()",
+    "checklist": [
+      "What does dropout do differently in train mode versus eval mode?",
+      "Why does forgetting model.eval() at test time silently hurt your numbers?",
+      "Name one thing batchnorm buys you besides a little regularization."
+    ]
+  },
+  {
+    "id": "ml-transfer-learning",
+    "track": "ml",
+    "title": "Transfer Learning",
+    "subtitle": "stand on a pretrained net",
+    "level": 10,
+    "parents": [
+      "ml-dropout-batchnorm"
+    ],
+    "minutes": 35,
+    "explain": "Training a deep CNN from scratch needs a lot of images and a lot of compute. You have neither for a butterfly assignment. Transfer learning is the shortcut everyone actually uses: take a network already trained on ImageNet's millions of images, keep everything it learned about edges, textures and shapes, and only retrain the last layer for YOUR classes.\n\nThe early layers of a vision net learn generic features (edges, colour blobs, fur, wings) that transfer across almost any image task. The final fully-connected layer is the only part that is ImageNet-specific (1000 classes). So you FREEZE the backbone (set requires_grad = False so its weights do not update) and REPLACE the final layer with a fresh one sized to your class count. You now train only a few thousand weights instead of millions, on a handful of images, in minutes.\n\nFor resnet18 the final layer is `model.fc`; read its in_features and build a new nn.Linear from that to your number of classes. Later, if you have time and data, you can UNFREEZE the top blocks and fine-tune at a tiny learning rate for a few more points of accuracy.\n\nThis is the single highest-leverage move for the butterfly classifier: it is the difference between 40 percent from scratch and 90 percent in the same wall-clock time.",
+    "example": "import torch.nn as nn\nfrom torchvision import models\n\nmodel = models.resnet18(weights='IMAGENET1K_V1')\nfor p in model.parameters():\n    p.requires_grad = False          # freeze the backbone\nn_features = model.fc.in_features    # 512 for resnet18\nmodel.fc = nn.Linear(n_features, 10) # fresh head, 10 classes, trainable\n# only model.fc's weights will update during training",
+    "exercise": "You have 6 butterfly classes. Write the lines that load a pretrained resnet18, freeze every backbone parameter, and replace model.fc with a new Linear sized correctly. Read the in_features from the old fc instead of hardcoding 512.",
+    "solution": "import torch.nn as nn\nfrom torchvision import models\n\nmodel = models.resnet18(weights='IMAGENET1K_V1')\nfor p in model.parameters():\n    p.requires_grad = False\nmodel.fc = nn.Linear(model.fc.in_features, 6)",
+    "checklist": [
+      "Why do early CNN layers transfer to a new task but the final layer does not?",
+      "What does freezing (requires_grad = False) actually prevent during training?",
+      "Why read fc.in_features instead of hardcoding the number?"
+    ]
+  },
+  {
+    "id": "ml-confusion-matrix",
+    "track": "ml",
+    "title": "Confusion Matrix",
+    "subtitle": "which classes get mixed up",
+    "level": 9,
+    "parents": [
+      "ml-overfitting-accuracy"
+    ],
+    "minutes": 25,
+    "explain": "Accuracy is one number and it lies on imbalanced data: a classifier that always says \"not butterfly\" scores 95 percent if only 5 percent of images are butterflies. To see what is really happening you need the confusion matrix.\n\nIt is a grid: rows are the TRUE class, columns are the PREDICTED class. The diagonal is correct predictions; everything off the diagonal is a specific mistake, and the position tells you which class got mistaken for which. Two visually similar butterfly species lighting up each other's cells is a concrete, fixable signal.\n\nFrom the matrix you read three per-class numbers. Precision for a class: of everything I PREDICTED as this class, what fraction was right (punishes false positives). Recall: of everything that TRULY is this class, what fraction did I catch (punishes false misses). F1 is their harmonic mean, one number when you need a single score per class. sklearn's classification_report prints all three for every class at once.\n\nFor the assignment this is what turns \"my accuracy is 88 percent\" into \"class 3 has 0.6 recall because it keeps getting called class 5\", which is an actual finding you can write up.",
+    "example": "from sklearn.metrics import confusion_matrix, classification_report\n\ny_true = [0, 0, 1, 1, 2, 2]\ny_pred = [0, 0, 1, 2, 2, 2]\nprint(confusion_matrix(y_true, y_pred))\n# [[2 0 0]\n#  [0 1 1]\n#  [0 0 2]]   -> one class-1 sample was called class 2\nprint(classification_report(y_true, y_pred, digits=2))",
+    "exercise": "By hand IN CODE (no sklearn), compute precision and recall for the positive class from these lists: y_true = [1,1,1,0,0], y_pred = [1,0,1,1,0]. Count TP, FP, FN yourself, then precision = TP/(TP+FP), recall = TP/(TP+FN). Print both.",
+    "solution": "y_true = [1, 1, 1, 0, 0]\ny_pred = [1, 0, 1, 1, 0]\ntp = sum(t == 1 and p == 1 for t, p in zip(y_true, y_pred))\nfp = sum(t == 0 and p == 1 for t, p in zip(y_true, y_pred))\nfn = sum(t == 1 and p == 0 for t, p in zip(y_true, y_pred))\nprecision = tp / (tp + fp)   # 2 / 3\nrecall = tp / (tp + fn)      # 2 / 3\nprint(precision, recall)",
+    "checklist": [
+      "Give one example where 95 percent accuracy hides a useless model.",
+      "State precision and recall in words, and which kind of error each one punishes.",
+      "On a confusion matrix, what does an off-diagonal cell at row i column j mean?"
+    ]
+  },
+  {
+    "id": "ml-save-load-model",
+    "track": "ml",
+    "title": "Save & Load Models",
+    "subtitle": "state_dict, not the whole object",
+    "level": 9,
+    "parents": [
+      "ml-overfitting-accuracy"
+    ],
+    "minutes": 20,
+    "explain": "You trained for ten minutes; you do not want to do it again every time you open the notebook. Saving a model in PyTorch has one right way and one fragile way.\n\nThe right way saves the STATE DICT: a plain dictionary of the learned tensors (weights and biases), with `torch.save(model.state_dict(), 'model.pt')`. To restore, you rebuild the same architecture in code, then load the numbers into it with `model.load_state_dict(torch.load('model.pt'))`. The fragile way pickles the whole model object; that file silently breaks when your class definition or library version moves, so it is not how anyone ships.\n\nTwo steps people forget. First, call `model.eval()` after loading and before predicting, so dropout and batchnorm switch to inference behaviour. Second, when loading on a machine with no GPU, pass `map_location='cpu'` or the load will error looking for CUDA.\n\nFor a longer training run you save a CHECKPOINT, a dict holding the model state, the optimizer state, and the epoch number, so you can resume mid-training and not just run inference. Same idea, just more keys.",
+    "example": "import torch\n# save just the learned numbers\ntorch.save(model.state_dict(), 'butterfly.pt')\n\n# later, in fresh code: rebuild the SAME architecture first...\nmodel = build_model()                                  # your function\nmodel.load_state_dict(torch.load('butterfly.pt',\n                                 map_location='cpu'))\nmodel.eval()   # critical before inference",
+    "exercise": "Write two functions: save_model(model, path) that stores only the state dict, and load_model(model, path) that loads the state dict into an already-built model, puts it in eval mode, and returns it. Assume CPU, so pass map_location='cpu'.",
+    "solution": "import torch\n\ndef save_model(model, path):\n    torch.save(model.state_dict(), path)\n\ndef load_model(model, path):\n    model.load_state_dict(torch.load(path, map_location='cpu'))\n    model.eval()\n    return model",
+    "checklist": [
+      "Why save the state_dict instead of pickling the whole model object?",
+      "What two things must you do after loading before you can trust a prediction?",
+      "What extra keys go into a training checkpoint versus an inference-only save?"
+    ]
+  },
+  {
+    "id": "ml-butterfly-capstone",
+    "track": "ml",
+    "title": "Butterfly Classifier",
+    "subtitle": "the whole pipeline, end to end",
+    "level": 11,
+    "parents": [
+      "ml-transfer-learning",
+      "ml-confusion-matrix",
+      "ml-save-load-model"
+    ],
+    "minutes": 60,
+    "explain": "This is the node where every earlier one pays off: the actual Exun ML assignment-2 CNN. Nothing new to learn here, just the order things go in, which is the part that trips people up under a deadline.\n\nThe pipeline, top to bottom: (1) build DataLoaders for train and validation, with augmentation on the train set only and the SAME normalization on both. (2) Load a pretrained resnet18, freeze the backbone, swap the final layer for your class count (transfer learning). (3) Pick a loss, CrossEntropyLoss for multi-class, and an optimizer over only the trainable parameters. (4) The training loop: for each epoch, for each batch, do the five-step dance you already know - zero_grad, forward, loss, backward, step - then run validation in eval() with no_grad. (5) After training, build the confusion matrix on the validation set to see which species get confused. (6) Save the state_dict so you never retrain.\n\nThe one piece worth memorising is the train-one-epoch loop, because the five steps in the wrong order is the most common silent bug: forgetting zero_grad makes gradients accumulate across batches and your loss goes haywire.\n\nWrite this loop from memory once and the whole assignment is just wiring known parts together.",
+    "example": "import torch\n# one training epoch: the five-step dance, per batch\ndef train_one_epoch(model, loader, loss_fn, optimizer, device):\n    model.train()\n    running = 0.0\n    for images, labels in loader:\n        images, labels = images.to(device), labels.to(device)\n        optimizer.zero_grad()           # 1. clear old gradients\n        outputs = model(images)         # 2. forward\n        loss = loss_fn(outputs, labels) # 3. measure\n        loss.backward()                 # 4. backprop\n        optimizer.step()                # 5. update weights\n        running += loss.item() * images.size(0)\n    return running / len(loader.dataset)",
+    "exercise": "From memory, write the validation counterpart evaluate(model, loader, device) that returns accuracy. It must: set model.eval(), wrap the loop in torch.no_grad(), take argmax over outputs for predictions, count correct vs total, and return correct/total. No gradients, no optimizer.",
+    "solution": "import torch\ndef evaluate(model, loader, device):\n    model.eval()\n    correct, total = 0, 0\n    with torch.no_grad():\n        for images, labels in loader:\n            images, labels = images.to(device), labels.to(device)\n            outputs = model(images)\n            preds = outputs.argmax(dim=1)\n            correct += (preds == labels).sum().item()\n            total += labels.size(0)\n    return correct / total",
+    "checklist": [
+      "List the five per-batch training steps in order, and what breaks if zero_grad is skipped.",
+      "Why is validation wrapped in torch.no_grad() and model.eval()?",
+      "Which earlier nodes supply the dataloaders, the model, and the final report in this pipeline?"
+    ]
+  }
+]

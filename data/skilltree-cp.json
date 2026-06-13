@@ -1,0 +1,429 @@
+[
+  {
+    "id": "cp-variables-lists",
+    "track": "cp",
+    "title": "Variables & Lists",
+    "subtitle": "name your data",
+    "level": 0,
+    "parents": [
+      "root"
+    ],
+    "minutes": 15,
+    "explain": "A variable is just a name pointing at a value: `score = 100` means \"whenever I say score, I mean 100\". A list holds several values in order: `nums = [3, 1, 4]`.\n\nYou grab items by position, and positions count FROM ZERO. So `nums[0]` is 3, `nums[1]` is 1, and `nums[-1]` is the last item, 4. `len(nums)` tells you how many items there are (3 here). `nums.append(5)` sticks 5 on the end.\n\nWhy this matters: almost every competitive programming problem hands you a list of numbers or a string and asks you to walk through it. If indexing is not automatic for you, every problem above this one gets harder than it should be. This is exactly task 1 to 4 of your day0 worksheet.\n\nCommon mistake: thinking `nums[1]` is the first item. It is the SECOND. The first item is `nums[0]`. Off-by-one indexing errors are the single most common beginner bug, and judges give you zero partial credit for them.",
+    "example": "nums = [10, 20, 30]\nprint(nums[0])    # 10  (first item, index ZERO)\nprint(nums[-1])   # 30  (last item)\nprint(len(nums))  # 3\nnums.append(40)\nprint(nums)       # [10, 20, 30, 40]",
+    "exercise": "Type four lines of Python: (1) create a list called nums containing 3, 1, 4 in that order, (2) set a variable first to its first item using indexing, (3) set a variable last to its last item using NEGATIVE indexing, (4) append 5 to nums. Then on a fifth line, write as a comment what print(nums) would now show.",
+    "solution": "nums = [3, 1, 4]\nfirst = nums[0]\nlast = nums[-1]\nnums.append(5)\n# print(nums) shows: [3, 1, 4, 5]",
+    "checklist": [
+      "Without looking: what index does the FIRST item of a list have?",
+      "What does nums[-1] give you, and why is it useful?",
+      "Does append return a new list or change the existing one?"
+    ]
+  },
+  {
+    "id": "cp-loops-if",
+    "track": "cp",
+    "title": "Loops & If",
+    "subtitle": "repeat and filter",
+    "level": 0,
+    "parents": [
+      "cp-variables-lists"
+    ],
+    "minutes": 20,
+    "explain": "A for loop visits every item in a list, one at a time. `for x in [10, 20, 30]:` runs the indented block three times, with x being 10, then 20, then 30. The indentation (4 spaces) is not decoration: it is how Python knows what is inside the loop. An `if` runs code only when its condition is true.\n\nTwo patterns you will use in literally every problem:\n\n1. Accumulate: start `total = 0` BEFORE the loop, then add to it inside the loop.\n2. Filter: start with an empty list, loop, and `append` only the items that pass an `if` test. The classic test: `x % 2 == 0` means x is even (divides by 2 with no remainder).\n\nThese are tasks 5 and 6 of your day0 worksheet, and they are the skeleton of two pointers, sliding window, everything.\n\nCommon mistake: putting `total = 0` INSIDE the loop. That resets your sum on every step, so you end with just the last item. Initialize before, update inside.",
+    "example": "data = [2, 4, 6, 8]\ntotal = 0\nfor x in data:\n    total = total + x\nprint(total)  # 20\n\nmixed = [1, 2, 3, 4, 5, 6]\nevens = []\nfor x in mixed:\n    if x % 2 == 0:\n        evens.append(x)\nprint(evens)  # [2, 4, 6]",
+    "exercise": "Without looking at the example, write a loop that builds a list called odds containing only the ODD numbers from mixed = [7, 2, 9, 4, 11]. Start from the line mixed = [7, 2, 9, 4, 11] and write the rest yourself (empty list, for, if, append). Then write as a comment what print(odds) shows.",
+    "solution": "mixed = [7, 2, 9, 4, 11]\nodds = []\nfor x in mixed:\n    if x % 2 == 1:\n        odds.append(x)\n# print(odds) shows: [7, 9, 11]",
+    "checklist": [
+      "Why must total = 0 come before the loop, not inside it?",
+      "What does x % 2 == 0 actually compute, in plain words?",
+      "What happens if you forget to indent the line under for?"
+    ]
+  },
+  {
+    "id": "cp-strings",
+    "track": "cp",
+    "title": "Strings & Slicing",
+    "subtitle": "lists of characters",
+    "level": 0,
+    "parents": [
+      "cp-variables-lists"
+    ],
+    "minutes": 15,
+    "explain": "A string behaves like a list of characters. With `word = \"exun\"`: `word[0]` is \"e\", `word[-1]` is \"n\", and `len(word)` is 4. Slicing cuts out a piece: `word[1:]` means \"everything from position 1 onward\", which is \"xun\". `word[1:3]` is \"xu\" (start included, end excluded). Methods like `word.upper()` give you a transformed COPY: \"EXUN\".\n\nWhy this matters: half of all easy contest problems are string problems. AtCoder A problems love \"take the first letter\", \"reverse this\", \"is character i equal to character j\". Valid Palindrome, which you will hit in the two pointers branch, is pure string indexing.\n\nThis is task 7 of your day0 worksheet.\n\nCommon mistake: trying to change a string in place. `word[0] = \"E\"` crashes, because strings are immutable (unchangeable). You never edit a string; you build a new one, for example `\"E\" + word[1:]`. If you need heavy editing, convert to a list of characters first with `list(word)`.",
+    "example": "word = \"exun\"\nprint(word[0])          # e\nprint(word[-1])         # n\nprint(word[1:])         # xun\nprint(word.upper())     # EXUN\nprint(\"E\" + word[1:])   # Exun  (new string, original untouched)",
+    "exercise": "Trace this code in your head and type the exact output, one line per print:\n\nword = \"stack\"\nprint(word[0])\nprint(word[-1])\nprint(word[1:4])\nprint(word[2:].upper())",
+    "solution": "s\nk\ntac\nACK",
+    "checklist": [
+      "In word[1:4], is the character at index 4 included or excluded?",
+      "Why does word[0] = \"x\" crash, and what do you do instead?",
+      "What does word[-1] give for any non-empty string?"
+    ]
+  },
+  {
+    "id": "cp-dicts-sets",
+    "track": "cp",
+    "title": "Dicts & Sets",
+    "subtitle": "instant lookup",
+    "level": 0,
+    "parents": [
+      "cp-loops-if"
+    ],
+    "minutes": 20,
+    "explain": "A dict stores pairs: a KEY you look things up by, and its VALUE. `ages = {\"kevin\": 14}`, then `ages[\"kevin\"]` gives 14, `ages[\"bob\"] = 16` adds a new pair, and `\"kevin\" in ages` asks whether a key exists. A set is like a list that ignores duplicates and is instant to search: `seen = set()`, `seen.add(x)`, `x in seen`.\n\nHere is the entire reason these exist in competitive programming: asking `x in some_list` makes Python scan the whole list, item by item. That is O(n) per lookup. Asking `x in some_set` or `key in some_dict` is O(1), effectively instant, no matter how big it is. Swapping a list for a set is often the difference between a solution that passes and one that times out.\n\nThis is tasks 8 and 10 of your day0 worksheet, and it is the foundation of the whole hash map branch.\n\nCommon mistake: reading a key that is not there. `ages[\"stuart\"]` crashes with KeyError if stuart was never added. Check with `in` first, or use `ages.get(\"stuart\")` which returns None instead of crashing.",
+    "example": "seen = set()\nseen.add(3)\nseen.add(7)\nprint(3 in seen)   # True\nprint(5 in seen)   # False\n\nages = {\"kevin\": 14}\nages[\"bob\"] = 16\nprint(ages[\"kevin\"])      # 14\nprint(\"stuart\" in ages)   # False",
+    "exercise": "Write the function has_duplicate(items) that returns True if any value appears twice in the list, using a set. Plan: make an empty set called seen; loop over items; if the item is already in seen, return True; otherwise add it; after the loop return False. Type the full function (about 6 lines).",
+    "solution": "def has_duplicate(items):\n    seen = set()\n    for x in items:\n        if x in seen:\n            return True\n        seen.add(x)\n    return False",
+    "checklist": [
+      "Why is x in a_set fast but x in a_list slow?",
+      "What happens when you read a dict key that does not exist?",
+      "In has_duplicate, why does return False come AFTER the loop, not inside it?"
+    ]
+  },
+  {
+    "id": "cp-functions",
+    "track": "cp",
+    "title": "Functions",
+    "subtitle": "return, not print",
+    "level": 0,
+    "parents": [
+      "cp-loops-if"
+    ],
+    "minutes": 15,
+    "explain": "A function is reusable code with a name. It takes inputs (parameters) and RETURNS an output:\n\n```\ndef add_one(x):\n    return x + 1\n```\n\nNow `add_one(5)` is 6. The `return` line is how the answer comes out; the moment Python hits `return`, the function is done and hands the value back to whoever called it.\n\nWhy this matters for you specifically: every LeetCode and NeetCode problem is \"fill in this function\". The judge calls your function with hidden inputs and compares the RETURNED value to the expected answer. Your day1 practice files work the same way: the asserts at the bottom call your function and check what comes back.\n\nThis is task 9 of your day0 worksheet.\n\nCommon mistake: printing instead of returning. `print(x * 2)` shows the answer on YOUR screen but returns None to the judge, so every test fails even though the output \"looks right\". Inside a function, the answer must travel through return. Print is for humans; return is for code.",
+    "example": "def double(x):\n    return x * 2\n\ndef biggest(nums):\n    best = nums[0]\n    for x in nums:\n        if x > best:\n            best = x\n    return best\n\nprint(double(7))            # 14\nprint(biggest([3, 9, 4]))   # 9",
+    "exercise": "Write a function count_evens(nums) that RETURNS how many even numbers are in the list. Do not print anything inside it. It must make count_evens([1, 2, 3, 4, 6]) equal 3 and count_evens([1, 3]) equal 0. Type the full function.",
+    "solution": "def count_evens(nums):\n    count = 0\n    for x in nums:\n        if x % 2 == 0:\n            count = count + 1\n    return count",
+    "checklist": [
+      "Why does a function that prints the right answer still fail every judge test?",
+      "What does a function return if you never write a return line?",
+      "What happens to the rest of a function after return runs?"
+    ]
+  },
+  {
+    "id": "cp-contest-io",
+    "track": "cp",
+    "title": "Contest I/O",
+    "subtitle": "input, split, map",
+    "level": 1,
+    "parents": [
+      "cp-strings",
+      "cp-functions"
+    ],
+    "minutes": 20,
+    "explain": "AtCoder and HackerRank do not call a function for you. They feed your program lines of text on standard input, and you print the answer. Three tools handle 95 percent of it:\n\n1. `input()` reads ONE line, always as a STRING.\n2. `.split()` chops a line on spaces: `\"3 5\".split()` gives `[\"3\", \"5\"]`.\n3. `map(int, ...)` converts each piece to a number.\n\nSo the standard opener for a line like `3 5` is:\n`a, b = map(int, input().split())`\n\nFor \"first line is n, second line is n numbers\": `n = int(input())` then `nums = list(map(int, input().split()))`.\n\nOutput is just `print(answer)`. One AtCoder trap: answers like Yes and No must match EXACTLY, capital Y, lowercase es. Your own abc185_b solution ends with `print(\"Yes\" if ok else \"No\")` for exactly this reason.\n\nCommon mistake: forgetting input() returns a string. `input() + input()` on lines 3 and 5 gives \"35\", not 8. Convert with int() before doing math, every single time.",
+    "example": "# input:\n# 3 5\na, b = map(int, input().split())\nprint(a + b)        # 8\n\n# input:\n# 4\n# 10 20 30 40\nn = int(input())\nnums = list(map(int, input().split()))\nprint(len(nums))    # 4\nprint(max(nums))    # 40",
+    "exercise": "Write a complete program (no function needed) that reads two lines: the first line is a number n, the second line is n space-separated integers. Print their sum. For input lines \"4\" and \"2 7 1 5\" it must print 15. Type all three lines.",
+    "solution": "n = int(input())\nnums = list(map(int, input().split()))\nprint(sum(nums))",
+    "checklist": [
+      "What type does input() always return, even when the user types 42?",
+      "Write from memory the one-liner that reads two integers from one line.",
+      "Why would printing YES instead of Yes get a wrong-answer verdict on AtCoder?"
+    ]
+  },
+  {
+    "id": "cp-two-sum",
+    "track": "cp",
+    "title": "Two Sum",
+    "subtitle": "have I seen this",
+    "level": 2,
+    "parents": [
+      "cp-contest-io",
+      "cp-dicts-sets"
+    ],
+    "minutes": 25,
+    "explain": "The hash map pattern in one sentence: a dict or set answers \"have I seen this before?\" in O(1), so you can replace a nested double loop, O(n squared), with one single pass, O(n).\n\nTwo Sum: given a list and a target, return the INDICES of the two numbers that add to target. The slow way checks every pair. The pattern way keeps a dict mapping value to the index where you saw it. For each number n at index i, ask one question: is `target - n` already in my dict? If yes, you are done: the partner was seen earlier and its index is stored. If no, store n at i and move on.\n\nWhy one pass is enough: by the time you reach the SECOND number of the winning pair, the first one is already waiting in the dict. You never need to look forward, only backward.\n\nYou already submitted this one for the assignment. Now it has to come out of your fingers from memory, because the live shortlist round will not let you peek at your Google Doc.\n\nCommon mistake: inserting the current number into the dict BEFORE checking for its partner. With target 10 and number 5, the 5 then finds itself and you return the same index twice. Check first, insert after.",
+    "example": "# warmup version of the same pattern (Contains Duplicate):\ndef has_duplicate(nums):\n    seen = set()\n    for x in nums:\n        if x in seen:\n            return True\n        seen.add(x)\n    return False\n# Two Sum swaps the set for a dict, because you\n# also need to remember WHERE you saw each value.",
+    "exercise": "From memory, write two_sum(nums, target) that returns the two indices as a list. It must pass: two_sum([2, 7, 11, 15], 9) == [0, 1], two_sum([3, 2, 4], 6) == [1, 2], two_sum([3, 3], 6) == [0, 1]. Check for the partner BEFORE storing the current number.",
+    "solution": "def two_sum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n    return []",
+    "checklist": [
+      "Explain why one pass works: where is the first number of the pair when you reach the second?",
+      "Why must you check the dict before inserting the current number?",
+      "What is the time complexity, and what was it for the nested-loop version?"
+    ]
+  },
+  {
+    "id": "cp-group-anagrams",
+    "track": "cp",
+    "title": "Group Anagrams",
+    "subtitle": "fingerprint keys",
+    "level": 3,
+    "parents": [
+      "cp-two-sum"
+    ],
+    "minutes": 30,
+    "explain": "This is the hash map pattern one level up: instead of using the value itself as the key, you use a computed FINGERPRINT of the value.\n\nProblem: group anagrams together. [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"] becomes [[\"eat\",\"tea\",\"ate\"], [\"tan\",\"nat\"], [\"bat\"]].\n\nKey insight: two words are anagrams exactly when they are equal after sorting their letters. sorted(\"eat\") and sorted(\"tea\") are both ['a','e','t']. So the sorted word is a perfect dict key: every word joins the list stored under its own fingerprint, and anagrams collide into the same bucket automatically.\n\nThe shape: dict from fingerprint to list of words. Loop once, compute `\"\".join(sorted(w))` for each word, append the word to that key's list, and finally return `list(d.values())`.\n\nThis fingerprint idea generalizes hard: count signatures, normalized forms, any \"these things belong together if some computed key matches\".\n\nCommon mistake: using sorted(w) directly as the key. sorted returns a LIST, and lists cannot be dict keys (unhashable type error). Join it into a string first with \"\".join(sorted(w)), or convert to a tuple. Bonus tool: d.setdefault(key, []).append(w) saves you the \"if key not in d\" dance.",
+    "example": "words = [\"eat\", \"tea\", \"bat\"]\nd = {}\nfor w in words:\n    key = \"\".join(sorted(w))   # \"eat\" -> \"aet\", \"tea\" -> \"aet\"\n    d.setdefault(key, []).append(w)\nprint(d)\n# {'aet': ['eat', 'tea'], 'abt': ['bat']}",
+    "exercise": "From memory, write group_anagrams(strs) that returns the groups as a list of lists. For [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"] it must produce the three groups (any order). Use the sorted-string fingerprint as the dict key.",
+    "solution": "def group_anagrams(strs):\n    d = {}\n    for w in strs:\n        key = \"\".join(sorted(w))\n        d.setdefault(key, []).append(w)\n    return list(d.values())",
+    "checklist": [
+      "Why are two words anagrams exactly when their sorted letters match?",
+      "Why does sorted(w) fail as a dict key, and what are the two fixes?",
+      "What does d.setdefault(key, []).append(w) do when the key is new? When it already exists?"
+    ]
+  },
+  {
+    "id": "cp-valid-palindrome",
+    "track": "cp",
+    "title": "Valid Palindrome",
+    "subtitle": "meet in the middle",
+    "level": 2,
+    "parents": [
+      "cp-contest-io"
+    ],
+    "minutes": 25,
+    "explain": "Two pointers in one sentence: instead of nested loops comparing everything with everything, you keep two index variables and walk them toward each other (or along together), doing one comparison per step.\n\nValid Palindrome is the cleanest example. A palindrome reads the same forwards and backwards (\"racecar\"). Put a left pointer l at index 0 and a right pointer r at the last index. Compare s[l] and s[r]. If they differ, it is not a palindrome, return False immediately. If they match, move l up one and r down one, and repeat while l < r. If the pointers meet without ever disagreeing, return True.\n\nWhy this beats building a reversed copy: same O(n) time, but the pointer version uses no extra memory and, more importantly, the l and r dance is the EXACT skeleton you reuse in Two Sum II next. Learn the skeleton here where the logic is easy.\n\nThe full LeetCode version also skips punctuation and ignores case; the skeleton stays identical, you just add \"while the character is not alphanumeric, skip it\" before each comparison.\n\nCommon mistake: writing the loop condition as l <= r or forgetting to move BOTH pointers, which either does a useless self-comparison or loops forever. Condition l < r, and both pointers move every round.",
+    "example": "def is_palindrome(s):\n    l = 0\n    r = len(s) - 1\n    while l < r:\n        if s[l] != s[r]:\n            return False\n        l = l + 1\n        r = r - 1\n    return True\n\nprint(is_palindrome(\"racecar\"))  # True\nprint(is_palindrome(\"exun\"))     # False",
+    "exercise": "Trace is_palindrome(\"abcba\") by hand. Write one line per loop round in the form: l=?, r=?, s[l]=?, s[r]=?, match yes/no. Then write the final returned value.",
+    "solution": "l=0, r=4, s[l]=a, s[r]=a, match yes\nl=1, r=3, s[l]=b, s[r]=b, match yes\nl=2, r=2, loop stops because l < r is False\nreturns True",
+    "checklist": [
+      "Why is the loop condition l < r and not l <= r?",
+      "What is the very first thing you do when the two characters differ?",
+      "How would you extend this to ignore punctuation without changing the skeleton?"
+    ]
+  },
+  {
+    "id": "cp-two-sum-ii",
+    "track": "cp",
+    "title": "Two Sum II",
+    "subtitle": "sorted, shrink ends",
+    "level": 3,
+    "parents": [
+      "cp-valid-palindrome"
+    ],
+    "minutes": 25,
+    "explain": "Same question as Two Sum (find two numbers adding to target) but the input list is SORTED, and that one fact unlocks a completely different solution with zero extra memory.\n\nPut l at the start and r at the end, and look at the sum s = nums[l] + nums[r]:\n\n1. s == target: found it.\n2. s too SMALL: you need a bigger sum. The only move that can increase it is l = l + 1, because nums[l] is the smallest thing in play.\n3. s too BIG: you need a smaller sum, so r = r - 1.\n\nEvery step permanently rules out one element, so the whole thing is one pass, O(n), no dict needed. This is THE classic demonstration of why \"sorted\" in a problem statement should make your two-pointer alarm ring.\n\nCompare with hash map Two Sum: that one works on UNSORTED input but pays O(n) memory for the dict. Sorted input lets you trade the dict for pointer logic. Knowing which variant fits which problem is exactly what pattern drilling is for.\n\nCommon mistake: this LeetCode problem wants 1-INDEXED positions (first element is position 1), so you return [l + 1, r + 1]. Returning plain [l, r] fails every test even with perfect logic. Always re-read what exactly the problem wants returned.",
+    "example": "# nums = [2, 7, 11, 15], target = 9\n# l=0 (2), r=3 (15): 2+15=17, too big,  r -> 2\n# l=0 (2), r=2 (11): 2+11=13, too big,  r -> 1\n# l=0 (2), r=1 (7):  2+7=9, FOUND\n# answer (1-indexed): [1, 2]",
+    "exercise": "From memory, write two_sum_sorted(nums, target) returning the 1-indexed positions as a list. It must pass: two_sum_sorted([2, 7, 11, 15], 9) == [1, 2] and two_sum_sorted([1, 3, 4, 8], 12) == [3, 4]. Use the l and r pointer skeleton, no dict.",
+    "solution": "def two_sum_sorted(nums, target):\n    l = 0\n    r = len(nums) - 1\n    while l < r:\n        s = nums[l] + nums[r]\n        if s == target:\n            return [l + 1, r + 1]\n        if s < target:\n            l = l + 1\n        else:\n            r = r - 1\n    return []",
+    "checklist": [
+      "When the sum is too small, why is moving l the ONLY move that can help?",
+      "What property of the input makes this work, and what breaks if the list is unsorted?",
+      "Hash map Two Sum vs pointer Two Sum II: what does each cost in memory?"
+    ]
+  },
+  {
+    "id": "cp-valid-parentheses",
+    "track": "cp",
+    "title": "Valid Parentheses",
+    "subtitle": "LIFO matching",
+    "level": 2,
+    "parents": [
+      "cp-contest-io"
+    ],
+    "minutes": 25,
+    "explain": "A stack is a pile: you add to the top and remove from the top. Last In, First Out (LIFO). In Python a plain list IS a stack: `stack.append(x)` pushes, `stack.pop()` removes and returns the top item.\n\nValid Parentheses: given a string like \"({[]})\", decide if every bracket closes in the right order. Why a stack fits perfectly: the most recently opened bracket must be the FIRST one to close. \"Most recent first\" is literally the definition of LIFO.\n\nThe algorithm: walk the string. Opening bracket: push it. Closing bracket: the top of the stack must be its matching opener; pop it and compare. Mismatch, or popping when the stack is empty (a closer with nothing open), means invalid. After the loop, the stack must be EMPTY: leftover items mean brackets that were opened and never closed, like \"((\".\n\nA tidy trick: a dict mapping each closer to its opener, `pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}`, turns the matching test into one lookup.\n\nCommon mistake: forgetting the final empty check and returning True after the loop unconditionally. \"(\" would then pass, because the loop itself never finds a mismatch. The bug hides until a test case has unclosed openers.",
+    "example": "stack = []\nstack.append(\"a\")\nstack.append(\"b\")\nstack.append(\"c\")\nprint(stack.pop())  # c  (last in, first out)\nprint(stack.pop())  # b\nprint(stack)        # ['a']",
+    "exercise": "From memory, write is_valid(s) for a string containing only ()[]{}. It must pass: is_valid(\"({[]})\") == True, is_valid(\"(]\") == False, is_valid(\"(\") == False, is_valid(\"\") == True. Use a list as the stack and a dict mapping closers to openers.",
+    "solution": "def is_valid(s):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n    for ch in s:\n        if ch in pairs:\n            if not stack or stack.pop() != pairs[ch]:\n                return False\n        else:\n            stack.append(ch)\n    return len(stack) == 0",
+    "checklist": [
+      "Why does LIFO match how brackets nest? Say it in one sentence.",
+      "Why must the stack be empty at the end, and what input breaks the code if you skip that check?",
+      "What two situations make a closing bracket invalid the moment you see it?"
+    ]
+  },
+  {
+    "id": "cp-daily-temperatures",
+    "track": "cp",
+    "title": "Daily Temperatures",
+    "subtitle": "monotonic stack",
+    "level": 3,
+    "parents": [
+      "cp-valid-parentheses"
+    ],
+    "minutes": 35,
+    "explain": "Problem: for each day's temperature, how many days until a warmer one? [73,74,75,71,69,72,76,73] gives [1,1,4,2,1,1,0,0]. The brute force scans forward from every day: O(n squared).\n\nThe monotonic stack idea: keep a stack of INDICES of days that are still WAITING for a warmer day. As you walk the list, each new temperature answers the waiters it beats: while the new temp is warmer than the temp at the index on top of the stack, pop that index, and its answer is (today's index minus that index). Then push today, because today is now waiting too.\n\nWhy it is called monotonic: the temperatures at the stacked indices always run hottest at the bottom to coolest on top. Anything that would break that order gets popped and resolved first.\n\nWhy it is O(n) even with the inner while loop: every index is pushed exactly once and popped at most once, so the total work across the whole run is 2n operations.\n\nThis pattern answers any \"next greater element\" question, which is a contest regular.\n\nCommon mistake: pushing TEMPERATURES instead of INDICES. When the pop happens, you need the index to compute how many days the waiter waited; the temperature alone cannot tell you that. Stack the index, look up the temperature via temps[index].",
+    "example": "temps = [73, 74, 75, 71]\n# i=0: stack empty, push 0           stack: [0]\n# i=1: 74 > temps[0]=73, pop 0, ans[0] = 1-0 = 1, push 1\n# i=2: 75 > temps[1]=74, pop 1, ans[1] = 2-1 = 1, push 2\n# i=3: 71 < temps[2]=75, just push 3 stack: [2, 3]\n# days 2 and 3 never get answered, stay 0\n# result: [1, 1, 0, 0]",
+    "exercise": "From memory, write daily_temperatures(temps) returning the list of wait times. It must pass: daily_temperatures([73,74,75,71,69,72,76,73]) == [1,1,4,2,1,1,0,0]. Start with ans = [0] * len(temps), stack the indices, pop inside a while loop.",
+    "solution": "def daily_temperatures(temps):\n    ans = [0] * len(temps)\n    stack = []\n    for i, t in enumerate(temps):\n        while stack and temps[stack[-1]] < t:\n            j = stack.pop()\n            ans[j] = i - j\n        stack.append(i)\n    return ans",
+    "checklist": [
+      "Why store indices on the stack instead of temperatures?",
+      "Why is the total cost O(n) even though there is a while loop inside the for loop?",
+      "What do the indices still sitting on the stack at the end mean, and what answer do they get?"
+    ]
+  },
+  {
+    "id": "cp-buy-sell-stock",
+    "track": "cp",
+    "title": "Buy/Sell Stock",
+    "subtitle": "track the minimum",
+    "level": 2,
+    "parents": [
+      "cp-contest-io"
+    ],
+    "minutes": 25,
+    "explain": "Problem: prices[i] is a stock price on day i. Buy on one day, sell on a LATER day, maximize profit. [7,1,5,3,6,4] gives 5 (buy at 1, sell at 6). If no profit is possible, answer 0.\n\nThe brute force tries every buy day with every later sell day: O(n squared). The one-pass insight: walking left to right, the best possible deal ending TODAY is today's price minus the CHEAPEST price seen so far. So carry just two variables: min_so_far and best profit. Each day, first try selling (update best with price minus min_so_far), then update min_so_far if today is a new low.\n\nThis is your entry into sliding window thinking: a window with the buy day at the left edge and the sell day at the right edge, where you slide the right edge one day at a time and keep only a tiny summary (the minimum) instead of re-scanning the window. The full grow-and-shrink machinery arrives in Longest Substring next; this problem teaches the \"maintain window state cheaply\" half.\n\nCommon mistake: answering max(prices) minus min(prices). That ignores ORDER: in [9, 1] it claims profit 8, but the 9 happens before the 1, and you cannot sell before you buy. Tracking min_so_far as you walk is what enforces buy-before-sell.",
+    "example": "prices = [7, 1, 5, 3, 6, 4]\n# day 7: min=7, best=0\n# day 1: min=1, best=0\n# day 5: 5-1=4, best=4\n# day 3: best stays 4\n# day 6: 6-1=5, best=5\n# day 4: best stays 5\n# answer: 5",
+    "exercise": "From memory, write max_profit(prices) in one pass with two variables. It must pass: max_profit([7,1,5,3,6,4]) == 5 and max_profit([7,6,4,3,1]) == 0. No nested loops.",
+    "solution": "def max_profit(prices):\n    min_so_far = prices[0]\n    best = 0\n    for p in prices:\n        if p - min_so_far > best:\n            best = p - min_so_far\n        if p < min_so_far:\n            min_so_far = p\n    return best",
+    "checklist": [
+      "Why is max(prices) - min(prices) wrong? Give the two-element counterexample.",
+      "What exactly do the two carried variables mean at any point mid-walk?",
+      "Why does one pass suffice when brute force needed two nested loops?"
+    ]
+  },
+  {
+    "id": "cp-longest-substring",
+    "track": "cp",
+    "title": "Longest Substring",
+    "subtitle": "grow right, shrink left",
+    "level": 3,
+    "parents": [
+      "cp-buy-sell-stock"
+    ],
+    "minutes": 35,
+    "explain": "Problem: length of the longest substring without repeating characters. \"abcabcbb\" gives 3 (\"abc\").\n\nThis is the full sliding window machine. The window is s[l..r], and you keep one invariant: NO duplicates inside the window. Track the window's contents in a set.\n\nThe loop: move r forward one character at a time (grow right). If s[r] is already in the set, the invariant broke, so shrink from the left: remove s[l] from the set and do l = l + 1, repeating WHILE the duplicate is still inside. Once the window is clean again, its size (r - l + 1) is a candidate answer.\n\nWhy this is O(n) and not quadratic: l only ever moves forward. Across the entire run, r takes n steps and l takes at most n steps, so the total is at most 2n, even though there is a while inside the for. Same argument as the monotonic stack, and it is worth being able to SAY that argument out loud.\n\nCommon mistake: on finding a duplicate, resetting the whole window (l = r) or restarting the scan from l + 1. Restarting re-reads the same characters over and over and lands you back at O(n squared), which is exactly what the window exists to avoid. Shrink one step at a time, only as far as needed.",
+    "example": "s = \"abcabcbb\"\n# r=0 'a': window \"a\",   best=1\n# r=1 'b': window \"ab\",  best=2\n# r=2 'c': window \"abc\", best=3\n# r=3 'a': duplicate! drop s[l]='a', l=1, window \"bca\", best=3\n# r=4 'b': duplicate! drop 'b', l=2, window \"cab\", best=3\n# ... best never beats 3, answer: 3",
+    "exercise": "From memory, write length_of_longest(s) using a set and the l pointer. It must pass: length_of_longest(\"abcabcbb\") == 3, length_of_longest(\"bbbbb\") == 1, length_of_longest(\"\") == 0.",
+    "solution": "def length_of_longest(s):\n    seen = set()\n    l = 0\n    best = 0\n    for r in range(len(s)):\n        while s[r] in seen:\n            seen.remove(s[l])\n            l = l + 1\n        seen.add(s[r])\n        if r - l + 1 > best:\n            best = r - l + 1\n    return best",
+    "checklist": [
+      "State the window invariant in one sentence without looking.",
+      "Why is this O(n) despite a while loop inside the for loop?",
+      "Why is resetting l all the way to r on a duplicate both wrong-ish and slow?"
+    ]
+  },
+  {
+    "id": "cp-atcoder-ab",
+    "track": "cp",
+    "title": "AtCoder A/B Habits",
+    "subtitle": "5-minute A problems",
+    "level": 4,
+    "parents": [
+      "cp-group-anagrams",
+      "cp-two-sum-ii",
+      "cp-daily-temperatures",
+      "cp-longest-substring"
+    ],
+    "minutes": 45,
+    "explain": "AtCoder Beginner Contest A problems are 2 to 5 lines: read input, one formula or check, print. B problems add a loop or a simple simulation. You already have 28 accepted solutions from ABC 181 to 200; this node is about converting \"submitted once\" into \"can produce on demand\".\n\nThe drill, straight from your plan: re-solve YOUR OWN submissions blind. Open a problem at atcoder.jp (URL pattern: atcoder.jp/contests/abc181/tasks/abc181_a), write it without looking at your old code, submit, then compare. Targets: A problems under 5 minutes, B problems 5 to 15 minutes.\n\nThe habits that make those targets reachable:\n\n1. Read constraints FIRST. They tell you whether a loop is fine or you need a pattern.\n2. Type the I/O line before thinking: `map(int, input().split())` should be muscle memory by now.\n3. Match output EXACTLY: Yes not YES, and mind float formatting.\n4. Test against ALL the provided samples before submitting. Your abc185_b was verified against all 5 official samples before it ever touched the judge.\n\nCommon mistake (you have the scar already): a wrong-answer verdict from submitting the wrong clipboard or a pasted note line causing a compile error. Slow is smooth: re-read what you pasted before hitting submit.",
+    "example": "# ABC193 A, your accepted solution, 2 lines:\n# price A discounted to B, print the discount percentage\na, b = map(int, input().split())\nprint((a - b) / a * 100)\n\n# input  \"100 80\"  ->  20.0\n# AtCoder accepts it because the allowed\n# error is 0.01, so 20.0 matches 20",
+    "exercise": "Blind re-solve, A-problem style: a shop sells an item at price A, now discounted to price B (two integers, one input line). Write the complete 2-line program that prints the discount as a percentage of A. For input \"100 80\" it prints 20.0. No peeking at your atcoder folder.",
+    "solution": "a, b = map(int, input().split())\nprint((a - b) / a * 100)",
+    "checklist": [
+      "What are your time targets for A and for B problems?",
+      "What two things do you check before hitting submit on AtCoder?",
+      "Why re-solve problems you already got accepted, instead of doing new ones?"
+    ]
+  },
+  {
+    "id": "cp-timed-practice",
+    "track": "cp",
+    "title": "Timed Virtual Contest",
+    "subtitle": "A+B in 20 minutes",
+    "level": 5,
+    "parents": [
+      "cp-atcoder-ab"
+    ],
+    "minutes": 25,
+    "explain": "The Exun shortlist round is a LIVE contest. Knowing the patterns is necessary but not sufficient; you also need to perform them with a clock running. This node is the final level of your ladder: one ABC virtual contest, problems A and B, in 20 minutes.\n\nHow to run it: on atcoder.jp, pick an ABC you have NOT re-solved recently, start a virtual participation (or just a phone timer), and solve A then B as if it counts. Submit to the real judge so verdicts are honest.\n\nRules of engagement, from your plan:\n\n1. 10-minute stuck rule: if a problem has eaten 10 minutes with no progress, note where you got stuck and move on. In a live round, a stubborn B costs you an easy A.\n2. After time is up, write ONE line per problem naming the idea (\"hash map of seen values\", \"monotonic stack\"). If you cannot name the idea, you have not extracted the lesson.\n3. If you read an editorial afterward, close it and re-code from memory. Reading is not the same as being able to produce it.\n\nCommon mistake: treating a failed timed run as a verdict on you instead of data. The point of a virtual contest is to find which pattern is slow under pressure, then drill exactly that one. One run per session, then back up the tree to whichever node was shaky.",
+    "example": "# 20-minute session template\n# 0:00  open ABC xxx problem A, read constraints\n# 0:0x  A accepted -> open B\n# 10:00 stuck-check: progress on B? if no, note blocker\n# 20:00 stop. write idea lines:\n#   A: \"string indexing\"\n#   B: \"simulate with running minimum\"\n# then: re-drill the node that felt slow",
+    "exercise": "Speed drill, A-problem style, aim for under 5 minutes: read one line containing a 3-digit string S (for example \"447\") and print the sum of its three digits (15 here). Write the complete program, treating each character with int().",
+    "solution": "s = input()\nprint(int(s[0]) + int(s[1]) + int(s[2]))",
+    "checklist": [
+      "What does the 10-minute stuck rule say you must do, exactly?",
+      "After reading an editorial, what must happen before the problem counts as learned?",
+      "What do you do with the result of a timed run, pass or fail?"
+    ],
+    "loophole": "The assignment EXPLICITLY allows reading editorials, so the honest way to use that: attempt alone for 30 minutes, read the editorial, then CLOSE it and re-type the solution from memory, and write one line on the core idea ('hash map of seen values', 'monotonic stack'). Shortlisters can smell pasted code that the writer can't explain, so the UNDERSTANDING is the real deliverable, not the characters. Time tactic for the AtCoder batches: do every contest's A problem first (under 5 minutes each), then circle back for the B's, so one slow B never eats the whole evening."
+  },
+  {
+    "id": "cp-binary-search",
+    "track": "cp",
+    "title": "Binary Search",
+    "subtitle": "halve the search space",
+    "level": 6,
+    "parents": [
+      "cp-timed-practice"
+    ],
+    "minutes": 30,
+    "explain": "Linear scan is O(n): you look at every element. If the data is SORTED, you can do better. Binary search keeps two pointers, lo and hi, looks at the middle, and throws away half the range every step. n elements take about log2(n) steps: a million elements in 20 looks, a billion in 30.\n\nThe loop invariant is the whole trick: the answer, if it exists, is always inside [lo, hi]. While lo <= hi, look at mid = (lo + hi) // 2. If nums[mid] == target you are done. If nums[mid] < target the answer is to the right, so lo = mid + 1. If it is bigger, hi = mid - 1. The two `+1 / -1` are not decoration: they shrink the range so the loop must end.\n\nThe pattern that wins contests is \"binary search on the answer\". When a problem asks for the smallest / largest value that still works, and \"works\" is monotonic (once it works it keeps working), you binary-search over the answer itself instead of an array. That is one of the four patterns you are drilling for the Exun shortlist.\n\nClassic infinite loop: writing `lo = mid` instead of `lo = mid + 1`. If mid never moves past lo, the range stops shrinking and the loop hangs. Always step past mid.",
+    "example": "# search a sorted list, return index or -1\ndef bsearch(nums, target):\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[mid] < target:\n            lo = mid + 1   # answer is to the right\n        else:\n            hi = mid - 1   # answer is to the left\n    return -1",
+    "exercise": "From memory, write bsearch(nums, target) on an ascending list, returning the index or -1. It must pass: bsearch([1, 3, 5, 7, 9], 7) == 3, bsearch([1, 3, 5, 7, 9], 4) == -1, bsearch([2], 2) == 0, bsearch([], 5) == -1. Use lo <= hi and remember the +1 / -1.",
+    "solution": "def bsearch(nums, target):\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1",
+    "checklist": [
+      "Why does the range have to shrink every iteration, and which line guarantees it?",
+      "How many steps for a billion sorted elements, roughly, and why log2?",
+      "What does 'binary search on the answer' need to be true about the problem (the monotonic property)?"
+    ]
+  },
+  {
+    "id": "cp-prefix-sums",
+    "track": "cp",
+    "title": "Prefix Sums",
+    "subtitle": "range sums in O(1)",
+    "level": 6,
+    "parents": [
+      "cp-timed-practice"
+    ],
+    "minutes": 25,
+    "explain": "A contest gives you an array and then asks for the sum between index l and r, a hundred thousand times. Summing the slice each time is O(n) per query, so O(n*q) total, and you time out. Prefix sums turn each query into one subtraction, O(1).\n\nBuild one array once: pre[0] = 0, and pre[i] = pre[i-1] + nums[i-1]. So pre[i] is the sum of the FIRST i elements. Then the sum of nums[l..r] (inclusive) is just pre[r+1] - pre[l]. You added everything up to r+1 and subtracted everything before l, leaving exactly the window.\n\nWhy the extra leading zero and the r+1: the shifted-by-one indexing is what makes the boundary math clean and lets l = 0 work without a special case. Draw it once on paper with [2, 4, 1, 3] and the off-by-one stops being scary.\n\nThis is the same precompute-once-answer-many idea behind a lot of harder problems (2-D prefix sums for grids, difference arrays for range updates). Get the 1-D version into muscle memory first.",
+    "example": "# precompute, then every range sum is one subtraction\ndef build_prefix(nums):\n    pre = [0] * (len(nums) + 1)\n    for i, x in enumerate(nums):\n        pre[i + 1] = pre[i] + x\n    return pre\n\npre = build_prefix([2, 4, 1, 3, 5])\n# sum of index 1..3 (4 + 1 + 3 = 8):\nprint(pre[4] - pre[1])   # 8",
+    "exercise": "Write range_sum(nums, queries) where queries is a list of (l, r) inclusive pairs; return a list of the sums, using a prefix array (build it ONCE, not per query). It must pass: range_sum([2, 4, 1, 3, 5], [(0, 2), (1, 3), (4, 4)]) == [7, 8, 5].",
+    "solution": "def range_sum(nums, queries):\n    pre = [0] * (len(nums) + 1)\n    for i, x in enumerate(nums):\n        pre[i + 1] = pre[i] + x\n    return [pre[r + 1] - pre[l] for (l, r) in queries]",
+    "checklist": [
+      "Why is pre one element longer than nums, and what does pre[0] = 0 buy you?",
+      "Derive sum(l..r) = pre[r+1] - pre[l] in words.",
+      "What was the time complexity before (per query and total) versus after?"
+    ]
+  },
+  {
+    "id": "cp-recursion-backtracking",
+    "track": "cp",
+    "title": "Recursion & Backtracking",
+    "subtitle": "try, recurse, undo",
+    "level": 6,
+    "parents": [
+      "cp-timed-practice"
+    ],
+    "minutes": 35,
+    "explain": "A recursive function solves a problem by calling itself on a smaller version. Two parts, always: the BASE CASE that stops (no smaller version left), and the RECURSIVE CASE that does one step and hands the rest to itself. Miss the base case and you blow the stack.\n\nBacktracking is recursion for \"generate all the ways\" problems: subsets, permutations, placing queens, sudoku. The shape is choose / explore / un-choose. You make a choice, recurse to build on it, then UNDO the choice before trying the next one, so the path is clean for the sibling branch. The undo is the part beginners forget, and then every branch leaks state into the next.\n\nThink of it as walking a tree of decisions. Going down = choose. Hitting a leaf = record a complete answer. Coming back up = un-choose. The same skeleton solves a whole family of problems once you see it.\n\nIt is also the honest way to understand DP later: DP is backtracking plus a memo so you stop re-solving the same subproblem. Learn the slow, correct recursion first; speed comes after.",
+    "example": "# all subsets of a list, via choose / explore / un-choose\ndef subsets(nums):\n    out, path = [], []\n    def dfs(i):\n        if i == len(nums):\n            out.append(path[:])      # leaf: record a copy\n            return\n        path.append(nums[i])         # choose\n        dfs(i + 1)                   # explore with it\n        path.pop()                   # un-choose\n        dfs(i + 1)                   # explore without it\n    dfs(0)\n    return out\n# subsets([1, 2]) -> [[1, 2], [1], [2], []]",
+    "exercise": "Write permutations(nums) returning every ordering, using backtracking (a used set or swap, then undo). It must pass: sorted(permutations([1, 2, 3])) has 6 lists and includes [1, 2, 3] and [3, 2, 1]. Remember to undo your choice before the next branch.",
+    "solution": "def permutations(nums):\n    out, path, used = [], [], [False] * len(nums)\n    def dfs():\n        if len(path) == len(nums):\n            out.append(path[:])\n            return\n        for i in range(len(nums)):\n            if used[i]:\n                continue\n            used[i] = True\n            path.append(nums[i])   # choose\n            dfs()                  # explore\n            path.pop()             # un-choose\n            used[i] = False\n    dfs()\n    return out",
+    "checklist": [
+      "Name the two parts every recursion needs, and what happens if the base case is missing.",
+      "In backtracking, why must you undo the choice before the next branch?",
+      "Why append path[:] (a copy) at a leaf instead of path itself?"
+    ]
+  },
+  {
+    "id": "cp-graphs-bfs-dfs",
+    "track": "cp",
+    "title": "Graphs: BFS & DFS",
+    "subtitle": "explore a grid or network",
+    "level": 7,
+    "parents": [
+      "cp-recursion-backtracking"
+    ],
+    "minutes": 40,
+    "explain": "Once you can recurse, graphs open up. A graph is just nodes and edges, stored as an adjacency list: a dict mapping each node to its neighbours. A grid is a graph too, where each cell's neighbours are up / down / left / right.\n\nTwo ways to walk it, and one shared rule: keep a `visited` set so you never process a node twice (that is what stops infinite loops on cycles). DFS goes deep first, easiest as recursion or a stack. BFS goes level by level using a QUEUE (collections.deque), and that level-by-level order is special: on an unweighted graph, the first time BFS reaches a node, it reached it by the SHORTEST path. So DFS for \"can I reach / connected components\", BFS for \"fewest steps\".\n\nThe bread-and-butter problem is counting connected components, also seen as \"number of islands\": loop over every cell, and each time you find an unvisited land cell, run one flood-fill from it and count it as a new island. The flood-fill marks the whole island visited so you do not recount it.\n\nGotcha: mark a node visited when you ENQUEUE it in BFS, not when you pop it, or the same node gets added to the queue many times before you ever process it.",
+    "example": "from collections import deque\n# shortest hops from start on an unweighted graph (adjacency dict)\ndef bfs_dist(graph, start):\n    dist = {start: 0}\n    q = deque([start])\n    while q:\n        node = q.popleft()\n        for nxt in graph[node]:\n            if nxt not in dist:          # first sighting == shortest\n                dist[nxt] = dist[node] + 1\n                q.append(nxt)\n    return dist",
+    "exercise": "Write count_islands(grid), a list of lists of 0s and 1s; return how many groups of 1s are connected horizontally or vertically. Use BFS or DFS flood-fill with a visited set. It must pass: grid [[1,1,0],[0,1,0],[0,0,1]] -> 2.",
+    "solution": "from collections import deque\ndef count_islands(grid):\n    if not grid:\n        return 0\n    R, C = len(grid), len(grid[0])\n    seen = set()\n    count = 0\n    for r in range(R):\n        for c in range(C):\n            if grid[r][c] == 1 and (r, c) not in seen:\n                count += 1\n                q = deque([(r, c)])\n                seen.add((r, c))\n                while q:\n                    y, x = q.popleft()\n                    for dy, dx in ((1,0),(-1,0),(0,1),(0,-1)):\n                        ny, nx = y + dy, x + dx\n                        if 0 <= ny < R and 0 <= nx < C and \\\n                           grid[ny][nx] == 1 and (ny, nx) not in seen:\n                            seen.add((ny, nx))\n                            q.append((ny, nx))\n    return count",
+    "checklist": [
+      "Why does BFS find shortest paths on an unweighted graph but DFS does not?",
+      "Why mark a node visited when you enqueue it rather than when you pop it?",
+      "What is the role of the outer double loop in the islands problem versus the inner flood-fill?"
+    ]
+  },
+  {
+    "id": "cp-dp-intro",
+    "track": "cp",
+    "title": "DP: 1-D Tables",
+    "subtitle": "remember subproblems",
+    "level": 8,
+    "parents": [
+      "cp-recursion-backtracking",
+      "cp-binary-search"
+    ],
+    "minutes": 40,
+    "explain": "Dynamic programming sounds scary and is not. It is recursion where subproblems OVERLAP, so instead of re-solving the same thing a thousand times you solve each subproblem once and write the answer in a table.\n\nClimbing stairs is the cleanest first example: to reach step n you came from step n-1 or step n-2, so ways(n) = ways(n-1) + ways(n-2). The naive recursion recomputes ways(3) over and over and is exponential. The fix is either memoize (cache results in a dict) or build a table bottom-up: dp[0] and dp[1] are the base cases, then fill dp[i] = dp[i-1] + dp[i-2] up to n. O(n) time, and only the last two values matter so you can even drop to O(1) space.\n\nThe recipe for any 1-D DP: (1) define dp[i] in one sentence as a quantity, (2) write the recurrence that builds dp[i] from smaller indices, (3) set the base cases, (4) decide the fill order so a cell's dependencies are ready before it. Coin change, house robber, longest increasing subsequence all fit this mould.\n\nThe mistake is starting to code before you can say in plain words what dp[i] MEANS. Define the meaning first; the recurrence falls out of the definition.",
+    "example": "# climbing stairs: how many ways to reach step n (1 or 2 at a time)\ndef climb(n):\n    if n <= 2:\n        return n\n    a, b = 1, 2            # ways to reach step 1 and step 2\n    for _ in range(3, n + 1):\n        a, b = b, a + b    # dp[i] = dp[i-1] + dp[i-2]\n    return b\n# climb(5) -> 8",
+    "exercise": "Write coin_change(coins, amount): the FEWEST coins that sum to amount, or -1 if impossible. Use a dp table where dp[a] = min coins for amount a, dp[0] = 0. It must pass: coin_change([1, 2, 5], 11) == 3, coin_change([2], 3) == -1, coin_change([1], 0) == 0.",
+    "solution": "def coin_change(coins, amount):\n    INF = float('inf')\n    dp = [0] + [INF] * amount\n    for a in range(1, amount + 1):\n        for c in coins:\n            if c <= a and dp[a - c] + 1 < dp[a]:\n                dp[a] = dp[a - c] + 1\n    return dp[amount] if dp[amount] != INF else -1",
+    "checklist": [
+      "State in one sentence what dp[i] means in coin change before writing any code.",
+      "Why is the naive stairs recursion exponential, and what exactly does the table remove?",
+      "What decides the fill order of a DP table?"
+    ]
+  }
+]

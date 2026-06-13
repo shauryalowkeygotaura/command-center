@@ -13,6 +13,7 @@ import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
 import { Planner } from "./Planner";
+import { SkillTree } from "./SkillTree";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -21,6 +22,7 @@ import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 const TABS = [
   { id: "board", label: "BOARD" },
   { id: "planner", label: "PLANNER" },
+  { id: "skills", label: "SKILL TREE" },
   { id: "calls", label: "CALL LIST" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "drops", label: "INBOX · KEYS" },
@@ -152,6 +154,8 @@ export function Board() {
                 onToggleTask={(id, done) => update(id, { done })}
               />
             )}
+
+            {tab === "skills" && <SkillTree />}
 
             {tab === "pipelines" && <PipelineOps />}
 

@@ -1,0 +1,552 @@
+[
+  {
+    "id": "web-how-the-web-works",
+    "track": "webdev",
+    "title": "How the Web Works",
+    "subtitle": "URL to pixels",
+    "level": 0,
+    "parents": [
+      "root"
+    ],
+    "minutes": 15,
+    "explain": "When you type `exun-webdev-psi.vercel.app` into a browser, four things happen in order:\n\n1. **DNS lookup**: the domain name is translated into an IP address (the actual machine to talk to).\n2. **HTTP request**: your browser sends a text message like `GET /index.html` to that machine.\n3. **HTTP response**: the server replies with a status code (200 = here you go) plus the file.\n4. **Render**: the browser parses the HTML, then fetches every file the HTML mentions (your `styles.css`, your `script.js`) with more GET requests, and paints the page.\n\nWhy it matters: every single thing in web dev is built on this request and response loop. Your e-Lite site does it three layers deep: the browser GETs the page, then `script.js` GETs the Hacker News API, then your Express backend answers GETs of its own.\n\n**Common mistake**: thinking the server \"pushes\" the page to you. It never does (until websockets, much later in this tree). The browser always asks first; the server only ever answers.",
+    "example": "Open DevTools (F12) > Network tab, then load your live site:\n\nhttps://exun-webdev-psi.vercel.app\n\nYou will see a waterfall of requests:\n  index.html   200  document\n  styles.css   200  stylesheet\n  script.js    200  script\n\nEach row is one full request/response cycle. Click one to see the raw headers your browser sent.",
+    "exercise": "Without looking anything up, write the four steps that happen between typing a URL and seeing the page, in order, one line each. Then answer: when index.html is loaded, how does the browser know to also fetch styles.css?",
+    "solution": "1. DNS turns the domain into an IP address.\n2. Browser sends an HTTP GET request to that IP.\n3. Server sends back a status code + the HTML file.\n4. Browser parses the HTML and renders it.\n\nThe browser fetches styles.css because the HTML contains <link rel=\"stylesheet\" href=\"styles.css\">. Parsing that tag triggers a second GET request.",
+    "checklist": [
+      "Can I name the 4 steps from URL to rendered page?",
+      "Who initiates every plain-HTTP exchange, the browser or the server?",
+      "Why does loading one page show many rows in the Network tab?"
+    ]
+  },
+  {
+    "id": "web-html-structure",
+    "track": "webdev",
+    "title": "Semantic HTML",
+    "subtitle": "Structure with meaning",
+    "level": 1,
+    "parents": [
+      "web-how-the-web-works"
+    ],
+    "minutes": 20,
+    "explain": "HTML is the skeleton of a page, and *semantic* HTML means picking tags that say what content **is**, not what it looks like. Your `index.html` does this properly: `<header>` wraps the nav bar, `<nav>` wraps the links, `<main>` holds the page content, `<section class=\"hero\">` and `<section class=\"features\">` split it into meaningful chunks, and `<footer>` closes it out.\n\nWhy bother when `<div>` would render the same? Three reasons:\n\n- Screen readers and search engines use these tags to understand your page.\n- CSS gets easier: you styled `nav ul li a` directly because the structure is meaningful.\n- Six months from now, `<main>` tells you where the content lives instantly; `<div class=\"d3\">` tells you nothing.\n\nAlso load-bearing: the `<head>` section. Your pages declare `<meta charset=\"UTF-8\">`, a `<meta name=\"viewport\">` (which makes mobile rendering sane), a `<title>`, and the `<link>` to the shared stylesheet.\n\n**Common mistake**: \"div soup\", building everything from nested `<div>` tags. It works visually but throws away all the meaning, and accessibility tools see a page made of nothing.",
+    "example": "From your index.html:\n\n<header>\n  <nav>\n    <a href=\"index.html\" class=\"logo\">AUTOMATIC</a>\n    <ul>\n      <li><a href=\"index.html\">Home</a></li>\n      <li><a href=\"contact.html\">Contact</a></li>\n      <li><a href=\"waitlist.html\">Waitlist</a></li>\n    </ul>\n  </nav>\n</header>\n<main>\n  <section class=\"hero\">\n    <h1>AUTOMATIC</h1>\n    <p class=\"tagline\">yo. stop living ur life.</p>\n  </section>\n</main>\n<footer>\n  <p>&copy; 2026 AUTOMATIC.</p>\n</footer>",
+    "exercise": "Write the HTML skeleton for a one-page band site from memory: doctype, html with lang, head (charset, viewport, title), and a body containing header with nav, main with one section holding an h1, and a footer. Use zero div tags.",
+    "solution": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>The Band</title>\n</head>\n<body>\n  <header>\n    <nav>\n      <a href=\"#\">Home</a>\n    </nav>\n  </header>\n  <main>\n    <section>\n      <h1>The Band</h1>\n    </section>\n  </main>\n  <footer>\n    <p>&copy; 2026</p>\n  </footer>\n</body>\n</html>",
+    "checklist": [
+      "Can I explain why <main> beats <div class=\"main\"> if they render identically?",
+      "What two meta tags does every one of my pages start with, and what does each do?",
+      "Which semantic tags did my e-Lite homepage use, top to bottom?"
+    ]
+  },
+  {
+    "id": "web-css-basics",
+    "track": "webdev",
+    "title": "CSS Selectors & Box Model",
+    "subtitle": "Targeting and spacing",
+    "level": 2,
+    "parents": [
+      "web-html-structure"
+    ],
+    "minutes": 20,
+    "explain": "CSS is rules: a **selector** (who) plus declarations (what). Your `styles.css` uses the three core selector types: element (`body`, `header`), class (`.logo`, `.card`, `.button`), and descendant chains (`nav ul li a` means \"links inside list items inside lists inside nav\").\n\nEvery element is a box with four layers: content, **padding** (space inside the border), border, and **margin** (space outside). Your nav uses `padding: 16px 32px` so the links do not touch the edges.\n\nThe very first rule in your stylesheet is the famous reset:\n\n`* { margin: 0; padding: 0; box-sizing: border-box; }`\n\nTwo jobs: it wipes out the inconsistent default spacing every browser ships with, and `border-box` changes the math so `width: 300px` means the FULL box is 300px, padding and border included. Without it, padding gets added on top of the width and layouts overflow by mysterious amounts.\n\n**Common mistake**: confusing margin and padding. Padding pushes the border away from the content (inside). Margin pushes other elements away (outside). If a hover background should cover the spacing, that spacing must be padding, not margin.",
+    "example": "From your styles.css:\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: Arial, Helvetica, sans-serif;\n  background-color: #0e0e10;\n  color: #f2f2f2;\n  line-height: 1.6;\n}\n\nnav ul li a:hover {\n  color: #fff;\n}",
+    "exercise": "A box has width: 200px, padding: 20px, and border: 5px solid. Predict its total rendered width (a) with box-sizing: content-box (the default) and (b) with box-sizing: border-box. Show the math for both.",
+    "solution": "(a) content-box: 200 (content) + 20+20 (padding both sides) + 5+5 (border both sides) = 250px total.\n(b) border-box: 200px total. Padding and border are carved out of the declared width, leaving 150px for the content.\n\nThis is exactly why the reset at the top of styles.css sets border-box on everything: declared widths become real widths.",
+    "checklist": [
+      "Box model from inside out: can I name the 4 layers?",
+      "What does the * { box-sizing: border-box } reset actually change about width math?",
+      "What does the selector nav ul li a match, in plain English?"
+    ]
+  },
+  {
+    "id": "web-flexbox-layout",
+    "track": "webdev",
+    "title": "Flexbox Layout",
+    "subtitle": "Rows that just work",
+    "level": 3,
+    "parents": [
+      "web-css-basics"
+    ],
+    "minutes": 20,
+    "explain": "Flexbox solves the problem CSS was bad at for 15 years: putting things in a row and controlling the space between them. You set `display: flex` on a **parent**, and its direct children become flex items you can align with two key properties:\n\n- `justify-content`: spacing along the main axis (the row). `space-between` pushes the first child hard left and the last hard right.\n- `align-items`: alignment on the cross axis. `center` vertically centers items in the row.\n\nYour e-Lite nav bar is the textbook case. In `styles.css`:\n\n`nav { display: flex; justify-content: space-between; align-items: center; }`\n\nThat one rule pins the AUTOMATIC logo to the left, the link list to the right, and vertically centers both. Your `.features` section uses flex again with `flex-wrap: wrap` so the three cards sit side by side on wide screens and wrap onto new lines when the screen gets narrow.\n\n**Common mistake**: putting `display: flex` on the items instead of the container. Flex properties on the parent control the children. If `justify-content` seems to do nothing, you almost certainly set it on the wrong element.",
+    "example": "From your styles.css:\n\nnav {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 32px;\n}\n\n.features {\n  display: flex;\n  flex-wrap: wrap;\n  /* three .card children share the row,\n     wrapping when there is no room */\n}",
+    "exercise": "Write the CSS to make this header behave like your e-Lite nav: logo on the far left, links on the far right, everything vertically centered.\n\n<header class=\"bar\">\n  <span class=\"logo\">SITE</span>\n  <div class=\"links\">...</div>\n</header>\n\nThen answer: which element gets display: flex and why?",
+    "solution": ".bar {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\nThe PARENT (.bar) gets display: flex, because flexbox works by making a container lay out its direct children. justify-content: space-between then pushes .logo and .links to opposite ends, and align-items: center handles the vertical centering.",
+    "checklist": [
+      "Does display: flex go on the parent or the children?",
+      "justify-content vs align-items: which axis does each control?",
+      "Which two places in my e-Lite stylesheet use flexbox, and for what?"
+    ]
+  },
+  {
+    "id": "web-css-polish",
+    "track": "webdev",
+    "title": "Transitions & Responsive Polish",
+    "subtitle": "Smooth and screen-proof",
+    "level": 4,
+    "parents": [
+      "web-flexbox-layout"
+    ],
+    "minutes": 20,
+    "explain": "Two things separate a site that feels finished from one that feels like homework: motion and responsiveness. The induction brief literally graded you on \"transitions/polish\", and your site earned it.\n\n**Transitions** animate property changes instead of snapping. Your `.button` declares `transition: transform 0.15s ease, background-color 0.2s ease`, and on `:hover` applies `transform: translateY(-2px)`, a tiny lift. The crucial detail: the `transition` property lives on the base rule, NOT inside `:hover`. Put it only in the hover rule and the animation plays on the way in but snaps back instantly on the way out.\n\n**Responsiveness** in your build comes from three tools that need zero media queries:\n\n- `<meta name=\"viewport\" content=\"width=device-width\">` so phones do not pretend to be 980px wide.\n- `max-width` on text blocks (your pitch caps at 620px, forms at 480px) so lines stay readable.\n- `flex-wrap: wrap` so the feature cards and article cards reflow onto new lines on narrow screens.\n\n**Common mistake**: animating layout properties like `width` or `margin`, which forces the browser to recalculate the whole page every frame. `transform` and `opacity` are the cheap ones; notice your hover effects only ever touch transform and colors.",
+    "example": "From your styles.css:\n\n.button {\n  transition: transform 0.15s ease, background-color 0.2s ease;\n}\n\n.button:hover {\n  transform: translateY(-2px);  /* tiny lift on hover */\n}\n\n.card {\n  transition: transform 0.2s ease, border-color 0.2s ease;\n}\n\n.card:hover {\n  transform: translateY(-4px);\n}",
+    "exercise": "This card snaps up instantly on hover but should glide both in AND out over 0.2s. Fix it and explain what was wrong:\n\n.card:hover {\n  transform: translateY(-4px);\n  transition: transform 0.2s ease;\n}",
+    "solution": ".card {\n  transition: transform 0.2s ease;\n}\n\n.card:hover {\n  transform: translateY(-4px);\n}\n\nThe bug: transition was declared only inside :hover, so it only applies while hovering. Mouse-in animates, but on mouse-out the :hover rule (and its transition) vanish, so the card snaps back. Declaring transition on the base .card rule makes it apply in both directions.",
+    "checklist": [
+      "Why does the transition property belong on the base rule instead of :hover?",
+      "Which 3 things make my e-Lite site survive a phone screen without any media query?",
+      "Which CSS properties are cheap to animate, and which are expensive?"
+    ]
+  },
+  {
+    "id": "web-js-basics",
+    "track": "webdev",
+    "title": "JavaScript in the Page",
+    "subtitle": "Making pages think",
+    "level": 2,
+    "parents": [
+      "web-html-structure"
+    ],
+    "minutes": 20,
+    "explain": "HTML is structure, CSS is looks, JavaScript is behavior. A `<script src=\"script.js\"></script>` tag at the end of `<body>` loads your code after the HTML above it exists, then it runs top to bottom.\n\nYour whole e-Lite frontend is ONE `script.js` shared by five pages, and the trick that makes that work is worth learning early. The top comment in your file says it: \"Each if block below only runs on the page where that element actually exists.\" Concretely:\n\n`var contactBox = document.getElementById(\"contactBox\");`\n`if (contactBox) { ...contact page logic... }`\n\nOn contact.html that lookup finds the element and the block runs. On every other page it returns `null`, which is falsy, so the block is skipped. One file, zero crashes, no duplicated code.\n\nThe building blocks you used everywhere: variables (`var me = null`), functions as values (`function loadMessages() {...}` defined once, passed around like data), and methods that take functions as arguments, which becomes the heart of events and fetch in the next nodes.\n\n**Common mistake**: loading the script in `<head>` (or before the elements it needs) and then wondering why `getElementById` returns null. The element genuinely does not exist yet when the code runs. Script at the end of body, or use the defer attribute.",
+    "example": "The pattern that runs your entire site (script.js, top of each section):\n\nvar contactBox = document.getElementById(\"contactBox\");\n\nif (contactBox) {\n  // only contact.html has #contactBox,\n  // so only contact.html runs this\n  var me = null;\n\n  function loadMessages() {\n    // defined here, reused by submit, edit and delete\n  }\n}",
+    "exercise": "Predict the output, then explain the difference between the two lookups:\n\nvar a = document.getElementById(\"hero\");      // exists in the HTML\nvar b = document.getElementById(\"unicorn\");   // does not exist\nconsole.log(Boolean(a), Boolean(b));\nif (b) { console.log(\"unicorn code ran\"); }",
+    "solution": "Output: true false (and nothing else).\n\ngetElementById returns the element object when found (truthy) and null when not found (falsy). So Boolean(a) is true, Boolean(b) is false, and the if (b) block is skipped entirely. This null-check-then-run pattern is exactly how one script.js safely serves all five pages of the e-Lite site.",
+    "checklist": [
+      "Why does putting the script tag at the end of body matter?",
+      "What does getElementById return when the element is missing, and why is that useful?",
+      "How does my single script.js avoid crashing on pages missing its elements?"
+    ]
+  },
+  {
+    "id": "web-dom-manipulation",
+    "track": "webdev",
+    "title": "DOM Manipulation",
+    "subtitle": "Rebuilding the page live",
+    "level": 3,
+    "parents": [
+      "web-js-basics"
+    ],
+    "minutes": 25,
+    "explain": "The DOM is the browser's live object tree of your HTML. JavaScript can read it, change it, and grow it, which is how your tech.html shows 18 Hacker News cards that were never in the HTML file.\n\nThe core API, all used heavily in your script.js:\n\n- `document.createElement(\"div\")` makes a detached element.\n- `el.textContent = \"...\"` sets its text.\n- `el.className`, `el.href` set attributes as properties.\n- `parent.appendChild(el)` attaches it to the page (this is when it appears).\n\nYour `loadMessages()` and the HN card builder both follow the same recipe: clear the container, loop over the data, build each row with createElement, append.\n\nNow the security lesson your own code comments call out. There are two ways to insert text: `innerHTML` (parses the string AS HTML) and `textContent` (treats it as plain text, always). Your message list and article cards deliberately use textContent, because the text comes from users and a random API. If someone's message is `<img src=x onerror=stealCookies()>`, innerHTML would execute it. That attack is called XSS, and textContent makes it impossible.\n\n**Common mistake**: reaching for innerHTML with string concatenation because it is shorter. It works right up until the data contains markup, then it is a security hole.",
+    "example": "From your script.js loadMessages():\n\nmyMessages.innerHTML = \"\";  // safe: clearing with an empty literal\n\ndata.messages.forEach(function (m) {\n  var row = document.createElement(\"div\");\n  row.className = \"message-row\";\n\n  var text = document.createElement(\"p\");\n  text.textContent = m.text;  // user data: textContent, never innerHTML\n\n  var meta = document.createElement(\"p\");\n  meta.className = \"meta\";\n  meta.textContent = new Date(m.createdAt).toLocaleString();\n\n  row.appendChild(text);\n  row.appendChild(meta);\n  myMessages.appendChild(row);\n});",
+    "exercise": "This renders a username from your API. Find the vulnerability, name the attack, and rewrite it safely:\n\nvar badge = document.createElement(\"span\");\nbadge.innerHTML = \"sending as \" + user.username;\nheader.appendChild(badge);",
+    "solution": "Vulnerability: user.username goes through innerHTML, so a username containing HTML (e.g. <img src=x onerror=alert(1)>) gets parsed and executed. The attack is XSS (cross-site scripting).\n\nSafe version:\n\nvar badge = document.createElement(\"span\");\nbadge.textContent = \"sending as \" + user.username;\nheader.appendChild(badge);\n\ntextContent treats the whole string as literal text, exactly like the sendingAs line in script.js does.",
+    "checklist": [
+      "textContent vs innerHTML: which parses HTML and why does that matter for user data?",
+      "What is the 4-step recipe for rendering an array as DOM cards?",
+      "When does a created element actually become visible on the page?"
+    ]
+  },
+  {
+    "id": "web-forms-events",
+    "track": "webdev",
+    "title": "Forms & Events",
+    "subtitle": "Intercepting the submit",
+    "level": 4,
+    "parents": [
+      "web-dom-manipulation"
+    ],
+    "minutes": 25,
+    "explain": "Events are the browser shouting \"something happened\", and `addEventListener(type, fn)` is how you answer. Your script.js listens for `submit` on forms, `click` on buttons, `keyup` for the Enter key on the HN search, and `change` on the category dropdown.\n\nForms have a special gotcha. A form's default behavior is to navigate away and reload the page on submit, which would kill your JavaScript. So every form handler you wrote starts the same way:\n\n`event.preventDefault();`\n\nThat one line cancels the navigation so you can read the values and call the API yourself. Forget it and the page \"flashes\", everything resets, and you wonder why nothing worked.\n\nReading values: text inputs are `input.value` (your code always wraps it in `.trim()` so spaces do not pass as content). Radio groups need a different move; your waitlist page does:\n\n`document.querySelector('input[name=\"updates\"]:checked').value`\n\nplus the `checked` attribute on the first radio in the HTML so one is ALWAYS selected, exactly what the task demanded.\n\nValidation before sending: the contact form rejects empty text, the waitlist form rejects emails missing @ or a dot, and both write the complaint into an error element instead of using a disruptive alert.\n\n**Common mistake**: forgetting preventDefault. Hands down the most classic beginner form bug, and the reason the very first line inside each of your six submit handlers is that call.",
+    "example": "From your script.js (waitlist page):\n\ndocument.getElementById(\"waitlistForm\").addEventListener(\"submit\", function (event) {\n  event.preventDefault();  // stop the page reload\n\n  var email = document.getElementById(\"waitEmail\").value.trim();\n  var updates = document.querySelector('input[name=\"updates\"]:checked').value;\n\n  if (email === \"\" || !email.includes(\"@\") || !email.includes(\".\")) {\n    waitError.textContent = \"ts email looks dum, try a real one.\";\n    return;\n  }\n  // ...send to the API...\n});",
+    "exercise": "This handler never shows the error because the page reloads first. Fix the bug (one line) and add validation that rejects names shorter than 2 characters after trimming:\n\nform.addEventListener(\"submit\", function (event) {\n  var name = document.getElementById(\"name\").value;\n  errorBox.textContent = \"checking...\";\n});",
+    "solution": "form.addEventListener(\"submit\", function (event) {\n  event.preventDefault();  // the missing line: cancels the reload\n\n  var name = document.getElementById(\"name\").value.trim();\n  if (name.length < 2) {\n    errorBox.textContent = \"name too short\";\n    return;\n  }\n  errorBox.textContent = \"checking...\";\n});\n\nWithout preventDefault the form performs its default navigation, the page reloads, and the error text is wiped before anyone sees it.",
+    "checklist": [
+      "What exactly does event.preventDefault() stop on a form, and what goes wrong without it?",
+      "How do I read which radio button in a group is selected?",
+      "Why does my code .trim() every text value before validating it?"
+    ]
+  },
+  {
+    "id": "web-fetch-api",
+    "track": "webdev",
+    "title": "fetch & Promises",
+    "subtitle": "Asking servers for JSON",
+    "level": 4,
+    "parents": [
+      "web-dom-manipulation"
+    ],
+    "minutes": 25,
+    "explain": "`fetch(url)` sends an HTTP request from JavaScript and returns a **Promise**: an object representing an answer that has not arrived yet. You chain `.then(fn)` for success and `.catch(fn)` for failure. Your tech.html page is built on exactly this: fetch the Hacker News Algolia API, parse, render cards.\n\nThe chain in your loadNews():\n\n1. `fetch(url)` resolves with a Response when ANY reply arrives.\n2. Check `response.ok` yourself and throw if false.\n3. `response.json()` (another promise) parses the body.\n4. `.then(data => render)` builds the cards.\n5. `.catch(err => show message)` handles whatever broke above.\n\nQuery parameters are how you pass options in the URL: your code builds `?tags=front_page&hitsPerPage=18&query=...` and wraps user input in `encodeURIComponent()` so a search like \"C++\" does not corrupt the URL.\n\nYou also generalized this into the `api()` helper at the top of script.js: one function that does fetch + JSON + error extraction for every backend call on every page.\n\n**Common mistake**, and your own comment documents it: fetch does NOT reject on a 404 or 500. It only rejects on network failure. A 404 \"resolves successfully\", so if you skip the `response.ok` check, error pages get parsed as if they were data. That is why step 2 exists.",
+    "example": "From your script.js (tech page):\n\nvar url = \"https://hn.algolia.com/api/v1/search_by_date?tags=front_page&hitsPerPage=18\";\n\nfetch(url)\n  .then(function (response) {\n    // a non-2xx response still resolves fetch(), so check it ourselves\n    if (!response.ok) {\n      throw new Error(\"API returned status \" + response.status);\n    }\n    return response.json();\n  })\n  .then(function (data) {\n    data.hits.forEach(function (story) { /* build a card */ });\n  })\n  .catch(function (err) {\n    articlesBox.textContent = \"couldnt load stories rn (\" + err.message + \")\";\n  });",
+    "exercise": "Predict what this logs when the server responds 404 with body {\"error\":\"nope\"}:\n\nfetch(\"/api/missing\")\n  .then(function (r) { return r.json(); })\n  .then(function (data) { console.log(\"got:\", data); })\n  .catch(function (e) { console.log(\"failed:\", e.message); });\n\nThen fix it so a 404 lands in the catch instead.",
+    "solution": "It logs: got: { error: \"nope\" }\n\nfetch resolves on ANY HTTP response, including 404, so the success path runs and the error body is treated as data. The catch only fires on network-level failure.\n\nFix, same as loadNews() does:\n\nfetch(\"/api/missing\")\n  .then(function (r) {\n    if (!r.ok) throw new Error(\"status \" + r.status);\n    return r.json();\n  })\n  .then(function (data) { console.log(\"got:\", data); })\n  .catch(function (e) { console.log(\"failed:\", e.message); });",
+    "checklist": [
+      "When does fetch reject vs resolve? What does a 500 response do?",
+      "Why is response.json() itself a promise?",
+      "Why does my code wrap the search keyword in encodeURIComponent()?"
+    ]
+  },
+  {
+    "id": "web-node-express",
+    "track": "webdev",
+    "title": "Node & Express Server",
+    "subtitle": "Your own backend",
+    "level": 5,
+    "parents": [
+      "web-fetch-api"
+    ],
+    "minutes": 25,
+    "explain": "Until Assignment 2, your JavaScript only ran inside a browser. **Node.js** runs it on a machine directly, which lets you BE the server instead of just calling them. **Express** is the standard Node library that handles the messy HTTP parts so a server becomes a few readable lines.\n\nYour server.js boots like this:\n\n1. `require(\"express\")` loads the library (Node's import system; npm installed it into node_modules from package.json).\n2. `const app = express()` creates the app.\n3. Routes and middleware get attached.\n4. `app.listen(PORT)` opens the door. From then on, AUTOMATIC answers at http://localhost:3000.\n\nOne smart move in your setup: `app.use(express.static(__dirname))` makes the same server hand out your existing HTML/CSS/JS files untouched. One process serves the whole frontend AND the API, which kills CORS problems dead because the page and the API share an origin.\n\nAlso note `process.env.PORT || 3000` and dotenv: configuration comes from environment variables with sane fallbacks, never hardcoded secrets. Your repo ships `.env.example`, not `.env`.\n\n**Common mistake**: editing server code and refreshing the browser expecting changes. The server is a separate running process; unlike frontend files it must be restarted (Ctrl+C, `npm start`) to pick up edits.",
+    "example": "The skeleton of your server.js:\n\nrequire(\"dotenv\").config();\nconst express = require(\"express\");\n\nconst app = express();\nconst PORT = process.env.PORT || 3000;\n\n// serve the existing html/css/js as-is\napp.use(express.static(__dirname));\n\napp.get(\"/api/health\", (req, res) => {\n  res.json({ ok: true });\n});\n\napp.listen(PORT, () =>\n  console.log(\"AUTOMATIC running on http://localhost:\" + PORT)\n);",
+    "exercise": "From memory, write a minimal Express server that (1) listens on process.env.PORT or 4000, and (2) answers GET /api/ping with the JSON {\"pong\": true}. Then answer: after changing this file, why does refreshing the browser not show the change?",
+    "solution": "const express = require(\"express\");\nconst app = express();\nconst PORT = process.env.PORT || 4000;\n\napp.get(\"/api/ping\", (req, res) => {\n  res.json({ pong: true });\n});\n\napp.listen(PORT, () => console.log(\"on \" + PORT));\n\nRefreshing does nothing because the old code is still running in the Node process; the browser only talks to that process. You must restart the server (Ctrl+C then npm start) to load the new code.",
+    "checklist": [
+      "What do require, express(), and app.listen each do?",
+      "How does one server serve both my static site and my API, and why does that avoid CORS?",
+      "Where does the port number come from and why not hardcode it?"
+    ]
+  },
+  {
+    "id": "web-express-routing",
+    "track": "webdev",
+    "title": "Express Routing",
+    "subtitle": "URLs to handlers",
+    "level": 6,
+    "parents": [
+      "web-node-express"
+    ],
+    "minutes": 25,
+    "explain": "A route maps METHOD + PATH to a handler function: `app.get(\"/api/health\", (req, res) => {...})`. The two arguments are the whole game:\n\n- `req` is the request: `req.params` (URL placeholders), `req.body` (parsed JSON payload), `req.session` (who is asking).\n- `res` is your reply: `res.status(404).json({...})` and done.\n\nRoute **params** are placeholders in the path. Your messages router declares `GET /message/:id`, and Express puts whatever is in that slot into `req.params.id`. Your code then validates it with `mongoose.Types.ObjectId.isValid()` before using it, because garbage ids should get a clean 400, not a crash.\n\nAt scale, defining every route on `app` becomes a swamp, so Express has **Router**: a mini-app you fill with related routes and mount with a prefix. Your project splits cleanly into three files: `routes/auth.js`, `routes/messages.js`, `routes/waitlist.js`, mounted in server.js:\n\n`app.use(\"/api/auth\", auth.router);`\n`app.use(\"/api\", messages.router);`\n\nSo `router.post(\"/register\")` inside auth.js actually answers at `/api/auth/register`. Prefix plus route path.\n\n**Common mistake**: forgetting that mounted routers are prefixed. You stare at auth.js, see `/register`, test `POST /register`, and get a 404, because the real path is `/api/auth/register`.",
+    "example": "routes/messages.js (yours, trimmed):\n\nconst router = express.Router();\n\nrouter.get(\"/message/:id\", requireLogin, async (req, res) => {\n  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {\n    return res.status(400).json({ error: \"ts id looks dum\" });\n  }\n  const messages = await Message.find({ user: req.params.id });\n  res.json({ messages });\n});\n\nmodule.exports = { router };\n\n// server.js\napp.use(\"/api\", messages.router);  // so the real URL is /api/message/:id",
+    "exercise": "Given this setup:\n\n// server.js\napp.use(\"/api/auth\", authRouter);\n\n// auth.js\nrouter.post(\"/login\", handler);\nrouter.get(\"/me\", handler);\n\nWrite (a) the full URL + method that triggers each handler, and (b) for a request to GET /api/auth/me/extra, what status comes back and why?",
+    "solution": "(a) POST /api/auth/login and GET /api/auth/me. The mount prefix /api/auth is glued in front of each router path.\n(b) 404. /me/extra does not match the /me route pattern (no params or wildcards are declared), and no other route matches, so Express falls through to not-found.",
+    "checklist": [
+      "Where do req.params and req.body each come from?",
+      "If a router is mounted at /api and declares /message/:id, what is the full URL?",
+      "Why does my code validate :id before calling findById?"
+    ]
+  },
+  {
+    "id": "web-middleware",
+    "track": "webdev",
+    "title": "Middleware",
+    "subtitle": "The request pipeline",
+    "level": 7,
+    "parents": [
+      "web-express-routing"
+    ],
+    "minutes": 20,
+    "explain": "Middleware is the idea that makes Express click: every request flows through a **pipeline** of functions, in the order you registered them, before reaching the route handler. Each function gets `(req, res, next)` and chooses: call `next()` to pass the request along, or send a response and end it right there.\n\nYour server.js builds this pipeline: `express.json()` (parses JSON bodies into req.body), then `session(...)` (attaches req.session from the cookie), then `express.static` (if it matches a file, respond now), then your routers.\n\nThe one you wrote yourself is the cleanest example, in routes/auth.js:\n\n`function requireLogin(req, res, next) { if (!req.session.userId) return res.status(401).json({ error: \"u gotta log in first\" }); next(); }`\n\nDrop it into any route as a middle argument (`router.post(\"/message\", requireLogin, handler)`) and that route is gated. Eleven routes share one guard, written once. That is the why of middleware: cross-cutting concerns (auth, parsing, logging) get extracted instead of copy-pasted into every handler.\n\nThe error handler is special middleware with FOUR arguments `(err, req, res, next)`, registered last. Express 5 routes anything an async handler throws straight to it, so one function catches every database explosion in the app.\n\n**Common mistake**: order. Middleware runs in registration order. Mount your routers before `express.json()` and req.body is undefined in every handler. Your server.js registers json and session first for exactly this reason.",
+    "example": "Yours, from routes/auth.js and routes/messages.js:\n\nfunction requireLogin(req, res, next) {\n  if (!req.session.userId) {\n    return res.status(401).json({ error: \"u gotta log in first\" });\n  }\n  next();  // logged in: continue to the real handler\n}\n\n// used as the second argument, before the handler:\nrouter.post(\"/message\", requireLogin, async (req, res) => {\n  const message = await Message.create({\n    user: req.session.userId,\n    text: req.body.text.trim()\n  });\n  res.status(201).json({ message });\n});",
+    "exercise": "Write an Express middleware called logTime that prints the method and URL of every request (e.g. \"GET /api/health\") and then lets the request continue. Show both the function and the one line that applies it to ALL routes. What happens if you forget to call next()?",
+    "solution": "function logTime(req, res, next) {\n  console.log(req.method + \" \" + req.url);\n  next();\n}\n\napp.use(logTime);  // registered before the routes it should cover\n\nIf you forget next(), the request enters logTime and never leaves: no route runs, no response is sent, and the browser hangs until it times out. A middleware must either call next() or send a response.",
+    "checklist": [
+      "What are a middleware's two legal ways to finish?",
+      "Why is registration order critical (json/session before routers)?",
+      "How does requireLogin protect 11 routes with zero copy-paste?"
+    ]
+  },
+  {
+    "id": "web-rest-status-codes",
+    "track": "webdev",
+    "title": "REST & Status Codes",
+    "subtitle": "Verbs with meaning",
+    "level": 7,
+    "parents": [
+      "web-express-routing"
+    ],
+    "minutes": 20,
+    "explain": "REST is a convention: the HTTP **method** says what kind of action, the **URL** says which resource, and the **status code** says how it went. Your messages API is a textbook CRUD mapping:\n\n- CREATE: `POST /api/message` returns **201** (created)\n- READ: `GET /api/message/:userId` returns **200**\n- UPDATE: `PUT /api/notes/:id` returns **200**\n- DELETE: `DELETE /api/message/:id` returns **200**\n\nStatus codes are the API's vocabulary, and your backend uses six of them deliberately:\n\n- **400** bad request: empty text, malformed ObjectId\n- **401** unauthenticated: requireLogin fired, nobody is logged in\n- **403** forbidden: logged in, but trying to edit someone ELSE's message\n- **404** not found: valid id, no such document\n- **409** conflict: username or email already taken at register\n- **500** server error: the catch-all error handler\n\nThe 401 vs 403 distinction is the one interviewers love: 401 means \"I do not know who you are\", 403 means \"I know exactly who you are, and no.\" Your messages.js update route shows both in ten lines.\n\n**Common mistake**: returning 200 for everything with `{\"error\": ...}` in the body. Clients and tools key off the status code; your own `api()` helper in script.js literally checks `response.ok` to decide whether to throw. An API that lies in its status codes breaks every client built on it.",
+    "example": "Your PUT /notes/:id handler walks the whole ladder:\n\nif (badId(req.params.id))\n  return res.status(400).json({ error: \"ts id looks dum\" });\n// requireLogin already sent 401 if nobody is logged in\n\nconst message = await Message.findById(req.params.id);\nif (!message)\n  return res.status(404).json({ error: \"no such message\" });\n\nif (message.user.toString() !== req.session.userId.toString())\n  return res.status(403).json({ error: \"ts is not ur message to edit\" });\n\nmessage.text = text;\nawait message.save();\nres.json({ message });  // 200",
+    "exercise": "For each scenario against your API, write the status code it should return:\n(a) POST /api/message while logged out\n(b) POST /api/message logged in, with text \"\"\n(c) PUT /api/notes/<someone else's message id> logged in\n(d) DELETE /api/message/abc123 (not a valid ObjectId)\n(e) POST /api/auth/register with an email that already exists\n(f) POST /api/message logged in with valid text",
+    "solution": "(a) 401: requireLogin blocks it, identity unknown.\n(b) 400: authenticated but the request itself is invalid (empty text).\n(c) 403: identity known, ownership check fails. Not 401, you ARE logged in.\n(d) 400: fails the ObjectId validity check before any database lookup.\n(e) 409: conflict with an existing resource.\n(f) 201: resource created (not plain 200; creation gets its own code).",
+    "checklist": [
+      "401 vs 403: one sentence each, what is the difference?",
+      "Which HTTP method pairs with each letter of CRUD?",
+      "Why is 200-with-error-body an API design bug?"
+    ]
+  },
+  {
+    "id": "web-mongodb-mongoose",
+    "track": "webdev",
+    "title": "MongoDB & Mongoose",
+    "subtitle": "Data that survives",
+    "level": 7,
+    "parents": [
+      "web-express-routing"
+    ],
+    "minutes": 25,
+    "explain": "Variables die when the server restarts; databases do not. MongoDB stores **documents** (JSON-like objects) in **collections**, and Mongoose is the Node library that adds structure on top: a **Schema** declares what fields a document may have, and a **Model** is the class you query with.\n\nYour models.js defines all three shapes: User, Message, WaitlistEntry. Schema options do real work:\n\n- `required: true` rejects saves missing the field\n- `unique: true` makes the DATABASE refuse duplicates (your waitlist's one-spot-per-user rule lives here, not in route code)\n- `trim`, `lowercase` normalize strings on the way in\n- `{ timestamps: true }` adds createdAt/updatedAt for free\n\nRelationships: a Message stores `user: ObjectId ref \"User\"`, a pointer to the owning account. One `Message.find({ user: id })` then fetches everything one person sent.\n\nThe query verbs map straight onto your routes: `Message.create({...})`, `Message.find({user})`, `findById(id)`, `doc.save()`, `doc.deleteOne()`, `User.findOne({ $or: [{email}, {username}] })`. All return promises, hence `await` everywhere.\n\nA clever bit of your setup: with no MONGODB_URI set, server.js spins up `mongodb-memory-server`, a real Mongo that needs zero install but forgets on restart. Set the env var and the same code talks to Atlas with persistence. Same Mongoose calls either way.\n\n**Common mistake**: passing a malformed string to findById, which throws a CastError and 500s the request. Your badId() guard checks `ObjectId.isValid()` first and turns that crash into a clean 400.",
+    "example": "From your models.js:\n\nconst messageSchema = new mongoose.Schema(\n  {\n    user: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n    text: { type: String, required: true, trim: true }\n  },\n  { timestamps: true }\n);\n\nmodule.exports = {\n  Message: mongoose.model(\"Message\", messageSchema)\n};\n\n// and in a route:\nconst message = await Message.create({ user: req.session.userId, text });\nconst mine = await Message.find({ user: req.params.id }).sort({ createdAt: -1 });",
+    "exercise": "Write a Mongoose schema + model for a Todo: text (string, required, trimmed), done (boolean, default false), and an owner field pointing at a User, with automatic timestamps. Then write the one-line query that finds all UNFINISHED todos for owner id `uid`, newest first.",
+    "solution": "const todoSchema = new mongoose.Schema(\n  {\n    text: { type: String, required: true, trim: true },\n    done: { type: Boolean, default: false },\n    owner: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true }\n  },\n  { timestamps: true }\n);\nconst Todo = mongoose.model(\"Todo\", todoSchema);\n\nconst open = await Todo.find({ owner: uid, done: false }).sort({ createdAt: -1 });",
+    "checklist": [
+      "Schema vs Model: what does each one do?",
+      "How does unique: true on the waitlist schema enforce one-spot-per-user without route code?",
+      "What does ref: \"User\" + an ObjectId field let me query?"
+    ],
+    "loophole": "The Exun spec wanted a database. It never said WHERE it had to live. So instead of an Atlas account, a connection string, and a grader who has to set env vars, I used `mongodb-memory-server`: a real MongoDB that boots inside the Node process and wipes on restart. `npm install && npm start` just works with zero config, and the Mongoose code is identical either way. Reads like a full database setup; is actually zero infrastructure. The habit worth stealing: read the spec for what it does NOT demand, and ship the smallest thing that satisfies the literal requirement."
+  },
+  {
+    "id": "web-auth-sessions",
+    "track": "webdev",
+    "title": "Auth: bcrypt & Sessions",
+    "subtitle": "Who is asking?",
+    "level": 8,
+    "parents": [
+      "web-middleware",
+      "web-mongodb-mongoose"
+    ],
+    "minutes": 30,
+    "explain": "HTTP is stateless: every request arrives anonymous. Auth is the machinery that fixes that, and your Assignment 2 built the full classic stack.\n\n**Passwords**: never stored. Your register route runs `bcrypt.hash(password, 10)` and stores only the hash; bcrypt is deliberately slow and salted, so even a stolen database does not yield passwords. Login runs `bcrypt.compare(typed, storedHash)`. Detail worth stealing: your login returns the SAME error for wrong email and wrong password, so attackers cannot use the form to discover which emails have accounts.\n\n**Sessions**: after login, `req.session.userId = user._id` stores the id server-side, and the browser gets a signed cookie pointing at that session. Every later request carries the cookie automatically, so `req.session.userId` answers \"who is asking\" forever after. Your cookie flags matter: `httpOnly` (page JS cannot read it, so XSS cannot steal it) and `sameSite: \"lax\"` (other sites cannot ride on it).\n\n**Authorization** is the separate question \"are you ALLOWED\": requireLogin gates routes (401), and ownership checks like `message.user.toString() !== req.session.userId.toString()` stop users editing each other's data (403). Without that check, any logged-in user could rewrite anyone's messages by guessing ids.\n\nYour delete route also cleans up messages and waitlist entries before deleting the user, so no orphan data survives.\n\n**Common mistake**: comparing two ObjectIds with ===. They are objects, so two ids with identical values are NOT === equal. Your code calls .toString() on both sides first. Skip that and every ownership check silently fails.",
+    "example": "From your routes/auth.js:\n\n// register: hash, store, log them in\nconst passwordHash = await bcrypt.hash(password, 10);\nconst user = await User.create({ username, email, passwordHash });\nreq.session.userId = user._id;\n\n// login: same error for both failure kinds, on purpose\nconst user = await User.findOne({ email: email.toLowerCase() });\nif (!user || !(await bcrypt.compare(password, user.passwordHash))) {\n  return res.status(401).json({ error: \"wrong email or password, ts aint it\" });\n}\nreq.session.userId = user._id;",
+    "exercise": "Spot the THREE security bugs in this login route and fix each one:\n\nrouter.post(\"/login\", async (req, res) => {\n  const user = await User.findOne({ email: req.body.email });\n  if (!user) return res.status(401).json({ error: \"no account with that email\" });\n  if (req.body.password !== user.password)\n    return res.status(401).json({ error: \"wrong password\" });\n  req.session.userId = user._id;\n  res.json({ ok: true });\n});",
+    "solution": "Bug 1: comparing plain-text passwords means they are STORED in plain text. Store a bcrypt hash and check with await bcrypt.compare(req.body.password, user.passwordHash).\nBug 2: different error messages for \"no account\" vs \"wrong password\" let attackers probe which emails exist. Return one identical 401 message for both, like routes/auth.js does.\nBug 3: the email is not lowercased before lookup, so Shaurya@x.com and shaurya@x.com act like different accounts. Use req.body.email.toLowerCase() (the schema also stores lowercase).",
+    "checklist": [
+      "Why hash passwords with bcrypt instead of storing or encrypting them?",
+      "Walk the cookie: what happens between login and the next request that makes req.session.userId work?",
+      "Authentication vs authorization, and which status code belongs to each?"
+    ]
+  },
+  {
+    "id": "web-websockets",
+    "track": "webdev",
+    "title": "WebSockets",
+    "subtitle": "Server pushes back",
+    "level": 9,
+    "parents": [
+      "web-auth-sessions",
+      "web-rest-status-codes"
+    ],
+    "minutes": 30,
+    "explain": "Everything so far is request/response: the client asks, the server answers, the line goes dead. A **WebSocket** upgrades that into a persistent two-way pipe where EITHER side can send at any time. That push ability is the whole point, and it is what your `ws` branch bonus built: edit a message in one tab and every open tab updates instantly, because the server broadcasts the change instead of waiting to be asked.\n\nHow the handshake works: the connection STARTS as a normal HTTP request with an Upgrade header. Your server listens for the `upgrade` event and, here is the clever part, runs the SAME session middleware on that request first. So the cookie that authenticates your fetches also authenticates your socket, and anonymous connections get destroyed with a 401 before the socket ever opens.\n\nClient side (ws branch script.js): `new WebSocket(\"ws://\" + location.host)`, then `socket.send(JSON.stringify({type: \"update-note\", id, text}))` to talk and a `message` event listener to hear broadcasts. Note the protocol switch: ws:// instead of http://, wss:// on HTTPS.\n\nServer side: the `ws` library's WebSocketServer receives messages, runs the same ownership checks as the REST route, then loops over every connected client and sends a `note-updated` event to each.\n\n**Common mistake**: calling socket.send() before the connection finishes opening, or after it drops. Your client checks `socket.readyState === WebSocket.OPEN` first and shows \"refresh to reconnect\" on close instead of failing silently.",
+    "example": "From your ws branch:\n\n// client (script.js)\nvar proto = location.protocol === \"https:\" ? \"wss://\" : \"ws://\";\nsocket = new WebSocket(proto + location.host);\n\nsocket.addEventListener(\"message\", function (event) {\n  var data = JSON.parse(event.data);\n  // server broadcast \"note-updated\" -> re-render the list\n});\n\nif (socket && socket.readyState === WebSocket.OPEN) {\n  socket.send(JSON.stringify({ type: \"update-note\", id: m._id, text: newText }));\n}\n\n// server (server.js)\nserver.on(\"upgrade\", (req, socket, head) => {\n  // reuse the session middleware: no login, no socket (401)\n  wss.handleUpgrade(req, socket, head, (ws) => {\n    ws.userId = req.session.userId.toString();\n    wss.emit(\"connection\", ws, req);\n  });\n});",
+    "exercise": "Your contact page shows a list of messages. Two tabs are open. Describe (a) how tab B learns about an edit made in tab A under plain REST (master branch), and (b) under the ws branch. Then answer: why does the server attach ws.userId during the upgrade instead of trusting a userId field inside each incoming socket message?",
+    "solution": "(a) REST: tab B does NOT learn about it. It still shows stale data until something triggers a re-fetch (reload, or its own action calling loadMessages). HTTP cannot push.\n(b) ws branch: tab A sends update-note over its socket, the server validates and saves, then broadcasts note-updated to EVERY connected socket. Tab B's message listener fires and re-renders immediately.\n\nws.userId is set server-side from the session during the authenticated upgrade, so it cannot be forged. If the server trusted a userId inside message payloads, any client could claim to be anyone and edit other people's messages, exactly the spoofing the ownership check exists to stop.",
+    "checklist": [
+      "What can a WebSocket do that fetch fundamentally cannot?",
+      "How does my upgrade handler reuse the session cookie to reject anonymous sockets?",
+      "Why must I check readyState before socket.send()?"
+    ]
+  },
+  {
+    "id": "web-deploy-vercel",
+    "track": "webdev",
+    "title": "Deployment",
+    "subtitle": "localhost to the world",
+    "level": 5,
+    "parents": [
+      "web-css-polish",
+      "web-fetch-api"
+    ],
+    "minutes": 20,
+    "explain": "A site on localhost exists only on your machine. Deployment puts it on infrastructure the world can reach, and your induction submission lives at exun-webdev-psi.vercel.app: push to GitHub, Vercel builds and serves it, every new push deploys automatically.\n\nThe key concept your project teaches the hard way is **static vs dynamic hosting**. Static files (HTML, CSS, browser JS) just need to be COPIED to a server; Vercel does this perfectly and your home, mockup and tech pages work fully on the live URL (the tech page works because the fetch to Hacker News happens in the VISITOR'S browser, not on Vercel).\n\nBut a long-running Express process with a Mongo connection is dynamic: it needs a machine that stays on. Vercel's static hosting does not run your server.js, which is exactly why your contact, waitlist and account pages show a \"backend not running\" hint on the live site but work fine on localhost:3000. Hosting a backend needs either a Node host (Render, Railway, a VPS) or restructuring into serverless functions.\n\nSecond deployment discipline you already follow: secrets. `.env` is gitignored, `.env.example` documents the shape, and real values like MONGODB_URI and SESSION_SECRET are configured on the host, never committed.\n\n**Common mistake**: hardcoding http://localhost:3000 into frontend fetch URLs. Your script.js calls relative paths like `/api/message`, which automatically point at whichever host the page is on. Hardcode localhost and the deployed site calls a server that only exists on your laptop.",
+    "example": "Why your code survives deployment unchanged:\n\n// script.js: relative URL, works on any host\nfetch(\"/api\" + path, { ... })\n\n// server.js: host decides the port\nconst PORT = process.env.PORT || 3000;\n\n// .gitignore\n.env\nnode_modules\n\n// .env.example (committed, no real values)\nMONGODB_URI=\nSESSION_SECRET=",
+    "exercise": "Your live Vercel site: the tech page loads Hacker News stories fine, but the contact page says the backend is not running. Explain why one works and the other does not, naming where each request actually goes. Then state the bug in this line and fix it:\n\nfetch(\"http://localhost:3000/api/message\", { method: \"POST\", ... })",
+    "solution": "The tech page fetches https://hn.algolia.com directly from the visitor's browser, so it needs no server of mine; Vercel only had to serve the static HTML/JS. The contact page fetches /api/message, which must be answered by MY Express server, and Vercel's static hosting is not running server.js, so the call fails.\n\nThe bug: a hardcoded absolute localhost URL. Deployed visitors would try to reach a server on their own machine. Fix: use a relative path so it targets the current host:\n\nfetch(\"/api/message\", { method: \"POST\", ... })",
+    "checklist": [
+      "Static vs dynamic hosting: which parts of my project are which?",
+      "Why do relative /api URLs survive deployment when localhost URLs do not?",
+      "What is the .env / .env.example split protecting, and which one gets committed?"
+    ]
+  },
+  {
+    "id": "web-react-intro",
+    "track": "webdev",
+    "title": "React: Components & JSX",
+    "subtitle": "UI as functions",
+    "level": 5,
+    "parents": [
+      "web-forms-events",
+      "web-fetch-api"
+    ],
+    "minutes": 30,
+    "explain": "Manually poking the DOM with querySelector and innerHTML works for a small page and turns into spaghetti for an app: the UI and the data drift apart and you spend your life keeping them in sync. React flips it. You write a function that takes data and RETURNS what the screen should look like, and React figures out the DOM changes for you.\n\nA component is just that function. It returns JSX, which looks like HTML living inside JavaScript: `return <h2>Hello {name}</h2>`. The curly braces drop back into real JS, so you interpolate variables, map over arrays, and use conditionals right in the markup. Components are PascalCase (Card, not card) so React can tell them apart from plain HTML tags.\n\nData flows ONE way: a parent passes values down to a child through props, the child's single argument object. Props are read-only; a child never reaches up and edits its parent's data. This one-way flow is the whole reason React apps stay predictable as they grow, and it is the mental model the rest of the track builds on.\n\nComing from the appdev project: this is the same React that React Native uses, so every hour here is an hour toward the app, not a detour.",
+    "example": "// a component is a function returning JSX; props are its input\nfunction Card({ title, tag }) {\n  return (\n    <div className=\"card\">\n      <h3>{title}</h3>\n      <span>{tag}</span>\n    </div>\n  );\n}\n// used like a tag, props passed as attributes:\n// <Card title=\"copt.\" tag=\"appdev\" />",
+    "exercise": "Write a React component Profile that takes props { name, role } and returns a div containing an h2 with the name and a p with the role. Then write the one line that renders it for name 'Shaurya' and role 'builder' (just the JSX usage, e.g. <Profile ... />).",
+    "solution": "function Profile({ name, role }) {\n  return (\n    <div>\n      <h2>{name}</h2>\n      <p>{role}</p>\n    </div>\n  );\n}\n// usage:\n// <Profile name=\"Shaurya\" role=\"builder\" />",
+    "checklist": [
+      "What does a component function return, and what is JSX?",
+      "Why must component names be capitalized?",
+      "What does 'props are read-only, data flows one way' protect you from?"
+    ]
+  },
+  {
+    "id": "web-react-state",
+    "track": "webdev",
+    "title": "useState & useEffect",
+    "subtitle": "memory and side effects",
+    "level": 6,
+    "parents": [
+      "web-react-intro"
+    ],
+    "minutes": 35,
+    "explain": "Props come from the parent and never change from the inside. But a component often needs its OWN memory that changes over time: a counter, a typed input, fetched data. That is state, and you reach it with the useState hook.\n\n`const [count, setCount] = useState(0)` gives you the current value and a setter. The rule that catches everyone: never assign to the variable directly. You call the setter (`setCount(count + 1)`), and React re-runs your component function with the new value and updates the screen. Mutating the variable does nothing because React only re-renders when a setter tells it to.\n\nuseEffect is for SIDE EFFECTS: things outside rendering, like fetching from an API, setting a timer, or subscribing to something. It runs AFTER the render. Its second argument, the dependency array, controls when it re-runs: `[]` means once on mount, `[id]` means whenever id changes. Leave the array off entirely and it runs after every render, which is how people accidentally fetch in an infinite loop.\n\nHooks have two hard rules: only call them at the top level of a component (never inside an if or a loop), and only from React functions. Break those and the order React relies on falls apart.",
+    "example": "import { useState, useEffect } from 'react';\nfunction Counter() {\n  const [count, setCount] = useState(0);   // state\n  useEffect(() => {\n    document.title = `count: ${count}`;     // side effect\n  }, [count]);                              // re-run when count changes\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      clicked {count}\n    </button>\n  );\n}",
+    "exercise": "Write a component Hits that holds a number in state starting at 0, shows it inside a button, and adds 1 each time the button is clicked. Use useState and update only through the setter (never reassign the variable).",
+    "solution": "import { useState } from 'react';\nfunction Hits() {\n  const [hits, setHits] = useState(0);\n  return (\n    <button onClick={() => setHits(hits + 1)}>\n      {hits}\n    </button>\n  );\n}",
+    "checklist": [
+      "Why does reassigning the state variable directly not update the screen?",
+      "What does the useEffect dependency array control, and what does [] versus no array mean?",
+      "State the two rules of hooks (where you may call them)."
+    ]
+  },
+  {
+    "id": "web-react-native",
+    "track": "webdev",
+    "title": "React Native + Expo",
+    "subtitle": "same React, native screens",
+    "level": 7,
+    "parents": [
+      "web-react-state"
+    ],
+    "minutes": 35,
+    "explain": "React Native is the React you just learned, rendering to real iOS and Android views instead of a web page. Same components, same props, same useState and useEffect. What changes is the vocabulary of built-in elements and how you style them.\n\nThere is no div, p, or button. You use View (the container, like a div), Text (ALL text must sit inside a Text, you cannot put a bare string in a View), Pressable or TouchableOpacity (tappable), and Image. Styling is not CSS files; you pass a `style` object, usually made with StyleSheet.create, and the property names are camelCase (backgroundColor, not background-color). Layout is flexbox by default, and the default direction is column, not row, which surprises everyone coming from the web.\n\nExpo is the toolchain that makes this painless: `npx create-expo-app`, then `npx expo start`, scan the QR code with the Expo Go app, and your phone live-reloads as you save. No Xcode or Android Studio needed to start. This is exactly the stack your 'copt.' appdev project runs on, so this node is the bridge from the web track into that build.\n\nThe trap when crossing over: wrapping text directly in a View. `<View>hello</View>` crashes; it has to be `<View><Text>hello</Text></View>`.",
+    "example": "import { View, Text, Pressable, StyleSheet } from 'react-native';\nimport { useState } from 'react';\n\nexport default function Screen() {\n  const [n, setN] = useState(0);\n  return (\n    <View style={styles.box}>\n      <Text style={styles.label}>tapped {n}</Text>\n      <Pressable onPress={() => setN(n + 1)}>\n        <Text>tap me</Text>\n      </Pressable>\n    </View>\n  );\n}\nconst styles = StyleSheet.create({\n  box: { flex: 1, justifyContent: 'center', alignItems: 'center' },\n  label: { fontSize: 20, fontWeight: 'bold' },\n});",
+    "exercise": "Write a React Native screen component that shows a Text greeting and a Pressable that, when pressed, flips a boolean in state to toggle the greeting between 'hi' and 'bye'. Use View, Text, Pressable, and useState. Remember every string lives inside a Text.",
+    "solution": "import { View, Text, Pressable } from 'react-native';\nimport { useState } from 'react';\n\nexport default function Greeting() {\n  const [hi, setHi] = useState(true);\n  return (\n    <View>\n      <Text>{hi ? 'hi' : 'bye'}</Text>\n      <Pressable onPress={() => setHi(!hi)}>\n        <Text>toggle</Text>\n      </Pressable>\n    </View>\n  );\n}",
+    "checklist": [
+      "Map div, p, and button to their React Native equivalents.",
+      "Why does putting a bare string directly inside a View crash?",
+      "How does styling and the default flex direction differ from web CSS?"
+    ],
+    "loophole": "The 'copt.' app task is where this paid off. It never required a routing library, so there isn't one: screens swap with a single `useState` that picks which component to render. It explicitly ALLOWED login and register to be empty stub pages, so they stayed empty. Fewer dependencies, less code, and it still demos the full flow end to end. When the rules hand you an allowance (stubs are fine, no router required), take it, do not gold-plate past the spec."
+  },
+  {
+    "id": "web-expo-router",
+    "track": "webdev",
+    "title": "Expo Router",
+    "subtitle": "file-based screens",
+    "level": 8,
+    "parents": [
+      "web-react-native"
+    ],
+    "minutes": 30,
+    "explain": "One screen is a demo; an app has many and you move between them. Expo Router gives you navigation the same way Next.js gives the web routes: the FILE SYSTEM is the router. A file at app/index.tsx is the home route, app/settings.tsx is the /settings route, and a folder with nested files becomes nested routes. No central route config to keep in sync.\n\nYou move between screens with the Link component for declarative taps (`<Link href=\"/settings\">`), or imperatively with the useRouter hook when you need to navigate from code after, say, a successful login (`router.push('/home')`). Going back is `router.back()`.\n\nA special file, app/_layout.tsx, wraps every screen in that folder, which is where shared chrome lives: a tab bar, a header, a provider. Dynamic routes use brackets in the filename, app/butterfly/[id].tsx, and you read the id with useLocalSearchParams, the same pattern as passing a record id into a detail screen.\n\nIf you already understand Next.js file routing from the web side of this track, this is the same idea pointed at native screens, so it should click fast.",
+    "example": "// app/index.tsx  -> the \"/\" screen\nimport { View, Text } from 'react-native';\nimport { Link } from 'expo-router';\n\nexport default function Home() {\n  return (\n    <View>\n      <Text>home</Text>\n      <Link href=\"/about\">go to about</Link>\n    </View>\n  );\n}\n// app/about.tsx automatically becomes the \"/about\" screen",
+    "exercise": "Describe the two files you create to make a home screen and a 'profile' screen reachable at /profile, and write the Home component (app/index.tsx) with a Link that navigates to /profile. Just the index file's component is enough.",
+    "solution": "// file 1: app/index.tsx   (the home / \"/\" route)\n// file 2: app/profile.tsx (auto-becomes the \"/profile\" route)\nimport { View, Text } from 'react-native';\nimport { Link } from 'expo-router';\n\nexport default function Home() {\n  return (\n    <View>\n      <Text>home</Text>\n      <Link href=\"/profile\">open profile</Link>\n    </View>\n  );\n}",
+    "checklist": [
+      "How does Expo Router decide what the routes are?",
+      "When would you use useRouter().push() instead of a Link?",
+      "What is app/_layout.tsx for, and how do you make a dynamic route like /butterfly/3?"
+    ]
+  },
+  {
+    "id": "web-ship-eas",
+    "track": "webdev",
+    "title": "Ship with EAS",
+    "subtitle": "build and submit the app",
+    "level": 9,
+    "parents": [
+      "web-expo-router",
+      "web-deploy-vercel"
+    ],
+    "minutes": 25,
+    "explain": "A web app ends at a Vercel deploy. A phone app has one more step: it has to become an installable binary and, eventually, reach a store. EAS (Expo Application Services) is the cloud build service that does both without you owning a Mac or fighting native toolchains.\n\nThe config lives in app.json (or app.config.js): the app's name, slug, version, icon, splash screen, and bundle identifiers (a reverse-domain id like com.shaurya.copt for iOS, a package name for Android). Get these right once; they identify your app everywhere.\n\nThe commands are short. `eas build --platform android` (or ios) sends your project to Expo's servers, which compile a real .apk/.aab or .ipa and hand back a download link, no local Android Studio needed. `eas submit` then uploads that build to the Play Store or App Store. And because most changes are just JavaScript, `eas update` pushes an over-the-air update straight to installed apps, no new store build at all, which is the appdev equivalent of a fast Vercel redeploy.\n\nThe mental model: app.json is your manifest, build makes the binary, submit ships it, update patches the JS layer in place.",
+    "example": "// app.json -- the manifest EAS reads\n{\n  \"expo\": {\n    \"name\": \"copt.\",\n    \"slug\": \"copt\",\n    \"version\": \"1.0.0\",\n    \"ios\": { \"bundleIdentifier\": \"com.shaurya.copt\" },\n    \"android\": { \"package\": \"com.shaurya.copt\" }\n  }\n}\n// then, in the terminal:\n//   eas build --platform android   -> cloud-built .aab + a link\n//   eas submit  --platform android -> uploads to Play Store\n//   eas update                     -> OTA JS patch to live installs",
+    "exercise": "Write the minimal expo block of app.json for an app named 'copt.' at version 1.0.0 with an Android package com.shaurya.copt, then write the single command that produces an installable Android build in the cloud.",
+    "solution": "// app.json\n{\n  \"expo\": {\n    \"name\": \"copt.\",\n    \"slug\": \"copt\",\n    \"version\": \"1.0.0\",\n    \"android\": { \"package\": \"com.shaurya.copt\" }\n  }\n}\n// command:\n//   eas build --platform android",
+    "checklist": [
+      "What lives in app.json and why do the bundle id / package matter?",
+      "What does eas build give you that a Vercel deploy never has to produce?",
+      "When can you use eas update (OTA) instead of a full rebuild and resubmit?"
+    ]
+  },
+  {
+    "id": "web-nextjs",
+    "track": "webdev",
+    "title": "Next.js: App Router",
+    "subtitle": "React as a real framework",
+    "level": 7,
+    "parents": [
+      "web-react-state"
+    ],
+    "minutes": 35,
+    "explain": "Plain React gives you components and nothing else: no routing, no server, no build story. Next.js wraps React into a full framework, and it is what the auto-portfolio actually runs on (Next.js 16).\n\nThe App Router is folder-based, like Express routes but for pages. A folder under app/ is a route; app/page.tsx is the home page, app/work/page.tsx is /work, and app/layout.tsx wraps everything in that folder with shared chrome (nav, fonts). Same file-as-route idea you saw in Expo Router, pointed at the web.\n\nThe piece that trips people up is server versus client components. By DEFAULT every component renders on the SERVER: it runs once on Vercel, can read secrets and databases directly, and ships zero JavaScript for that part to the browser, so it is fast. The moment a component needs interactivity (useState, onClick, useEffect) you put `'use client'` at the very top of the file to opt INTO the browser. The habit: server by default, client only where you truly need hands-on behaviour.\n\nThat split is the whole reason a Next.js site can quietly do server work (fetch data, call an API with a secret key) without leaking anything to the visitor.",
+    "example": "// app/page.tsx -- a SERVER component (no 'use client')\nimport { Counter } from './counter';\n\nexport default function Home() {\n  // this runs on the server; could read a DB or env here\n  return (\n    <main>\n      <h1>revengine</h1>\n      <Counter />   {/* the interactive bit is its own client file */}\n    </main>\n  );\n}\n// app/counter.tsx starts with:  'use client'  (it uses useState)",
+    "exercise": "Sketch two files: app/page.tsx as a SERVER component that renders an h1 and a client <Hits /> component, and say (in a comment) what the very first line of the Hits file must be and why. You wrote Hits earlier in the React state node, so reuse it.",
+    "solution": "// app/page.tsx  (server component, no directive)\nimport { Hits } from './hits';\nexport default function Home() {\n  return (\n    <main>\n      <h1>revengine</h1>\n      <Hits />\n    </main>\n  );\n}\n// app/hits.tsx  -- first line MUST be:\n//   'use client'\n// because Hits calls useState, which only runs in the browser.",
+    "checklist": [
+      "How does the App Router decide what the routes are?",
+      "What renders on the server by default, and what does 'use client' opt into?",
+      "Why can a server component safely read a secret but a client component cannot?"
+    ]
+  },
+  {
+    "id": "web-server-routes",
+    "track": "webdev",
+    "title": "Server Code & API Routes",
+    "subtitle": "where secrets stay secret",
+    "level": 8,
+    "parents": [
+      "web-nextjs"
+    ],
+    "minutes": 30,
+    "explain": "Pages render UI. Sometimes you need a plain HTTP endpoint instead: something a cron can hit, or a form can POST to. In the App Router that is a Route Handler, a file app/api/<name>/route.ts that exports functions named after HTTP verbs: export GET, export POST, and so on. Same REST verbs you learned on the Express side, just living inside Next.\n\nThis code only ever runs on the server, which is the important part. That means it can read `process.env.MY_KEY` and the value never reaches the browser. API keys, database URLs, the LLM token: all of it lives in environment variables (you already keep yours in Doppler), gets injected at runtime, and stays server-side. The cardinal sin is putting a secret in a client component or, worse, a NEXT_PUBLIC_ variable, which Next deliberately ships to the browser.\n\nA handler reads the request, does work, and returns a Response, usually `Response.json(...)`. From here it can fetch any external API, talk to Mongo, or kick off a job. This node is the doorway between your site and everything it does behind the scenes.",
+    "example": "// app/api/health/route.ts\nexport async function GET() {\n  const region = process.env.VERCEL_REGION ?? 'local'; // server-only\n  return Response.json({ status: 'ok', region, now: Date.now() });\n}\n// hit it at /api/health -- no key ever crosses to the browser",
+    "exercise": "Write a Route Handler at app/api/ping/route.ts exporting a GET that returns JSON { ok: true, at: <current ISO time> }. Then write the one-sentence reason a secret read here is safe but the same read inside a 'use client' component is not.",
+    "solution": "// app/api/ping/route.ts\nexport async function GET() {\n  return Response.json({ ok: true, at: new Date().toISOString() });\n}\n// Reason: a route handler executes only on the server, so process.env\n// values are never serialized into anything the browser receives; a\n// client component's code is shipped to and runs in the browser.",
+    "checklist": [
+      "What is the filename pattern that turns a folder into an API endpoint?",
+      "Where do API keys live, and what makes NEXT_PUBLIC_ variables dangerous for secrets?",
+      "What does a route handler return to send back JSON?"
+    ]
+  },
+  {
+    "id": "web-vercel-cron",
+    "track": "webdev",
+    "title": "Vercel Cron Jobs",
+    "subtitle": "the site's heartbeat",
+    "level": 9,
+    "parents": [
+      "web-server-routes"
+    ],
+    "minutes": 25,
+    "explain": "A normal site only does something when a visitor clicks. An AUTOMATIC site needs to do things on its own, on a schedule, with nobody watching. On Vercel that is a Cron Job: an entry in vercel.json that maps a schedule to one of your route handlers, and Vercel calls that URL for you at those times.\n\nThe schedule uses cron syntax, five fields (minute, hour, day-of-month, month, day-of-week). `0 6 * * *` means 06:00 every day; `*/15 * * * *` means every fifteen minutes. You point it at a path like /api/iterate, and that handler runs as if someone had requested it.\n\nThe security gotcha everyone hits: that URL is public, so anyone who guesses it can trigger your job. The fix is a shared secret. You store a CRON_SECRET env var, Vercel sends it as an Authorization header on its scheduled calls, and your handler rejects any request that does not carry it. Without that guard a stranger can run your expensive LLM job all day.\n\nThis is the heartbeat of the auto-portfolio: the thing that wakes the site up.",
+    "example": "// vercel.json\n{\n  \"crons\": [\n    { \"path\": \"/api/iterate\", \"schedule\": \"0 6 * * *\" }\n  ]\n}\n\n// app/api/iterate/route.ts -- reject anyone without the secret\nexport async function GET(req: Request) {\n  const auth = req.headers.get('authorization');\n  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {\n    return new Response('forbidden', { status: 401 });\n  }\n  // ...do the scheduled work...\n  return Response.json({ ran: true });\n}",
+    "exercise": "Write the vercel.json crons entry that runs /api/iterate once a day at 6am, and the first few lines of that handler that reject any request whose Authorization header is not `Bearer <CRON_SECRET>` with a 401.",
+    "solution": "// vercel.json\n{ \"crons\": [ { \"path\": \"/api/iterate\", \"schedule\": \"0 6 * * *\" } ] }\n\n// app/api/iterate/route.ts\nexport async function GET(req: Request) {\n  if (req.headers.get('authorization') !== `Bearer ${process.env.CRON_SECRET}`) {\n    return new Response('forbidden', { status: 401 });\n  }\n  return Response.json({ ran: true });\n}",
+    "checklist": [
+      "Read the cron string 0 6 * * * out loud: when does it fire?",
+      "Why is an unguarded cron route a real risk, and how does CRON_SECRET fix it?",
+      "What does Vercel actually do at the scheduled time?"
+    ]
+  },
+  {
+    "id": "web-llm-in-app",
+    "track": "webdev",
+    "title": "Calling an LLM in Your App",
+    "subtitle": "the engine of self-iteration",
+    "level": 9,
+    "parents": [
+      "web-server-routes"
+    ],
+    "minutes": 30,
+    "explain": "A self-improving site needs something that can decide WHAT to improve. That decision comes from a language model, called from your own server code. The mechanics are just a fetch: POST a prompt to the model's chat-completions endpoint with your API key in the header, read the JSON back, pull out the text.\n\nTwo rules make it production-safe. First, it MUST happen in a server route, never the browser, because the request carries your secret key (you use Groq, and the key lives in an env var, not in the code). Second, treat the model's output as untrusted text: if you need structured data back, ask for JSON, then JSON.parse inside a try/catch, because a model will occasionally hand you something malformed and you do not want that to crash the cron.\n\nThe shape is always: build a prompt from your real inputs, send it, parse the reply, act on it. Here the 'act on it' is later (write a change, deploy). Right now just get clean text or JSON out of the call.\n\nThis is the brain that sits behind the heartbeat: cron wakes the route, the route asks the model, the model answers.",
+    "example": "// app/api/iterate/route.ts (inside the guarded handler)\nasync function askModel(prompt: string): Promise<string> {\n  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      Authorization: `Bearer ${process.env.GROQ_API_KEY}`, // server-only\n    },\n    body: JSON.stringify({\n      model: 'llama-3.3-70b-versatile',\n      messages: [{ role: 'user', content: prompt }],\n    }),\n  });\n  const data = await res.json();\n  return data.choices[0].message.content;\n}",
+    "exercise": "Write an async function suggestEdit(prompt) that POSTs to the Groq chat-completions URL with the key from process.env.GROQ_API_KEY, sends the prompt as a single user message, and returns the model's reply text. Keep it server-side; do not hardcode the key.",
+    "solution": "async function suggestEdit(prompt) {\n  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      Authorization: `Bearer ${process.env.GROQ_API_KEY}`,\n    },\n    body: JSON.stringify({\n      model: 'llama-3.3-70b-versatile',\n      messages: [{ role: 'user', content: prompt }],\n    }),\n  });\n  const data = await res.json();\n  return data.choices[0].message.content;\n}",
+    "checklist": [
+      "Why must the LLM call live in a server route and not a client component?",
+      "Why wrap a JSON.parse of model output in a try/catch?",
+      "Trace the chain: what wakes this call, and what supplies the API key?"
+    ]
+  },
+  {
+    "id": "web-self-iterating-site",
+    "track": "webdev",
+    "title": "Self-Iterating Site",
+    "subtitle": "the automatic website, end to end",
+    "level": 10,
+    "parents": [
+      "web-vercel-cron",
+      "web-llm-in-app",
+      "web-deploy-vercel"
+    ],
+    "minutes": 50,
+    "explain": "This is the capstone: the actual self-iterating portfolio, assembled from every node below it. Nothing new to learn, just the loop wired together.\n\nThe five stages, in order: (1) a Vercel CRON fires on schedule and hits a guarded route. (2) The route gathers SIGNAL, real data about how the site is doing (visitor analytics, which sections got attention). (3) It builds a prompt from that signal and asks the LLM for ONE concrete, small improvement. (4) It applies the change (commit a content/style tweak, or write to a store the site reads from). (5) That triggers a Vercel DEPLOY, and crucially a PREVIEW deploy, not production, so a human can look before it goes live.\n\nThe word 'self-learning' just means stage 2 feeds real outcomes back into stage 3: the site's own traffic shapes what it asks for next. Which is also why, with little traffic, the runs come back with nothing useful to change. That is the system working as designed on a quiet site, not a bug, so do not chase empty iteration runs.\n\nIf you can describe these five stages and say which earlier node powers each, you understand the whole machine.",
+    "example": "// app/api/iterate/route.ts -- the loop, guard already passed\nexport async function runIteration() {\n  const signal = await readAnalytics();          // 2. gather signal\n  const idea = await suggestEdit(                 // 3. ask the model\n    `Visitors did: ${signal}. Suggest ONE small improvement as JSON.`\n  );\n  const change = safeParse(idea);                // untrusted -> parse carefully\n  if (!change) return { skipped: 'empty or unusable' };\n  await applyChange(change);                      // 4. write the tweak\n  await triggerPreviewDeploy();                    // 5. PREVIEW, not prod\n  return { proposed: change.summary };\n}\n// stage 1 (the cron) lives in vercel.json and calls the route on schedule",
+    "exercise": "Write the five stages of the loop as a single commented function outline (just the stage comments and the call you'd make at each, no real bodies). Make stage 5 explicitly a PREVIEW deploy, and have the function bail early if the model returns nothing usable.",
+    "solution": "async function iterateOnce() {\n  // 1. cron triggers this route (configured in vercel.json)\n  const signal = await readAnalytics();        // 2. gather real signal\n  const idea = await suggestEdit(signal);      // 3. ask the LLM\n  const change = safeParse(idea);\n  if (!change) return;                         // bail on empty/unusable\n  await applyChange(change);                   // 4. apply the tweak\n  await triggerPreviewDeploy();                // 5. PREVIEW deploy only\n}",
+    "checklist": [
+      "Name the five stages of the loop in order.",
+      "What does 'self-learning' actually refer to here (which stage feeds which)?",
+      "Why are empty iteration runs expected on a low-traffic site rather than a bug?"
+    ],
+    "loophole": "The cron deploys a PREVIEW, never production. The robot proposes; a human runs `vercel promote` to ship. It is the cheapest insurance against the model pushing something broken to your live site, and it means a boring or empty iteration costs you nothing. Automate the labour, keep the gate. The lesson generalises: let automation do the work, but never let it be the last signature."
+  }
+]
