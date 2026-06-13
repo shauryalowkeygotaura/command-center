@@ -13,6 +13,7 @@ import {
   NODE_BY_ID,
   Progress,
   SkillNode,
+  TOTAL_NODES,
   TRACKS,
   computeLayout,
   isDone,
@@ -94,8 +95,10 @@ export function SkillTree() {
           );
         })}
         <div className="hud rounded-lg border border-line bg-panel px-3 py-2 font-mono text-xs">
-          <span className="text-amber">{xp} XP</span>
-          <span className="ml-1 text-cream-dim">(minutes mastered)</span>
+          <span className="text-amber">
+            {xp} / {TOTAL_NODES} XP
+          </span>
+          <span className="ml-1 text-cream-dim">(nodes done)</span>
         </div>
         {next && (
           <button
@@ -420,7 +423,7 @@ function LearnPanel({
                         : "cursor-not-allowed bg-panel text-cream-dim"
                     }`}
                   >
-                    ✓ mark complete (+{node.minutes} XP)
+                    ✓ mark complete (+1 XP)
                   </button>
                 ) : (
                   <button

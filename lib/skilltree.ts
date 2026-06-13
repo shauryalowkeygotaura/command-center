@@ -105,12 +105,13 @@ export function trackStats(track: TrackId, p: Progress) {
   return { done, total: nodes.length };
 }
 
+// XP = number of nodes completed (one node = one point), not minutes.
 export function totalXp(p: Progress): number {
-  return NODES.filter((n) => isDone(n.id, p)).reduce(
-    (sum, n) => sum + n.minutes,
-    0,
-  );
+  return NODES.filter((n) => isDone(n.id, p)).length;
 }
+
+// Total nodes in the tree, so the meter can read "12 / 70".
+export const TOTAL_NODES = NODES.length;
 
 // First node you can actually work on right now, shallowest first.
 export function nextUp(p: Progress): SkillNode | null {

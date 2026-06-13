@@ -107,7 +107,11 @@ export function Board() {
         />
       )}
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
+      <main
+        className={`mx-auto w-full flex-1 px-4 py-6 ${
+          tab === "skills" ? "max-w-none" : "max-w-6xl"
+        }`}
+      >
         {!mounted ? (
           <p className="font-mono text-sm text-cream-dim">loading board…</p>
         ) : (
