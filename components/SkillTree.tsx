@@ -295,6 +295,14 @@ function LearnPanel({
 
   const canComplete = !!p.draft?.trim();
 
+  // lesson vs exercise (test) view. Pressing "attempt" hides the explanation
+  // and worked example so the question is answered from memory, not copied.
+  const [mode, setMode] = useState<"lesson" | "exercise">("lesson");
+  // opening a different node always drops you back on the lesson side
+  useEffect(() => {
+    setMode("lesson");
+  }, [node.id]);
+
   return (
     <aside
       className="fixed inset-y-0 right-0 z-40 flex w-full flex-col border-l border-line bg-panel md:w-1/2"
@@ -350,7 +358,7 @@ function LearnPanel({
               </button>
             ))}
           </div>
-        ) : (
+        ) : mode === "lesson" ? (
           <div className="flex flex-col gap-5">
             {/* HOW IT WORKS */}
             <section>
@@ -384,10 +392,34 @@ function LearnPanel({
               </section>
             )}
 
+            {/* start the exercise -> switches to the no-peeking test view */}
+            <button
+              onClick={() => setMode("exercise")}
+              className="hud rounded-lg border border-amber/50 bg-amber/10 px-4 py-3 text-left transition hover:bg-amber/20"
+            >
+              <span className="block font-mono text-xs font-bold text-amber">
+                ✎ attempt the exercise from memory →
+              </span>
+              <span className="mt-0.5 block font-sans text-xs text-cream-dim">
+                opens on its own. the lesson hides, so you answer it yourself
+                instead of copying.
+              </span>
+            </button>
+          </div>
+        ) : (
+          /* EXERCISE (test) view — explanation + worked example are hidden */
+          <div className="flex flex-col gap-5">
+            <button
+              onClick={() => setMode("lesson")}
+              className="self-start rounded px-2 py-1 font-mono text-xs text-cream-dim transition hover:bg-panel-2 hover:text-cream"
+            >
+              ← back to the lesson
+            </button>
+
             {/* EXERCISE */}
             <section className="hud rounded-lg border border-amber/40 bg-panel-2 p-3">
               <h3 className="mb-2 font-mono text-[10px] font-bold tracking-wider text-amber">
-                YOUR TURN — DO IT HERE
+                YOUR TURN — NO PEEKING
               </h3>
               <div className="mb-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-cream">
                 {renderInline(node.exercise)}

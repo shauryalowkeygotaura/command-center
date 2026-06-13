@@ -4,7 +4,7 @@ import glob
 import os
 import sys
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
 URL = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3177"
 SHOT_DIR = os.path.join(os.path.dirname(__file__), "..", ".verify")
@@ -31,12 +31,27 @@ with sync_playwright() as pw:
     print("locked chips visible:", chips.count())
     page.screenshot(path=os.path.join(SHOT_DIR, "1-tree.png"))
 
-    # 2. open the CP root node -> panel with exercise
+    # 2. open the CP root node -> LESSON view (explanation + example, no exercise)
     page.get_by_role("button", name="Variables & Lists").first.click()
     page.wait_for_timeout(400)
-    assert page.get_by_text("YOUR TURN").is_visible(), "exercise section missing"
-    assert page.get_by_text("WORKED EXAMPLE").is_visible(), "example missing"
+    assert page.get_by_text("WORKED EXAMPLE").is_visible(), "lesson example missing"
+    assert page.get_by_text("YOUR TURN").count() == 0, (
+        "exercise should stay hidden until 'attempt' is pressed"
+    )
     page.screenshot(path=os.path.join(SHOT_DIR, "2-panel.png"))
+
+    # 2b. enter the no-peeking exercise view: lesson hides, exercise appears.
+    # The two views are mutually exclusive branches, so once the exercise is
+    # visible the lesson is unmounted. Bounded wait_for(detached) auto-waits
+    # (no fixed sleep) and we re-raise as a clear assertion on timeout.
+    page.get_by_role("button", name="attempt the exercise", exact=False).click()
+    page.get_by_text("YOUR TURN").wait_for(state="visible")
+    try:
+        page.get_by_text("WORKED EXAMPLE").wait_for(state="detached", timeout=4000)
+    except PlaywrightTimeoutError:
+        raise AssertionError(
+            "worked example still present in exercise view — answer could be copied"
+        )
 
     # 3. mark complete is gated until you type
     complete = page.get_by_role("button", name="mark complete", exact=False)
