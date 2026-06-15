@@ -17,7 +17,8 @@
       "Without looking: what index does the FIRST item of a list have?",
       "What does nums[-1] give you, and why is it useful?",
       "Does append return a new list or change the existing one?"
-    ]
+    ],
+    "interview": "Examiner tests whether indexing is automatic, not memorized. Be ready to state instantly that the first item is nums[0] and the last is nums[-1], and that len(nums) is the count not the last index. The builder nuance: off-by-one is the single most common beginner bug and judges give zero partial credit, so when reading code aloud point at each index and say the position. If asked, append mutates the list in place and returns None."
   },
   {
     "id": "cp-loops-if",
@@ -37,7 +38,8 @@
       "Why must total = 0 come before the loop, not inside it?",
       "What does x % 2 == 0 actually compute, in plain words?",
       "What happens if you forget to indent the line under for?"
-    ]
+    ],
+    "interview": "Examiner probes the two skeletons under every pattern: accumulate (total = 0 before the loop, add inside) and filter (empty list, loop, append on an if). Be ready to explain WHY total = 0 must sit before the loop: putting it inside resets the sum each step so you end with only the last item. The nuance only the builder knows: x % 2 == 0 is the even test (remainder zero), and Python uses indentation, not braces, to mark what is inside the loop."
   },
   {
     "id": "cp-strings",
@@ -57,7 +59,8 @@
       "In word[1:4], is the character at index 4 included or excluded?",
       "Why does word[0] = \"x\" crash, and what do you do instead?",
       "What does word[-1] give for any non-empty string?"
-    ]
+    ],
+    "interview": "Examiner checks that you treat a string as an indexable, sliceable, but IMMUTABLE list of characters. Be ready to explain slicing: word[1:3] includes start, excludes end. The builder nuance and classic gotcha: word[0] = 'X' crashes because strings cannot be edited in place; you build a new one with concatenation ('X' + word[1:]) or convert to list(word) for heavy editing. Methods like upper() return a COPY and leave the original untouched."
   },
   {
     "id": "cp-dicts-sets",
@@ -77,7 +80,8 @@
       "Why is x in a_set fast but x in a_list slow?",
       "What happens when you read a dict key that does not exist?",
       "In has_duplicate, why does return False come AFTER the loop, not inside it?"
-    ]
+    ],
+    "interview": "Examiner wants the complexity reason these exist: x in a_list is O(n) (scans every item) but x in a_set or key in a_dict is O(1) effectively instant, regardless of size. Be ready to say that swapping a list for a set is often the line between passing and timing out. The builder nuance: a dict stores key->value pairs and reading a missing key raises KeyError, so guard with `in` first or use .get() which returns None. This set/dict idea is the entire foundation of the hash map branch."
   },
   {
     "id": "cp-functions",
@@ -97,7 +101,8 @@
       "Why does a function that prints the right answer still fail every judge test?",
       "What does a function return if you never write a return line?",
       "What happens to the rest of a function after return runs?"
-    ]
+    ],
+    "interview": "Examiner tests the return-vs-print distinction because it is how every LeetCode/NeetCode problem and your day1 asserts are graded: the judge calls your function and compares the RETURNED value. Be ready to explain the classic gotcha plainly: print(answer) shows it on your screen but returns None to the grader, so every hidden test fails even though the output looks right. The builder nuance: the moment Python hits return the function ends and hands the value back. Print is for humans, return is for code."
   },
   {
     "id": "cp-contest-io",
@@ -118,7 +123,8 @@
       "What type does input() always return, even when the user types 42?",
       "Write from memory the one-liner that reads two integers from one line.",
       "Why would printing YES instead of Yes get a wrong-answer verdict on AtCoder?"
-    ]
+    ],
+    "interview": "Examiner checks contest-style stdin handling, since AtCoder and HackerRank feed text lines instead of calling a function. Be ready to write from muscle memory: a, b = map(int, input().split()) for one line of ints, and n = int(input()) then list(map(int, input().split())) for a count line plus a values line. The builder nuance and gotcha: input() always returns a STRING, so input() + input() concatenates ('35') instead of adding; convert with int() every time. AtCoder also matches output EXACTLY, so 'Yes' not 'YES' (your abc185_b ends with print('Yes' if ok else 'No') for exactly this)."
   },
   {
     "id": "cp-two-sum",
@@ -139,7 +145,8 @@
       "Explain why one pass works: where is the first number of the pair when you reach the second?",
       "Why must you check the dict before inserting the current number?",
       "What is the time complexity, and what was it for the nested-loop version?"
-    ]
+    ],
+    "interview": "Pattern: Arrays/Hashing. One-sentence core idea: a dict answers 'have I seen this before?' in O(1), so a nested double loop O(n^2) collapses to one pass O(n). Be ready to explain why one pass suffices: by the time you reach the second number of the winning pair, the first is already stored, so you only look backward. The classic gotcha the builder must own out loud: check whether target - n is in the dict BEFORE inserting the current number, otherwise with target 10 and value 5 the 5 matches itself and you return the same index twice. Store value->index because you must return positions."
   },
   {
     "id": "cp-group-anagrams",
@@ -159,7 +166,8 @@
       "Why are two words anagrams exactly when their sorted letters match?",
       "Why does sorted(w) fail as a dict key, and what are the two fixes?",
       "What does d.setdefault(key, []).append(w) do when the key is new? When it already exists?"
-    ]
+    ],
+    "interview": "Pattern: hash map one level up, using a computed FINGERPRINT as the key instead of the raw value. One-sentence core idea: two words are anagrams exactly when their sorted letters match, so the sorted string is a perfect dict key and anagrams collide into the same bucket automatically. Complexity is O(n*k log k) for n words of length k, versus comparing every pair. The classic gotcha: sorted(w) returns a LIST which is unhashable and cannot be a dict key, so join it into a string with ''.join(sorted(w)) (or use a tuple). Builder tip: d.setdefault(key, []).append(w) skips the if-key-not-in-d dance."
   },
   {
     "id": "cp-valid-palindrome",
@@ -179,7 +187,8 @@
       "Why is the loop condition l < r and not l <= r?",
       "What is the very first thing you do when the two characters differ?",
       "How would you extend this to ignore punctuation without changing the skeleton?"
-    ]
+    ],
+    "interview": "Pattern: Two Pointers. One-sentence core idea: keep a left pointer at index 0 and a right pointer at the last index, compare, and walk them toward each other, one comparison per step while l < r. Complexity is O(n) time and O(1) space, beating the build-a-reversed-copy approach on memory, but the real reason to learn it here is that the l/r skeleton is reused verbatim in Two Sum II. The classic gotcha: the loop condition is l < r (not <=) and BOTH pointers must move every round, or you do a useless self-comparison or loop forever. The full LeetCode version just adds 'skip non-alphanumeric, lowercase' before each compare; the skeleton is unchanged."
   },
   {
     "id": "cp-two-sum-ii",
@@ -199,7 +208,8 @@
       "When the sum is too small, why is moving l the ONLY move that can help?",
       "What property of the input makes this work, and what breaks if the list is unsorted?",
       "Hash map Two Sum vs pointer Two Sum II: what does each cost in memory?"
-    ]
+    ],
+    "interview": "Pattern: Two Pointers on a SORTED array. One-sentence core idea: with l at the start and r at the end, if the sum is too small move l up (only way to increase, since nums[l] is the smallest in play), if too big move r down. Complexity O(n) time and O(1) space, versus hash-map Two Sum which works on unsorted input but pays O(n) memory for the dict; be ready to contrast the two and say 'the word sorted should make my two-pointer alarm ring'. The classic gotcha: this problem wants 1-INDEXED positions, so return [l + 1, r + 1]; returning [l, r] fails every test with otherwise perfect logic."
   },
   {
     "id": "cp-valid-parentheses",
@@ -219,7 +229,8 @@
       "Why does LIFO match how brackets nest? Say it in one sentence.",
       "Why must the stack be empty at the end, and what input breaks the code if you skip that check?",
       "What two situations make a closing bracket invalid the moment you see it?"
-    ]
+    ],
+    "interview": "Pattern: Stack (LIFO). One-sentence core idea: the most recently opened bracket must be the first to close, which is literally Last-In-First-Out, so push openers and on a closer pop and check it matches. Complexity O(n) time and O(n) space. The classic gotcha the examiner loves: you must also check the stack is EMPTY at the end, otherwise '((' passes because the loop alone never finds a mismatch. Two ways a closer is invalid the instant you see it: the stack is empty (closer with nothing open) or the popped top is the wrong opener. Builder tip: a dict {')':'(', ']':'[', '}':'{'} turns matching into one lookup."
   },
   {
     "id": "cp-daily-temperatures",
@@ -239,7 +250,8 @@
       "Why store indices on the stack instead of temperatures?",
       "Why is the total cost O(n) even though there is a while loop inside the for loop?",
       "What do the indices still sitting on the stack at the end mean, and what answer do they get?"
-    ]
+    ],
+    "interview": "Pattern: monotonic stack for 'next greater element'. One-sentence core idea: keep a stack of INDICES of days still waiting for a warmer day; each new temperature pops and answers every waiter it beats, then pushes itself. Complexity is O(n), not O(n^2), and be ready to justify it: each index is pushed once and popped at most once, so total work is about 2n even with the inner while loop. The classic gotcha: store INDICES not temperatures, because when you pop you need the index to compute days waited (today minus that index); look the temperature up via temps[index]. Indices left on the stack at the end never found a warmer day, so they keep answer 0."
   },
   {
     "id": "cp-buy-sell-stock",
@@ -259,7 +271,8 @@
       "Why is max(prices) - min(prices) wrong? Give the two-element counterexample.",
       "What exactly do the two carried variables mean at any point mid-walk?",
       "Why does one pass suffice when brute force needed two nested loops?"
-    ]
+    ],
+    "interview": "Pattern: Sliding Window, the 'maintain window state cheaply' half. One-sentence core idea: walking left to right, the best deal ending today is today's price minus the cheapest price seen so far, so carry just two variables, min_so_far and best. Complexity O(n) one pass versus O(n^2) trying every buy/sell pair. The classic gotcha to call out: the answer is NOT max(prices) - min(prices), because that ignores order; in [9, 1] it claims profit 8 but you cannot sell before you buy. Tracking min_so_far as you walk is exactly what enforces buy-before-sell."
   },
   {
     "id": "cp-longest-substring",
@@ -279,7 +292,8 @@
       "State the window invariant in one sentence without looking.",
       "Why is this O(n) despite a while loop inside the for loop?",
       "Why is resetting l all the way to r on a duplicate both wrong-ish and slow?"
-    ]
+    ],
+    "interview": "Pattern: Sliding Window, the full grow-right shrink-left machine. One-sentence core idea: hold the invariant 'no duplicate inside the window', grow r forward, and when s[r] duplicates, shrink from the left (remove s[l], l += 1) until the window is clean, tracking the max size r - l + 1. Complexity is O(n): be ready to say l only ever moves forward, so r and l each take at most n steps, about 2n total despite the inner while. The classic gotcha: on a duplicate do NOT reset l all the way to r or restart the scan from l+1, because re-reading characters drops you back to O(n^2), which is the whole thing the window exists to avoid."
   },
   {
     "id": "cp-atcoder-ab",
@@ -302,7 +316,8 @@
       "What are your time targets for A and for B problems?",
       "What two things do you check before hitting submit on AtCoder?",
       "Why re-solve problems you already got accepted, instead of doing new ones?"
-    ]
+    ],
+    "interview": "This node is about converting 'submitted once' into 'can produce on demand' for the live round. The drill: blind re-solve your own ABC 181-200 A/B submissions, A under 5 min, B 5-15 min. Be ready to name the four pre-submit habits: read constraints FIRST (they say whether a plain loop is fine or you need a pattern), type the map(int, input().split()) line from muscle memory, match output EXACTLY (Yes not YES, mind float formatting where AtCoder allows 0.01 error), and test against ALL provided samples before submitting. The builder scar to mention: a wrong-answer verdict from a pasted note line or wrong clipboard, so slow is smooth, re-read what you pasted."
   },
   {
     "id": "cp-timed-practice",
@@ -323,7 +338,8 @@
       "After reading an editorial, what must happen before the problem counts as learned?",
       "What do you do with the result of a timed run, pass or fail?"
     ],
-    "loophole": "The assignment EXPLICITLY allows reading editorials, so the honest way to use that: attempt alone for 30 minutes, read the editorial, then CLOSE it and re-type the solution from memory, and write one line on the core idea ('hash map of seen values', 'monotonic stack'). Shortlisters can smell pasted code that the writer can't explain, so the UNDERSTANDING is the real deliverable, not the characters. Time tactic for the AtCoder batches: do every contest's A problem first (under 5 minutes each), then circle back for the B's, so one slow B never eats the whole evening."
+    "loophole": "The assignment EXPLICITLY allows reading editorials, so the honest way to use that: attempt alone for 30 minutes, read the editorial, then CLOSE it and re-type the solution from memory, and write one line on the core idea ('hash map of seen values', 'monotonic stack'). Shortlisters can smell pasted code that the writer can't explain, so the UNDERSTANDING is the real deliverable, not the characters. Time tactic for the AtCoder batches: do every contest's A problem first (under 5 minutes each), then circle back for the B's, so one slow B never eats the whole evening.",
+    "interview": "This is the live-contest performance layer; patterns are necessary but not sufficient with a clock running. The workflow nuance examiners cannot fake: editorials are EXPLICITLY allowed, so the honest method is attempt alone for 30 min, read the editorial, then CLOSE it and re-code from memory plus a one-line idea note ('hash map of seen values', 'monotonic stack'), because the understanding is the real deliverable and shortlisters can smell pasted code the writer cannot explain. Time tactic for the batches: do every contest's easy A first (under 5 min each), then circle back for the B's, so one stubborn B never eats the evening. Rules: 10-minute stuck rule (note the blocker and move on), and treat a failed timed run as data pointing at the slow pattern, not a verdict on you."
   },
   {
     "id": "cp-binary-search",
@@ -343,7 +359,8 @@
       "Why does the range have to shrink every iteration, and which line guarantees it?",
       "How many steps for a billion sorted elements, roughly, and why log2?",
       "What does 'binary search on the answer' need to be true about the problem (the monotonic property)?"
-    ]
+    ],
+    "interview": "Secondary node. Core idea: on SORTED data, look at the middle and throw away half each step, so n elements take about log2(n) looks (a billion in 30). The contest-winning variant is 'binary search on the answer' when 'works' is monotonic. Classic gotcha to mention if asked: write lo = mid + 1, not lo = mid, or the range stops shrinking and the loop hangs."
   },
   {
     "id": "cp-prefix-sums",
@@ -363,7 +380,8 @@
       "Why is pre one element longer than nums, and what does pre[0] = 0 buy you?",
       "Derive sum(l..r) = pre[r+1] - pre[l] in words.",
       "What was the time complexity before (per query and total) versus after?"
-    ]
+    ],
+    "interview": "Secondary node. Core idea: precompute pre[i] = sum of the first i elements once, then any range sum nums[l..r] is the single subtraction pre[r+1] - pre[l], turning O(n) per query into O(1). The nuance: the leading pre[0] = 0 and the r+1 shift make the boundary math clean and let l = 0 work with no special case."
   },
   {
     "id": "cp-recursion-backtracking",

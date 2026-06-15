@@ -17,7 +17,8 @@
       "Can I name the 4 steps from URL to rendered page?",
       "Who initiates every plain-HTTP exchange, the browser or the server?",
       "Why does loading one page show many rows in the Network tab?"
-    ]
+    ],
+    "interview": "Examiner tests: can you walk URL to pixels (DNS, HTTP request, response with status code, render). Be ready to explain WHY my live site does this loop three layers deep: browser GETs the page, then script.js GETs the Hacker News Algolia API from the visitor's own browser, then on localhost my own Express server answers GETs of its own. Killer follow-up to nail: the server never pushes, the browser always asks first, which is exactly the limitation my ws branch later removes."
   },
   {
     "id": "web-html-structure",
@@ -37,7 +38,8 @@
       "Can I explain why <main> beats <div class=\"main\"> if they render identically?",
       "What two meta tags does every one of my pages start with, and what does each do?",
       "Which semantic tags did my e-Lite homepage use, top to bottom?"
-    ]
+    ],
+    "interview": "Examiner tests: why semantic tags over div soup (screen readers, search engines, readable CSS). Be ready to explain that my index.html uses header/nav/main/section/footer with zero div tags, and every page opens with meta charset UTF-8 plus the viewport meta (that viewport tag is what stops phones pretending to be 980px wide, and it is half of how I went responsive with no media queries). If pushed: the logo and nav links are real anchor tags inside nav ul li, which is why the CSS selector nav ul li a works."
   },
   {
     "id": "web-css-basics",
@@ -57,7 +59,8 @@
       "Box model from inside out: can I name the 4 layers?",
       "What does the * { box-sizing: border-box } reset actually change about width math?",
       "What does the selector nav ul li a match, in plain English?"
-    ]
+    ],
+    "interview": "Examiner tests: box model (content, padding, border, margin) and selector types. Be ready to explain my first stylesheet rule, the reset * { margin:0; padding:0; box-sizing:border-box }, and WHY border-box matters: it makes width:300px mean the full box including padding and border, so layouts stop overflowing by mysterious amounts. Know the margin vs padding trap: a hover background only covers spacing if that spacing is padding (inside the border), not margin."
   },
   {
     "id": "web-flexbox-layout",
@@ -77,7 +80,8 @@
       "Does display: flex go on the parent or the children?",
       "justify-content vs align-items: which axis does each control?",
       "Which two places in my e-Lite stylesheet use flexbox, and for what?"
-    ]
+    ],
+    "interview": "Examiner tests: display:flex goes on the PARENT, and justify-content (main axis) vs align-items (cross axis). Be ready to explain my nav: display:flex with justify-content:space-between pins the AUTOMATIC logo left and the link list right, align-items:center vertically centers both, in one rule. Second use: .features uses flex-wrap:wrap so the three cards sit in a row on wide screens and wrap on narrow ones, which is the other half of my no-media-query responsiveness."
   },
   {
     "id": "web-css-polish",
@@ -97,7 +101,8 @@
       "Why does the transition property belong on the base rule instead of :hover?",
       "Which 3 things make my e-Lite site survive a phone screen without any media query?",
       "Which CSS properties are cheap to animate, and which are expensive?"
-    ]
+    ],
+    "interview": "Examiner tests: transitions and responsiveness, both literally graded on the brief ('transitions/polish'). Be ready to explain the gotcha I got right: the transition property lives on the base .button / .card rule, NOT inside :hover, so the lift animates both in AND out (put it only in :hover and it snaps back instantly on mouse-out). My hover only touches transform (translateY) and color on purpose, because those are cheap to animate while width/margin force a full page reflow every frame."
   },
   {
     "id": "web-js-basics",
@@ -117,7 +122,8 @@
       "Why does putting the script tag at the end of body matter?",
       "What does getElementById return when the element is missing, and why is that useful?",
       "How does my single script.js avoid crashing on pages missing its elements?"
-    ]
+    ],
+    "interview": "Examiner tests: HTML is structure, JS is behavior, and why the script tag sits at the END of body (so the elements exist when the code runs). Be ready to explain my one-file trick: a single script.js serves all five pages, and each block is guarded by an if on getElementById, e.g. if (contactBox) {...}. getElementById returns null (falsy) on pages that lack the element, so the block silently skips, one file, zero crashes, no duplicated code."
   },
   {
     "id": "web-dom-manipulation",
@@ -137,7 +143,8 @@
       "textContent vs innerHTML: which parses HTML and why does that matter for user data?",
       "What is the 4-step recipe for rendering an array as DOM cards?",
       "When does a created element actually become visible on the page?"
-    ]
+    ],
+    "interview": "Examiner tests: the DOM is a live tree JS can rebuild, via createElement, textContent, appendChild. Be ready to explain WHY I deliberately use textContent and never innerHTML for message text and HN card titles: that data comes from users and a random API, and innerHTML would PARSE a payload like <img src=x onerror=...> as real HTML and run it. That attack is XSS; textContent treats everything as literal text so it is impossible. My loadMessages() follows the recipe: clear container, loop the data, build each row, append."
   },
   {
     "id": "web-forms-events",
@@ -157,7 +164,8 @@
       "What exactly does event.preventDefault() stop on a form, and what goes wrong without it?",
       "How do I read which radio button in a group is selected?",
       "Why does my code .trim() every text value before validating it?"
-    ]
+    ],
+    "interview": "Examiner tests: addEventListener, and the form gotcha that the very first line of every one of my submit handlers fixes, event.preventDefault() (a form's default is to reload and navigate away, which would kill my JS and wipe the error text before anyone sees it). Be ready to explain how I read the radio: querySelector('input[name=updates]:checked').value, plus the checked attribute on the first radio in the HTML so one is ALWAYS selected, which is exactly what Task 2 demanded. I also .trim() every text value so spaces do not pass as content."
   },
   {
     "id": "web-fetch-api",
@@ -177,7 +185,8 @@
       "When does fetch reject vs resolve? What does a 500 response do?",
       "Why is response.json() itself a promise?",
       "Why does my code wrap the search keyword in encodeURIComponent()?"
-    ]
+    ],
+    "interview": "Examiner tests: fetch returns a Promise, you chain .then/.catch, and the trap that my own code comment documents, fetch does NOT reject on 404 or 500, only on network failure (a 404 'resolves successfully' and gets parsed as data). Be ready to explain that my tech.html checks response.ok myself and throws if false. Two more nuances: I wrap the HN search keyword in encodeURIComponent so a query like C++ does not corrupt the URL, and I generalized all this into one api() helper at the top of script.js used by every backend call."
   },
   {
     "id": "web-node-express",
@@ -197,7 +206,8 @@
       "What do require, express(), and app.listen each do?",
       "How does one server serve both my static site and my API, and why does that avoid CORS?",
       "Where does the port number come from and why not hardcode it?"
-    ]
+    ],
+    "interview": "Examiner tests: Node runs JS on a machine so you BE the server, Express handles the HTTP plumbing, and the boot sequence (require, express(), routes, app.listen). Be ready to explain my smartest setup choice: app.use(express.static(__dirname)) makes ONE server hand out the existing HTML/CSS/JS untouched AND the /api routes, so page and API share an origin and CORS never happens. Know that PORT comes from process.env.PORT || 3000 (never hardcoded), and the classic trap: editing server.js needs a restart because the old process is still running, refreshing the browser does nothing."
   },
   {
     "id": "web-express-routing",
@@ -217,7 +227,8 @@
       "Where do req.params and req.body each come from?",
       "If a router is mounted at /api and declares /message/:id, what is the full URL?",
       "Why does my code validate :id before calling findById?"
-    ]
+    ],
+    "interview": "Examiner tests: a route is METHOD + PATH to handler, req.params (URL slots) vs req.body (parsed JSON), and that mounted Routers are PREFIXED. Be ready to explain my split: routes/auth.js, messages.js, waitlist.js, mounted in server.js as app.use('/api/auth', auth.router) and app.use('/api', messages.router), so router.post('/register') in auth.js actually answers at /api/auth/register. Nuance: my messages routes call badId() (mongoose ObjectId.isValid) on :id FIRST, because a malformed id would otherwise make findById throw a CastError and 500."
   },
   {
     "id": "web-middleware",
@@ -237,7 +248,8 @@
       "What are a middleware's two legal ways to finish?",
       "Why is registration order critical (json/session before routers)?",
       "How does requireLogin protect 11 routes with zero copy-paste?"
-    ]
+    ],
+    "interview": "Examiner tests: every request flows through a pipeline of (req,res,next) functions in registration order, and each must either call next() or send a response. Be ready to explain my requireLogin guard (returns 401 if no req.session.userId, else next()) used as a middle argument on every protected route, so one function gates all the message/auth/waitlist routes with zero copy-paste. Know the order point: server.js registers express.json() and session BEFORE the routers, because mounting routers first would leave req.body undefined. The 4-arg error handler (err,req,res,next) is registered last and catches every async throw in Express 5."
   },
   {
     "id": "web-rest-status-codes",
@@ -257,7 +269,8 @@
       "401 vs 403: one sentence each, what is the difference?",
       "Which HTTP method pairs with each letter of CRUD?",
       "Why is 200-with-error-body an API design bug?"
-    ]
+    ],
+    "interview": "Examiner tests: method says the action, URL the resource, status code the outcome, and the 401 vs 403 distinction interviewers love (401 = I do not know who you are; 403 = I know exactly who you are, and no). Be ready to walk my PUT /notes/:id ladder: 400 bad id, 401 from requireLogin, 404 no such message, 403 if message.user !== session user, then 200. Nuance: POST returns 201 not 200 (creation gets its own code), register returns 409 on a taken username/email, and I never return 200-with-error-body because my own api() helper keys off response.ok to decide whether to throw."
   },
   {
     "id": "web-mongodb-mongoose",
@@ -278,7 +291,8 @@
       "How does unique: true on the waitlist schema enforce one-spot-per-user without route code?",
       "What does ref: \"User\" + an ObjectId field let me query?"
     ],
-    "loophole": "The Exun spec wanted a database. It never said WHERE it had to live. So instead of an Atlas account, a connection string, and a grader who has to set env vars, I used `mongodb-memory-server`: a real MongoDB that boots inside the Node process and wipes on restart. `npm install && npm start` just works with zero config, and the Mongoose code is identical either way. Reads like a full database setup; is actually zero infrastructure. The habit worth stealing: read the spec for what it does NOT demand, and ship the smallest thing that satisfies the literal requirement."
+    "loophole": "The Exun spec wanted a database. It never said WHERE it had to live. So instead of an Atlas account, a connection string, and a grader who has to set env vars, I used `mongodb-memory-server`: a real MongoDB that boots inside the Node process and wipes on restart. `npm install && npm start` just works with zero config, and the Mongoose code is identical either way. Reads like a full database setup; is actually zero infrastructure. The habit worth stealing: read the spec for what it does NOT demand, and ship the smallest thing that satisfies the literal requirement.",
+    "interview": "Examiner tests: Schema declares allowed fields, Model is what you query, and refs link documents. Be ready to explain my best loophole: with no MONGODB_URI set, server.js boots mongodb-memory-server, a REAL Mongo inside the Node process, so npm install && npm start just works with zero config (data resets on restart); set the env var and the identical Mongoose code talks to Atlas with persistence. The spec wanted a database but never said WHERE. Nuance: unique:true on the waitlist user field enforces one-spot-per-account at the DB level, not in route code, and Message stores user as an ObjectId ref User so one find({user:id}) gets everything one person sent."
   },
   {
     "id": "web-auth-sessions",
@@ -299,7 +313,8 @@
       "Why hash passwords with bcrypt instead of storing or encrypting them?",
       "Walk the cookie: what happens between login and the next request that makes req.session.userId work?",
       "Authentication vs authorization, and which status code belongs to each?"
-    ]
+    ],
+    "interview": "Examiner tests: HTTP is stateless so auth fixes it, bcrypt for passwords (slow + salted, store only the hash, bcrypt.hash(pw,10) / bcrypt.compare on login), and authentication (who, 401) vs authorization (allowed, 403). Be ready to explain two deliberate choices: login returns the SAME error for wrong email and wrong password so attackers cannot probe which emails exist, and my cookie is httpOnly (page JS cannot read it so XSS cannot steal it) plus sameSite lax. Critical gotcha: ownership checks compare message.user.toString() === session userId.toString(), because two ObjectIds with equal values are NOT === equal as objects. My delete /me also wipes the user's messages and waitlist entry first so no orphan data survives."
   },
   {
     "id": "web-websockets",
@@ -320,7 +335,8 @@
       "What can a WebSocket do that fetch fundamentally cannot?",
       "How does my upgrade handler reuse the session cookie to reject anonymous sockets?",
       "Why must I check readyState before socket.send()?"
-    ]
+    ],
+    "interview": "Examiner tests: everything else is request/response (server cannot push), a WebSocket is a persistent two-way pipe where either side sends anytime. Be ready to explain my ws branch bonus: editing a message in one tab broadcasts a note-updated event so EVERY open tab re-renders instantly. The clever part to lead with: the upgrade handshake starts as a normal HTTP request, and my server.on('upgrade') REUSES the same session middleware, so the cookie that authenticates fetches also authenticates the socket and anonymous connections get 401 before the socket opens. ws.userId is set server-side from the session (not trusted from the message payload) so it cannot be forged. Client checks readyState === OPEN before send."
   },
   {
     "id": "web-deploy-vercel",
@@ -341,7 +357,8 @@
       "Static vs dynamic hosting: which parts of my project are which?",
       "Why do relative /api URLs survive deployment when localhost URLs do not?",
       "What is the .env / .env.example split protecting, and which one gets committed?"
-    ]
+    ],
+    "interview": "Examiner tests: deployment puts localhost on infrastructure the world reaches, and static vs dynamic hosting. Be ready to explain WHY my live Vercel site is split: home, mockups and tech work fully (tech's fetch to Hacker News runs in the VISITOR'S browser, no server of mine needed), but contact/waitlist/account show a 'backend not running' hint because Vercel static hosting does not run my long-running Express+Mongo process. Nuance that makes the code survive deploy: script.js calls relative paths like /api/message (point at whatever host the page is on), and secrets live in .env (gitignored) with .env.example committed as the shape, never real values."
   },
   {
     "id": "web-react-intro",
@@ -464,7 +481,8 @@
       "How does the App Router decide what the routes are?",
       "What renders on the server by default, and what does 'use client' opt into?",
       "Why can a server component safely read a secret but a client component cannot?"
-    ]
+    ],
+    "group": "portfolio"
   },
   {
     "id": "web-server-routes",
@@ -484,7 +502,8 @@
       "What is the filename pattern that turns a folder into an API endpoint?",
       "Where do API keys live, and what makes NEXT_PUBLIC_ variables dangerous for secrets?",
       "What does a route handler return to send back JSON?"
-    ]
+    ],
+    "group": "portfolio"
   },
   {
     "id": "web-vercel-cron",
@@ -504,7 +523,8 @@
       "Read the cron string 0 6 * * * out loud: when does it fire?",
       "Why is an unguarded cron route a real risk, and how does CRON_SECRET fix it?",
       "What does Vercel actually do at the scheduled time?"
-    ]
+    ],
+    "group": "portfolio"
   },
   {
     "id": "web-llm-in-app",
@@ -524,7 +544,8 @@
       "Why must the LLM call live in a server route and not a client component?",
       "Why wrap a JSON.parse of model output in a try/catch?",
       "Trace the chain: what wakes this call, and what supplies the API key?"
-    ]
+    ],
+    "group": "portfolio"
   },
   {
     "id": "web-self-iterating-site",
@@ -547,7 +568,8 @@
       "What does 'self-learning' actually refer to here (which stage feeds which)?",
       "Why are empty iteration runs expected on a low-traffic site rather than a bug?"
     ],
-    "loophole": "The cron deploys a PREVIEW, never production. The robot proposes; a human runs `vercel promote` to ship. It is the cheapest insurance against the model pushing something broken to your live site, and it means a boring or empty iteration costs you nothing. Automate the labour, keep the gate. The lesson generalises: let automation do the work, but never let it be the last signature."
+    "loophole": "The cron deploys a PREVIEW, never production. The robot proposes; a human runs `vercel promote` to ship. It is the cheapest insurance against the model pushing something broken to your live site, and it means a boring or empty iteration costs you nothing. Automate the labour, keep the gate. The lesson generalises: let automation do the work, but never let it be the last signature.",
+    "group": "portfolio"
   },
   {
     "id": "web-automatic",
@@ -570,6 +592,7 @@
       "Which node supplies the backend auth, and which supplies the live updates?",
       "Why does Task 2 reward voice/creativity, and how did AUTOMATIC lean into that?"
     ],
-    "loophole": "Task 2 said the Waitlist form should, on submit, 'show the user's inputs with alert()'. So that is ALL it does: no backend, no database, no fetch, just a literal `alert()` echoing the inputs back. The spec asked for exactly that, so building more would have been wasted effort under a deadline. Same move on 'invent the details': the brief handed over naming, so AUTOMATIC leaned all the way into a bit (a startup that learns 'exactly how u live', footer admitting 'ts is not a real product, dw') and turned a requirement into the creativity marks. Read the spec literally, satisfy it exactly, and spend the saved time on the part that is actually scored."
+    "loophole": "Task 2 said the Waitlist form should, on submit, 'show the user's inputs with alert()'. So that is ALL it does: no backend, no database, no fetch, just a literal `alert()` echoing the inputs back. The spec asked for exactly that, so building more would have been wasted effort under a deadline. Same move on 'invent the details': the brief handed over naming, so AUTOMATIC leaned all the way into a bit (a startup that learns 'exactly how u live', footer admitting 'ts is not a real product, dw') and turned a requirement into the creativity marks. Read the spec literally, satisfy it exactly, and spend the saved time on the part that is actually scored.",
+    "interview": "Examiner tests: this is the capstone, AUTOMATIC ('yo. stop living ur life. ts runs itself now.'), and the skill is ASSEMBLY, pointing at which node supplies each layer. Be ready to recite Task 2: Home (logo/tagline/pitch/nav), Contact (name + VALID email + non-empty message), Waitlist (email + always-selected radio, alert() the inputs on submit); Task 3 adds tech.html GETting an API with a filter. Lead with the loophole that won creativity marks: the brief said the waitlist should 'show inputs with alert()' so that is literally all the Task 2 version does, and 'invent the details' became an open bit (footer admits 'ts is not a real product, dw'). Read the spec literally, satisfy it exactly, spend saved time on the scored part. The slang copy is intentional and must never be 'corrected'."
   }
 ]

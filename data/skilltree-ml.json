@@ -17,7 +17,8 @@
       "Can you explain 'training' in one sentence without using the word 'learn'?",
       "What were the input and the output of your week 1 model? Of your week 2 model?",
       "Why can a trained model still fail on new data?"
-    ]
+    ],
+    "interview": "Concept tested: a model is a function with adjustable weights fit from input/answer pairs, not hand-written rules; same idea across both projects. Your nuance: in week 1 the function was literally torch.nn.Linear(9,1) mapping an encoded person to a dollar amount (10 learnable numbers), and in week 2 it was a 4.8M-parameter CNN mapping a 96x96x3 pixel grid to one of 15 species. If asked 'did the model understand butterflies', say no: it only fit colour/shape patterns, which is exactly why COPPER TAIL still scored 0.50 on test while four species hit 1.00."
   },
   {
     "id": "ml-numpy-arrays",
@@ -37,7 +38,8 @@
       "What do shape and dtype tell you about an array?",
       "Why did your noise augmentation convert to float32 before adding noise?",
       "What does np.random.seed(42) buy you when re-running a notebook?"
-    ]
+    ],
+    "interview": "Concept tested: shape and dtype, plus why whole-array math beats Python loops. Your nuance: your features became a (1070,9) float32 array and your butterfly stack a (1489,96,96,3) uint8 array; the dtype mattered in gaussian_noise, where you added np.random.normal(0,sigma=15) AFTER astype(np.float32), then np.clip(0,255), then back to uint8, because adding noise on raw uint8 would wrap a 250 pixel to a dark value instead of clipping at 255. Seeds were np.random.seed(42)/torch.manual_seed(42) in every notebook so re-runs are identical."
   },
   {
     "id": "ml-dataframes",
@@ -57,7 +59,8 @@
       "What does a boolean mask actually contain, and what does df[mask] do?",
       "Describe groupby as 'split, apply, combine' using your region chart as the example.",
       "Why & and parentheses instead of 'and'?"
-    ]
+    ],
+    "interview": "Concept tested: boolean masks with & and parentheses, and groupby as split-apply-combine. Your nuance: the week-1 high-risk filter df[(df['bmi']>30)&(df['smoker']=='yes')] returned exactly 144 rows, and df.groupby('region')['charges'].mean() drove the regional bar chart. In week 2 pandas did the data hygiene: df.isna().sum() (0 missing), df['filename'].duplicated().sum() (0 dupes), df['label'].value_counts() to pick the top-15 species, and .map(label_to_id) to turn names into class ids 0-14."
   },
   {
     "id": "ml-images-as-arrays",
@@ -77,7 +80,8 @@
       "What is stored at img[i, j] for a colour image?",
       "Why must corrupt files be dropped rather than left as zeros?",
       "BGR vs RGB: who uses which, and where in your pipeline did you convert?"
-    ]
+    ],
+    "interview": "Concept tested: a colour image is an HxWx3 uint8 array, and the BGR/RGB and corrupt-file traps. Your nuance: raw butterflies were a uniform (224,224,3) (you verified raw_shapes was a single-element set), and you called cv2.cvtColor(img, cv2.COLOR_BGR2RGB) right after every cv2.imread because OpenCV loads BGR while matplotlib and your model assume RGB, and colour is the main signal here. You also checked 'if img is None' to catch corrupt files (OpenCV returns None, not an exception); your count was 0 corrupt out of 1489, but the guard would have dropped them rather than leave black squares with real labels."
   },
   {
     "id": "ml-train-test-split",
@@ -98,7 +102,8 @@
       "What does 'stratified' add over a plain shuffle-and-cut?",
       "What is val for that test must never be used for?"
     ],
-    "loophole": "The dataset's official 'test' folder was unlabelled (a competition leftover), so it was useless for measuring accuracy. Rather than fight that, I ignored it and cut my OWN 80/10/10 stratified split out of the labelled training data. The deliverable needs a number you can stand behind; if the provided data can't give you one, make a clean split that can. Stratified so every class keeps its proportion in each split."
+    "loophole": "The dataset's official 'test' folder was unlabelled (a competition leftover), so it was useless for measuring accuracy. Rather than fight that, I ignored it and cut my OWN 80/10/10 stratified split out of the labelled training data. The deliverable needs a number you can stand behind; if the provided data can't give you one, make a clean split that can. Stratified so every class keeps its proportion in each split.",
+    "interview": "Concept tested: never grade on training data, and stratification keeps every class in every split. Your nuance: week 1 was a plain np.random.permutation 80/20 giving 1070 train / 268 test; week 2 was 80/10/10 STRATIFIED per species (looping per class, shuffling, slicing) giving 1185 train / 141 val / 163 test. The real-world move to flag: the dataset shipped a test/ folder but its Testing_set.csv had NO labels (a Kaggle competition leftover), so you ignored it and cut your own labelled split because you cannot measure accuracy on unlabelled data."
   },
   {
     "id": "ml-feature-encoding",
@@ -118,7 +123,8 @@
       "When is 0/1 enough and when do you need one-hot?",
       "Why is mapping class names to ids 0-14 fine for LABELS but risky for input features?",
       "How many feature columns did your insurance model end up with, and why 9?"
-    ]
+    ],
+    "interview": "Concept tested: models multiply weights by numbers, so unordered categories need one-hot, not integer codes. Your nuance: in week 1 sex and smoker became 0/1 via (col=='value').astype(float), and region became four one-hot columns via pd.get_dummies, giving 9 feature columns total. Why not region=1,2,3,4? A single weight would invent a fake ranking; one-hot let each region get its own dollar effect (northeast +2541, southeast +1364). Note class labels ARE integer-coded 0-14 in week 2, which is fine because the id is a class index fed to cross-entropy, never multiplied as a feature."
   },
   {
     "id": "ml-linear-regression",
@@ -139,7 +145,8 @@
       "How many learnable numbers does Linear(9, 1) have?",
       "Which feature dominated your insurance model and by roughly how many dollars?",
       "Why standardise features before gradient descent?"
-    ]
+    ],
+    "interview": "Concept tested: y = w*x + b, its interpretability, and why you standardise first. Your nuance: the model was torch.nn.Linear(9,1) and you converted weights back to dollars (w*y_std/x_std), reading smoker as +23,616, bmi +326, age +261, sex only -42. You standardised features and target using TRAIN stats only because age (18-64) and smoker (0/1) live on wildly different scales. The honest limit: R^2 stuck at 0.751 because a line cannot bend, and the smoker-x-bmi interaction you saw as two clouds in the scatter is exactly the non-linearity a CNN/NN would capture."
   },
   {
     "id": "ml-mse-loss",
@@ -159,7 +166,8 @@
       "Why would averaging raw (unsquared) errors be a useless loss?",
       "What is RMSE and why did your notebook report $6,230 instead of an MSE?",
       "When do MSE and MAE disagree about which model is better?"
-    ]
+    ],
+    "interview": "Concept tested: why square errors (stops cancellation, punishes big misses, smooth bowl) and that MSE is scale-dependent. Your nuance: week 1 used torch.nn.MSELoss() and it flattened to 0.2495 train / 0.2693 test in STANDARDISED units, which is meaningless until converted; you reported RMSE $6,230 and MAE $4,047 in real dollars instead. If asked why those two numbers differ, RMSE is inflated by the worst rows, like the test person you missed by $21,011, while MAE is the plain average miss."
   },
   {
     "id": "ml-gradient-descent",
@@ -179,7 +187,8 @@
       "Recite the five steps of the loop from memory.",
       "What does the learning rate control, and what happens at each extreme?",
       "Why does PyTorch require zero_grad() at all?"
-    ]
+    ],
+    "interview": "Concept tested: the five-step loop (forward, loss, zero_grad, backward, step) and why zero_grad is mandatory. Your nuance: week 1 ran Adam at lr=0.01 for 1500 epochs and the loss flatlined at 0.2495 by epoch 300 (a linear model has one valley, so it just sits at the bottom). Week 2 reused the identical five steps but per-batch (93 batches/epoch) with Adam at 1e-3. If asked about zero_grad: PyTorch accumulates gradients on purpose, so skipping it sums stale slopes and training diverges with no error message."
   },
   {
     "id": "ml-regression-metrics",
@@ -199,7 +208,8 @@
       "What different question does each of RMSE, MAE, R^2 answer?",
       "What does R^2 = 0 mean concretely?",
       "Why did the notebook convert predictions back to dollars before computing metrics?"
-    ]
+    ],
+    "interview": "Concept tested: RMSE vs MAE vs R^2 each answer a different question, and metrics must come from the held-out test set. Your nuance: you un-standardised predictions (pred*y_std+y_mean) on the 268 test rows and got RMSE $6,230, MAE $4,047, R^2 0.751 (a line explains ~75% of charge variation; R^2=0 would be no better than predicting the mean). Your printed table of 10 real test people is the honesty check: aggregate looks fine but one row was off by $21,011, and the big misses clustered where linearity breaks (high-bmi smokers)."
   },
   {
     "id": "ml-image-preprocessing",
@@ -221,7 +231,8 @@
       "What does permute(0, 3, 1, 2) change and which library demands it?",
       "Where do the train-time mean/std tensors need to live after deployment?"
     ],
-    "loophole": "The butterfly task said use a MINIMUM of 15 species. So I used EXACTLY 15, and not a random 15: the 15 species with the MOST labelled images. More images per class is an easier, higher-accuracy model, and nothing in the spec said the choice had to be random or representative. Choosing your own inputs to favour the metric is allowed unless the rules forbid it. Just be ready to say WHY in the interview (max data per class), because a defensible reason is what separates a smart choice from a fluke."
+    "loophole": "The butterfly task said use a MINIMUM of 15 species. So I used EXACTLY 15, and not a random 15: the 15 species with the MOST labelled images. More images per class is an easier, higher-accuracy model, and nothing in the spec said the choice had to be random or representative. Choosing your own inputs to favour the metric is allowed unless the rules forbid it. Just be ready to say WHY in the interview (max data per class), because a defensible reason is what separates a smart choice from a fluke.",
+    "interview": "Concept tested: fixed input shape, /255 then standardise with TRAIN stats only, and HWC-to-CHW layout. Your nuance: you resized 224x224 down to 96x96 with cv2.resize(interpolation=INTER_AREA) (correct for shrinking) as a deliberate CPU-speed vs wing-detail trade, roughly 5x cheaper training. In the CNN notebook to_tensor does .permute(0,3,1,2)/255.0 (PyTorch convs want channels-first), then you compute mean/std over Xtr only and apply them to val and test, the same no-leakage rule as week 1. Also: you used EXACTLY 15 species (task minimum), and not random 15, the 15 with the MOST images, so each class gets max training data; be ready to justify that choice."
   },
   {
     "id": "ml-augmentation",
@@ -241,7 +252,8 @@
       "What single property must every augmentation preserve?",
       "Why were invert/grayscale/colour-filter wrong for butterflies specifically?",
       "Why do val and test stay un-augmented?"
-    ]
+    ],
+    "interview": "Concept tested: every augmentation must preserve the label, and you must split BEFORE augmenting (train only). Your nuance: you wrote the full menu but APPLIED only flip_horizontal, rotate90, gaussian_noise(sigma 15), and blur, growing train from 1185 to 5925 (5x), then shuffled so batches are not five blocks of the same transform. You deliberately SKIPPED invert, grayscale, and colour_filter because wing COLOUR is the signal that separates species, and skipped vflip/rot180 as redundant. Val (141) and test (163) stay un-augmented so they represent reality; augmenting before the split would leak a rotated twin of a test image into train."
   },
   {
     "id": "ml-cnn-layers",
@@ -261,7 +273,8 @@
       "What does one 3x3 conv filter actually do as it slides?",
       "What is each layer's one-line job: BatchNorm, ReLU, MaxPool, Dropout?",
       "Recompute your network's flatten size (128 * 12 * 12) from the 96px input, out loud."
-    ]
+    ],
+    "interview": "Concept tested: Conv2d slides 3x3 filters (local patterns) vs a dense layer, and the role of BatchNorm/ReLU/MaxPool, plus the flatten-size arithmetic. Your nuance: ButterflyCNN is 3 blocks of Conv-BN-ReLU-MaxPool with channels 3->32->64->128 and spatial 96->48->24->12, then Flatten -> Dropout(0.5) -> Linear(128*12*12=18432, 256) -> ReLU -> Linear(256,15), totalling 4,816,399 params. Your phrase 'trade where for what': pooling drops location precision while growing channels grows pattern capacity. If they change the input size, recompute 18432 live (that shape-mismatch is the classic bug); BatchNorm was chosen mainly to converge in fewer epochs, which mattered on CPU."
   },
   {
     "id": "ml-softmax-crossentropy",
@@ -282,7 +295,8 @@
       "What two properties does softmax guarantee about its output?",
       "What single number does cross-entropy look at, and what makes it explode?",
       "Why must your network NOT end with a softmax layer when using nn.CrossEntropyLoss?"
-    ]
+    ],
+    "interview": "Concept tested: softmax turns logits into a probability vector (positive, sums to 1) and cross-entropy punishes confident wrongness via -log(prob of true class). Your nuance: your last layer is a bare Linear(256,15) with NO softmax, because nn.CrossEntropyLoss applies log-softmax internally; adding a softmax layer too would run it twice and quietly flatten gradients. You took the prediction with out.argmax(1). If asked why not MSE on class ids: ids 0-14 are arbitrary names, so MSE would pretend predicting species 4 for true 5 is 'closer' than 0, an ordering that does not exist."
   },
   {
     "id": "ml-epochs-batches",
@@ -303,7 +317,8 @@
       "Define epoch vs batch vs weight update in one line each.",
       "Why shuffle the train loader but not val/test?",
       "What exactly did copy.deepcopy(model.state_dict()) save, and when was it restored?"
-    ]
+    ],
+    "interview": "Concept tested: epoch vs batch vs weight update, why shuffle train, and train()/eval() mode switching. Your nuance: DataLoader served batch_size=64 shuffled chunks giving 93 batches/epoch over 15 epochs (1395 updates). shuffle=True mattered specifically because your .npz was 5 stacked augmentation blocks before shuffling. You used model.train() for training and model.eval()+torch.no_grad() in evaluate(), and saved copy.deepcopy(model.state_dict()) whenever val accuracy hit a new best; the champion came at epoch 12 (val 0.879) and you load_state_dict it at the end so later overfit epochs cannot ship."
   },
   {
     "id": "ml-overfitting-accuracy",
@@ -324,7 +339,8 @@
       "What pattern in train/val curves diagnoses overfitting?",
       "Name the three anti-overfitting weapons in your butterfly pipeline.",
       "Why report 82.8% next to the 6.7% baseline, and what did the confusion matrix add that the single number hid?"
-    ]
+    ],
+    "interview": "Concept tested: the train-vs-val gap diagnoses memorisation, and accuracy is only honest on a once-touched test set stated against a baseline. Your nuance: by epoch 12 train acc was 0.995 while val was 0.879, and at epoch 15 val loss spiked to 1.065, the textbook gap. You fought it three ways: 5x augmentation, Dropout(0.5), and best-val checkpointing (shipped epoch 12, not 15). Final honest grade: 82.8% test vs 6.7% random baseline for 15 classes, and per-class showed where it fails (COPPER TAIL 0.50, IPHICLUS SISTER 0.60) vs four species at 1.00. Do NOT re-run test after tweaks or it becomes a second val set."
   },
   {
     "id": "ml-dropout-batchnorm",
@@ -344,7 +360,8 @@
       "What does dropout do differently in train mode versus eval mode?",
       "Why does forgetting model.eval() at test time silently hurt your numbers?",
       "Name one thing batchnorm buys you besides a little regularization."
-    ]
+    ],
+    "interview": "Concept tested: Dropout zeroes activations only in train mode (forces redundant features), BatchNorm normalises across the batch (faster convergence, mild regularisation), and both behave differently in train vs eval. Your nuance: you used Dropout(0.5) right before the dense head and BatchNorm2d after every conv. Be ready to say WHY 0.5 was reasonable: ~80 base images per class is tiny, so heavy dropout fights memorisation; and BatchNorm was picked mainly so the from-scratch net would converge in just 15 epochs on a CPU. Forgetting model.eval() would have made dropout keep firing during scoring and BatchNorm use batch instead of running stats, corrupting your numbers."
   },
   {
     "id": "ml-transfer-learning",
@@ -364,7 +381,8 @@
       "Why do early CNN layers transfer to a new task but the final layer does not?",
       "What does freezing (requires_grad = False) actually prevent during training?",
       "Why read fc.in_features instead of hardcoding the number?"
-    ]
+    ],
+    "interview": "Concept tested: reusing a pretrained backbone (freeze early generic layers, replace the final head) is the standard high-leverage shortcut for small image datasets. Your honest nuance: you did NOT use transfer learning. The task asked for your OWN CNN, so you built one from scratch, and it was a reasonable call here: only 15 classes, augmentation pushed train to 5925 images, a CPU-only budget made a fresh small net practical, and the point was to learn the mechanics. You reached 82.8% from scratch and your own wrap-up note says the obvious next step for more accuracy would be a pretrained resnet, so you can speak to the trade-off either direction."
   },
   {
     "id": "ml-confusion-matrix",
@@ -384,7 +402,8 @@
       "Give one example where 95 percent accuracy hides a useless model.",
       "State precision and recall in words, and which kind of error each one punishes.",
       "On a confusion matrix, what does an off-diagonal cell at row i column j mean?"
-    ]
+    ],
+    "interview": "Concept tested: the matrix (rows=true, cols=predicted) exposes per-class precision/recall that a single accuracy number hides. Your nuance: you built the 15x15 matrix by hand (conf[t,p]+=1) on the test set, then read per-class accuracy as conf.diagonal()/conf.sum(axis=1). The finding: four species scored 1.00 (BANDED ORANGE HELICONIAN, EASTERN PINE ELFIN, BROWN SIPROETA, SCARCE SWALLOW) while COPPER TAIL was 0.50 (5/10) and IPHICLUS SISTER 0.60 (6/10), which turns '82.8% accuracy' into a concrete statement about which species get confused and where to improve first."
   },
   {
     "id": "ml-save-load-model",
@@ -426,6 +445,7 @@
       "List the five per-batch training steps in order, and what breaks if zero_grad is skipped.",
       "Why is validation wrapped in torch.no_grad() and model.eval()?",
       "Which earlier nodes supply the dataloaders, the model, and the final report in this pipeline?"
-    ]
+    ],
+    "interview": "Concept tested: wiring the known parts in the right order under a deadline, especially the per-batch five-step loop. Your nuance: the real pipeline was preprocessing notebook (clean, pick top-15, resize 96x96, stratified 80/10/10, augment train only to 5925, save butterflies_15.npz ~156 MB) then the CNN notebook (to_tensor + train-stat normalisation, ButterflyCNN 4.8M params, CrossEntropyLoss + Adam 1e-3, 15 epochs with best-val checkpointing, confusion matrix). Result: 82.8% test vs 6.7% baseline on a CPU-only machine, no transfer learning. The one habit to recite: zero_grad/forward/loss/backward/step per batch, and model.eval()+no_grad for scoring."
   }
 ]

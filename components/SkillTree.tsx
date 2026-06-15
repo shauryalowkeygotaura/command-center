@@ -11,9 +11,9 @@ import {
   CHILDREN,
   NODES,
   NODE_BY_ID,
+  PORTFOLIO_GROUP,
   Progress,
   SkillNode,
-  TOTAL_NODES,
   TRACKS,
   computeLayout,
   isDone,
@@ -26,20 +26,47 @@ import {
 
 const CHIP_W = 116;
 const CHIP_H = 54;
+const SETTINGS_KEY = "revengine.command-center.skilltree.settings.v1";
+const PORTFOLIO_COUNT = NODES.filter((n) => n.group === PORTFOLIO_GROUP).length;
+const INTERVIEW_COUNT = NODES.filter((n) => n.interview).length;
 
 export function SkillTree() {
   const [progress, setProgress] = useState<Progress>({});
   const [mounted, setMounted] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
+  const [hidePortfolio, setHidePortfolio] = useState(false);
+  const [interviewOnly, setInterviewOnly] = useState(false);
 
   useEffect(() => {
     setProgress(progressStore.load());
+    try {
+      const raw = window.localStorage.getItem(SETTINGS_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        setHidePortfolio(!!s.hidePortfolio);
+        setInterviewOnly(!!s.interviewOnly);
+      }
+    } catch {
+      /* no saved settings */
+    }
     setMounted(true);
   }, []);
 
   useEffect(() => {
     if (mounted) progressStore.save(progress);
   }, [progress, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    try {
+      window.localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify({ hidePortfolio, interviewOnly }),
+      );
+    } catch {
+      /* private mode / quota */
+    }
+  }, [hidePortfolio, interviewOnly, mounted]);
 
   // close the panel with ESC
   useEffect(() => {
@@ -51,7 +78,19 @@ export function SkillTree() {
     return () => window.removeEventListener("keydown", onKey);
   }, [selected]);
 
-  const layout = useMemo(() => computeLayout(), []);
+  // visible node set: interview-essentials filter and/or hide-portfolio.
+  // Both layout and stats run off this so counts stay honest.
+  const visibleNodes = useMemo(() => {
+    let ns = NODES;
+    if (interviewOnly) ns = ns.filter((n) => n.interview);
+    if (hidePortfolio) ns = ns.filter((n) => n.group !== PORTFOLIO_GROUP);
+    return ns;
+  }, [interviewOnly, hidePortfolio]);
+  const visibleIds = useMemo(
+    () => new Set(visibleNodes.map((n) => n.id)),
+    [visibleNodes],
+  );
+  const layout = useMemo(() => computeLayout(visibleNodes), [visibleNodes]);
 
   function patchNode(id: string, patch: Partial<Progress[string]>) {
     setProgress((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }));
@@ -61,8 +100,9 @@ export function SkillTree() {
     return <p className="font-mono text-sm text-cream-dim">growing tree…</p>;
   }
 
-  const next = nextUp(progress);
-  const xp = totalXp(progress);
+  const next = nextUp(progress, visibleNodes);
+  const xp = totalXp(progress, visibleNodes);
+  const total = visibleNodes.length;
   const selectedNode = selected ? NODE_BY_ID.get(selected) : undefined;
 
   return (
@@ -70,7 +110,7 @@ export function SkillTree() {
       {/* stats strip */}
       <div className="flex flex-wrap items-center gap-3">
         {TRACKS.map((t) => {
-          const s = trackStats(t.id, progress);
+          const s = trackStats(t.id, progress, visibleNodes);
           return (
             <div
               key={t.id}
@@ -96,7 +136,7 @@ export function SkillTree() {
         })}
         <div className="hud rounded-lg border border-line bg-panel px-3 py-2 font-mono text-xs">
           <span className="text-amber">
-            {xp} / {TOTAL_NODES} XP
+            {xp} / {total} XP
           </span>
           <span className="ml-1 text-cream-dim">(nodes done)</span>
         </div>
@@ -108,6 +148,27 @@ export function SkillTree() {
             next up → {next.title}
           </button>
         )}
+
+        {/* view toggles */}
+        <button
+          onClick={() => setInterviewOnly((v) => !v)}
+          title="show only the must-know nodes for the Exun interviews: the concept the examiner tests plus the project nuance only you would know"
+          className={`rounded-lg border px-3 py-2 font-mono text-xs transition ${
+            interviewOnly
+              ? "border-amber bg-amber/20 text-amber"
+              : "border-line bg-panel text-cream-dim hover:border-amber hover:text-cream"
+          }`}
+        >
+          {interviewOnly ? "★ " : ""}
+          interview essentials ({INTERVIEW_COUNT})
+        </button>
+        <button
+          onClick={() => setHidePortfolio((v) => !v)}
+          title="the Next.js self-iterating-site path is an optional aside, not part of the Exun submission"
+          className="rounded-lg border border-line bg-panel px-3 py-2 font-mono text-xs text-cream-dim transition hover:border-burgundy-bright hover:text-cream"
+        >
+          {hidePortfolio ? "show" : "hide"} portfolio ({PORTFOLIO_COUNT})
+        </button>
       </div>
 
       {/* tree canvas — horizontally scrollable on small screens */}
@@ -122,8 +183,9 @@ export function SkillTree() {
             height={layout.height}
             aria-hidden
           >
-            {/* root → track roots, then every parent → child edge */}
-            {NODES.map((n) =>
+            {/* root → track roots, then every parent → child edge.
+                Hidden parents have no layout pos, so those edges drop out. */}
+            {visibleNodes.map((n) =>
               n.parents.map((pid) => {
                 const from =
                   pid === "root" ? layout.rootPos : layout.pos[pid];
@@ -165,7 +227,7 @@ export function SkillTree() {
             </p>
           </div>
 
-          {NODES.map((n) => (
+          {visibleNodes.map((n) => (
             <NodeChip
               key={n.id}
               node={n}
@@ -195,6 +257,7 @@ export function SkillTree() {
           <LearnPanel
             node={selectedNode}
             progress={progress}
+            visibleIds={visibleIds}
             onPatch={(patch) => patchNode(selectedNode.id, patch)}
             onJump={(id) => setSelected(id)}
             onClose={() => setSelected(null)}
@@ -267,12 +330,14 @@ function NodeChip({
 function LearnPanel({
   node,
   progress,
+  visibleIds,
   onPatch,
   onJump,
   onClose,
 }: {
   node: SkillNode;
   progress: Progress;
+  visibleIds: Set<string>;
   onPatch: (patch: Partial<Progress[string]>) => void;
   onJump: (id: string) => void;
   onClose: () => void;
@@ -288,10 +353,14 @@ function LearnPanel({
     .map((pid) => NODE_BY_ID.get(pid))
     .filter((x): x is SkillNode => !!x);
 
-  // children that became playable (all THEIR parents done) — the reward reveal
+  // children that became playable (all THEIR parents done) — the reward reveal.
+  // Skip any that the current filter has hidden, so we never jump to a hidden node.
   const unlockedChildren = (CHILDREN[node.id] ?? [])
     .map((id) => NODE_BY_ID.get(id))
-    .filter((c): c is SkillNode => !!c && done && isUnlocked(c.id, progress));
+    .filter(
+      (c): c is SkillNode =>
+        !!c && done && isUnlocked(c.id, progress) && visibleIds.has(c.id),
+    );
 
   const canComplete = !!p.draft?.trim();
 
@@ -360,6 +429,19 @@ function LearnPanel({
           </div>
         ) : mode === "lesson" ? (
           <div className="flex flex-col gap-5">
+            {/* INTERVIEW — concept the examiner tests + the project nuance
+                only the builder knows. Shown first for last-minute cramming. */}
+            {node.interview && (
+              <section className="rounded-lg border border-burgundy-bright/60 bg-burgundy/20 p-3">
+                <h3 className="mb-2 font-mono text-[10px] font-bold tracking-wider text-cream">
+                  🎤 INTERVIEW — BE READY TO EXPLAIN
+                </h3>
+                <div className="flex flex-col gap-2 font-sans text-sm leading-relaxed text-cream">
+                  {renderMd(node.interview)}
+                </div>
+              </section>
+            )}
+
             {/* HOW IT WORKS */}
             <section>
               <h3 className="mb-2 font-mono text-[10px] font-bold tracking-wider text-cream-dim">

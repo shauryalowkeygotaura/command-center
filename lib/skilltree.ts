@@ -30,7 +30,17 @@ export interface SkillNode {
   // used in the matching Exun build. Textbook path is in explain/example;
   // this is what shipped. markdown-lite, same as explain.
   loophole?: string;
+  // Optional grouping for nodes that form an optional/aside branch (e.g.
+  // "portfolio" — the self-iterating-site path), so the UI can hide them.
+  group?: string;
+  // Optional interview-prep note: the concept an examiner tests PLUS the
+  // project-specific nuance only the builder knows. Presence also marks a
+  // node as an "interview essential" the UI can filter to. markdown-lite.
+  interview?: string;
 }
+
+// Nodes that belong to an optional branch the user can toggle off.
+export const PORTFOLIO_GROUP = "portfolio";
 
 export const TRACKS: { id: TrackId; label: string; accent: string }[] = [
   { id: "webdev", label: "WEB DEV", accent: "#7b61ff" },
@@ -100,27 +110,29 @@ export function isUnlocked(id: string, p: Progress): boolean {
   return node.parents.every((pid) => isDone(pid, p));
 }
 
-export function trackStats(track: TrackId, p: Progress) {
-  const nodes = NODES.filter((n) => n.track === track);
-  const done = nodes.filter((n) => isDone(n.id, p)).length;
-  return { done, total: nodes.length };
+// All stats/layout helpers take the *visible* node set so hiding a group
+// (e.g. the portfolio path) drops it from counts and the map alike.
+export function trackStats(track: TrackId, p: Progress, nodes = NODES) {
+  const inTrack = nodes.filter((n) => n.track === track);
+  const done = inTrack.filter((n) => isDone(n.id, p)).length;
+  return { done, total: inTrack.length };
 }
 
 // XP = number of nodes completed (one node = one point), not minutes.
-export function totalXp(p: Progress): number {
-  return NODES.filter((n) => isDone(n.id, p)).length;
+export function totalXp(p: Progress, nodes = NODES): number {
+  return nodes.filter((n) => isDone(n.id, p)).length;
 }
 
 // Total nodes in the tree, so the meter can read "12 / 70".
 export const TOTAL_NODES = NODES.length;
 
 // First node you can actually work on right now, shallowest first.
-export function nextUp(p: Progress): SkillNode | null {
-  const candidates = NODES.filter(
+export function nextUp(p: Progress, nodes = NODES): SkillNode | null {
+  const candidates = nodes.filter(
     (n) => !isDone(n.id, p) && isUnlocked(n.id, p),
   );
   if (candidates.length === 0) return null;
-  const depth = computeDepths();
+  const depth = computeDepths(nodes);
   candidates.sort((a, b) => (depth[a.id] ?? 0) - (depth[b.id] ?? 0));
   return candidates[0];
 }
@@ -139,7 +151,7 @@ const ROW_H = 116;
 const TOP_PAD = 150; // room for the root chip
 const BOTTOM_PAD = 70;
 
-function computeDepths(): Record<string, number> {
+function computeDepths(nodes = NODES): Record<string, number> {
   const depth: Record<string, number> = {};
   const visiting = new Set<string>(); // cycle guard: bad data must not hang the UI
   const get = (id: string): number => {
@@ -152,25 +164,25 @@ function computeDepths(): Record<string, number> {
     visiting.delete(id);
     return depth[id];
   };
-  for (const n of NODES) get(n.id);
+  for (const n of nodes) get(n.id);
   return depth;
 }
 
-export function computeLayout(): {
+export function computeLayout(nodes = NODES): {
   pos: Record<string, NodePos>;
   rootPos: NodePos;
   width: number;
   height: number;
 } {
-  const depth = computeDepths();
+  const depth = computeDepths(nodes);
   const pos: Record<string, NodePos> = {};
 
   let bandStart = 0;
   let maxDepth = 0;
   for (const track of TRACKS) {
-    const nodes = NODES.filter((n) => n.track === track.id);
+    const trackNodes = nodes.filter((n) => n.track === track.id);
     const rows = new Map<number, SkillNode[]>();
-    for (const n of nodes) {
+    for (const n of trackNodes) {
       const d = depth[n.id];
       maxDepth = Math.max(maxDepth, d);
       const row = rows.get(d) ?? [];
