@@ -9,9 +9,9 @@
 
 import cpData from "@/data/skilltree-cp.json";
 import webData from "@/data/skilltree-webdev.json";
-import mlData from "@/data/skilltree-ml.json";
+import appdevData from "@/data/skilltree-appdev.json";
 
-export type TrackId = "webdev" | "cp" | "ml";
+export type TrackId = "webdev" | "cp" | "appdev";
 
 export interface SkillNode {
   id: string;
@@ -45,13 +45,13 @@ export const PORTFOLIO_GROUP = "portfolio";
 export const TRACKS: { id: TrackId; label: string; accent: string }[] = [
   { id: "webdev", label: "WEB DEV", accent: "#7b61ff" },
   { id: "cp", label: "COMP PROG", accent: "#ff7a1a" },
-  { id: "ml", label: "ML", accent: "#9a3f4a" },
+  { id: "appdev", label: "APP DEV", accent: "#3a86ff" },
 ];
 
 export const NODES: SkillNode[] = [
   ...(webData as unknown as SkillNode[]),
   ...(cpData as unknown as SkillNode[]),
-  ...(mlData as unknown as SkillNode[]),
+  ...(appdevData as unknown as SkillNode[]),
 ];
 
 export const NODE_BY_ID = new Map(NODES.map((n) => [n.id, n]));

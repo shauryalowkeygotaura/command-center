@@ -1,0 +1,368 @@
+[
+  {
+    "id": "app-rn-expo",
+    "track": "appdev",
+    "title": "React Native + Expo",
+    "subtitle": "JS that renders native",
+    "level": 0,
+    "parents": ["root"],
+    "minutes": 15,
+    "explain": "React Native lets you write a phone app's UI in JavaScript/React, and it renders to REAL native iOS/Android views, not a web page in a wrapper. Expo is the toolchain on top: one command to run, test on your actual phone through the Expo Go app, and build the APK in the cloud, so you never touch Android Studio.\n\nMy app `copt.` is built this way. Week 1 was one file, `App.js`, a landing page. Week 2 it grew a backend, so it's now `App.js` + a `screens/` folder (Landing, Login, Register, Profile) + `theme.js` + `firebaseConfig.js`.\n\n**Common mistake:** thinking RN is a web view. It isn't, a `<View>` becomes a native view, a `<Text>` becomes a native text label.",
+    "example": "package.json (the stack):\n  \"expo\": \"~56\",\n  \"react\": \"19\",\n  \"react-native\": \"0.85\",\n  \"firebase\": \"^12\",\n  \"@react-native-async-storage/async-storage\"\n\nRun it:\n  npm install\n  npx expo start   # scan the QR with Expo Go",
+    "exercise": "In one sentence each: what does React Native do, and what does Expo add on top of it?",
+    "solution": "React Native renders a React/JavaScript UI to real native iOS/Android views. Expo is a toolchain on top that lets you run the app instantly on your phone (Expo Go + QR) and build the APK in the cloud, with no native toolchain setup.",
+    "checklist": [
+      "Is React Native a web view? (no, it renders native views)",
+      "What does Expo save me from installing? (Android Studio / native toolchain)",
+      "How is the app structured now? (App.js + screens/ + theme.js + firebaseConfig.js)"
+    ],
+    "interview": "Examiner tests: do you know what you built on. copt. is React Native (UI in JS, renders to native views) with Expo (run on phone via Expo Go QR, APK built in the cloud with EAS). Week 1 was one App.js landing page; week 2 added Firebase auth + a database, so I split it into screens/, theme.js, firebaseConfig.js."
+  },
+  {
+    "id": "app-components-jsx",
+    "track": "appdev",
+    "title": "Components & JSX",
+    "subtitle": "Functions that return UI",
+    "level": 1,
+    "parents": ["app-rn-expo"],
+    "minutes": 15,
+    "explain": "A component is just a function that returns UI. The UI is written in JSX, the HTML-looking syntax that is really function calls producing elements.\n\nMy app has five: `App` (the root, decides which screen shows based on whether you're logged in), `Landing` (the shop home), `Login`, `Register`, and `Profile`. Each screen lives in its own file under `screens/` so no one file gets huge.\n\n**Common mistake:** forgetting a component must return a single root element. Every screen wraps its contents in one `<ScrollView>` or `<View>`.",
+    "example": "// App.js, the root component picks a screen\nexport default function App() {\n  const [user, setUser] = useState(null);\n  // ...\n  return (\n    <View style={styles.app}>\n      <StatusBar style=\"light\" />\n      {user ? <Profile user={user} /> : <Landing go={setRoute} />}\n    </View>\n  );\n}",
+    "exercise": "What are the five components in copt., and why does each screen live in its own file?",
+    "solution": "App (root/router), Landing, Login, Register, Profile. Each screen is its own file under screens/ so files stay small and focused, easier to read and edit one screen without scrolling past the others, instead of one giant App.js.",
+    "checklist": [
+      "What is a component? (a function returning UI/JSX)",
+      "Name my five components and what each does",
+      "Why split screens into separate files?"
+    ],
+    "interview": "Examiner tests: structure + reuse. App is the root that routes; Landing/Login/Register/Profile are screens, each in its own file under screens/. I split them in week 2 because one App.js was getting long once auth + a profile screen showed up, separate files keep each screen readable."
+  },
+  {
+    "id": "app-core-primitives",
+    "track": "appdev",
+    "title": "Core Native Components",
+    "subtitle": "View, Text, TextInput, Pressable",
+    "level": 2,
+    "parents": ["app-components-jsx"],
+    "minutes": 15,
+    "explain": "React Native has no HTML. You use a small set of built-in primitives:\n\n- `View` = a box / container (the web's div).\n- `Text` = text. EVERY string must live inside a `<Text>`.\n- `TextInput` = a text field (the login/register forms).\n- `Pressable` = anything tappable (button, card).\n- `ScrollView` = a container that scrolls when contents overflow.\n- `ActivityIndicator` = the loading spinner (shown while the profile loads).\n- `Alert` = a native confirm popup (used before deleting data).\n\nMy forms are `TextInput`s, the profile loads behind an `ActivityIndicator`, and deleting data pops an `Alert`.\n\n**Common mistake:** a bare string outside `<Text>`, e.g. `<View>hello</View>`, throws 'Text strings must be rendered within a <Text> component'.",
+    "example": "<View style={styles.field}>\n  <Text style={shared.label}>email</Text>\n  <TextInput\n    style={shared.input}\n    value={email}\n    onChangeText={setEmail}\n    autoCapitalize=\"none\"\n    keyboardType=\"email-address\"\n  />\n</View>",
+    "exercise": "Name the RN primitive for: a text field, a loading spinner, a native confirm popup, and a piece of text.",
+    "solution": "Text field = TextInput. Loading spinner = ActivityIndicator. Native confirm popup = Alert. Text = Text (every string must sit inside one). Plus View (box), Pressable (tappable), ScrollView (scrolls).",
+    "checklist": [
+      "Why can't I write text directly inside a View?",
+      "Which primitive is a text field, and which is the spinner?",
+      "What shows the confirm-before-delete popup? (Alert)"
+    ],
+    "interview": "Examiner tests: RN has no HTML. View (box), Text (all text inside one), TextInput (form fields), Pressable (tappable), ScrollView (overflow scroll), ActivityIndicator (the profile's loading spinner), Alert (confirm before delete). The classic error is a bare string outside <Text>."
+  },
+  {
+    "id": "app-props",
+    "track": "appdev",
+    "title": "Props",
+    "subtitle": "Inputs passed parent to child",
+    "level": 2,
+    "parents": ["app-components-jsx"],
+    "minutes": 12,
+    "explain": "Props are inputs you pass into a component, written like HTML attributes. They flow ONE way, parent to child, and are read-only inside the child.\n\nI pass two kinds: functions (`go={setRoute}`, so a screen can ask the app to navigate) and data (`user={user}`, so Profile knows whose data to load). In the child I destructure them: `function Profile({ user })` pulls `user` straight out.\n\n**Common mistake:** trying to change a prop inside the child. You can't, props are read-only; to change shared data you lift it to state in the parent, which is exactly what `go` does.",
+    "example": "// App passes a function down to a screen:\n<Login go={setRoute} />\n// and passes data down to Profile:\n<Profile user={user} />\n\n// the child reads them by destructuring:\nfunction Profile({ user }) {\n  const ref = doc(db, 'users', user.uid);\n  // ...\n}",
+    "exercise": "copt. passes `user={user}` into Profile. Why pass the user as a prop instead of letting Profile read it itself?",
+    "solution": "The logged-in user is owned by App (it subscribes to Firebase auth). Passing `user` down as a prop keeps App the single source of truth; Profile just receives whose data to load (`user.uid`) instead of each screen independently subscribing to auth.",
+    "checklist": [
+      "Which direction do props flow, and are they writable in the child?",
+      "What are the `go` and `user` props for?",
+      "How do I read props inside a screen? (destructuring)"
+    ],
+    "interview": "Examiner tests: state vs props, data flow. Props are read-only inputs from the parent. I pass `go` (a function = setRoute, so screens can navigate) and `user` (the logged-in user, so Profile knows whose doc to load). Props flow down, events flow up."
+  },
+  {
+    "id": "app-usestate",
+    "track": "appdev",
+    "title": "State with useState",
+    "subtitle": "What a component remembers",
+    "level": 3,
+    "parents": ["app-props"],
+    "minutes": 18,
+    "explain": "State is data a component remembers between renders. `const [email, setEmail] = useState('')` gives a value and a setter. Calling the setter changes the value AND re-runs the component so the screen updates.\n\nMy forms are full of state: each `TextInput` is bound to a state value via `value` + `onChangeText`, that's a controlled input. The Login/Register screens also keep `busy` (is a request in flight) and `err` (the error message to show).\n\n**Common mistake:** mutating state directly (`email = 'x'`). That doesn't re-render. You must call the setter.",
+    "example": "const [email, setEmail] = useState('');\nconst [busy, setBusy] = useState(false);\nconst [err, setErr] = useState('');\n\n<TextInput value={email} onChangeText={setEmail} />",
+    "exercise": "What is a 'controlled input', and which two props make a TextInput controlled in copt.?",
+    "solution": "A controlled input is a field whose value is driven by state, not the OS, the component is the single source of truth. In copt. the TextInput's `value={email}` (read from state) plus `onChangeText={setEmail}` (write back to state) make it controlled.",
+    "checklist": [
+      "What two things does useState give me?",
+      "What happens to the UI when I call the setter?",
+      "What makes a TextInput 'controlled'? (value + onChangeText)"
+    ],
+    "interview": "Examiner tests: state + re-rendering. useState returns [value, setter]; the setter updates the value and re-renders. My form fields are controlled inputs (value from state, onChangeText writes back). I also track `busy` and `err` in state to drive the button label and the error line."
+  },
+  {
+    "id": "app-stylesheet-theme",
+    "track": "appdev",
+    "title": "StyleSheet, Flexbox & a Theme",
+    "subtitle": "Styling without CSS",
+    "level": 3,
+    "parents": ["app-core-primitives"],
+    "minutes": 18,
+    "explain": "RN has no CSS files. You style with JS objects via `StyleSheet.create({...})`, camelCase props (`backgroundColor`, `paddingHorizontal`). Layout is **flexbox**, same as web but the DEFAULT direction is `column` (web defaults to row).\n\nBecause five screens share the same dark look, I pulled the design into `theme.js`: a `colors` object (bg `#0d0d0f`, lime accent `#d9ff3f`) and a `shared` StyleSheet (button, input, label) every screen imports. That's DRY, change the lime once, every screen updates.\n\n**Common mistake:** assuming row layout by default, in RN you must set `flexDirection: 'row'` or children stack vertically.",
+    "example": "// theme.js, shared tokens\nexport const colors = { bg: '#0d0d0f', lime: '#d9ff3f', text: '#f4f4f5' };\nexport const shared = StyleSheet.create({\n  btn: { backgroundColor: colors.lime, borderRadius: 12, paddingVertical: 14 },\n  input: { borderWidth: 1, borderColor: '#2c2c30', borderRadius: 12, color: colors.text },\n});",
+    "exercise": "In RN, what is the default flexDirection, and why did I move colors/buttons into theme.js?",
+    "solution": "Default flexDirection is `column` (children stack), unlike the web's row. I moved shared colors and styles into theme.js so all five screens import one source of truth, change the accent or button shape once and every screen updates, instead of copy-pasting style objects per file.",
+    "checklist": [
+      "How do I style in RN if there's no CSS file?",
+      "What's the default flexDirection, and how do I get a row?",
+      "Why a theme.js instead of styles per screen? (DRY, one source of truth)"
+    ],
+    "interview": "Examiner tests: layout + code quality. Styles are JS objects via StyleSheet.create, camelCase, layout is flexbox defaulting to COLUMN. For code quality I extracted colors + shared button/input styles into theme.js so the five screens stay consistent and I change the design in one place."
+  },
+  {
+    "id": "app-lists-keys",
+    "track": "appdev",
+    "title": "Lists & Keys",
+    "subtitle": "Arrays into UI",
+    "level": 3,
+    "parents": ["app-core-primitives"],
+    "minutes": 12,
+    "explain": "To render a list, you `.map()` over an array and return one component per item. My `drops` array (5 fake products on the Landing screen) becomes 5 `Pressable` cards.\n\nEach item needs a unique `key` prop (`key={item.id}`). React uses the key to track which items changed, were added, or removed, so it updates only what's needed.\n\n**Common mistake:** using the array index as the key, or omitting it. I used `item.id`, stable and unique, which is correct.",
+    "example": "const drops = [\n  { id: 1, name: 'oversized graphic tee', price: '₹799', tag: 'hot' },\n  // ...\n];\n\n{drops.map((item) => (\n  <Pressable key={item.id} onPress={() => setCart((c) => c + 1)}>\n    <Text>{item.name}</Text>\n  </Pressable>\n))}",
+    "exercise": "Why does each mapped card need a `key`, and why is `item.id` better than the array index?",
+    "solution": "The key lets React match each rendered card to its data across re-renders, so it updates only what changed. `item.id` is stable and unique; the array index shifts if items reorder or get removed, which can make React reuse the wrong component.",
+    "checklist": [
+      "How do I turn an array into cards? (.map)",
+      "What is the key for and why required?",
+      "Why id over index as the key?"
+    ],
+    "interview": "Examiner tests: list rendering. I `.map()` the drops array into Pressable cards, each `key={item.id}`. The key lets React track items for efficient re-renders; I use the stable id, not the index, because the index breaks on reorder."
+  },
+  {
+    "id": "app-pressable-events",
+    "track": "appdev",
+    "title": "Touch Events",
+    "subtitle": "Pressable, onPress, disabled",
+    "level": 4,
+    "parents": ["app-usestate"],
+    "minutes": 12,
+    "explain": "`Pressable` is the tappable primitive; `onPress` is its handler. My buttons call `submit()`, `go(...)`, or `logout()`.\n\nPressable's `style` can be a FUNCTION of press state: `style={({ pressed }) => [shared.btn, pressed && shared.btnPressed]}`. While the finger is down `pressed` is true, so it dims to opacity 0.7, the press feedback. I also pass `disabled={busy}` so you can't double-submit a login while one's already in flight.\n\n**Common mistake:** `onPress={submit()}` CALLS submit during render; you want `onPress={submit}` or `onPress={() => submit()}`, a function to call later.",
+    "example": "<Pressable\n  style={({ pressed }) => [shared.btn, (pressed || busy) && shared.btnPressed]}\n  onPress={submit}\n  disabled={busy}\n>\n  <Text style={shared.btnText}>{busy ? 'logging in...' : 'log in'}</Text>\n</Pressable>",
+    "exercise": "Why is `disabled={busy}` on the login button, and how does the button show it's being pressed?",
+    "solution": "`disabled={busy}` blocks a second tap while the first login request is still in flight, so you don't fire two sign-in calls. The press feedback is the style-as-function: while `pressed` (or busy) is true it applies btnPressed (opacity 0.7), and the label switches to 'logging in...'.",
+    "checklist": [
+      "Which primitive + prop handle a tap?",
+      "Why disable the button while busy?",
+      "How does the button dim while pressed?"
+    ],
+    "interview": "Examiner tests: event handling + UX. Pressable + onPress; I pass the function itself, not call it during render. While a request is in flight I set `busy` and use it for `disabled={busy}` (no double-submit) and to swap the label to 'logging in...'. Press feedback is the style-as-function dimming to 0.7."
+  },
+  {
+    "id": "app-conditional-nav",
+    "track": "appdev",
+    "title": "Navigation Without a Router",
+    "subtitle": "Two layers: auth state + a route string",
+    "level": 4,
+    "parents": ["app-usestate"],
+    "minutes": 14,
+    "explain": "No navigation library, three screens for logged-out, one for logged-in. I navigate in two layers.\n\n**Layer 1, are you logged in?** App holds a `user`. If `user` exists, show `Profile`, otherwise show an auth screen. This is decided by Firebase, not by me clicking around (see Auth-State Routing).\n\n**Layer 2, which auth screen?** When logged out, a `route` state string picks between landing / login / register, classic conditional rendering: `route === 'login' ? <Login/> : ...`. Buttons call `go('login')`.\n\n**When this breaks down:** once you need a back stack, tabs, or deep links, switch to React Navigation. For this, a state string is enough.",
+    "example": "{booting ? (\n  <ActivityIndicator />\n) : user ? (\n  <Profile user={user} />\n) : route === 'login' ? (\n  <Login go={setRoute} />\n) : route === 'register' ? (\n  <Register go={setRoute} />\n) : (\n  <Landing go={setRoute} />\n)}",
+    "exercise": "copt. has no router. What two pieces of state decide which screen shows, and what does each control?",
+    "solution": "`user` (from Firebase auth) decides logged-in vs logged-out, if it's set, Profile shows. `route` (a string) decides WHICH logged-out screen shows: landing, login, or register. Together they pick the screen via conditional rendering, no navigation library.",
+    "checklist": [
+      "What two states drive navigation?",
+      "Which one decides logged-in vs out, and where does it come from?",
+      "When would I actually add React Navigation?"
+    ],
+    "interview": "Examiner tests: your tradeoff. I navigate with conditional rendering, two layers: `user` (from Firebase) picks authed vs not, `route` picks which auth screen. No router because for a handful of screens it's overkill. I'd add React Navigation once I need a back stack, tabs, or deep links."
+  },
+  {
+    "id": "app-firebase-setup",
+    "track": "appdev",
+    "title": "Firebase + the JS SDK",
+    "subtitle": "A backend without a server",
+    "level": 5,
+    "parents": ["app-conditional-nav"],
+    "minutes": 18,
+    "explain": "Firebase is a Backend-as-a-Service: Google hosts the auth, database, and rules, so I write zero server code. `firebaseConfig.js` boots it once with `initializeApp(config)` and exports `auth` and `db` for the rest of the app to import.\n\n**Why the `firebase` JS SDK and not `@react-native-firebase`?** copt. runs in **Expo Go**, and the native module needs a custom dev build. The plain JS SDK works straight in Expo Go, so it was the only real choice.",
+    "example": "// firebaseConfig.js\nimport { initializeApp } from 'firebase/app';\nimport { getFirestore } from 'firebase/firestore';\n\nconst firebaseConfig = {\n  apiKey: '...', authDomain: '...', projectId: 'copt-b4122',\n  // ...\n};\nconst app = initializeApp(firebaseConfig);\nexport const db = getFirestore(app);",
+    "exercise": "Why did copt. use the `firebase` JS SDK instead of `@react-native-firebase`?",
+    "solution": "Because copt. runs in Expo Go. @react-native-firebase is a native module that requires a custom Expo dev build (or bare workflow) to work; the plain firebase JS SDK runs directly inside Expo Go, so I could keep the QR-code dev flow and still build the APK with EAS.",
+    "checklist": [
+      "What is Firebase / Backend-as-a-Service?",
+      "Why the JS SDK, not @react-native-firebase? (Expo Go)",
+      "What does firebaseConfig.js export? (auth, db)"
+    ],
+    "loophole": "The web `apiKey` in firebaseConfig.js is **not a secret**. It ships inside every client app, your APK contains it no matter what, and moving it to env vars still bundles it in plaintext. It's an identifier for the project, not a credential. What actually protects your data is Firestore security rules + Firebase Auth. So it's fine to commit firebaseConfig.js, which is why the repo builds for anyone.",
+    "interview": "Examiner's trap question: 'isn't your API key exposed in the repo?' Answer: the Firebase WEB config is a public identifier, not a secret, it's designed to ship in the client and is in the APK regardless. Data is secured by Firestore rules (only request.auth.uid can touch its own doc), not by hiding the key. And I used the JS SDK because the app runs in Expo Go."
+  },
+  {
+    "id": "app-auth-persistence",
+    "track": "appdev",
+    "title": "Staying Logged In",
+    "subtitle": "Auth persistence with AsyncStorage",
+    "level": 6,
+    "parents": ["app-firebase-setup"],
+    "minutes": 14,
+    "explain": "By default the firebase JS SDK keeps your session in memory, so closing the app logs you out. To persist across restarts you build auth with `initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) })`. AsyncStorage is the phone's key-value disk store; Firebase writes the session token there and reloads it on cold start.\n\nThat's why, when you reopen copt., you land straight on your Profile instead of the login screen.",
+    "example": "// firebaseConfig.js\nimport { initializeAuth, getReactNativePersistence } from 'firebase/auth';\nimport AsyncStorage from '@react-native-async-storage/async-storage';\n\nexport const auth = initializeAuth(app, {\n  persistence: getReactNativePersistence(AsyncStorage),\n});",
+    "exercise": "Without `getReactNativePersistence`, what happens every time you close and reopen the app, and why?",
+    "solution": "You'd be logged out on every restart, because the default JS SDK persistence is in-memory only, so the session token vanishes when the app process dies. Wiring AsyncStorage persistence writes the token to disk so Firebase can restore the session on cold start.",
+    "checklist": [
+      "What does getReactNativePersistence + AsyncStorage do?",
+      "What breaks without it? (logged out every restart)",
+      "Why initializeAuth instead of plain getAuth?"
+    ],
+    "loophole": "`getReactNativePersistence` only exists in firebase's react-native build (`dist/rn/index.js`), not the web build. Metro resolves `firebase/auth` to it via the package's `react-native` export condition. If you'd called plain `getAuth(app)`, you'd get the in-memory web auth, no AsyncStorage warning is hard to spot, and users silently get logged out every launch. I confirmed the rn build exports it and that the project bundles before trusting it.",
+    "interview": "Examiner tests: do you understand persistence. Default JS-SDK auth is in-memory, so I used initializeAuth with getReactNativePersistence(AsyncStorage) to survive restarts. Gotcha I hit: that helper lives only in firebase's react-native build, Metro picks it through the 'react-native' export condition."
+  },
+  {
+    "id": "app-firestore-model",
+    "track": "appdev",
+    "title": "Firestore Data Model",
+    "subtitle": "Documents in collections",
+    "level": 6,
+    "parents": ["app-firebase-setup"],
+    "minutes": 14,
+    "explain": "Cloud Firestore stores data as **documents** (JSON-like objects) grouped into **collections**. copt. has one collection, `users`, and one document per account keyed by the user's auth uid: `users/{uid}`.\n\nI store exactly what the task asked plus a timestamp: `{ name, email, age, city, createdAt }`. `age` is saved as a Number (not the raw string from the field), and `createdAt` uses `serverTimestamp()` so the time comes from Google's clock, not the phone's.\n\nYou address a document with `doc(db, 'users', uid)`, that ref is what every read/write uses.",
+    "example": "import { doc, setDoc, serverTimestamp } from 'firebase/firestore';\n\nawait setDoc(doc(db, 'users', cred.user.uid), {\n  name: name.trim(),\n  email: email.trim(),\n  age: Number(age),\n  city: city.trim(),\n  createdAt: serverTimestamp(),\n});",
+    "exercise": "How is a copt. user's data addressed in Firestore, and why store `age` as Number and `createdAt` with serverTimestamp()?",
+    "solution": "Each user is the document `users/{uid}`, keyed by their auth uid via `doc(db, 'users', uid)`. `age` is converted with `Number(age)` so it's stored as a real number (sortable/comparable), not a string. `serverTimestamp()` records Google's server time, so it's consistent regardless of the phone's clock or timezone.",
+    "checklist": [
+      "Collection vs document, what's the shape?",
+      "What's the document id for a user? (their auth uid)",
+      "Why Number(age) and serverTimestamp()?"
+    ],
+    "interview": "Examiner tests: data modelling. Firestore = documents in collections. I keyed each profile by the auth uid (`users/{uid}`) so the logged-in user maps 1:1 to their doc. I store name/email/age/city/createdAt, with age coerced to Number and createdAt as serverTimestamp() for a trustworthy server-side time."
+  },
+  {
+    "id": "app-auth-register",
+    "track": "appdev",
+    "title": "Sign Up (the C in CRUD)",
+    "subtitle": "Create the account + the profile doc",
+    "level": 6,
+    "parents": ["app-firebase-setup", "app-usestate"],
+    "minutes": 18,
+    "explain": "Registering is two steps. First `createUserWithEmailAndPassword(auth, email, password)` makes the auth account (Firebase stores ONLY the email + a hashed password). Then I write the extra fields, name/age/city, into Firestore as `users/{uid}`. That `setDoc` is the **Create** in CRUD.\n\nBefore any of that I validate: every field filled, age is 1-120, password 6+ chars (Firebase rejects shorter). If validation fails I show a message and never hit the network.",
+    "example": "async function submit() {\n  const problem = validate();\n  if (problem) { setErr(problem); return; }\n  setBusy(true);\n  try {\n    const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);\n    await setDoc(doc(db, 'users', cred.user.uid), {\n      name: name.trim(), email: email.trim(),\n      age: Number(age), city: city.trim(),\n      createdAt: serverTimestamp(),\n    });\n  } catch (e) {\n    setErr(authMessage(e.code));\n    setBusy(false);\n  }\n}",
+    "exercise": "Why does registering need BOTH createUserWithEmailAndPassword AND a setDoc? What does each store?",
+    "solution": "Firebase Auth only stores the credentials, email and a hashed password, and gives back a uid. It has nowhere for name/age/city. So after creating the account I write those profile fields to Firestore at users/{uid}. Auth = who you are; Firestore = your data.",
+    "checklist": [
+      "What does createUserWithEmailAndPassword store vs setDoc?",
+      "What do I validate before calling Firebase?",
+      "Which CRUD operation is registration? (Create)"
+    ],
+    "loophole": "Notice `setBusy(false)` is only in the `catch`, never after success. On success Firebase's auth listener fires, App swaps to <Profile>, and this Register screen UNMOUNTS, calling setState on an unmounted component does nothing (and warns). So I deliberately don't reset busy on the happy path; the screen is already gone.",
+    "interview": "Examiner tests: auth vs database split. Sign-up = createUserWithEmailAndPassword (stores email + hashed password, returns a uid) THEN setDoc to users/{uid} for name/age/city (the Create in CRUD). I validate first (all fields, age 1-120, password 6+). Subtlety: I only clear `busy` on error, because success unmounts the screen via the auth listener."
+  },
+  {
+    "id": "app-auth-login",
+    "track": "appdev",
+    "title": "Log In",
+    "subtitle": "signInWithEmailAndPassword",
+    "level": 7,
+    "parents": ["app-auth-register"],
+    "minutes": 12,
+    "explain": "Logging in is one call: `signInWithEmailAndPassword(auth, email, password)`. On success I do NOT navigate manually, Firebase's auth listener in App notices the user changed and swaps to Profile on its own (see Auth-State Routing). On failure I map the error code to a friendly line.\n\nThe login screen only needs email + password, the profile data already exists in Firestore from when they registered.",
+    "example": "async function submit() {\n  if (!email.trim() || !password) { setErr('fill in both fields'); return; }\n  setBusy(true);\n  try {\n    await signInWithEmailAndPassword(auth, email.trim(), password);\n  } catch (e) {\n    setErr(authMessage(e.code));\n    setBusy(false);\n  }\n}",
+    "exercise": "After a successful login, copt. doesn't call any navigation code. So how does the user end up on the Profile screen?",
+    "solution": "Firebase fires its onAuthStateChanged listener (subscribed in App) when sign-in succeeds. App's `user` state updates, App re-renders, and its conditional rendering shows <Profile> because `user` is now set. Login never navigates, the auth state change does.",
+    "checklist": [
+      "What's the one call to log in?",
+      "Why doesn't Login navigate on success itself?",
+      "Where does the error message come from? (authMessage)"
+    ],
+    "interview": "Examiner tests: the auth flow. Login = signInWithEmailAndPassword. I don't navigate on success, the onAuthStateChanged listener in App detects the new user and renders Profile. Errors go through authMessage(e.code) for a readable message."
+  },
+  {
+    "id": "app-auth-state-routing",
+    "track": "appdev",
+    "title": "Auth-State Routing",
+    "subtitle": "onAuthStateChanged as the source of truth",
+    "level": 7,
+    "parents": ["app-auth-login"],
+    "minutes": 16,
+    "explain": "The whole app keys off ONE subscription. In App, a `useEffect` calls `onAuthStateChanged(auth, cb)`, Firebase calls back with the user (or null) on login, logout, AND on cold start once it has restored the persisted session. I store that in `user` and render off it.\n\nThis is why login/register/logout never navigate by hand: they change the auth state, and this one listener reacts. I also keep a `booting` flag so the app shows a spinner until the first callback arrives (otherwise it'd flash the login screen before realising you're already signed in). The effect returns the unsubscribe function so it cleans up.",
+    "example": "useEffect(() => {\n  const unsub = onAuthStateChanged(auth, (u) => {\n    setUser(u);\n    if (!u) setRoute('landing');\n    setBooting(false);\n  });\n  return unsub;\n}, []);",
+    "exercise": "Why is onAuthStateChanged better than just setting `user` directly inside the login function, and what is the `booting` flag for?",
+    "solution": "One listener is the single source of truth: it covers login, logout, AND restoring a saved session on app launch, cases a login-only setter would miss (you'd never auto-resume a session on cold start). `booting` holds a spinner until that first callback fires, so the app doesn't flash the login screen before Firebase reports you're already signed in.",
+    "checklist": [
+      "What does onAuthStateChanged fire on? (login, logout, cold-start restore)",
+      "Why navigate via the listener, not in login()?",
+      "What's the booting flag preventing? (login-screen flash on launch)"
+    ],
+    "interview": "Examiner tests: app architecture. App subscribes once to onAuthStateChanged, it's the single source of truth for auth and fires on login, logout, and session-restore at launch. So screens just change auth state and this listener routes. `booting` shows a spinner until the first callback so I don't flash the login screen over a restored session. The effect returns unsub to clean up."
+  },
+  {
+    "id": "app-firestore-crud",
+    "track": "appdev",
+    "title": "Read, Update, Delete",
+    "subtitle": "The Profile screen completes CRUD",
+    "level": 7,
+    "parents": ["app-firestore-model", "app-auth-register"],
+    "minutes": 18,
+    "explain": "The Profile screen covers the other three CRUD operations on the `users/{uid}` doc:\n\n- **Read:** on mount, `getDoc(ref)` loads the stored info into the screen.\n- **Update:** edit mode lets you change name/age/city, then `updateDoc(ref, {...})` saves just those fields.\n- **Delete:** 'delete my data' fires `deleteDoc(ref)` then signs you out.\n\nSo across the app: Create = register, Read/Update/Delete = profile. All four, on a real database.",
+    "example": "import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';\nconst ref = doc(db, 'users', user.uid);\n\nconst snap = await getDoc(ref);            // read\nawait updateDoc(ref, { name, age, city }); // update\nawait deleteDoc(ref);                       // delete",
+    "exercise": "Map each CRUD operation to where it happens in copt., and explain why `email` isn't editable on the profile.",
+    "solution": "Create = register (setDoc). Read = Profile loads with getDoc. Update = Profile edit mode with updateDoc. Delete = Profile 'delete my data' with deleteDoc. Email isn't editable because it's the Firebase Auth identity (your login), changing it is an auth operation, not a profile-field edit, so the profile only updates name/age/city.",
+    "checklist": [
+      "Which Firestore call is each of read/update/delete?",
+      "Where does each CRUD op live in the app?",
+      "Why can't you edit email on the profile?"
+    ],
+    "loophole": "`updateDoc` only writes the keys you pass, so editing sends just `{ name, age, city }` and leaves `email` and `createdAt` untouched. Email is deliberately read-only in the UI, it's the auth identity, not a normal field. Delete wipes the Firestore doc and then signs out, so you don't sit on a profile screen with no data behind it.",
+    "interview": "Examiner tests: CRUD end to end. Create = register's setDoc; Read = getDoc on Profile mount; Update = updateDoc in edit mode (name/age/city only); Delete = deleteDoc then signOut. Email stays read-only because it's the auth identity. updateDoc is a partial write, so createdAt and email survive an edit."
+  },
+  {
+    "id": "app-security-rules",
+    "track": "appdev",
+    "title": "Firestore Security Rules",
+    "subtitle": "The real lock on the data",
+    "level": 8,
+    "parents": ["app-firestore-model"],
+    "minutes": 14,
+    "explain": "Firestore in **production mode** denies every read and write by default, you have to write rules that grant access. My rule: a signed-in user may read/write ONLY their own `users/{uid}` document, where the doc id equals their auth uid.\n\nThis, not the API key, is what secures the app. Even though firebaseConfig.js is public, nobody can read or edit your profile, because the rules check `request.auth.uid == uid` server-side on every request.",
+    "example": "rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /users/{uid} {\n      allow read, write: if request.auth != null\n                         && request.auth.uid == uid;\n    }\n  }\n}",
+    "exercise": "firebaseConfig.js is committed publicly. Explain why a stranger still can't read another user's profile.",
+    "solution": "Because access is enforced by security rules on Google's servers, not by the client. The rule only allows a read/write when the requester is authenticated AND their uid matches the document id (`request.auth.uid == uid`). A stranger has no matching auth session, so every request to someone else's users/{uid} is rejected, regardless of having the public config.",
+    "checklist": [
+      "What does production-mode Firestore allow by default? (nothing)",
+      "What does my rule require? (auth uid == doc id)",
+      "Why are rules, not the API key, the security boundary?"
+    ],
+    "loophole": "Easy trap: pick 'test mode' and the DB is world-open for 30 days, or pick production and forget rules and every read silently fails. The one rule `request.auth.uid == uid` both locks others out AND is the reason the public firebaseConfig is harmless. Server-side checks beat client-side every time.",
+    "interview": "Examiner's security question. Firestore production mode denies all; I added a rule allowing read/write only when request.auth.uid equals the document id, so each user touches only their own users/{uid}. That server-side check is the real lock, which is why shipping the public web config in the repo is safe."
+  },
+  {
+    "id": "app-error-handling",
+    "track": "appdev",
+    "title": "Error Handling & UX Polish",
+    "subtitle": "Friendly failures, no dead buttons",
+    "level": 8,
+    "parents": ["app-auth-login"],
+    "minutes": 14,
+    "explain": "Firebase throws coded errors like `auth/invalid-credential` or `auth/email-already-in-use`. Showing those raw is ugly, so `authErrors.js` maps each code to a human, on-brand line ('wrong email or password, try again'). Every auth/db call is wrapped in try/catch, and the message renders on the screen.\n\nOther polish: a `busy` flag disables buttons and swaps labels mid-request; the profile shows an `ActivityIndicator` while loading; and the destructive delete goes through a native `Alert` confirm first.",
+    "example": "// authErrors.js\nexport function authMessage(code) {\n  switch (code) {\n    case 'auth/email-already-in-use': return \"that email's already taken\";\n    case 'auth/invalid-credential':\n    case 'auth/wrong-password':\n    case 'auth/user-not-found':       return 'wrong email or password, try again';\n    case 'auth/network-request-failed': return 'no internet? check your connection';\n    default: return 'something broke, try again';\n  }\n}",
+    "exercise": "Name three things copt. does so a failed or slow request doesn't leave the user confused.",
+    "solution": "1) Maps Firebase error codes to plain messages via authMessage and shows them on screen instead of raw codes. 2) Uses a `busy` flag to disable the button and change its label ('logging in...') so the user knows it's working and can't double-submit. 3) Guards the destructive 'delete my data' behind a native Alert confirm so it isn't one accidental tap.",
+    "checklist": [
+      "How are raw Firebase error codes turned friendly? (authErrors.js)",
+      "What does the busy flag do for UX?",
+      "Why an Alert before delete?"
+    ],
+    "interview": "Examiner tests: robustness. Every Firebase call is try/catch; authErrors.js maps codes to friendly copy. A `busy` flag disables buttons + swaps labels so there's feedback and no double-submit, the profile shows a spinner while loading, and delete is gated behind an Alert confirm. No raw errors, no dead-looking buttons."
+  },
+  {
+    "id": "app-run-build",
+    "track": "appdev",
+    "title": "Run & Build",
+    "subtitle": "Expo Go, EAS APK, server-side backend",
+    "level": 6,
+    "parents": ["app-firebase-setup"],
+    "minutes": 14,
+    "explain": "**Development:** `npx expo start` boots a dev server with a QR code; scanning it in Expo Go runs the app live with hot reload, no cable, no Android Studio.\n\n**Shipping:** the APK is built in the cloud with EAS, `eas build -p android --profile preview`. Expo's servers compile it and auto-generate the signing keystore; I download `copt.apk` and commit it (the submission wants an installable file).\n\n**Key point about Firebase:** enabling Email/Password auth, creating the Firestore database, and publishing rules are all **server-side** config in the Firebase console. The APK just talks to that project, so the same build keeps working when the backend changes, no rebuild needed.",
+    "example": "# dev on your phone\nnpx expo start          # scan QR in Expo Go\n\n# build the installable APK in the cloud\neas build -p android --profile preview   # -> copt.apk",
+    "exercise": "If you build the APK before enabling Firestore in the console, will you have to rebuild after enabling it? Why or why not?",
+    "solution": "No. Auth providers, the database, and rules are server-side settings on the Firebase project. The APK only holds the client config pointing at that project, so flipping those switches in the console takes effect immediately for the already-built app, no recompile or new APK required.",
+    "checklist": [
+      "How do I run on my phone in dev? (expo start + Expo Go QR)",
+      "How is the APK built without Android Studio? (EAS cloud)",
+      "Why doesn't enabling Firebase need an APK rebuild? (server-side config)"
+    ],
+    "interview": "Examiner tests: your pipeline. Dev = expo start + Expo Go QR (hot reload). APK = EAS cloud build with an auto-generated keystore, committed as copt.apk. And because Firebase auth/DB/rules are server-side, the same APK works once I enable them in the console, no rebuild."
+  }
+]
