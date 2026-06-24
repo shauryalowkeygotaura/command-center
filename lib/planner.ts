@@ -82,8 +82,10 @@ export function toMin(hhmm: string): number {
 // June timing is NOT a guess: it mirrors the dental two-session windows in
 // Projects/client-acquisition-pipeline/jaipur-summer-sprint-2026-06.md
 // (owners reachable 11:30–13:30 and 17:00–19:30; clinics shut 2–5 PM).
-// ⚠ The July+ school row is still my guess — real Class-11 timetable pending
-// (see HANDOFFS tab).
+// July+ is Shaurya's REAL school-day schedule (given 2026-06-24): work blocks
+// (school, calls, study, homework, agency) run weekdays [1-5]; the personal
+// rhythm (wake, meals, gym, night routine) runs every day. "phone dies at 4"
+// is why cold calls sit 15:00–16:00.
 interface TemplateBlock {
   key: string;
   start: string;
@@ -104,13 +106,29 @@ export const DAY_TEMPLATE: TemplateBlock[] = [
   { key: "sprint-am", start: "11:00", end: "13:30", title: "Clinic outreach — morning session", kind: "calls", until: SPRINT_END, note: "In Jaipur = walk the day's locality route; in Delhi = DMs + calls. Owners free 11:30–13:30." },
   { key: "sprint-log", start: "14:00", end: "16:30", title: "Clinics shut — log touches, follow-ups, build", kind: "deep", until: SPRINT_END, note: "Append every touch to jaipur-sends-log.md. WhatsApp the flyer to misses." },
   { key: "sprint-pm", start: "17:00", end: "19:30", title: "Clinic outreach — evening session", kind: "calls", until: SPRINT_END, note: "Session opens 5pm, rush hasn't built. 5–7 clinics." },
-  // ── July+: school term ──────────────────────────────────────────────────────
-  { key: "school", start: "08:00", end: "14:30", title: "School", kind: "school", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM, note: "Guessed slot — give me the real Class-11 timetable and I'll fix it." },
-  { key: "calls", start: "16:00", end: "17:00", title: "Call list — clinics (target 50)", kind: "calls", from: SCHOOL_FROM, note: "Numbers live on the CALL LIST tab." },
-  { key: "deep", start: "17:30", end: "19:30", title: "Deep work — build / pipelines", kind: "deep", from: SCHOOL_FROM },
-  // ── every era ───────────────────────────────────────────────────────────────
-  { key: "content", start: "20:30", end: "21:30", title: "Reel + posts — today's brand-plan row", kind: "content" },
-  { key: "plan", start: "22:30", end: "22:45", title: "Plan tomorrow (set blocks for D+1)", kind: "ops" },
+  // June only — the July+ real schedule carries its own reel slot (agency block).
+  { key: "content", start: "20:30", end: "21:30", title: "Reel + posts — today's brand-plan row", kind: "content", until: SPRINT_END },
+  { key: "plan", start: "22:30", end: "22:45", title: "Plan tomorrow (set blocks for D+1)", kind: "ops", until: SPRINT_END },
+
+  // ── July+: real school-day schedule ─────────────────────────────────────────
+  // Personal rhythm — every day.
+  { key: "wake", start: "06:40", end: "07:10", title: "Wake — milk + chocos", kind: "life", from: SCHOOL_FROM },
+  { key: "lunch", start: "14:00", end: "14:30", title: "Lunch", kind: "life", from: SCHOOL_FROM },
+  { key: "rest", start: "14:30", end: "15:00", title: "Rest (phone)", kind: "life", from: SCHOOL_FROM },
+  { key: "snacks", start: "16:30", end: "17:00", title: "Snacks — pre-gym fuel", kind: "life", from: SCHOOL_FROM },
+  { key: "gym", start: "17:30", end: "19:00", title: "Gym", kind: "life", from: SCHOOL_FROM },
+  { key: "decompress", start: "19:00", end: "19:50", title: "Decompress (+ shower on gym-shower days)", kind: "life", from: SCHOOL_FROM },
+  { key: "dinner", start: "19:50", end: "20:10", title: "Dinner", kind: "life", from: SCHOOL_FROM },
+  { key: "fun", start: "21:40", end: "22:50", title: "Fun / buffer", kind: "life", from: SCHOOL_FROM },
+  { key: "night", start: "22:50", end: "23:10", title: "Night routine (+ set tomorrow's blocks)", kind: "life", from: SCHOOL_FROM },
+  { key: "read", start: "23:10", end: "23:30", title: "Read + journal", kind: "life", from: SCHOOL_FROM },
+  // Work / school — weekdays only.
+  { key: "school", start: "07:10", end: "14:00", title: "School (breakfast in this block)", kind: "school", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM },
+  { key: "calls", start: "15:00", end: "16:00", title: "Cold calls — clinics (target 50)", kind: "calls", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM, note: "Phone dies at 4. Numbers live on the CALL LIST tab." },
+  { key: "study1", start: "16:00", end: "16:30", title: "Deep study — part 1", kind: "deep", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM, note: "SAT Aug 2026 → target 1550." },
+  { key: "study2", start: "17:00", end: "17:25", title: "Deep study — part 2", kind: "deep", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM },
+  { key: "homework", start: "20:10", end: "20:40", title: "Homework", kind: "school", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM },
+  { key: "agency", start: "20:40", end: "21:40", title: "Agency (laptop) — reel + client build", kind: "content", days: [1, 2, 3, 4, 5], from: SCHOOL_FROM, note: "Today's brand-plan row + pipeline work." },
 ];
 
 // Dated one-offs I schedule for you. Deterministic ids → safe re-merge.
