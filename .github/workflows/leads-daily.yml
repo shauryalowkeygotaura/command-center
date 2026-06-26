@@ -1,0 +1,60 @@
+name: Daily lead top-up
+
+# Scrapes the next batch of fresh clinic leads each morning, commits today's
+# file, and triggers a Pages rebuild so the dashboard's CALL + MESSAGE panel
+# auto-loads them. Inert until SERPAPI_KEYS is set (the script exits clean and
+# nothing is committed), so this can land before the secret exists.
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # 01:00 UTC = 06:30 IST, ready before the day starts
+  workflow_dispatch: # run on demand from the Actions tab
+
+permissions:
+  contents: write # commit today's leads back to the repo
+  actions: write # dispatch deploy.yml so the new file gets served
+
+concurrency:
+  group: leads-daily
+  cancel-in-progress: false
+
+jobs:
+  topup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build today's lead list
+        env:
+          # Comma-separated SerpAPI keys (rotated to stay on the free tier).
+          SERPAPI_KEYS: ${{ secrets.SERPAPI_KEYS }}
+          CALL_CITIES: Delhi
+          CALL_TARGET: "50"
+        run: python scripts/build_call_list.py
+
+      - name: Commit if there are new leads
+        id: commit
+        run: |
+          git config user.name "leads-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/calls
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new leads to commit (no keys set, quota out, or pond dry)."
+          else
+            git commit -m "data: daily lead top-up $(date -u +%F)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # A push made by GITHUB_TOKEN does not trigger deploy.yml's push event
+      # (loop guard), so dispatch it explicitly to serve the new file.
+      - name: Trigger Pages rebuild
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml

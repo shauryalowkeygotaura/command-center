@@ -6,6 +6,8 @@ export interface CallEntry {
   id: string;
   number: string;
   label?: string; // clinic name etc.
+  whatsapp?: string; // wa.me-ready digits (91XXXXXXXXXX), empty for landlines
+  area?: string; // locality, from the maps listing
   called: boolean;
   dueDate: string; // YYYY-MM-DD
 }
