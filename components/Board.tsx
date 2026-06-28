@@ -8,6 +8,7 @@ import { buildSeedTasks } from "@/lib/seed";
 import { rolloverIncompleteTasks, mergeSeed } from "@/lib/rollover";
 import { StatusBar } from "./StatusBar";
 import { CallList } from "./CallList";
+import { LeadList } from "./LeadList";
 import { PipelineOps } from "./PipelineOps";
 import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
@@ -24,6 +25,7 @@ const TABS = [
   { id: "planner", label: "PLANNER" },
   { id: "skills", label: "SKILL TREE" },
   { id: "calls", label: "CALL LIST" },
+  { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "drops", label: "INBOX · KEYS" },
   { id: "life", label: "TO DOS · HANDOFFS" },
@@ -164,6 +166,8 @@ export function Board() {
             {tab === "pipelines" && <PipelineOps />}
 
             {tab === "calls" && <CallList today={today} />}
+
+            {tab === "leads" && <LeadList />}
 
             {tab === "drops" && (
               <div className="flex flex-col gap-6">
