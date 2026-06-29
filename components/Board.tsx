@@ -16,6 +16,7 @@ import { KeysPanel } from "./KeysPanel";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
 import { SatGrind } from "./SatGrind";
+import { HandoffCards } from "./HandoffCards";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -30,7 +31,8 @@ const TABS = [
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "drops", label: "INBOX · KEYS" },
-  { id: "life", label: "TO DOS · HANDOFFS" },
+  { id: "handoffs", label: "HANDOFFS" },
+  { id: "life", label: "TO DOS · HABITS" },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 const TAB_KEY = "cc.activeTab.v1";
@@ -185,6 +187,8 @@ export function Board() {
                 <KeysPanel />
               </div>
             )}
+
+            {tab === "handoffs" && <HandoffCards />}
 
             {tab === "life" && (
               <div className="flex flex-col gap-5">
