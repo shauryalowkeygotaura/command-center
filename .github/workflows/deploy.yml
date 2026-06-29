@@ -10,6 +10,9 @@ on:
       # Classroom sync commits its feed on a cron; the rail reads it from raw
       # GitHub, so it must not trigger a rebuild either.
       - "public/status/classroom-deadlines.json"
+      # The site-alive feed (shipping + studying) is read from raw GitHub by
+      # the portfolio panel; refreshing it must not rebuild Pages either.
+      - "public/status/now.json"
   workflow_dispatch:
 
 # Run the bundled JS actions (checkout, setup-node, *-pages) on Node 24

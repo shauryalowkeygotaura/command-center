@@ -15,6 +15,7 @@ import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
+import { SatGrind } from "./SatGrind";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -24,6 +25,7 @@ const TABS = [
   { id: "board", label: "BOARD" },
   { id: "planner", label: "PLANNER" },
   { id: "skills", label: "SKILL TREE" },
+  { id: "sat", label: "SAT GRIND" },
   { id: "calls", label: "CALL LIST" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
@@ -162,6 +164,8 @@ export function Board() {
             )}
 
             {tab === "skills" && <SkillTree />}
+
+            {tab === "sat" && <SatGrind />}
 
             {tab === "pipelines" && <PipelineOps />}
 
