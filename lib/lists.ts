@@ -65,6 +65,41 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-upstash-push",
+    text: "Release the new Upstash creds: KeysPanel ⚙ → push to Doppler, or paste them to Claude",
+    note: "2026-07-03: you created the new Upstash DB (nice) but the creds are still trapped in this browser's KeysPanel localStorage — Doppler in BOTH client-acquisition-pipeline and portfolio still points at the dead apt-starfish-75347 host (verified: curl 000). Open INBOX · KEYS, either hit 'push to Doppler' (needs the key-drop endpoint+passphrase set in ⚙) or 'copy for claude' and paste in chat. The moment I have UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN I re-point Doppler (both projects), the GH repo secret, and Vercel env — demo KV automation + portfolio personalization cache both come back in one move.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-revengine-post-1",
+    text: "Post Revengine #1: upload the already-rendered failure carousel, then run `python feedback.py posted`",
+    note: "2026-06-29: your first-ever Revengine post is rendered and waiting — Code/carousel-autoposter/output/ig-2026-06-28-it-broke-github-profile.../ (5 PNGs + a PDF). Upload the PNGs to @revengineee as an album, then run `python feedback.py posted` in the repo so the taste ledger learns what you actually ship. This is the whole point of the rebuild: ideas from you, the draining part already done.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-revengine-ig-autopost",
+    text: "Arm Revengine IG autopost: @revengineee creds + POST_IG=1 in Doppler (carousel-autoposter, NOT here)",
+    note: "Built 2026-06-29 (Code/carousel-autoposter): a daily Task Scheduler cron renders a carousel at 08:07 (run-on-wake) and posts via run.py when POST_IG=1. Wiring is done and verified as a safe no-op (logs 'posted to: nothing' until armed). Missing piece = @revengineee's OWN login (philosopher's creds are a different account). From the repo: `doppler secrets set INSTAGRAM_USERNAME=revengineee`, then `INSTAGRAM_PASSWORD=<pw>`, then `POST_IG=1`. CAUTION: an instagrapi auto-album on a brand-new account is ban-bait — hand-upload for ~1-2 weeks to age @revengineee first, THEN flip POST_IG. Reply with the password and I will set Doppler for you.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-revengine-linkedin-token",
+    text: "Provision a LinkedIn token to turn on LinkedIn doc-post autopost",
+    note: "2026-06-29: post_linkedin.py needs LINKEDIN_ACCESS_TOKEN (scope w_member_social) + LINKEDIN_AUTHOR_URN (urn:li:person:...). Doppler only has LINKEDIN_COOKIES_JSON, which that code does not use. Make a LinkedIn dev app, run the OAuth, paste the token + your person URN, and I will set Doppler + flip POST_LINKEDIN=1. Until then LinkedIn just leaves the PDF on disk (render still happens).",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-revengine-beehiiv",
+    text: "Authorize beehiiv (one browser login) so I can wire the Revengine newsletter",
+    note: "2026-06-29: the last of your original three asks (the daily suggester + carousel pipeline are done). The beehiiv MCP needs an interactive browser auth I cannot do headless. Once you are logged in, I will wire the failure/cost carousels to compile into the quarterly Revengine letter — repurposing what you already make, not net-new writing. Say go and I will start the auth.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-instagram-creds",
     text: "Add Instagram creds so the new IG DM channel goes live (NOT here, in Doppler + GH secrets)",
     note: "Built 2026-06-29: instagram.py is a live send channel (informal DM copy, hides the thread after send so only repliers show in your inbox, no auto-replies). It is OFF until creds exist. They do NOT go in the Command Center, they go where the pipeline runs: Doppler project client-acquisition-pipeline (INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, INSTAGRAM_ENABLED=1) AND as GH repo secrets (pipeline.yml env reads secrets.*). Use a BURNER IG, not your personal handle, automated cold DMs get soft-banned. Reply with the burner user/pass and I will set Doppler + the gh secrets for you.",
@@ -94,8 +129,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-football-yt-oauth",
-    text: "World Cup is HERE: 3-min Google Cloud step + `python auth_youtube.py`, then I flip YT_DRY_RUN=0",
-    note: "Verified 2026-06-10: every other piece is wired (DOPPLER_TOKEN in GH, doppler.yaml → youtube-title-autoresearch/dev, CI green daily in dry mode). Missing ONLY: console.cloud.google.com → enable YouTube Data API v3 → OAuth client (Desktop) → save client_secret.json next to auth_youtube.py → run it; it prints the exact doppler commands. I left YT_DRY_RUN=1 on purpose — flipping early would crash tomorrow's scheduled run.",
+    text: "YouTube OAuth for football autopost: ~8-min Google Cloud setup + `python auth_youtube.py`, then I flip YT_DRY_RUN=0",
+    note: "Re-verified 2026-07-03: the OAuth APP does not exist yet anywhere — no client_secret.json in the repo, no YT_CLIENT_ID/SECRET in Doppler, google-auth-oauthlib not installed. Full path: (1) console.cloud.google.com → pick/create project; (2) APIs & Services → Library → enable YouTube Data API v3; (3) OAuth consent screen → External → add your channel's Google email as a TEST USER (skip this and the browser step throws 'access denied'); (4) Credentials → Create → OAuth client ID → Desktop app → download JSON → save as client_secret.json next to auth_youtube.py; (5) `pip install google-auth-oauthlib` then `python auth_youtube.py` in Code/football-shorts-autopilot — browser opens, PICK THE CHANNEL, Allow. It writes .yt_oauth.json + prints the doppler commands; just tell me it ran and I do the rest (Doppler + YT_DRY_RUN=0). Everything else is already wired and green in dry-run.",
     done: false,
     seeded: true,
   },
@@ -113,6 +148,15 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
+  // ── Retired from the old HandoffCards tab (merged into this seed 2026-07-03,
+  //    when the duplicate handoff UI was consolidated to this single list):
+  // ho-football-data-token retired 2026-07-03: FOOTBALL_DATA_TOKEN verified live
+  //   in Doppler youtube-title-autoresearch/dev.
+  // ho-promote-portfolio retired 2026-07-03: prod alias (revengine-studio) already
+  //   serves the latest commit 10aa178 — promoted Jun 30, nothing newer to ship.
+  // ho-upstash-db superseded 2026-07-03 by h-upstash-push above: DB created, creds
+  //   still need to reach Doppler.
+  // ho-youtube-oauth merged 2026-07-03 into h-football-yt-oauth above.
   // h-habit-script retired 2026-06-05: found the "Automated Habit Tracker"
   // sheet in Drive myself; the HABITS panel on the LIFE tab replicates it.
   // h-voice-confirm retired 2026-06-06: philosopher voice finalized 2026-06-05.

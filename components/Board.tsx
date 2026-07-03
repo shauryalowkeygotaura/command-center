@@ -16,7 +16,6 @@ import { KeysPanel } from "./KeysPanel";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
 import { SatGrind } from "./SatGrind";
-import { HandoffCards } from "./HandoffCards";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -188,27 +187,30 @@ export function Board() {
               </div>
             )}
 
-            {tab === "handoffs" && <HandoffCards />}
+            {/* Single source of truth for handoffs: HANDOFF_SEED (lib/lists.ts)
+                rendered ONLY here. The old HandoffCards component kept its own
+                hardcoded list + separate localStorage key and silently drifted
+                from the seed — consolidated 2026-07-03. */}
+            {tab === "handoffs" && (
+              <Checklist
+                title="HANDOFFS · CLAUDE → YOU"
+                store={handoffStore}
+                seed={HANDOFF_SEED}
+                placeholder="+ add your own note"
+                emptyText="Things only you can do for me show up here."
+                replies
+              />
+            )}
 
             {tab === "life" && (
               <div className="flex flex-col gap-5">
                 <HabitTracker />
-                <div className="grid gap-5 md:grid-cols-2">
                 <Checklist
                   title="TO DOS"
                   store={lifeStore}
                   placeholder="+ add a real-life to-do"
                   emptyText="Your personal real-life to-dos go here. Type below to add."
                 />
-                <Checklist
-                  title="HANDOFFS · CLAUDE → YOU"
-                  store={handoffStore}
-                  seed={HANDOFF_SEED}
-                  placeholder="+ add your own note"
-                  emptyText="Things only you can do for me show up here."
-                  replies
-                />
-                </div>
               </div>
             )}
           </>
