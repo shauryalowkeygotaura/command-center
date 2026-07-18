@@ -15,6 +15,11 @@ export interface ChecklistItem {
   // by the "Copy replies for Claude" button so I can act on them next session.
   replyStatus?: "done" | "wontdo" | "needinfo";
   reply?: string;
+  // Sync metadata (used by the INBOX list's gist sync — see inboxSync.ts).
+  // updatedAt: ISO stamp of the last local edit, drives last-write-wins merge.
+  // deleted: tombstone instead of hard removal, so deletes propagate.
+  updatedAt?: string;
+  deleted?: boolean;
 }
 
 function makeStore(key: string) {
@@ -64,13 +69,6 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
-  {
-    id: "h-upstash-push",
-    text: "Release the new Upstash creds: KeysPanel ⚙ → push to Doppler, or paste them to Claude",
-    note: "2026-07-03: you created the new Upstash DB (nice) but the creds are still trapped in this browser's KeysPanel localStorage — Doppler in BOTH client-acquisition-pipeline and portfolio still points at the dead apt-starfish-75347 host (verified: curl 000). Open INBOX · KEYS, either hit 'push to Doppler' (needs the key-drop endpoint+passphrase set in ⚙) or 'copy for claude' and paste in chat. The moment I have UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN I re-point Doppler (both projects), the GH repo secret, and Vercel env — demo KV automation + portfolio personalization cache both come back in one move.",
-    done: false,
-    seeded: true,
-  },
   {
     id: "h-revengine-post-1",
     text: "Post Revengine #1: upload the already-rendered failure carousel, then run `python feedback.py posted`",
@@ -135,19 +133,19 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
-    id: "h-planner-template",
-    text: "Send me your real Class-11 timetable (July onward)",
-    note: "DONE for June (2026-06-10): the planner now mirrors the Jaipur sprint doc's dental two-session windows (11:00–13:30 / 17:00–19:30) through Jun 30 — not a guess. School rows resume Jul 1 but the 08:00–14:30 slot is still my guess; reply with the real DPS RK Puram timing and I'll set it.",
-    done: false,
-    seeded: true,
-  },
-  {
     id: "h-client-secrets",
     text: "Sign up free at hunter.io (2 min) and paste the API key back to me",
     note: "Shrunk 2026-06-10: I wired the workflow to pass HUNTER_API_KEY / SNOV_* into the job (it never did before) — the only missing piece is a key, and key signup needs your email. Free tier = 50 finds/month. Paste it in the reply box here and I'll set Doppler + the repo secret.",
     done: false,
     seeded: true,
   },
+  // h-planner-template retired 2026-07-04: Shaurya confirmed done.
+  // h-upstash-push retired 2026-07-04: Shaurya's smart-drop HAD worked — the new
+  //   DB creds were sitting in Doppler portfolio/dev under off-names
+  //   (UPSTASH_REST_URL/UPSTASH_TOKEN). Claude re-pointed the canonical names in
+  //   BOTH Doppler projects, set the GH repo secrets + pipeline.yml env, and
+  //   replaced the Vercel env (production + preview/master). New host
+  //   excited-sturgeon-110590 answers PONG. Demo KV + portfolio cache are back.
   // ── Retired from the old HandoffCards tab (merged into this seed 2026-07-03,
   //    when the duplicate handoff UI was consolidated to this single list):
   // ho-football-data-token retired 2026-07-03: FOOTBALL_DATA_TOKEN verified live

@@ -47,7 +47,7 @@ export function clearSync(): void {
   }
 }
 
-async function gh(path: string, token: string, init?: RequestInit): Promise<Response> {
+export async function gh(path: string, token: string, init?: RequestInit): Promise<Response> {
   const r = await fetch(`https://api.github.com${path}`, {
     ...init,
     headers: {

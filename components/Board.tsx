@@ -13,6 +13,7 @@ import { PipelineOps } from "./PipelineOps";
 import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
+import { OutreachSends } from "./OutreachSends";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
 import { SatGrind } from "./SatGrind";
@@ -172,7 +173,12 @@ export function Board() {
 
             {tab === "calls" && <CallList today={today} />}
 
-            {tab === "leads" && <LeadList />}
+            {tab === "leads" && (
+              <div className="flex flex-col gap-6">
+                <OutreachSends />
+                <LeadList />
+              </div>
+            )}
 
             {tab === "drops" && (
               <div className="flex flex-col gap-6">
@@ -180,8 +186,9 @@ export function Board() {
                   title="INBOX · DROP IDEAS"
                   store={inboxStore}
                   placeholder="+ drop an idea or task for Claude to file"
-                  emptyText="Drop raw ideas here. Hit “copy for claude” to hand them to me — I file them into the vault Inbox + todos."
+                  emptyText="Drop raw ideas here. They sync to every device + the vault cron files them into Inbox/ + todos automatically."
                   exportForClaude
+                  sync
                 />
                 <KeysPanel />
               </div>
