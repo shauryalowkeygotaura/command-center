@@ -17,6 +17,7 @@ import { OutreachSends } from "./OutreachSends";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
 import { SatGrind } from "./SatGrind";
+import { AngusIdeas } from "./AngusIdeas";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
@@ -30,6 +31,7 @@ const TABS = [
   { id: "calls", label: "CALL LIST" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
+  { id: "angus", label: "ANGUS" },
   { id: "drops", label: "INBOX · KEYS" },
   { id: "handoffs", label: "HANDOFFS" },
   { id: "life", label: "TO DOS · HABITS" },
@@ -170,6 +172,8 @@ export function Board() {
             {tab === "sat" && <SatGrind />}
 
             {tab === "pipelines" && <PipelineOps />}
+
+            {tab === "angus" && <AngusIdeas />}
 
             {tab === "calls" && <CallList today={today} />}
 

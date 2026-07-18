@@ -1,0 +1,371 @@
+[
+  {
+    "id": 1,
+    "title": "Brain-dump to database-table architecture prompt",
+    "summary": "Dump everything you wish your AI could see about your life into one doc, then feed it to Claude with a prompt that clusters items into candidate Postgres tables, ranks them by leverage-to-effort, and picks the single first table to build. Planning pass only, no SQL yet.",
+    "effort": "S",
+    "relevance": "Gives the vault a structured queryable layer for what markdown cannot hold: call outcomes and client pipeline state.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 2,
+    "title": "Personal Postgres second brain on Railway",
+    "summary": "Stand up a free Postgres on Railway and start with exactly ONE table (tasks or decisions). Philosophy: many small sharp tables one agent queries on demand beats one giant doc dumped into the prompt (context rot).",
+    "effort": "S",
+    "relevance": "A queryable store for leads, calls, and outreach state would sharpen the client pipeline more than more markdown files.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 3,
+    "title": "Postgres MCP plus n8n MCP wiring",
+    "summary": "Install crystaldba/postgres-mcp (write mode; the archived reference server is read-only and cannot create tables) and czlonkowski/n8n-mcp (knows 1845 n8n nodes). Claude can then create tables, write rows, and design real n8n sync workflows from chat.",
+    "effort": "S",
+    "relevance": "With the n8n-expert skill already in the vault, these two MCPs turn Claude Code into a database engineer and automation builder at near-zero cost.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 4,
+    "title": "Claude as database engineer workflow",
+    "summary": "Two-phase prompt pattern: first Claude designs the schema on paper as a senior DB engineer (columns, keys, indexes, constraints) with an explicit do-not-create-yet clause, then a second prompt executes the agreed DDL statement by statement with confirmation.",
+    "effort": "S",
+    "relevance": "Directly reusable for dental receptionist and Jio outbound, where call logs and booking data need proper schemas.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 5,
+    "title": "Self-debugging n8n sync workflows",
+    "summary": "Prompt Claude via the n8n MCP to build a scheduled daily upsert workflow from any app API into Postgres, with the killer clause: test it live over webhooks repeatedly and keep fixing itself until a real row lands. Never report done without a confirmed end-to-end write.",
+    "effort": "M",
+    "relevance": "Matches the vault's validate-responses and checkpoint rules, and applies directly to syncing VAPI or Jio call data.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 6,
+    "title": "Telegram bot capture lane with voice notes",
+    "summary": "Create a bot via BotFather, then an n8n workflow receives voice notes, transcribes them, classifies each message, writes it to the right Postgres table (decisions, tasks, journal), and replies confirming what it saved.",
+    "effort": "M",
+    "relevance": "Swap the newsletter's OpenAI transcribe for Groq Whisper and the whole capture lane is free, matching the Groq-only stack rule.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 7,
+    "title": "Claude skills that analyze your tables",
+    "summary": "Once data accumulates, have Claude build reusable named skills that pull the last 30 days across tables via the Postgres MCP, find correlations, and return the strongest patterns plus one concrete experiment.",
+    "effort": "S",
+    "relevance": "Pointing the existing skill-authoring habit at outreach and call data could surface which pitch angles actually convert.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 8,
+    "title": "Internal dashboard on the same database",
+    "summary": "Point Claude Code at the same Railway DATABASE_URL and add visualization tabs (trend lines, daily stats, weekly averages) wired to live tables, not mocked data. Deliberately simple internal tool.",
+    "effort": "M",
+    "relevance": "Fits naturally as a data-backed tab on this Command Center instead of a separate app.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Isn't Dumb. It's Starving.", "date": "2026-06-26", "threadId": "19f0508ccab6b2c7" }
+  },
+  {
+    "id": 9,
+    "title": "Ship page with stable CTA selector",
+    "summary": "Have an AI coding agent build and deploy a single-page landing site today, but give the primary CTA a permanent unique CSS class and data attribute that is never reused. Testing tools later target that exact selector, so no rebuild is needed to add experiments.",
+    "effort": "S",
+    "relevance": "Clinic demo and portfolio already run on Vercel; adding the stable selector now makes them testable before Jaipur outreach traffic arrives.",
+    "status": "proposed",
+    "source": { "subject": "The Landing Page That Rebuilds Itself", "date": "2026-06-30", "threadId": "19f18e3ef9f6d4d0" }
+  },
+  {
+    "id": 10,
+    "title": "Free session recording and heatmaps",
+    "summary": "Paste one snippet into the page head: Microsoft Clarity (free forever, unlimited recordings) or PostHog (free 5k recordings a month plus flags and experiments). Heatmaps, scrollmaps, and replays of real visitors hesitating or rage-clicking.",
+    "effort": "S",
+    "relevance": "Watching how clinic owners actually behave on clinic-demo-blond.vercel.app shows exactly where the pitch loses them, at zero cost.",
+    "status": "proposed",
+    "source": { "subject": "The Landing Page That Rebuilds Itself", "date": "2026-06-30", "threadId": "19f18e3ef9f6d4d0" }
+  },
+  {
+    "id": 11,
+    "title": "Feature-flag A/B tests without flicker",
+    "summary": "Define flags once (PostHog, GrowthBook, or Vercel Flags) and branch hero variants server-side with an awaited flag so visitors never see a version swap. One change at a time, and do not peek: monitoring a running test more than tripled false positives in Adobe's data.",
+    "effort": "M",
+    "relevance": "Test pricing and headline framing on the clinic demo with real data instead of gut feel, on the Vercel stack already in use.",
+    "status": "proposed",
+    "source": { "subject": "The Landing Page That Rebuilds Itself", "date": "2026-06-30", "threadId": "19f18e3ef9f6d4d0" }
+  },
+  {
+    "id": 12,
+    "title": "Weekly growth agent that proposes, never ships",
+    "summary": "A scheduled coding agent with read-only analytics access reads experiment results weekly, declares a winner only above 95 percent probability and 50 conversions per variant, proposes exactly one next test, then stops for approval. Only after sign-off does it open a PR behind a flag.",
+    "effort": "M",
+    "relevance": "The philosopher-runner autopilot pattern pointed at conversion optimization.",
+    "status": "proposed",
+    "source": { "subject": "The Landing Page That Rebuilds Itself", "date": "2026-06-30", "threadId": "19f18e3ef9f6d4d0" }
+  },
+  {
+    "id": 13,
+    "title": "Cohort-based landing page personalization",
+    "summary": "Group returning visitors into cohorts from analytics profiles, have an agent draft tailored headline, subhead, and CTA copy per cohort as disabled feature flags you review and enable, then a small client-side script swaps content from the flag payload. Needs real traffic and a cookie-consent banner.",
+    "effort": "L",
+    "relevance": "Lower priority until demo pages get traffic, but a dental-specific hero for a returning clinic owner is a strong future upsell.",
+    "status": "proposed",
+    "source": { "subject": "The Landing Page That Rebuilds Itself", "date": "2026-06-30", "threadId": "19f18e3ef9f6d4d0" }
+  },
+  {
+    "id": 14,
+    "title": "Autonomous AI content-coach analytics loop",
+    "summary": "An agent pulls your own post metrics, scrapes competitor posts, compiles a findings brief, loads it into NotebookLM, and generates an audio coaching briefing. Reruns itself every couple of days; you keep writing every post, the AI only tells you what to make next.",
+    "effort": "M",
+    "relevance": "Grow @revengineee with data instead of guessing; the NotebookLM MCP pipeline already exists in the vault.",
+    "status": "proposed",
+    "source": { "subject": "I Fired AI as My Ghostwriter. Hired It as My Coach", "date": "2026-07-05", "threadId": "19f32bca92ce9321" }
+  },
+  {
+    "id": 15,
+    "title": "Wire Instagram metrics into Claude",
+    "summary": "Connect an IG Business/Creator account via Composio, Unipile, or the free official Instagram Graph API. Pull 90 days of posts with reach, watch time, saves, shares, and follows-from-post (skip metrics Meta killed in 2025), and rank by saves and follows, not views.",
+    "effort": "S",
+    "relevance": "The Graph API route is free and gives real signal on which @revengineee posts convert to followers.",
+    "status": "proposed",
+    "source": { "subject": "I Fired AI as My Ghostwriter. Hired It as My Coach", "date": "2026-07-05", "threadId": "19f32bca92ce9321" }
+  },
+  {
+    "id": 16,
+    "title": "Benchmark against slightly bigger rivals",
+    "summary": "Feed the same agent the posts of creators 1.5x to 3x your size rather than mega accounts, since their tactics are copyable next week. The AI measures your numbers against theirs to find patterns worth stealing.",
+    "effort": "S",
+    "relevance": "A concrete competitor set for the personal brand instead of comparing against unreachable large creators.",
+    "status": "proposed",
+    "source": { "subject": "I Fired AI as My Ghostwriter. Hired It as My Coach", "date": "2026-07-05", "threadId": "19f32bca92ce9321" }
+  },
+  {
+    "id": 17,
+    "title": "Founder-led posting with analytics coaching",
+    "summary": "Post as yourself 3-5 times a week with specific technical material (benchmarks, pricing debates, bugs), then hook analytics to an agent that pulls what popped and flopped every few days and dumps it into NotebookLM to explain why, ideally as audio.",
+    "effort": "S",
+    "relevance": "Documenting the dental-agent and Jio builds publicly is the cheapest client acquisition channel available.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 18,
+    "title": "AI community listening, human replies",
+    "summary": "Pick one community where buyers live, be useful for weeks without pitching, then use monitoring tools (dist0, Syften, Pluggo) to flag threads where someone describes the exact problem you solve and ping you within minutes. The AI never posts; it finds the moment for you to show up.",
+    "effort": "S",
+    "relevance": "A free way to surface clinic owners complaining about missed calls, feeding the receptionist-agent pipeline without ad spend.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 19,
+    "title": "Signal-triggered outbound instead of volume",
+    "summary": "AI watches the web for buying signals (new hire, funding, launch), builds and scores a small list, and sends via your sequencer, or the whole loop runs as a scheduled agent skill. You hand-write a few email versions; the AI only adapts them per person. Triggered outreach reportedly gets 15-25 percent replies vs 1-3 for generic personalization.",
+    "effort": "M",
+    "relevance": "Maps directly onto the existing client-acquisition-pipeline skill; the build-your-own-loop route avoids paying for Clay.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 20,
+    "title": "Free wedge tool as top-of-funnel",
+    "summary": "Ship one small genuinely free tool adjacent to the paid service, built with Claude Code over a weekend and open-sourced with no demo wall. Track stars, installs, and which companies use it, so sales conversations start warm.",
+    "effort": "M",
+    "relevance": "A missed-call ROI calculator or the existing jio-voice-demo productized as the wedge for the dental and clinic offers.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 21,
+    "title": "Build an MCP or extension where buyers live",
+    "summary": "Find the one app your buyer keeps open all day (Notion, Slack, Chrome, VS Code), build an extension or MCP server for it, and get listed in the marketplace. Design it so usage pulls in the next person via shared artifacts.",
+    "effort": "M",
+    "relevance": "MCP wrappers are already routine work here, so a marketplace listing is a low-cost distribution loop with existing skills.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 22,
+    "title": "Optimize for LLM citations, not Google",
+    "summary": "Write pages that answer buyers' exact LLM questions in the first 200 words in an extractable format, and publish original data so others cite you. Track weekly whether ChatGPT, Perplexity, and Claude cite you for buyer questions. Claimed AI-referred traffic converts at 14.2 percent vs 2.8 for Google.",
+    "effort": "M",
+    "relevance": "Being the answer when clinic owners ask ChatGPT about AI receptionists is a realistic, durable channel for a solo dev with no ad budget.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 23,
+    "title": "One newsletter spot, AI-mined clicks",
+    "summary": "Buy a single test placement in one small niche newsletter your exact buyers read. Then AI reads the click-domain report, resolves the companies behind the clicks, and hands you a warm list to retarget manually.",
+    "effort": "S",
+    "relevance": "Needs test budget so later-stage, but the AI click-mining half is buildable today for any campaign.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 24,
+    "title": "Unscalable dream-account artifacts, ten weekly",
+    "summary": "Pick dream accounts, let Claude Code scrape their site and founder posts to surface the sharp angle, then personally build something a robot never would: a real funnel teardown or a white-labeled version of your product with their logo, and DM them the login with no pitch. Ten a week, not a hundred.",
+    "effort": "M",
+    "relevance": "A white-labeled voice-agent demo per clinic costs almost nothing to spin up and is exactly the contract-getter the Jaipur sprint needs.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 25,
+    "title": "AI-researched direct mail to ghosting accounts",
+    "summary": "Take your top 50 perfect-but-ghosting accounts, have AI research what each just shipped, then send a handwritten-style one-page note with nothing salesy, dispatched via a print-and-post API wrapped in an MCP. Follow up 3-5 days later referencing the note. Direct mail claims 4.4 percent response vs 0.12 for email.",
+    "effort": "M",
+    "relevance": "Postie is US-centric so an Indian print-post equivalent is needed, but physical mail to Delhi and Jaipur clinics that ignore email is an uncrowded channel.",
+    "status": "proposed",
+    "source": { "subject": "How to Run a Whole Marketing Team as One Person", "date": "2026-07-07", "threadId": "19f3d56208250dff" }
+  },
+  {
+    "id": 26,
+    "title": "Connect wearables to Claude via MCP",
+    "summary": "Point Claude at ring or watch data using MCP connectors: Terra as the aggregator that pulls every wearable in one step, or community connectors per device (Oura, Whoop, Garmin). Oura killed its old access-token method end of 2025, so token-paste guides are outdated.",
+    "effort": "S",
+    "relevance": "A ready-made pattern for the Claude Code setup, and the wearable-MCP landscape feeds client-facing data-agent product ideas.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 27,
+    "title": "Voice-note life tracker with n8n",
+    "summary": "Send a Telegram voice note; an n8n workflow transcribes it, a second LLM pass parses it into structured rows (food, exercise, supplements), and drops them into Postgres tables. Claude reads the live tables through a Postgres MCP so queries hit real history, not screenshots.",
+    "effort": "M",
+    "relevance": "Groq covers transcription and parsing for free, and the voice-note-to-database architecture is reusable in voice-agent client work.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 28,
+    "title": "Bloodwork PDF decoder prompt",
+    "summary": "Drop a lab PDF into Claude with a prompt that extracts every biomarker into a table with value, range, and status, groups by body system, flags out-of-range items in plain English, and generates the exact questions to ask a doctor. Free and universal vs the paid US-only connectors.",
+    "effort": "S",
+    "relevance": "The extract-flag-question prompt pattern transfers to any document-decoding deliverable for clients.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 29,
+    "title": "Scheduled weekly review skill with guardrails",
+    "summary": "Claude writes its own reusable weekly-review skill that reads the last 7 days across connected sources, compares to prior weeks, and returns only one or two changes that move the needle. Hard rules baked in: clinical out-of-range goes to a doctor, and it optimizes consistent patterns, not one bad night's noise.",
+    "effort": "S",
+    "relevance": "The self-authoring skill plus hard-guardrails pattern fits every recurring agent in the vault, from health reviews to weekly standups.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 30,
+    "title": "Sell packaged skill packs to subscribers",
+    "summary": "Package working builds (tracker, decoder, review coach) into downloadable Claude skill packs gated behind a paid subscription tier. The free post teaches the concept; the paid tier ships the ready-to-run skills.",
+    "effort": "M",
+    "relevance": "A direct monetization template for @revengineee: gate polished packs (voice-agent setup, outreach loops) behind a paid tier.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 31,
+    "title": "Unbundle human middleman services with AI",
+    "summary": "A $15k longevity coach only reads data the client already owns and texts changes on a schedule: pattern-finding plus a cron job. Find any expensive human middleman whose job is reading a client's own data and rebuild it as connectors plus one analysis prompt plus a scheduled skill.",
+    "effort": "L",
+    "relevance": "A repeatable product thesis: Indian SMB equivalents (bookkeeping reviewers, social report agencies) are unbundleable with the existing stack.",
+    "status": "proposed",
+    "source": { "subject": "Fire Your $15,000 Longevity Coach", "date": "2026-07-09", "threadId": "19f483e23b36448b" }
+  },
+  {
+    "id": 32,
+    "title": "Decision sparring partner prompt",
+    "summary": "Instead of asking the AI what to do, run a fixed prompt that makes it argue hard for and against each option, name the single assumption the decision rests on, and list the exact data needed, with no final recommendation allowed.",
+    "effort": "S",
+    "relevance": "Directly usable for pricing and client decisions (clinic pricing, VAPI migration), and matches the sparring-partner stance already enforced in plan mode.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Answers Like It Knows Your Business. It Doesn't.", "date": "2026-07-14", "threadId": "19f61aed4813969b" }
+  },
+  {
+    "id": 33,
+    "title": "Skeptical analyst prompt on real exports",
+    "summary": "Export actual figures (CRM, sales, traffic) and feed them to the AI with a structured prompt: define columns and timeframe, then demand a KPI table, the 3 numbers that move the decision, anomalies to double-check, and a recommendation with a confidence level.",
+    "effort": "S",
+    "relevance": "The client pipeline and outbound campaigns generate real data worth analyzing this way instead of relying on memory of the numbers.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Answers Like It Knows Your Business. It Doesn't.", "date": "2026-07-14", "threadId": "19f61aed4813969b" }
+  },
+  {
+    "id": 34,
+    "title": "MCP connectors for live data pulls",
+    "summary": "Wire the AI to read tools directly (CRM, sheets, Gmail, live web) through MCP connectors so it queries live sources instead of stale exports. Prompt it to reconcile overlapping sources, flag disagreements, and cite which source each number came from.",
+    "effort": "M",
+    "relevance": "FastMCP-style tooling is already routine here; connecting pipeline sheets and Gmail makes acquisition data queryable for free.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Answers Like It Knows Your Business. It Doesn't.", "date": "2026-07-14", "threadId": "19f61aed4813969b" }
+  },
+  {
+    "id": 35,
+    "title": "One sub-agent per data source",
+    "summary": "With many sources connected, spawn one sub-agent per source; each pulls its source in its own context window and returns only a 5-bullet summary plus 3 risks, and the main agent synthesizes. Avoids the accuracy drop once a model fills roughly 40 percent of its context.",
+    "effort": "M",
+    "relevance": "A reusable Claude Code pattern that maps directly onto existing subagent and RuFlo orchestration habits.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Answers Like It Knows Your Business. It Doesn't.", "date": "2026-07-14", "threadId": "19f61aed4813969b" }
+  },
+  {
+    "id": 36,
+    "title": "Four-signal decision triangulation protocol",
+    "summary": "Before any big call, write down four independent reads: the data, the AI, your gut (written before reading the AI answer), and one trusted human. Feed all four to the AI to map agreements, surface the biggest conflict, and name the one piece of evidence that would resolve it.",
+    "effort": "S",
+    "relevance": "A cheap checklist for irreversible calls like locking pricing or dropping VAPI, where no human review loop currently exists.",
+    "status": "proposed",
+    "source": { "subject": "Your AI Answers Like It Knows Your Business. It Doesn't.", "date": "2026-07-14", "threadId": "19f61aed4813969b" }
+  },
+  {
+    "id": 37,
+    "title": "Five sales-stage skills, one guru each",
+    "summary": "Build five separate Claude skills, one per sales stage, each scaffolded on a named methodology: discovery on Josh Braun, email on Jeb Blount's Hook-Relate-Bridge-Ask, follow-up on Blount's cadence doctrine, closing on Challenger, reactivation on Chet Holmes' Dream 100. Five small skills beat one giant prompt.",
+    "effort": "M",
+    "relevance": "Rebasing the existing client-acquisition and cold-email skills on named frameworks with primary sources would sharpen clinic outreach.",
+    "status": "proposed",
+    "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  },
+  {
+    "id": 38,
+    "title": "Research-first skill-building prompt pattern",
+    "summary": "When asking Claude to write a skill, force it to first research the expert's primary sources and quote real vocabulary with clickable sources, and to explicitly leave out anything it cannot source. Unscaffolded skill requests produce a confident averaged fake methodology.",
+    "effort": "S",
+    "relevance": "Directly improves skill authoring in the vault and matches the existing cited-recall rule against reconstructed knowledge.",
+    "status": "proposed",
+    "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  },
+  {
+    "id": 39,
+    "title": "Mine call transcripts for closed-vs-died gap",
+    "summary": "Label 10-20 closed calls and 10-20 dead calls, then ask one question: what did I do on the calls that closed that I did not do on the ones that died. Bake the winning verbatim phrasing into the skills. Point it at discovery calls, where winners and losers differ most.",
+    "effort": "M",
+    "relevance": "Dental and clinic sales calls plus VAPI call logs are recorded material ready to mine so outreach skills speak in proven language.",
+    "status": "proposed",
+    "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  },
+  {
+    "id": 40,
+    "title": "Transcript connector wiring order",
+    "summary": "Connect data sources in earning order: meeting transcripts first (Fathom has an official Claude connector with transcripts on every plan; native Zoom or Meet exports as manual fallback), then Gmail and Calendar, then CRM last. Then prompts like 'who do I follow up with today' become executable.",
+    "effort": "S",
+    "relevance": "A free-tier path to make the follow-up pipeline queryable from Claude Code without paying for a notetaker.",
+    "status": "proposed",
+    "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  },
+  {
+    "id": 41,
+    "title": "n8n plus Unipile outreach automation",
+    "summary": "Use n8n as the no-code route: raw message in, parse, an LLM rewrites it so it does not sound robotic, then send via Unipile, which exposes one API across LinkedIn, Gmail, and WhatsApp. FastMCP is the Python alternative: one decorator turns a function into an agent tool.",
+    "effort": "M",
+    "relevance": "Slots into the n8n-documented acquisition pipeline and opens LinkedIn and WhatsApp, the key channels for Indian clinic owners.",
+    "status": "proposed",
+    "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  }
+]
