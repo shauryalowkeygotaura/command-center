@@ -70,6 +70,20 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-inbox-sync-pat",
+    text: "Activate inbox cross-device sync: paste a gist-scope PAT once per device (INBOX panel)",
+    note: "Built 2026-07-19: the INBOX now syncs through a secret gist, and an hourly vault cron ('CC Inbox Vault Sync', Task Scheduler) files new drops into Inbox/command-center-inbox.md + Notes/todos.md automatically — no more copy-paste relay. Missing piece: each device needs a PAT once. github.com/settings/tokens → classic token → ONLY the `gist` scope → paste it into the sync bar on the INBOX panel (the same token also powers HABITS sync, one paste covers both). It must be from shauryalowkeygotaura — the vault cron reads that account's gists; the panel verifies and yells if it's the wrong account.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-portfolio-git-remote",
+    text: "Portfolio git push is broken — tell me which account owns the repo now",
+    note: "Found 2026-07-19 while shipping the layout A/B test: pushing to shauryalowkeygotaura/portfolio → 'repository not found' even with your full-scope PAT, and Doppler's iterator config points at they-call-me-god/portfolio → also invisible to this token. Best guess: the repo is still PRIVATE under the old they-call-me-god account (whose gh login on this machine is dead). Nothing is lost — the A/B commit (70ab223) is committed locally and the preview deployed from disk — but git push and possibly the nightly iterator's GitHub commits are broken until this is resolved. Reply with where the repo should live and I'll fix remote + Doppler + iterator env in one pass.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-revengine-post-1",
     text: "Post Revengine #1: upload the already-rendered failure carousel, then run `python feedback.py posted`",
     note: "2026-06-29: your first-ever Revengine post is rendered and waiting — Code/carousel-autoposter/output/ig-2026-06-28-it-broke-github-profile.../ (5 PNGs + a PDF). Upload the PNGs to @revengineee as an album, then run `python feedback.py posted` in the repo so the taste ledger learns what you actually ship. This is the whole point of the rebuild: ideas from you, the draining part already done.",
