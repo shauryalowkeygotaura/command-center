@@ -70,6 +70,20 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-ship-five-features",
+    text: "Review + ship the 5 verified features (all sit uncommitted in working trees; nothing deployed)",
+    note: "Built + adversarially verified across the 2026-07-02..18 ultracode session, ALL PASS. Per repo: (1) clinic-demo: TWO features share the tree; commit Attract Mode (index.html attract parts, api/patient.js, api/tts.py, README, requirements.txt) and Grill Room (api/_drill.js, api/score.js, api/chat.js drill branch, index.html drill UI) as separate commits, push, Vercel auto-deploys; drill URL: clinic-demo-blond.vercel.app/?mode=drill&clinic=Test%20Clinic (never send to prospects). (2) portfolio: Ambush Voice (?from= personalised voice greeting) is tsc/build clean, but push is BROKEN until h-portfolio-git-remote below is answered; then push = preview, review, vercel promote. (3) jio-outbound web_demo: Demo That Remembers (Upstash cross-visit memory, 11/11 tests) - Upstash is LIVE again since 2026-07-04 (excited-sturgeon PONG), so likely just needs a deploy with the canonical UPSTASH_* env; not a git repo, deploy from disk. (4) resume-autopilot: Receipts Mode (evidence appendix, verifier ran live 4/4, vitest 41 pass) - commit + push. Reply per-feature if you want me to do the commits.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-vault-leftovers",
+    text: "Vault audit leftovers: 4 code folders living in Projects/ + raw/ items - decide, I execute",
+    note: "From the 2026-07-02..18 vault audit, report-only because you killed the mover agent (so I will NOT move/delete anything unasked): (a) 4 code-bearing folders inside Projects/ that per CLAUDE.md belong in Code/; (b) raw/reference/ and raw/exun.docx awaiting wiki processing; (c) a duplicate essay v1 PDF; (d) Notes/exun-tasks-status.md rename candidate. Everything else from the audit (31 fixes, master-index rebuild, todo closures) is already applied. Reply 'go' on any subset and I do it next session.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-inbox-sync-pat",
     text: "Activate inbox cross-device sync: paste a gist-scope PAT once per device (INBOX panel)",
     note: "Built 2026-07-19: the INBOX now syncs through a secret gist, and an hourly vault cron ('CC Inbox Vault Sync', Task Scheduler) files new drops into Inbox/command-center-inbox.md + Notes/todos.md automatically — no more copy-paste relay. Missing piece: each device needs a PAT once. github.com/settings/tokens → classic token → ONLY the `gist` scope → paste it into the sync bar on the INBOX panel (the same token also powers HABITS sync, one paste covers both). It must be from shauryalowkeygotaura — the vault cron reads that account's gists; the panel verifies and yells if it's the wrong account.",
