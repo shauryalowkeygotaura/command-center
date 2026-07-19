@@ -86,7 +86,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-ship-five-features",
     text: "Review + ship the 5 verified features (all sit uncommitted in working trees; nothing deployed)",
-    note: "Built + adversarially verified across the 2026-07-02..18 ultracode session, ALL PASS. Per repo: (1) clinic-demo: TWO features share the tree; commit Attract Mode (index.html attract parts, api/patient.js, api/tts.py, README, requirements.txt) and Grill Room (api/_drill.js, api/score.js, api/chat.js drill branch, index.html drill UI) as separate commits, push, Vercel auto-deploys; drill URL: clinic-demo-blond.vercel.app/?mode=drill&clinic=Test%20Clinic (never send to prospects). (2) portfolio: Ambush Voice (?from= personalised voice greeting) is tsc/build clean, but push is BROKEN until h-portfolio-git-remote below is answered; then push = preview, review, vercel promote. (3) jio-outbound web_demo: Demo That Remembers (Upstash cross-visit memory, 11/11 tests) - Upstash is LIVE again since 2026-07-04 (excited-sturgeon PONG), so likely just needs a deploy with the canonical UPSTASH_* env; not a git repo, deploy from disk. (4) resume-autopilot: Receipts Mode (evidence appendix, verifier ran live 4/4, vitest 41 pass) - commit + push. Reply per-feature if you want me to do the commits.",
+    note: "Built + adversarially verified across the 2026-07-02..18 ultracode session, ALL PASS. Per repo: (1) clinic-demo: TWO features share the tree; commit Attract Mode (index.html attract parts, api/patient.js, api/tts.py, README, requirements.txt) and Grill Room (api/_drill.js, api/score.js, api/chat.js drill branch, index.html drill UI) as separate commits, push, Vercel auto-deploys; drill URL: clinic-demo-blond.vercel.app/?mode=drill&clinic=Test%20Clinic (never send to prospects). (2) portfolio: Ambush Voice (?from= personalised voice greeting) is tsc/build clean; push is FIXED as of 2026-07-19 (repo recreated at shauryalowkeygotaura/portfolio) — push = preview, review, vercel promote. (3) jio-outbound web_demo: Demo That Remembers (Upstash cross-visit memory, 11/11 tests) - Upstash is LIVE again since 2026-07-04 (excited-sturgeon PONG), so likely just needs a deploy with the canonical UPSTASH_* env; not a git repo, deploy from disk. (4) resume-autopilot: Receipts Mode (evidence appendix, verifier ran live 4/4, vitest 41 pass) - commit + push. Reply per-feature if you want me to do the commits.",
     done: false,
     seeded: true,
   },
@@ -104,13 +104,12 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
-  {
-    id: "h-portfolio-git-remote",
-    text: "Portfolio git push is broken — tell me which account owns the repo now",
-    note: "Found 2026-07-19 while shipping the layout A/B test: pushing to shauryalowkeygotaura/portfolio → 'repository not found' even with your full-scope PAT, and Doppler's iterator config points at they-call-me-god/portfolio → also invisible to this token. Best guess: the repo is still PRIVATE under the old they-call-me-god account (whose gh login on this machine is dead). Nothing is lost — the A/B commit (70ab223) is committed locally and the preview deployed from disk — but git push and possibly the nightly iterator's GitHub commits are broken until this is resolved. Reply with where the repo should live and I'll fix remote + Doppler + iterator env in one pass.",
-    done: false,
-    seeded: true,
-  },
+  // h-portfolio-git-remote resolved 2026-07-19 same-session: Shaurya confirmed
+  //   shauryalowkeygotaura is THE account; the portfolio repo simply no longer
+  //   existed there. Claude recreated it (private), pushed full history, fixed
+  //   Doppler GITHUB_OWNER (dev+prd) and replaced Vercel production's DEAD
+  //   GITHUB_TOKEN + CRLF-polluted GITHUB_OWNER/GITHUB_REPO (all verified
+  //   green). Iterator commits work again from the next prod deploy.
   {
     id: "h-revengine-post-1",
     text: "Post Revengine #1: upload the already-rendered failure carousel, then run `python feedback.py posted`",
