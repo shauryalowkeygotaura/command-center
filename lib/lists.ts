@@ -70,6 +70,20 @@ export function mergeChecklistSeed(
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
+    id: "h-autoshop-pdf-attach-decision",
+    text: "autoshop: pick the PDF-attach fix (a) self-hosted download link (b) Playwright dashboard upload (c) static evergreen PDFs",
+    note: "2026-07-18: live run 29635870338 proved the pipeline is green end-to-end, but the honest file_uploaded status exposed that Lemon Squeezy's v1 API has NO file-upload endpoint (405 every run, always has). So each run refreshes title/description/price while buyers still download the dashboard-attached PDF. Details + trade-offs in Projects/autoshop/bugs.md Open. Reply a/b/c and I build it; until then the shop sells the old PDFs, nothing is broken or losing money.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-autoshop-ig-session",
+    text: "autoshop: enable IG posting - run `python login_instagram.py` locally, then set the INSTAGRAM_SESSION repo secret",
+    note: "2026-07-18: CI skips Instagram cleanly every run until this exists. In Code/autoshop run `python login_instagram.py` (interactive, handles 2FA), then `gh secret set INSTAGRAM_SESSION --repo shauryalowkeygotaura/autoshop < instagram.session`. Redo whenever the run log shows the skip line again (session expiry). Only you can do the login; everything else is already wired.",
+    done: false,
+    seeded: true,
+  },
+  {
     id: "h-ship-five-features",
     text: "Review + ship the 5 verified features (all sit uncommitted in working trees; nothing deployed)",
     note: "Built + adversarially verified across the 2026-07-02..18 ultracode session, ALL PASS. Per repo: (1) clinic-demo: TWO features share the tree; commit Attract Mode (index.html attract parts, api/patient.js, api/tts.py, README, requirements.txt) and Grill Room (api/_drill.js, api/score.js, api/chat.js drill branch, index.html drill UI) as separate commits, push, Vercel auto-deploys; drill URL: clinic-demo-blond.vercel.app/?mode=drill&clinic=Test%20Clinic (never send to prospects). (2) portfolio: Ambush Voice (?from= personalised voice greeting) is tsc/build clean, but push is BROKEN until h-portfolio-git-remote below is answered; then push = preview, review, vercel promote. (3) jio-outbound web_demo: Demo That Remembers (Upstash cross-visit memory, 11/11 tests) - Upstash is LIVE again since 2026-07-04 (excited-sturgeon PONG), so likely just needs a deploy with the canonical UPSTASH_* env; not a git repo, deploy from disk. (4) resume-autopilot: Receipts Mode (evidence appendix, verifier ran live 4/4, vitest 41 pass) - commit + push. Reply per-feature if you want me to do the commits.",
