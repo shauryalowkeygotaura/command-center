@@ -185,12 +185,16 @@ export function KeysPanel() {
     void dropSmart(completed);
   }
 
-  // Manual fallback: copy pending keys as a paste-ready block for chat.
+  // Manual fallback: copy keys as a paste-ready block for chat. Prefers the
+  // pending ones; when everything is already integrated (e.g. smart-drop marks
+  // keys integrated immediately) it copies ALL keys, so there is always a way
+  // to hand the values to Claude.
   async function copyForClaude() {
     const pending = keys.filter((k) => !k.integrated);
-    if (pending.length === 0) return;
+    const list = pending.length > 0 ? pending : keys;
+    if (list.length === 0) return;
     const byProject = new Map<string, KeyEntry[]>();
-    for (const k of pending) {
+    for (const k of list) {
       const p = k.project || "unassigned";
       if (!byProject.has(p)) byProject.set(p, []);
       byProject.get(p)!.push(k);
@@ -221,23 +225,25 @@ export function KeysPanel() {
         </span>
         <div className="flex items-center gap-3">
           {mounted && pendingCount > 0 && (
-            <>
-              <button
-                onClick={pushPending}
-                disabled={pushing}
-                className="font-mono text-[10px] uppercase tracking-wide text-burgundy-bright transition hover:text-cream disabled:opacity-50"
-                title="Push pending keys straight into Doppler"
-              >
-                {pushing ? "pushing…" : "push to doppler"}
-              </button>
-              <button
-                onClick={copyForClaude}
-                className="font-mono text-[10px] uppercase tracking-wide text-indigo transition hover:text-burgundy-bright"
-                title="Fallback: copy pending keys to paste to Claude"
-              >
-                {copied ? "copied ✓" : "copy for claude"}
-              </button>
-            </>
+            <button
+              onClick={pushPending}
+              disabled={pushing}
+              className="font-mono text-[10px] uppercase tracking-wide text-burgundy-bright transition hover:text-cream disabled:opacity-50"
+              title="Push pending keys straight into Doppler"
+            >
+              {pushing ? "pushing…" : "push to doppler"}
+            </button>
+          )}
+          {/* Always available when any key exists — integrated keys included,
+              so values can still be handed to Claude after a smart drop. */}
+          {mounted && keys.length > 0 && (
+            <button
+              onClick={copyForClaude}
+              className="font-mono text-[10px] uppercase tracking-wide text-indigo transition hover:text-burgundy-bright"
+              title="Copy keys (pending first, else all) to paste to Claude"
+            >
+              {copied ? "copied ✓" : "copy for claude"}
+            </button>
           )}
           <button
             onClick={() => setShowSettings((s) => !s)}
