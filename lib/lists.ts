@@ -89,9 +89,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   //   member. Fixed repo git config to the real account email, re-pushed ->
   //   READY -> layout A/B verified live on revengine-studio.vercel.app.
   {
-    id: "h-autoshop-pdf-attach-decision",
-    text: "autoshop: pick the PDF-attach fix (a) self-hosted download link (b) Playwright dashboard upload (c) static evergreen PDFs",
-    note: "2026-07-18: live run 29635870338 proved the pipeline is green end-to-end, but the honest file_uploaded status exposed that Lemon Squeezy's v1 API has NO file-upload endpoint (405 every run, always has). So each run refreshes title/description/price while buyers still download the dashboard-attached PDF. Details + trade-offs in Projects/autoshop/bugs.md Open. Reply a/b/c and I build it; until then the shop sells the old PDFs, nothing is broken or losing money.",
+    id: "h-autoshop-lemon-confirmation-links",
+    text: "autoshop: set each Lemon product's confirmation/redirect link to its delivery URL — run `python list_delivery_links.py` in Code/autoshop",
+    note: "2026-07-22: option (a) BUILT + tested (you chose 'a'). autoshop now self-hosts each day's PDF on Vercel Blob at a stable, unguessable, per-niche URL (overwritten each run, so buyers always get the latest edition), and deletes local files so output/ never grows. Token wired in Doppler + the autoshop repo secret + CI. ONE manual step to make delivery buyer-only: in Code/autoshop run `python list_delivery_links.py` (prints all 6 niche URLs), then in the Lemon Squeezy dashboard set each product's confirmation / redirect-after-purchase link to its URL. One-time; the URL never changes. Until then buyers still get the old dashboard-attached PDF (nothing broken). Details: Projects/autoshop/bugs.md. (Also: 3 empty stray Vercel Blob stores autoshop-dl/-store/-blob from setup can be deleted in the Vercel dashboard; harmless.)",
     done: false,
     seeded: true,
   },
