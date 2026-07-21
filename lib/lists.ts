@@ -102,17 +102,21 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
-  {
-    id: "h-ship-five-features",
-    text: "Review + ship the 5 verified features (all sit uncommitted in working trees; nothing deployed)",
-    note: "Built + adversarially verified across the 2026-07-02..18 ultracode session, ALL PASS. Per repo: (1) clinic-demo: TWO features share the tree; commit Attract Mode (index.html attract parts, api/patient.js, api/tts.py, README, requirements.txt) and Grill Room (api/_drill.js, api/score.js, api/chat.js drill branch, index.html drill UI) as separate commits, push, Vercel auto-deploys; drill URL: clinic-demo-blond.vercel.app/?mode=drill&clinic=Test%20Clinic (never send to prospects). (2) portfolio: Ambush Voice SHIPPED to production 2026-07-19 (commit 7d4cebd) - it had become build-inseparable from the layout-A/B commit that included page.tsx, and it was verified ALL PASS, so it rode along; review it live and say revert if unwanted. (3) jio-outbound web_demo: Demo That Remembers (Upstash cross-visit memory, 11/11 tests) - Upstash is LIVE again since 2026-07-04 (excited-sturgeon PONG), so likely just needs a deploy with the canonical UPSTASH_* env; not a git repo, deploy from disk. (4) resume-autopilot: Receipts Mode (evidence appendix, verifier ran live 4/4, vitest 41 pass) - commit + push. Reply per-feature if you want me to do the commits.",
-    done: false,
-    seeded: true,
-  },
+  // h-ship-five-features SHIPPED 2026-07-21 (Shaurya said "ship all"): (1)+(2)
+  //   clinic-demo Attract Mode + Grill Room committed (d957b2e, 517d168) and
+  //   deployed via vercel --prod -> clinic-demo-blond.vercel.app (drill gated
+  //   behind ?mode=drill). (3) jio "Demo That Remembers" built + deployed ->
+  //   jio-voice-demo.vercel.app, smoke-tested live (200, agent replied by name
+  //   with TTS, Upstash memory env present). (4) resume-autopilot Receipts Mode
+  //   committed + pushed (4caa908, 12/12 receipts tests pass) -> Vercel auto-
+  //   deploys. (5) portfolio Ambush Voice was already shipped 07-19 (7d4cebd).
+  // h-video-pitch-wip retired 2026-07-21: ALREADY DONE by a prior session -
+  //   modules/video_pitch.py is committed (e26f927) and wired into delivery.py
+  //   + demo_builder.py. Nothing to commit.
   {
     id: "h-vault-leftovers",
     text: "Vault audit leftovers: 4 code folders living in Projects/ + raw/ items - decide, I execute",
-    note: "From the 2026-07-02..18 vault audit, report-only because you killed the mover agent (so I will NOT move/delete anything unasked): (a) 4 code-bearing folders inside Projects/ that per CLAUDE.md belong in Code/; (b) raw/reference/ and raw/exun.docx awaiting wiki processing; (c) a duplicate essay v1 PDF; (d) Notes/exun-tasks-status.md rename candidate. Everything else from the audit (31 fixes, master-index rebuild, todo closures) is already applied. Reply 'go' on any subset and I do it next session.",
+    note: "2026-07-21 update (you said 'go'): I checked. (a) the 4 code folders are github-profile, portfolio, vayuvani, vayuvani-app - and the prior audit DELIBERATELY did not move them because 'deploys depend on these paths'. github-profile is likely safe (its automation is a cloud GitHub Action); portfolio/vayuvani/vayuvani-app deploy from disk, so a blind move can break prod. I will NOT move deploy-critical folders on a generic 'go' - reply per folder (e.g. 'move github-profile') and I do that one carefully. (b) raw/exun.docx + raw/reference/ is a content task (wiki processing), not a move - say the word and I process it. (c)+(d) the specific dup essay PDF path and the exun-tasks-status rename target weren't in this note and the vault is too slow to scan blind - tell me the file and target and I do it in seconds.",
     done: false,
     seeded: true,
   },
