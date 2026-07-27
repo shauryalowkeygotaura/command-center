@@ -69,6 +69,69 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // ── Backfilled 2026-07-26 ────────────────────────────────────────────────
+  // Sessions 07-22 → 07-26 ended abruptly and their handoffs never reached this
+  // seed. Recovered from Logs/session-log-archive.md + Projects/*/plan.md and
+  // added below, newest first. Verified live before adding (repo dirty counts
+  // re-checked, autoshop delivery confirmed already on origin, meta-ads MCP
+  // still shows an authenticate tool = still unauthed).
+  {
+    id: "h-fish-api-key",
+    text: "⏳ DEADLINE 2026-07-31 — create a Fish Audio API key (fish.audio → API Keys → Create new) and drop it as FISH_API_KEY",
+    note: "2026-07-25: Code/fish-voice is built and smoke-tested but has NEVER made a live call, because no key exists anywhere. TIME-SENSITIVE: the free S2.1-Pro window closes 2026-07-31 — after that you drop to ~8k credits/month (~7 minutes of audio), which a daily reel cron burns through in about a week. So the cheap window to record + clone is THIS WEEK. Steps: fish.audio → API Keys → Create new (the key displays exactly once, copy it immediately) → drop via the KEYS panel or paste it to me and I run `doppler secrets set FISH_API_KEY`. Everything downstream is already wired: the stdlib client (clone/speak/speak_many/CLI) and the `fish` provider in voicezero, which silently falls back to edge-tts until the key lands. Pairs with h-fish-reference-clip.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-fish-reference-clip",
+    text: "Record a 15-30s voice reference clip for cloning (quiet room, natural delivery, not monotone)",
+    note: "2026-07-25: the other half of fish-voice — a key alone clones nothing. Record 15-30 seconds of yourself talking normally (quiet room, no music, natural delivery; reading flatly produces a flat clone). Any format the recorder gives you is fine. Tell me the file path and I run `clone ... --default` and store the returned voice id as FISH_VOICE_ID in Doppler. Do this inside the free S2.1-Pro window (see h-fish-api-key) — cloning on the free tier costs credits you will want later. NOTE what this is NOT for: philosopher-pipeline can't use it (tts.py:259 needs edge-tts per-word WordBoundary timestamps for kinetic caption sync; Fish returns audio only, would need whisper forced alignment first) and dental-receptionist is deliberately excluded (guardian-signed deployment to real patients + cloud TTS breaks the $0/min latency design).",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-fish-quota-policy",
+    text: "DECIDE: what fish-voice does when it hits a 402 mid-batch — fail fast / continue / checkpoint+resume?",
+    note: "2026-07-25: `on_quota_exhausted()` in fish_voice.py raises NotImplementedError ON PURPOSE — I would not pick this for you because each option fails differently. Free plan is ~7 min of audio a month, so an unattended batch WILL hit a 402 partway through. (a) FAIL FAST: nothing downstream consumes a half-finished set, but one missing clip loses the whole batch and a 3am CI run just dies. (b) CONTINUE: batch completes and the caller fills gaps from edge-tts — but it ships in the WRONG VOICE silently, which is brand drift nobody notices for days. (c) CHECKPOINT + RESUME: next run continues from the last good clip; more code and needs a state file the caller honours. MY READ: (c), because CLAUDE.md already requires scheduled work to checkpoint so a 402/429 resumes instead of losing the run. Reply `fish = a|b|c` and I implement it. Table lives in Projects/fish-voice/plan.md.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-td-invisibility-build",
+    text: "TouchDesigner: run the builder in Textport and save invisibility.toe (~2 min, TD is installed)",
+    note: "2026-07-25: this one got orphaned when your battery died mid-session. Status re-verified 2026-07-26: TouchDesigner IS installed (C:\\Program Files\\Derivative\\TouchDesigner), the builder script IS written (Code/td-invisibility/build_invisibility.py) — but no .toe exists, so the invisibility effect has never actually been generated or seen. TD is a GUI app, I cannot drive it. Steps: (1) open TD, (2) Textport with Alt+T, (3) paste `exec(open(r\"C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Code\\td-invisibility\\build_invisibility.py\").read())`, (4) view /invisibility/out1, (5) Save As invisibility.toe. It self-animates on open, so it proves itself with no camera and no plugin attached. WHAT TO SEND ME: the script guards every param write and PRINTS the ones it could not set (Displace/Rectangle/Noise param names drift across TD builds) — paste that warning list to me and I patch the builder. Real hand tracking is a separate later step (needs Torin Blankensmith's MediaPipe TD plugin, then export a landmark CHOP onto Centerx/Centery/Width — one wire).",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-meta-ads-auth",
+    text: "Authenticate the meta-ads MCP — one OAuth login, or paste a token from pipeboard.co/api-tokens",
+    note: "2026-07-24: installed the pipeboard-hosted meta-ads MCP at user scope (https://meta-ads.mcp.pipeboard.co/). It shows 'Failed to connect' and exposes only an `authenticate` tool until you log in — still unauthed as of 2026-07-26, I re-checked. Two ways: (1) run `/mcp` in a session and complete the browser OAuth, or (2) grab a token at pipeboard.co/api-tokens and paste it to me — I append `?token=...` to the server URL. This is the difference between having ad STRATEGY skills (ads-meta, audit-meta, which are analysis-only) and being able to actually read/execute live FB/IG/Threads ad campaigns. No spend happens from authenticating.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-postiz-key",
+    text: "Get a POSTIZ_API_KEY (hosted Postiz account) so the 28-platform scheduler works",
+    note: "2026-07-24: installed the `postiz@claude-plugins-official` plugin at user scope — no Docker, lightweight. It is inert without POSTIZ_API_KEY. Sign up for a hosted Postiz account, copy the API key, drop it via the KEYS panel (or paste it to me) and I set Doppler. Payoff: one scheduler across 28+ platforms, which is the piece the existing per-platform autoposters (carousel-autoposter, philosopher, football) each reimplement. Low urgency — nothing is broken without it, it just stays unused.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-inflight-uncommitted",
+    text: "Your own uncommitted work in 5 repos — tell me which to review + commit (I will not commit your authorship blind)",
+    note: "Found 2026-07-22 during the unattended upgrade sweep, RE-VERIFIED 2026-07-26 (all still dirty, nothing unpushed): carousel-autoposter 27 changed files, youtube-title-autoresearch 7, client-acquisition-pipeline 3, philosopher-pipeline 1, exun-appdev 1. I deliberately did not touch any of it — you authored it, and committing someone else's in-flight work is how half-finished features reach live repos (exactly what happened on autoshop that same session). None of it is lost, it is just unversioned, so a bad edit or a disk problem eats it. Reply per repo (e.g. 'review carousel-autoposter') and I read the diff, tell you what is in it, secret-audit it, and commit + push with a real message. Start with carousel-autoposter — 27 files is the one actually at risk.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-taste-slash-wrappers",
+    text: "taste-engine: want real /taste slash commands + the optional Stop hook installed? (say yes and I do it)",
+    note: "2026-07-24: taste-engine shipped PUBLIC at github.com/shauryalowkeygotaura/taste-engine (MIT). Two optional pieces were left off deliberately rather than installed without asking. (1) Real `/taste new|use|moodboard|learn|distill|status` slash-command wrappers — right now those are documented in SKILL.md and run through the skill, not as first-class slash commands. (2) The Stop hook, which would auto-capture design corrections into the journal at the end of every session — genuinely useful for the self-improving half, but it fires on EVERY session and you already run several Stop hooks, so I did not add another one unasked. Reply 'taste wrappers', 'taste hook', or 'both'. Neither is required for the engine to work.",
+    done: false,
+    seeded: true,
+  },
+  // ── end 2026-07-26 backfill ──────────────────────────────────────────────
   // key-drop SSO block fixed 2026-07-21: the key-drop proxy had Vercel
   //   Deployment Protection (ssoProtection: all_except_custom_domains) ON, so
   //   every browser "push to doppler" hit 401 "Protected deployment" and NO key
