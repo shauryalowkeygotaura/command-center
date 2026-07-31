@@ -69,6 +69,28 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // ── Added 2026-07-30 (format-engine / format-render pipeline) ─────────────
+  {
+    id: "h-format-watch-first-render",
+    text: "WATCH the 2.9-min asteroid video + 2 shorts before anything gets uploaded (Code/format-render/output/every-scariest-asteroid-explained-in-12-minutes/)",
+    done: false,
+    seeded: true,
+    note: "2026-07-30: the whole pipeline now runs end to end and produced a real deliverable — 1920x1080 h264+aac master (174s), a thumbnail built to the format's measured spec, and 2 vertical 9:16 shorts with burned captions. All 9 stills are genuine Wikimedia Commons astronomy imagery (Ceres from Dawn, the asteroid belt, the Chelyabinsk trail, Vesta, Apophis groundtrack, Bennu). WHY THIS IS A HANDOFF AND NOT A CHECKBOX: an earlier build passed EVERY automated check — layout, saturation, contrast, brightness all measured fine — and shipped a 19th-century oil painting of a reclining nude as the thumbnail, because Wikimedia resolves a bare 'Ceres' to the Roman goddess before the dwarf planet. I only caught it by rendering the image and looking at it. Numeric verification is not visual review, and I cannot watch a video. Watch it, then tell me: (a) is the narration pace right (edge-tts at +6%), (b) do the Ken-Burns pushes feel too slow/fast, (c) are the shorts' caption timings synced. I tune from your answers. Nothing should be uploaded before you have seen it.",
+  },
+  {
+    id: "h-format-channel-decision",
+    text: "DECIDE: are you actually running a faceless channel from this pipeline — and if so, on which Google account?",
+    done: false,
+    seeded: true,
+    note: "2026-07-30: format-engine + format-render are both built and verified, but there is NO CHANNEL. The tooling found a live breakout to bend from (Bluntly Explained: 21k subs, 104 days old, 1.33M top video, +0.080 momentum, est. RPM $5-14) and produced a gated brief and a finished video. What is missing is your decision, and it gates h-football-yt-oauth (no point doing OAuth with no channel to point it at). THREE THINGS ONLY YOU CAN DO: (1) decide yes/no — this is a real time commitment and the honest read is that adavia's own channel has a 3,953-view MEDIAN with exactly one outlier, so the tutorials sell the system better than the system performs; (2) if yes, pick the Google account — the tutorials recommend an AGED account (one you have had for years, not made yesterday) and warming it by watching ~20 min of in-niche video before the first upload; (3) confirm the niche — asteroids/space is just what the first bend surfaced, not a choice you made. Reply `channel = yes <account hint> <niche>` or `channel = no` and I either wire it up or stop spending time here.",
+  },
+  {
+    id: "h-stock-broll-key",
+    text: "OPTIONAL free signup: Pixabay and/or Pexels API key, to unlock stock-video b-roll instead of Ken-Burns stills",
+    done: false,
+    seeded: true,
+    note: "2026-07-30: `Code/format-render/broll.py` is written, dry-safe and wired — with no key it returns None and the composer falls through to a Ken-Burns push on a real photograph, so nothing is broken without this. Both are free, no card: pixabay.com/api/docs (PIXABAY_API_KEY) and pexels.com/api (PEXELS_API_KEY, and it accepts a COMMA-SEPARATED LIST which the code rotates through to stretch the free tier). Drop via the KEYS panel or paste to me. LOW PRIORITY ON PURPOSE: motion is nice, but a generic stock 'space' clip under narration about the Chelyabinsk meteor is genuinely worse than a real photograph of the Chelyabinsk meteor, which is why stills stayed the default and this is opt-in per render (`--broll`). Take it only if you want variety on beats where Commons imagery is thin.",
+  },
   // ── Backfilled 2026-07-26 ────────────────────────────────────────────────
   // Sessions 07-22 → 07-26 ended abruptly and their handoffs never reached this
   // seed. Recovered from Logs/session-log-archive.md + Projects/*/plan.md and
@@ -254,8 +276,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-football-yt-oauth",
-    text: "YouTube OAuth for football autopost: ~8-min Google Cloud setup + `python auth_youtube.py`, then I flip YT_DRY_RUN=0",
-    note: "Re-verified 2026-07-03: the OAuth APP does not exist yet anywhere — no client_secret.json in the repo, no YT_CLIENT_ID/SECRET in Doppler, google-auth-oauthlib not installed. Full path: (1) console.cloud.google.com → pick/create project; (2) APIs & Services → Library → enable YouTube Data API v3; (3) OAuth consent screen → External → add your channel's Google email as a TEST USER (skip this and the browser step throws 'access denied'); (4) Credentials → Create → OAuth client ID → Desktop app → download JSON → save as client_secret.json next to auth_youtube.py; (5) `pip install google-auth-oauthlib` then `python auth_youtube.py` in Code/football-shorts-autopilot — browser opens, PICK THE CHANNEL, Allow. It writes .yt_oauth.json + prints the doppler commands; just tell me it ran and I do the rest (Doppler + YT_DRY_RUN=0). Everything else is already wired and green in dry-run.",
+    text: "YouTube OAuth — now unblocks TWO repos (football autopilot + format-render): ~8-min Google Cloud setup + `python auth_youtube.py`",
+    note: "PROMOTED 2026-07-30: this was football-only; format-render now also ends at the same wall, so one 8-minute setup unblocks BOTH. Re-verified 2026-07-30: still no YT_CLIENT_ID/SECRET/REFRESH_TOKEN in any Doppler project, so `formatrender publish` prints payloads and refuses to upload, exactly like football sits in dry-run. Full path unchanged: (1) console.cloud.google.com → pick/create project; (2) APIs & Services → Library → enable YouTube Data API v3; (3) OAuth consent screen → External → add your channel's Google email as a TEST USER (skip this and the browser step throws 'access denied'); (4) Credentials → Create → OAuth client ID → Desktop app → download JSON → save as client_secret.json next to auth_youtube.py; (5) `pip install google-auth-oauthlib` then `python auth_youtube.py` in Code/football-shorts-autopilot — browser opens, PICK THE CHANNEL, Allow. It writes .yt_oauth.json + prints the doppler commands; tell me it ran and I do the rest (Doppler + YT_DRY_RUN=0). QUOTA REALITY once live: an upload costs 1,600 of the 10,000 free units/day, so ~6 uploads/day per channel — one format-render output (master + 4 shorts) is 8,000 units, nearly the whole day. Depends on h-format-channel-decision: there is still no channel to upload TO.",
     done: false,
     seeded: true,
   },
