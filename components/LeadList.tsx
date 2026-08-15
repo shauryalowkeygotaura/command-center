@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LeadFlags, leadFlagStore, leadKey } from "@/lib/leadFlags";
 
 // The automated client-acquisition pipeline commits runs/leads.json at the end
 // of every run (qualified leads + their source + which channels auto-fired).
@@ -63,6 +64,25 @@ function waHref(wa?: string): string {
 export function LeadList() {
   const [data, setData] = useState<LeadsFile | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
+  // Hand-set flags. Loaded in an effect, never during render, because
+  // localStorage does not exist during the server pass.
+  const [flags, setFlags] = useState<LeadFlags>({});
+
+  useEffect(() => {
+    setFlags(leadFlagStore.load());
+  }, []);
+
+  function toggleMissing(l: Lead) {
+    const k = leadKey(l);
+    // Built outside the setState updater on purpose: React can re-invoke an
+    // updater (StrictMode, concurrent rendering), and a localStorage write in
+    // there would fire twice. This is an event handler, so `flags` is current.
+    const next = { ...flags };
+    if (next[k] === "missing") delete next[k];
+    else next[k] = "missing";
+    setFlags(next);
+    leadFlagStore.save(next);
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -86,6 +106,14 @@ export function LeadList() {
 
   const leads = data?.leads ?? [];
 
+  // Derived from the CURRENT leads, not from Object.keys(flags): flags persist
+  // for leads that have since dropped out of leads.json, and counting those
+  // would push "live" negative.
+  const missingCount = leads.reduce(
+    (n, l) => n + (flags[leadKey(l)] === "missing" ? 1 : 0),
+    0
+  );
+
   // Source breakdown chip row (indeed: 12 · maps: 3 …).
   const breakdown = leads.reduce<Record<string, number>>((acc, l) => {
     const s = l.source || "?";
@@ -98,7 +126,8 @@ export function LeadList() {
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-3 py-2 font-mono text-sm font-bold text-burgundy-bright">
         <span>AUTOMATED LEADS</span>
         <span className="font-normal tabular-nums text-cream-dim">
-          {state === "ok" ? `${leads.length} leads` : ""}
+          {state === "ok" ? `${leads.length - missingCount} live` : ""}
+          {missingCount > 0 ? ` · ${missingCount} n/a` : ""}
           {data?.ts ? ` · ${data.ts.slice(0, 10)}` : ""}
         </span>
       </div>
@@ -128,12 +157,21 @@ export function LeadList() {
       )}
 
       <ul className="divide-y divide-line">
-        {leads.map((l, i) => (
-          <li key={`${l.label}-${i}`} className="px-3 py-2">
+        {leads.map((l, i) => {
+          const missing = flags[leadKey(l)] === "missing";
+          return (
+          <li
+            key={`${l.label}-${i}`}
+            className={`px-3 py-2 ${missing ? "opacity-40" : ""}`}
+          >
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="truncate font-sans text-sm text-cream">
+                  <span
+                    className={`truncate font-sans text-sm text-cream ${
+                      missing ? "line-through decoration-cream-dim" : ""
+                    }`}
+                  >
                     {l.label}
                   </span>
                   <span className="shrink-0 rounded bg-burgundy px-1.5 py-0.5 font-mono text-[10px] text-cream">
@@ -166,6 +204,23 @@ export function LeadList() {
                     wa
                   </a>
                 )}
+                <button
+                  type="button"
+                  onClick={() => toggleMissing(l)}
+                  aria-pressed={missing}
+                  title={
+                    missing
+                      ? "Marked as not a real business. Tap to restore."
+                      : "Business does not exist (closed, moved, or a bad listing)"
+                  }
+                  className={`rounded border px-1.5 py-0.5 font-mono text-[10px] ${
+                    missing
+                      ? "border-burgundy-bright bg-burgundy text-cream"
+                      : "border-line text-cream-dim hover:border-burgundy-bright hover:text-cream"
+                  }`}
+                >
+                  {missing ? "restored?" : "n/a"}
+                </button>
               </div>
             </div>
 
@@ -189,7 +244,8 @@ export function LeadList() {
               })}
             </div>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </section>
   );
