@@ -92,19 +92,11 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-08-14: needed twice over, which is why it is worth the 20 minutes. FIRST USE: I reversed my original plan to post via instagrapi. publikclip already ships an Instagram feedback loop (`publikclip ig connect/link/pull/report`) that pulls real Reels insights through the official Meta Graph API and calibrates its own virality scores against actual views. That means after a few weeks the scorer learns what actually performs on YOUR account instead of a generic prior. SECOND USE: the same app can post through the official Instagram Content Publishing API. Since you need the app anyway, posting officially costs nothing extra and removes the ban vector entirely, versus instagrapi which drives a real session and can get the account flagged. WHAT TO DO: developers.facebook.com, create an app, add the Instagram product, and send me the App ID and App Secret (via the KEYS panel, not plain chat). The Instagram account has to be a Professional account (Creator or Business) linked to a Facebook Page, which is a free switch in the IG app settings if it is not already. Reply `meta = done` and I wire the poster.",
   },
   {
-    id: "h-clipworks-scoring-llm",
-    text: "DECIDE: Gemini API key or local Ollama for publikclip's scoring calls (2-3 small calls per video)",
+    id: "h-clipworks-doppler-slot",
+    text: "DECIDE: free a Doppler project slot, or leave clipworks borrowing philosopher-pipeline/dev (you are at the 10-project free-plan cap)",
     done: false,
     seeded: true,
-    note: "2026-08-14: publikclip runs every model locally (speech recognition, diarization, laughter detection, face tracking) and the ONLY network calls in the whole pipeline are the video download plus 2-3 small LLM calls for humor and virality scoring. So this is a small decision, but it blocks the first real run. GEMINI: needs a free API key from aistudio.google.com, faster, and the calls are tiny so the free tier will comfortably cover it. OLLAMA: fully local, zero cost, zero rate limits, but it is another install and it will be slower on your machine. MY LEAN IS GEMINI to start, purely because it gets you to a first rendered clip sooner, and switching later is a one-word change in the campaign YAML (`publikclip.llm`). Worth knowing: publikclip validates its LLM humor scores against ACTUAL DETECTED LAUGHTER in the audio, so a weaker model degrades gracefully here rather than silently producing nonsense. Reply `scoring = gemini` (and drop the key) or `scoring = ollama`.",
-  },
-  // ── Added 2026-07-30 (format-engine / format-render pipeline) ─────────────
-  {
-    id: "h-format-watch-first-render",
-    text: "WATCH the 2.9-min asteroid video + 2 shorts before anything gets uploaded (Code/format-render/output/every-scariest-asteroid-explained-in-12-minutes/)",
-    done: false,
-    seeded: true,
-    note: "2026-07-30: the whole pipeline now runs end to end and produced a real deliverable — 1920x1080 h264+aac master (174s), a thumbnail built to the format's measured spec, and 2 vertical 9:16 shorts with burned captions. All 9 stills are genuine Wikimedia Commons astronomy imagery (Ceres from Dawn, the asteroid belt, the Chelyabinsk trail, Vesta, Apophis groundtrack, Bennu). WHY THIS IS A HANDOFF AND NOT A CHECKBOX: an earlier build passed EVERY automated check — layout, saturation, contrast, brightness all measured fine — and shipped a 19th-century oil painting of a reclining nude as the thumbnail, because Wikimedia resolves a bare 'Ceres' to the Roman goddess before the dwarf planet. I only caught it by rendering the image and looking at it. Numeric verification is not visual review, and I cannot watch a video. Watch it, then tell me: (a) is the narration pace right (edge-tts at +6%), (b) do the Ken-Burns pushes feel too slow/fast, (c) are the shorts' caption timings synced. I tune from your answers. Nothing should be uploaded before you have seen it.",
+    note: "2026-08-15: RESOLVED WITHOUT YOU, but you should know about it. You asked for Groq instead of Gemini or Ollama, so I patched a GroqClient into the vendored publikclip fork and made groq the default. It needed a key. GROQ_API_KEY already existed in philosopher-pipeline/dev, so no new key was required. What I could NOT do is give clipworks its own Doppler project: your workplace is at the free plan's 10-project cap and creating one fails outright. I refused to delete an existing project to make room. WHAT I DID INSTEAD: `Code/clipworks/doppler.yaml` + `doppler setup` now point clipworks at philosopher-pipeline/dev, which already holds exactly what clipworks needs (GROQ_API_KEY, INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD). Verified working: GROQ_API_KEY resolves in that directory. THE DECISION FOR YOU: leave it borrowed, which is slightly untidy but costs nothing and works today, or free a slot by deleting a dead project (candidates worth a look: creative-studio, heart-venture-paper, youtube-title-autoresearch, vayuvani-app — I did NOT check whether any are actually dead, that is your call). Only matters more once the Meta app keys land, since those genuinely belong to clipworks and not to philosopher-pipeline. Reply `doppler = borrow` or `doppler = free <project>`.",
   },
   {
     id: "h-format-channel-decision",
@@ -112,13 +104,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "2026-07-30: format-engine + format-render are both built and verified, but there is NO CHANNEL. The tooling found a live breakout to bend from (Bluntly Explained: 21k subs, 104 days old, 1.33M top video, +0.080 momentum, est. RPM $5-14) and produced a gated brief and a finished video. What is missing is your decision, and it gates h-football-yt-oauth (no point doing OAuth with no channel to point it at). THREE THINGS ONLY YOU CAN DO: (1) decide yes/no — this is a real time commitment and the honest read is that adavia's own channel has a 3,953-view MEDIAN with exactly one outlier, so the tutorials sell the system better than the system performs; (2) if yes, pick the Google account — the tutorials recommend an AGED account (one you have had for years, not made yesterday) and warming it by watching ~20 min of in-niche video before the first upload; (3) confirm the niche — asteroids/space is just what the first bend surfaced, not a choice you made. Reply `channel = yes <account hint> <niche>` or `channel = no` and I either wire it up or stop spending time here.",
-  },
-  {
-    id: "h-stock-broll-key",
-    text: "OPTIONAL free signup: Pixabay and/or Pexels API key, to unlock stock-video b-roll instead of Ken-Burns stills",
-    done: false,
-    seeded: true,
-    note: "2026-07-30: `Code/format-render/broll.py` is written, dry-safe and wired — with no key it returns None and the composer falls through to a Ken-Burns push on a real photograph, so nothing is broken without this. Both are free, no card: pixabay.com/api/docs (PIXABAY_API_KEY) and pexels.com/api (PEXELS_API_KEY, and it accepts a COMMA-SEPARATED LIST which the code rotates through to stretch the free tier). Drop via the KEYS panel or paste to me. LOW PRIORITY ON PURPOSE: motion is nice, but a generic stock 'space' clip under narration about the Chelyabinsk meteor is genuinely worse than a real photograph of the Chelyabinsk meteor, which is why stills stayed the default and this is opt-in per render (`--broll`). Take it only if you want variety on beats where Commons imagery is thin.",
   },
   // ── Backfilled 2026-07-26 ────────────────────────────────────────────────
   // Sessions 07-22 → 07-26 ended abruptly and their handoffs never reached this
@@ -137,13 +122,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     id: "h-fish-reference-clip",
     text: "Record a 15-30s voice reference clip for cloning (quiet room, natural delivery, not monotone)",
     note: "2026-07-25: the other half of fish-voice — a key alone clones nothing. Record 15-30 seconds of yourself talking normally (quiet room, no music, natural delivery; reading flatly produces a flat clone). Any format the recorder gives you is fine. Tell me the file path and I run `clone ... --default` and store the returned voice id as FISH_VOICE_ID in Doppler. Do this inside the free S2.1-Pro window (see h-fish-api-key) — cloning on the free tier costs credits you will want later. NOTE what this is NOT for: philosopher-pipeline can't use it (tts.py:259 needs edge-tts per-word WordBoundary timestamps for kinetic caption sync; Fish returns audio only, would need whisper forced alignment first) and dental-receptionist is deliberately excluded (guardian-signed deployment to real patients + cloud TTS breaks the $0/min latency design).",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-fish-quota-policy",
-    text: "DECIDE: what fish-voice does when it hits a 402 mid-batch — fail fast / continue / checkpoint+resume?",
-    note: "2026-07-25: `on_quota_exhausted()` in fish_voice.py raises NotImplementedError ON PURPOSE — I would not pick this for you because each option fails differently. Free plan is ~7 min of audio a month, so an unattended batch WILL hit a 402 partway through. (a) FAIL FAST: nothing downstream consumes a half-finished set, but one missing clip loses the whole batch and a 3am CI run just dies. (b) CONTINUE: batch completes and the caller fills gaps from edge-tts — but it ships in the WRONG VOICE silently, which is brand drift nobody notices for days. (c) CHECKPOINT + RESUME: next run continues from the last good clip; more code and needs a state file the caller honours. MY READ: (c), because CLAUDE.md already requires scheduled work to checkpoint so a 402/429 resumes instead of losing the run. Reply `fish = a|b|c` and I implement it. Table lives in Projects/fish-voice/plan.md.",
     done: false,
     seeded: true,
   },
@@ -185,9 +163,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   // ── end 2026-07-26 backfill ──────────────────────────────────────────────
   // key-drop SSO block fixed 2026-07-21: the key-drop proxy had Vercel
   //   Deployment Protection (ssoProtection: all_except_custom_domains) ON, so
-  //   every browser "push to doppler" hit 401 "Protected deployment" and NO key
+  //   every browser  hit 401  and NO key
   //   ever reached Doppler (activity log confirmed nothing since 07-19). Root
-  //   cause of "I dropped keys but nothing happened". Disabled ssoProtection via
+  //   cause of . Disabled ssoProtection via
   //   the Vercel API -> endpoint now returns the app's own {"error":"bad drop
   //   token"}, i.e. the proxy is reachable and running. Push path is live again.
   {
@@ -199,7 +177,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   // h-vercel-blocked resolved 2026-07-19 same-session: readyState BLOCKED was
   //   seatBlock COMMIT_AUTHOR_REQUIRED - the repo's git identity was the fake
-  //   "Shaur <shaur@portfolio.local>", which Vercel Hobby can't map to a team
+  //   , which Vercel Hobby can't map to a team
   //   member. Fixed repo git config to the real account email, re-pushed ->
   //   READY -> layout A/B verified live on revengine-studio.vercel.app.
   {
@@ -216,10 +194,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
   },
-  // h-ship-five-features SHIPPED 2026-07-21 (Shaurya said "ship all"): (1)+(2)
+  // h-ship-five-features SHIPPED 2026-07-21 (Shaurya said ): (1)+(2)
   //   clinic-demo Attract Mode + Grill Room committed (d957b2e, 517d168) and
   //   deployed via vercel --prod -> clinic-demo-blond.vercel.app (drill gated
-  //   behind ?mode=drill). (3) jio "Demo That Remembers" built + deployed ->
+  //   behind ?mode=drill). (3) jio  built + deployed ->
   //   jio-voice-demo.vercel.app, smoke-tested live (200, agent replied by name
   //   with TTS, Upstash memory env present). (4) resume-autopilot Receipts Mode
   //   committed + pushed (4caa908, 12/12 receipts tests pass) -> Vercel auto-
@@ -290,30 +268,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
-    id: "h-apollo-cookies",
-    text: "Run `python scripts/save_apollo_cookies.py` in Code/client-acquisition-pipeline (one Apollo login)",
-    note: "FOUND 2026-06-10: the APOLLO_COOKIES_JSON repo secret was never set, so the daily pipeline scrapes 0 leads. The script opens a browser, you log in to Apollo once, it writes apollo_cookies.json — then paste it: gh secret set APOLLO_COOKIES_JSON -R shauryalowkeygotaura/client-acquisition-pipeline --body (Get-Content apollo_cookies.json -Raw). Or just run the script and tell me — I'll do the gh part.",
-    done: false,
-    seeded: true,
-  },
-  {
     id: "h-dental-send-8",
     text: "Send the 8 Tier-A Jaipur dental DMs — fully assembled, just paste",
     note: "I verified all 8 bios via web (2026-06-10, table in jaipur-dental-outreach-2026-06-08.md) and assembled the complete DMs with honesty guardrails applied — scroll to 'Paste-ready DMs'. The 57-sec demo clip for Dr. Ruby is rendered and ready to send after her 'yes' (Code/dental-receptionist/demo_clips/). Use @dr_ankurgoyal_ (personal) for #4, and tap each bio in the IG app once for WhatsApp buttons. Log sends in jaipur-sends-log.md.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-football-yt-oauth",
-    text: "YouTube OAuth — now unblocks TWO repos (football autopilot + format-render): ~8-min Google Cloud setup + `python auth_youtube.py`",
-    note: "PROMOTED 2026-07-30: this was football-only; format-render now also ends at the same wall, so one 8-minute setup unblocks BOTH. Re-verified 2026-07-30: still no YT_CLIENT_ID/SECRET/REFRESH_TOKEN in any Doppler project, so `formatrender publish` prints payloads and refuses to upload, exactly like football sits in dry-run. Full path unchanged: (1) console.cloud.google.com → pick/create project; (2) APIs & Services → Library → enable YouTube Data API v3; (3) OAuth consent screen → External → add your channel's Google email as a TEST USER (skip this and the browser step throws 'access denied'); (4) Credentials → Create → OAuth client ID → Desktop app → download JSON → save as client_secret.json next to auth_youtube.py; (5) `pip install google-auth-oauthlib` then `python auth_youtube.py` in Code/football-shorts-autopilot — browser opens, PICK THE CHANNEL, Allow. It writes .yt_oauth.json + prints the doppler commands; tell me it ran and I do the rest (Doppler + YT_DRY_RUN=0). QUOTA REALITY once live: an upload costs 1,600 of the 10,000 free units/day, so ~6 uploads/day per channel — one format-render output (master + 4 shorts) is 8,000 units, nearly the whole day. Depends on h-format-channel-decision: there is still no channel to upload TO.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-client-secrets",
-    text: "Sign up free at hunter.io (2 min) and paste the API key back to me",
-    note: "Shrunk 2026-06-10: I wired the workflow to pass HUNTER_API_KEY / SNOV_* into the job (it never did before) — the only missing piece is a key, and key signup needs your email. Free tier = 50 finds/month. Paste it in the reply box here and I'll set Doppler + the repo secret.",
     done: false,
     seeded: true,
   },
@@ -333,7 +290,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   // ho-upstash-db superseded 2026-07-03 by h-upstash-push above: DB created, creds
   //   still need to reach Doppler.
   // ho-youtube-oauth merged 2026-07-03 into h-football-yt-oauth above.
-  // h-habit-script retired 2026-06-05: found the "Automated Habit Tracker"
+  // h-habit-script retired 2026-06-05: found the 
   // sheet in Drive myself; the HABITS panel on the LIFE tab replicates it.
   // h-voice-confirm retired 2026-06-06: philosopher voice finalized 2026-06-05.
   // h-cc-usage retired 2026-06-06: the Stop hook auto-publishes cc-usage now.
@@ -347,4 +304,56 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   // h-dental-phones retired 2026-06-10: all FILL_ slots filled with each clinic's
   //   verified public front-desk line (safe by construction); swap owner_callback
   //   for the doctors' direct mobiles when they share them.
+
+  // -- Added 2026-08-15 -----------------------------------------------------
+  {
+    id: "h-upstash-dead-db",
+    text: "URGENT: the Upstash DB is GONE (authoritative NXDOMAIN). Create a new Redis DB, then update UPSTASH_REDIS_REST_URL + TOKEN in THREE places: portfolio Vercel env, client-acquisition-pipeline GitHub secrets, and its Doppler config.",
+    done: false,
+    seeded: true,
+    note: "Silent damage right now: prospects get the GENERIC demo instead of their personalised /demo/<slug>, and nothing errors. Portfolio /api/iterate also throws. Second time this has happened (apt-starfish died the same way in July), consistent with free-tier inactivity reaping.",
+  },
+  {
+    id: "h-yt-dry-run-flip",
+    text: "DECIDE: flip YT_DRY_RUN to 0 and go live on YouTube? OAuth is done and everything else is ready. I did NOT flip it.",
+    done: false,
+    seeded: true,
+    note: "Flipping this makes the next cron publish REAL videos. The asteroid render is still the bad one (no hook, 2.9 min under a 12-minute title, repeated stills), and low-quality mass-produced uploads are exactly what the inauthentic-content policy targets. Fix a render first, then flip. Command: doppler secrets set --project youtube-title-autoresearch --config dev YT_DRY_RUN=0",
+  },
+  {
+    id: "h-youtube-data-api-key",
+    text: "Create a YouTube Data API v3 key (same GCP project as the OAuth client) and drop it as YOUTUBE_API_KEY.",
+    done: false,
+    seeded: true,
+    note: "Unlocks Scripts/yt_analytics.py so I can pull stats for videos we post and for any channel you ask me to research. Public stats only; no OAuth needed for this one.",
+  },
+  {
+    id: "h-football-license",
+    text: "DECIDE a licence for football-shorts-autopilot: MIT or AGPL-3.0. It is PUBLIC with NO licence file, which legally means all rights reserved.",
+    done: false,
+    seeded: true,
+    note: "Nobody can legally use it and you have no stated terms. Also gates the publikclip question: vendoring its AGPL code would force this repo to AGPL. Cleaner path is to invoke publikclip as a separate program, which keeps your code unencumbered.",
+  },
+  {
+    id: "h-github-pat-scope",
+    text: "The GitHub PAT you dropped has admin:enterprise, admin:org and delete_repo. Consider reissuing it with just repo + workflow + gist.",
+    done: false,
+    seeded: true,
+    note: "It works and is now in Doppler as portfolio/GITHUB_API_KEY. But that scope set can delete any of your repos, and it is sitting in a secrets store that several automated jobs read.",
+  },
+  {
+    id: "h-spare-groq-key",
+    text: "Spare Groq key ...39ZZ8 is valid but has no home. The live dental key is ...xMYOMl. Where do you want it?",
+    done: false,
+    seeded: true,
+    note: "I did not rotate the live receptionist key without a reason to.",
+  },
+  {
+    id: "h-vayuvani-deepgram-junk",
+    text: "vayuvani DEEPGRAM_API_KEY in Doppler holds a GitHub Pages URL, not a key. Delete the junk entry?",
+    done: false,
+    seeded: true,
+    note: "Nothing is broken: no vayuvani code reads Deepgram at all. It is just a misleading entry that looks like a secret.",
+  },
+
 ];
