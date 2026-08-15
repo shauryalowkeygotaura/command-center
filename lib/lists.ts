@@ -69,6 +69,35 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // ── Added 2026-08-14 (clipworks / clipping automation) ────────────────────
+  {
+    id: "h-clipworks-payout-rail",
+    text: "BLOCKER: get a parent or guardian to open the Whop account, and check FIRST whether Whop offers direct bank deposit to India",
+    done: false,
+    seeded: true,
+    note: "2026-08-14: this is the one thing that decides whether clipworks earns money or is just a clip factory for your own channels. Everything I built works either way, so nothing is waiting on code. THE FACTS I VERIFIED: FamPay cannot receive international payouts at all (prepaid + UPI, ages 11-19, under-18 min-KYC caps at Rs 10,000 account and Rs 1,000 per transaction), so your own account is out. PhonePe and Paytm are domestic UPI interfaces, not remittance rails, so your parents' apps cannot receive it either, BUT the bank account sitting behind them can take a SWIFT wire, and that is the opening. PayPal is ruled out: PayPal India INDIVIDUAL accounts cannot receive international payments at all, and business accounts need a registered business plus a business bank account matching the PAN, at 7-8% total cost. ORDER OF PREFERENCE: (1) Whop direct bank deposit into your guardian's existing account, free, no new signup, and this may close the question in five minutes so CHECK IT FIRST at signup; (2) Wise, roughly 1.6-1.8% USD to INR, automatic e-FIRC, got RBI in-principle PA-CB approval June 2025; (3) Payoneer, works but FIRC is a manual request; NOT crypto, 30% plus 1% TDS is strictly worse. WHY A GUARDIAN AND NOT YOU: Whop, PayPal, and platform monetization all require 18+. One more thing to raise at home: money landing in their account is their taxable income and India has clubbing rules for a minor's earnings, so it is worth a word with whoever does their filing before this gets past pocket-money size. Reply `payout = <method> confirmed` or `payout = blocked <reason>`.",
+  },
+  {
+    id: "h-clipworks-campaign-brief",
+    text: "GET one real clipping campaign brief (Whop listing or a streamer Discord) and paste it to me verbatim",
+    done: false,
+    seeded: true,
+    note: "2026-08-14: `compliance.py` is built and has 15 tests, but it is config-driven and currently has NO REAL CAMPAIGN to validate against. I deliberately did not invent rules, because a validator built on guessed rules passes clips the campaign will then reject. WHY THIS MATTERS MORE THAN IT SOUNDS: Whop campaigns verify clips AFTER the views accrue and reject non-compliant ones retroactively. A clip that does 40,000 views and gets rejected for a missing credit line pays you exactly zero. Compliance is the module that stops that, and it can only stop what it knows about. WHAT I NEED FROM THE BRIEF: min and max clip duration, required hashtags, required credit or attribution text, which platforms are allowed, any banned edit styles, the per-clipper daily post cap, and the rate per 1,000 views. YOUR DISCORD IDEA IS GOOD AND I ACTED ON IT: streamer Discords list campaigns before or instead of Whop. Two caveats I wrote into the spec. Never automate Discord, self-bots violate ToS and get accounts terminated, so joining and reading is manual and always will be. And Discord-direct campaigns often pay straight from the streamer, which sidesteps the whole Whop payout blocker above, but there is no escrow so the streamer can simply not pay and you have no recourse. Judge that per campaign, not once. Paste the brief and I encode it into `campaigns/<slug>.yaml` the same session.",
+  },
+  {
+    id: "h-clipworks-meta-app",
+    text: "CREATE a Meta developer app (Instagram Graph API): it unlocks both the auto-poster and publikclip's score calibration loop",
+    done: false,
+    seeded: true,
+    note: "2026-08-14: needed twice over, which is why it is worth the 20 minutes. FIRST USE: I reversed my original plan to post via instagrapi. publikclip already ships an Instagram feedback loop (`publikclip ig connect/link/pull/report`) that pulls real Reels insights through the official Meta Graph API and calibrates its own virality scores against actual views. That means after a few weeks the scorer learns what actually performs on YOUR account instead of a generic prior. SECOND USE: the same app can post through the official Instagram Content Publishing API. Since you need the app anyway, posting officially costs nothing extra and removes the ban vector entirely, versus instagrapi which drives a real session and can get the account flagged. WHAT TO DO: developers.facebook.com, create an app, add the Instagram product, and send me the App ID and App Secret (via the KEYS panel, not plain chat). The Instagram account has to be a Professional account (Creator or Business) linked to a Facebook Page, which is a free switch in the IG app settings if it is not already. Reply `meta = done` and I wire the poster.",
+  },
+  {
+    id: "h-clipworks-scoring-llm",
+    text: "DECIDE: Gemini API key or local Ollama for publikclip's scoring calls (2-3 small calls per video)",
+    done: false,
+    seeded: true,
+    note: "2026-08-14: publikclip runs every model locally (speech recognition, diarization, laughter detection, face tracking) and the ONLY network calls in the whole pipeline are the video download plus 2-3 small LLM calls for humor and virality scoring. So this is a small decision, but it blocks the first real run. GEMINI: needs a free API key from aistudio.google.com, faster, and the calls are tiny so the free tier will comfortably cover it. OLLAMA: fully local, zero cost, zero rate limits, but it is another install and it will be slower on your machine. MY LEAN IS GEMINI to start, purely because it gets you to a first rendered clip sooner, and switching later is a one-word change in the campaign YAML (`publikclip.llm`). Worth knowing: publikclip validates its LLM humor scores against ACTUAL DETECTED LAUGHTER in the audio, so a weaker model degrades gracefully here rather than silently producing nonsense. Reply `scoring = gemini` (and drop the key) or `scoring = ollama`.",
+  },
   // ── Added 2026-07-30 (format-engine / format-render pipeline) ─────────────
   {
     id: "h-format-watch-first-render",
