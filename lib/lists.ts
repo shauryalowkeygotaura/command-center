@@ -69,6 +69,35 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // ── Added 2026-08-16 (client acquisition: student framing + IG queue) ─────
+  {
+    id: "h-ca-whatsapp-template",
+    text: "SUBMIT the new WhatsApp template to Meta (`school_project_outreach`), then set WHATSAPP_TEMPLATE_NAME to it",
+    done: false,
+    seeded: true,
+    note: "2026-08-16: this is the ONLY piece of the new framing I could not ship in code, because WhatsApp's first cold message must be a template Meta has approved in advance — editing the string in the repo changes nothing about what Meta actually sends. RIGHT NOW YOU ARE SENDING TWO DIFFERENT PITCHES: email, Instagram, LinkedIn and the openWA path all say `I'm Shaurya, a student at DPS RKP doing a school project`, while the Meta WhatsApp path still sends the old `are you still looking to fill the receptionist gap at X?`. A prospect hit on both channels meets two different people, which is worse than either message alone. THE FIX, ~5 min plus 1-2 days of Meta's review: business.facebook.com -> WhatsApp Manager -> Message Templates -> Create. Name `school_project_outreach`, category MARKETING, language English. Body: `Hi {{1}}, I'm Shaurya, I'm a student at DPS RKP and I'm doing a school project. Can I show you what I built for {{2}}?` with footer `Reply STOP to opt out.` ({{1}} = contact name or 'there', {{2}} = company). The exact text is also in modules/whatsapp.py so you are not retyping it from here. Once approved, set the WHATSAPP_TEMPLATE_NAME secret. I deliberately left the old template as the default so an un-migrated deploy keeps sending rather than erroring on a template name that does not exist yet. Reply `template = approved` or `template = rejected <reason>` (Meta rejects for vague reasons and I can rewrite it).",
+  },
+  {
+    id: "h-ca-instagram-creds",
+    text: "DECIDE on the Instagram sending account, then set INSTAGRAM_USERNAME / PASSWORD / INSTAGRAM_ENABLED=1 — after warming it",
+    done: false,
+    seeded: true,
+    note: "2026-08-16: I found and fixed the reason your Instagram outreach has never sent a single DM. `instagram_handle` was being read by instagram.py and written to the leads sheet, but NOTHING IN THE CODE EVER SET IT — so resolve_handle returned None for every lead and every send was skipped, silently, regardless of INSTAGRAM_ENABLED. It now gets extracted from the business's own homepage during the scrape that was already happening (free, no new API). There is also a new daily A-tier queue: `python pipeline.py ig_queue` runs in CI and writes runs/ig_queue.json, ranking score>=7 leads across ALL cities with ties going to the least-messaged city, so it spreads instead of draining Jaipur. WHAT IS LEFT IS A JUDGEMENT CALL, NOT CODE. Sending needs a real IG account, and cold DMs from a cold account get soft-banned fast. So: use a warmed secondary, not your main. Post 5-10 things, follow ~20 dental accounts, like ~50 posts, and let it sit a few days BEFORE flipping INSTAGRAM_ENABLED=1. The cap is already set to 20 DMs/day with 45s spacing. ONE THING TO WEIGH: instagrapi drives the private API and Instagram does ban for it. The account is the thing at risk, so do not use one you would mind losing. Reply `ig = <handle> warmed` when it is ready, or `ig = skip` if you would rather not risk an account and I will leave the queue as a copy-paste list you send by hand.",
+  },
+  {
+    id: "h-ca-verify-first-sends",
+    text: "READ 3 generated messages end to end before the next run sends anything, and tell me if the school framing sounds like you",
+    done: false,
+    seeded: true,
+    note: "2026-08-16: I rewrote every outreach channel onto the student frame you asked for and verified real Groq output, but I am the wrong judge of whether it sounds like a 16-year-old you. Sample of what now goes out on Instagram: `hey, i'm Shaurya, i'm at DPS RKP and i'm doing a school project. ur reels are actually clean, whoever edits them knows what they're doing. i built a thing that picks up the clinic phone when no one can + books the appointment. 2 clinics are already using it. could i talk to u about it sometime? jus want some feedback on it`. TWO DELIBERATE DECISIONS TO CHECK. First, the ask is `can I talk to you sometime` and NOT `can I send you a demo` — asking to talk costs them a yes, while asking to send costs them the work of receiving and judging a file, and `sometime` deliberately asks for willingness rather than a slot so there is nothing to check a calendar for. The demo is now mentioned as something you HAVE. Second, `2 clinics are already using it` is a factual claim about the real world, wired to PROOF_CLIENT_COUNT in modules/persona.py. If that number is not exactly right, tell me and I will change it in one place — the copy will never round it up on its own. Also: the `saw your reels` line ONLY appears when a real Instagram handle was found on that clinic's own website; with no evidence the prompt forbids claiming to have seen anything and falls back to category-and-city. Reply `copy = ship` or paste the line you would change.",
+  },
+  {
+    id: "h-ca-portfolio-os-duplication",
+    text: "DECIDE what to do about portfolio-os existing twice (the answer to 'why is this in here twice')",
+    done: false,
+    seeded: true,
+    note: "2026-08-16: your instinct was right that something is duplicated, but not in the way it looks — do NOT just delete the copy inside portfolio, it would break the live site. WHAT IS ACTUALLY THERE: `Code/portfolio-os/` is the standalone open-source npm package, and `Code/portfolio/lib/portfolio-os/` is a SECOND, EARLIER copy of the same engine that the site actually imports from. The site does not depend on the published package at all — portfolio-os is not in portfolio's package.json. THEY HAVE ALREADY DRIFTED: I diffed engine.ts and they are materially different. The package version is properly generic (imports only its own ./types.js, no framework, no site imports), while the vendored copy is still wired into the site (`@/lib/content`, `@/lib/ambush`) and carries an older comment describing itself as freshly extracted. So the open-source repo you show people and the code that actually runs your site are two different implementations wearing one name. THREE OPTIONS. (1) Leave it, rename the vendored folder to something like `lib/personalization-engine` so nobody thinks it is the package — cheapest, kills the confusion, keeps the drift. (2) Make the site consume the real package (`npm i portfolio-os`, delete the vendored copy, adapt the site types to the generic ones) — correct, and it makes the open-source repo genuinely load-bearing, which is a much stronger story when someone asks about it. (3) Delete the standalone repo — I would not, it is one of your better public artifacts. My recommendation is (2), and it is maybe an hour. Reply `portfolio-os = 1`, `= 2`, or `= 3`.",
+  },
   // ── Added 2026-08-14 (clipworks / clipping automation) ────────────────────
   {
     id: "h-clipworks-payout-rail",
@@ -241,8 +270,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-revengine-linkedin-token",
-    text: "Provision a LinkedIn token to turn on LinkedIn doc-post autopost",
-    note: "2026-06-29: post_linkedin.py needs LINKEDIN_ACCESS_TOKEN (scope w_member_social) + LINKEDIN_AUTHOR_URN (urn:li:person:...). Doppler only has LINKEDIN_COOKIES_JSON, which that code does not use. Make a LinkedIn dev app, run the OAuth, paste the token + your person URN, and I will set Doppler + flip POST_LINKEDIN=1. Until then LinkedIn just leaves the PDF on disk (render still happens).",
+    text: "Bind Doppler to creative-studio, drop the LinkedIn token, draft-test the doc post",
+    note: "2026-08-15: OAuth is SOLVED. The dev app is created, Page-verified, both products added, and auth_linkedin.py (new, in Code/carousel-autoposter) runs the whole 3-legged flow and prints both values. A token was minted successfully. Author URN is urn:li:person:eHYDW8eXxZ and is not secret. THREE steps left. (1) Fix the Doppler binding FIRST: that directory currently resolves to client-acquisition-pipeline, not the creative-studio/dev its .doppler.yaml declares, so anything set now lands in the wrong project. Run `doppler setup --project creative-studio --config dev --no-interactive`, then confirm `doppler configure get project --plain` prints creative-studio. (2) In creative-studio/dev set LINKEDIN_ACCESS_TOKEN, LINKEDIN_AUTHOR_URN, LINKEDIN_TOKEN_EXPIRES=2026-10-14, POST_LINKEDIN=1, LINKEDIN_DRAFT=1. (3) Test in two stages: --dry-run renders only and never calls LinkedIn; then with LINKEDIN_DRAFT=1 the full path runs but lands as a draft on your profile instead of your feed. Clear LINKEDIN_DRAFT once a draft looks right. RECURRING: LinkedIn gives consumer apps no refresh token, so this token dies ~2026-10-14 and you re-run auth_linkedin.py every 60 days. That is ~30 seconds and does NOT mean touching the developer portal again, the app config is permanent. post_linkedin.py now warns from 10 days out and labels a 401 as likely expiry.",
     done: false,
     seeded: true,
   },
