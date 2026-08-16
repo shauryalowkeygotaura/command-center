@@ -8,10 +8,15 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 // Keep cold WhatsApp volume low so the personal number does not get banned.
 const WA_DAILY_CAP = 20;
 
+// Matches the pipeline's persona (client-acquisition-pipeline/modules/persona.py):
+// school project first, the demo is something he HAS, and the ask is a
+// conversation for feedback — not "let me send you a thing". Keep the two in
+// step; a prospect who gets this by hand and the pipeline copy by DM should not
+// meet two different people. No link: a cold WhatsApp with a URL reads as spam.
 const WA_MSG = (label?: string) =>
-  `Hi, this is Shaurya, a student at DPS R.K. Puram. I set up free AI chatbots and missed-call text-back for clinics${
-    label ? ` like ${label}` : ""
-  }. Can I send you a quick 1-min demo? clinic-demo-blond.vercel.app`;
+  `Hi, I'm Shaurya, I'm a student at DPS RKP and I'm doing a school project. I built a voice agent that picks up the clinic phone when nobody can get to it and books the appointment${
+    label ? ` — set up for ${label}` : ""
+  }. 2 clinics are already using it, and I can set a free demo up on your details. Can I talk to you about it sometime? Just want some feedback on it.`;
 
 /** Indian mobile -> wa.me digits (91XXXXXXXXXX). Landlines return "". */
 function waDigits(num: string): string {

@@ -31,8 +31,14 @@ Local run (uses Doppler-held keys):
         python scripts/build_call_list.py
 
 In CI this runs daily and commits the new file (see
-.github/workflows/leads-daily.yml). If no keys are set it exits cleanly without
-writing, so the workflow stays green and inert until keys are configured.
+.github/workflows/leads-daily.yml).
+
+SOURCE CASCADE (2026-08-15): SerpAPI first, OpenStreetMap/Overpass as the floor.
+SerpAPI's free quota was spent, so the script had been exiting without writing
+anything — the CALL panel read 0 every day while the workflow stayed green. The
+OSM pass is keyless and quota-free, so no-keys or spent-quota now still produces
+a (shorter) list rather than nothing. Both sources share one dedupe pool, so OSM
+never re-surfaces a number Maps already gave you.
 """
 import datetime
 import json
@@ -61,6 +67,121 @@ PAGES = int(os.environ.get("CALL_PAGES", "3"))
 
 CALLS_DIR = pathlib.Path(__file__).resolve().parent.parent / "public" / "calls"
 SEEN_FILE = CALLS_DIR / "_seen.json"
+
+
+# ── Keyless fallback source: OpenStreetMap via Overpass ─────────────────────
+# Why this exists: every lead this script has ever produced came from SerpAPI,
+# whose free tier is ~100 searches/month. Once that runs out the script exits
+# clean and writes nothing, which is why public/calls/ held no date files at all
+# and the dashboard's CALL panel showed 0 — silently, every day, with a green
+# workflow. Overpass has no key and no quota, so the panel now has a floor it
+# can always fall back to.
+#
+# Coverage trade-off: OSM phone-tag density in India is thinner than Google
+# Maps, so this yields a reliable trickle rather than a full 50. A short list
+# beats an empty one.
+# The main overpass-api.de endpoint is heavily shared and answers 504/429 often
+# enough that a single attempt is not a dependable floor. These are the public
+# mirrors, tried in order until one answers. OVERPASS_URL overrides the list.
+OVERPASS_MIRRORS = [
+    u.strip() for u in os.environ.get(
+        "OVERPASS_URL",
+        "https://overpass-api.de/api/interpreter,"
+        "https://overpass.kumi.systems/api/interpreter,"
+        "https://overpass.osm.ch/api/interpreter",
+    ).split(",") if u.strip()
+]
+OVERPASS_TIMEOUT = int(os.environ.get("OVERPASS_TIMEOUT_S", "60"))
+
+# Overpass element filters, unioned per city. Mirrors the niches the call script
+# targets via QUERIES.
+_OSM_FILTERS = [
+    'nwr["amenity"="dentist"](area.a);',
+    'nwr["healthcare"="dentist"](area.a);',
+    'nwr["amenity"="clinic"](area.a);',
+    'nwr["healthcare"="clinic"](area.a);',
+]
+
+
+def _osm_area(city: str) -> str:
+    """'Delhi, Delhi' -> 'Delhi', whitelisted to a safe charset.
+
+    Overpass QL is a query language, so the city string is restricted to known-
+    good characters rather than having bad ones escaped out.
+    """
+    raw = city.split(",")[0].strip()
+    return re.sub(r"[^A-Za-z0-9 .\-]", "", raw).strip()
+
+
+def fetch_osm(city: str) -> list[dict]:
+    """Clinic listings for a city from OpenStreetMap. [] on any failure."""
+    area = _osm_area(city)
+    if not area:
+        return []
+    query = (
+        f'[out:json][timeout:{OVERPASS_TIMEOUT}];\n'
+        f'area["name"="{area}"]["boundary"="administrative"]->.a;\n'
+        f'(\n  ' + "\n  ".join(_OSM_FILTERS) + '\n);\n'
+        f'out center tags 200;'
+    )
+    data = urllib.parse.urlencode({"data": query}).encode()
+    payload = None
+    for url in OVERPASS_MIRRORS:
+        try:
+            req = urllib.request.Request(
+                url, data=data,
+                headers={"User-Agent": "command-center-call-list/1.0 (lead research)"},
+            )
+            with urllib.request.urlopen(req, timeout=OVERPASS_TIMEOUT + 10) as resp:
+                payload = json.load(resp)
+            break
+        except (urllib.error.URLError, TimeoutError, ValueError, OSError) as e:
+            # 504/429 from the busiest mirror is routine, not exceptional — say
+            # so quietly and move to the next one.
+            print(f"  [osm] '{city}' via {urllib.parse.urlparse(url).netloc}: {e}")
+            continue
+
+    if payload is None:
+        print(f"  [osm] '{city}' — every mirror failed")
+        return []
+
+    # Overpass can answer 200 with a non-object body (proxy error pages, or a
+    # bare list). Guard the shape before .get, or the "floor" source takes the
+    # whole run down with an AttributeError and no file gets written at all.
+    if not isinstance(payload, dict):
+        print(f"  [osm] '{city}' unexpected response shape")
+        return []
+
+    elements = payload.get("elements", []) or []
+    if not elements:
+        # Overpass answers 200 + empty for BOTH "this city has no clinics" and
+        # "no admin boundary is named that" (a typo, or a city OSM spells
+        # differently). Those need different fixes, and neither should look like
+        # a normal quiet day, so say it out loud rather than returning 0 silently.
+        print(f"  [osm] '{city}' -> 0 elements. Either the pond is dry or no OSM "
+              f"admin boundary is named '{area}' — check the spelling against "
+              f"openstreetmap.org before assuming the former.")
+        return []
+
+    items: list[dict] = []
+    for el in elements:
+        tags = el.get("tags") or {}
+        name = (tags.get("name") or "").strip()
+        phone = (tags.get("phone") or tags.get("contact:phone") or "").strip()
+        if not name or not phone:
+            continue
+        addr = ", ".join(
+            p for p in (tags.get("addr:street"), tags.get("addr:suburb"),
+                        tags.get("addr:city")) if p
+        )
+        items.append({
+            "title": name,
+            "phone": phone,
+            "address": addr,
+            "website": (tags.get("website") or tags.get("contact:website") or "").strip(),
+        })
+    print(f"  [osm] '{city}' -> {len(items)} listings with a phone number")
+    return items
 
 
 def load_keys() -> list[str]:
@@ -172,45 +293,65 @@ def fetch_query(query: str, city: str, rotator: KeyRotator) -> list[dict]:
     return results
 
 
+def _collect(items, seen: set[str], run_seen: set[str], out: list[dict]) -> None:
+    """Append fresh, phone-bearing listings to `out`, deduping as it goes."""
+    for it in items:
+        if len(out) >= TARGET:
+            return
+        phone = (it.get("phone") or "").strip()
+        name = (it.get("title") or "").strip()
+        if not phone:
+            continue
+        pk = phone_key(phone)
+        if not pk or pk in seen or pk in run_seen:
+            continue
+        run_seen.add(pk)
+        out.append({
+            "number": phone,
+            "label": name,
+            "whatsapp": to_whatsapp(phone),
+            "area": (it.get("address") or "").strip(),
+            "website": (it.get("website") or "").strip(),
+        })
+
+
 def main() -> None:
     keys = load_keys()
-    if not keys:
-        print("No SERPAPI_KEYS / SERPAPI_KEY set — nothing to do (exiting clean).")
-        return
-
-    rotator = KeyRotator(keys)
     seen = load_seen()
     run_seen: set[str] = set()
     out: list[dict] = []
 
-    for city in CITIES:
+    # SerpAPI first when it has budget; OSM is the floor below it. Without keys
+    # we skip straight to OSM rather than exiting empty, which is what left the
+    # dashboard's CALL panel at 0 every day.
+    rotator = KeyRotator(keys) if keys else None
+    if not keys:
+        print("No SERPAPI_KEYS / SERPAPI_KEY set — going straight to the OSM fallback.")
+
+    for city in CITIES if rotator else []:
         for query in QUERIES:
             if len(out) >= TARGET or rotator.current() is None:
                 break
-            for it in fetch_query(query, city, rotator):
-                phone = (it.get("phone") or "").strip()
-                name = (it.get("title") or "").strip()
-                if not phone:
-                    continue
-                pk = phone_key(phone)
-                if not pk or pk in seen or pk in run_seen:
-                    continue
-                run_seen.add(pk)
-                out.append({
-                    "number": phone,
-                    "label": name,
-                    "whatsapp": to_whatsapp(phone),
-                    "area": (it.get("address") or "").strip(),
-                    "website": (it.get("website") or "").strip(),
-                })
-                if len(out) >= TARGET:
-                    break
+            _collect(fetch_query(query, city, rotator), seen, run_seen, out)
             print(f"  [maps] '{query} in {city}' -> running total {len(out)}")
         if len(out) >= TARGET or rotator.current() is None:
             break
 
+    # OSM floor. Runs whenever SerpAPI could not fill the target — no keys,
+    # spent quota, or a pond that has gone dry in these cities. Keyless, so it
+    # cannot fail for budget reasons; the same dedupe applies, so it will not
+    # re-surface a number that Maps already produced.
+    if len(out) < TARGET:
+        if rotator:
+            print(f"[osm] SerpAPI produced {len(out)}/{TARGET} — topping up from OpenStreetMap.")
+        for city in CITIES:
+            if len(out) >= TARGET:
+                break
+            _collect(fetch_osm(city), seen, run_seen, out)
+            print(f"  [osm] after '{city}' -> running total {len(out)}")
+
     if not out:
-        print("No fresh leads found this run (pond may be exhausted, or quota out).")
+        print("No fresh leads found this run (pond may be exhausted in every city).")
         return
 
     today = datetime.date.today().isoformat()
