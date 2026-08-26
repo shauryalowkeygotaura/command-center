@@ -22,6 +22,9 @@ Env knobs:
     SERPAPI_KEYS   comma-separated keys (preferred). Falls back to SERPAPI_KEY.
     CALL_CITY      default "Delhi"
     CALL_CITIES    comma-separated, rotated for freshness. Overrides CALL_CITY.
+    CALL_FALLBACK_CITIES
+                   reserve cities walked once CALL_CITIES is deduped dry, so a
+                   used-up pond extends itself instead of returning 0 forever.
     CALL_QUERIES   default "dental clinic,dentist,dental hospital,orthodontist"
     CALL_TARGET    default 50
     CALL_PAGES     pages per (city, query) to walk, default 3 (20 results/page)
@@ -46,6 +49,7 @@ import os
 import pathlib
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -65,6 +69,27 @@ QUERIES = [
 TARGET = int(os.environ.get("CALL_TARGET", "50"))
 PAGES = int(os.environ.get("CALL_PAGES", "3"))
 
+# Reserve cities, walked only after CITIES is exhausted.
+#
+# Why: a city's OSM pond is FINITE. Delhi returns ~143 clinics with a phone
+# number, and once those are in _seen.json every later run finds 143 listings
+# and 0 fresh ones. That is exactly what happened here: the OSM fallback
+# produced lists on 08-17 and 08-19, then went to 0 from 08-20 onward while the
+# workflow kept reporting success, because CALL_CITIES was a single city.
+#
+# So "which cities" cannot be a fixed setting — it has to extend on its own when
+# the current pond runs dry, or the panel silently returns to 0 every time a
+# city is used up. These are ordered roughly by clinic density.
+FALLBACK_CITIES = [
+    c.strip()
+    for c in os.environ.get(
+        "CALL_FALLBACK_CITIES",
+        "Jaipur,Pune,Lucknow,Indore,Chandigarh,Bhopal,Nagpur,Surat,"
+        "Kanpur,Patna,Ludhiana,Agra,Vadodara,Nashik,Coimbatore",
+    ).split(",")
+    if c.strip()
+]
+
 CALLS_DIR = pathlib.Path(__file__).resolve().parent.parent / "public" / "calls"
 SEEN_FILE = CALLS_DIR / "_seen.json"
 
@@ -81,17 +106,30 @@ SEEN_FILE = CALLS_DIR / "_seen.json"
 # Maps, so this yields a reliable trickle rather than a full 50. A short list
 # beats an empty one.
 # The main overpass-api.de endpoint is heavily shared and answers 504/429 often
-# enough that a single attempt is not a dependable floor. These are the public
-# mirrors, tried in order until one answers. OVERPASS_URL overrides the list.
+# enough that a single attempt is not a dependable floor, so these are tried in
+# order. OVERPASS_URL overrides the list.
+#
+# EVERY MIRROR HERE IS VERIFIED TO CARRY INDIAN DATA. That is not a given:
+# overpass.osm.ch was in this list and looked healthy — HTTP 200, well-formed
+# JSON — while returning ZERO elements for every Indian query, because it only
+# hosts Swiss extracts. An empty 200 is indistinguishable from "this city has no
+# clinics", so it quietly marked real cities as dry. Probe any mirror against a
+# known-good Indian city before adding it.
 OVERPASS_MIRRORS = [
     u.strip() for u in os.environ.get(
         "OVERPASS_URL",
         "https://overpass-api.de/api/interpreter,"
-        "https://overpass.kumi.systems/api/interpreter,"
-        "https://overpass.osm.ch/api/interpreter",
+        "https://maps.mail.ru/osm/tools/overpass/api/interpreter,"
+        "https://overpass.kumi.systems/api/interpreter",
     ).split(",") if u.strip()
 ]
 OVERPASS_TIMEOUT = int(os.environ.get("OVERPASS_TIMEOUT_S", "60"))
+
+# Hard wall-clock cap on the whole OSM pass. Overpass is a shared free service
+# and a slow mirror can sit near the per-query timeout, so without a ceiling the
+# daily job runs for many minutes. Partial results are fine here: the rotation
+# above means the next run covers different ground anyway.
+OSM_BUDGET_S = int(os.environ.get("OSM_BUDGET_S", "150"))
 
 # Overpass element filters, unioned per city. Mirrors the niches the call script
 # targets via QUERIES.
@@ -133,8 +171,18 @@ def fetch_osm(city: str) -> list[dict]:
                 headers={"User-Agent": "command-center-call-list/1.0 (lead research)"},
             )
             with urllib.request.urlopen(req, timeout=OVERPASS_TIMEOUT + 10) as resp:
-                payload = json.load(resp)
-            break
+                candidate = json.load(resp)
+            # An empty result is NOT taken as authoritative. A mirror missing
+            # this region answers 200 with no elements, which reads exactly like
+            # a genuinely dry city. Keep the answer but try the next mirror; a
+            # non-empty reply from anyone wins. Only if they all come back empty
+            # is the city really worked out.
+            payload = candidate
+            if isinstance(candidate, dict) and (candidate.get("elements") or []):
+                break
+            print(f"  [osm] '{city}' via {urllib.parse.urlparse(url).netloc}: "
+                  f"empty — confirming against the next mirror")
+            continue
         except (urllib.error.URLError, TimeoutError, ValueError, OSError) as e:
             # 504/429 from the busiest mirror is routine, not exceptional — say
             # so quietly and move to the next one.
@@ -344,11 +392,37 @@ def main() -> None:
     if len(out) < TARGET:
         if rotator:
             print(f"[osm] SerpAPI produced {len(out)}/{TARGET} — topping up from OpenStreetMap.")
-        for city in CITIES:
+        # Configured cities first, then the reserve pool, skipping any city
+        # already named so a duplicate entry does not cost a wasted request.
+        # Walking into the reserve is normal operation, not an error: it just
+        # means the earlier ponds are fully worked, which is the goal.
+        reserve = [c for c in FALLBACK_CITIES if c.lower() not in {x.lower() for x in CITIES}]
+        # Rotate the reserve by day-of-year. Each Overpass query costs up to a
+        # minute, so walking all ~15 reserve cities in one run took over eight
+        # minutes for a job that should take seconds. Rotating means a run tries
+        # a DIFFERENT slice each day: every city still gets worked, just spread
+        # across days instead of crammed into one run.
+        if reserve:
+            offset = datetime.date.today().timetuple().tm_yday % len(reserve)
+            reserve = reserve[offset:] + reserve[:offset]
+
+        deadline = time.monotonic() + OSM_BUDGET_S
+        for city in CITIES + reserve:
             if len(out) >= TARGET:
                 break
+            if time.monotonic() > deadline:
+                # Partial list beats an overrunning job. Tomorrow's run starts
+                # at a different rotation offset and picks up where this left off.
+                print(f"  [osm] time budget ({OSM_BUDGET_S}s) reached — "
+                      f"stopping at {len(out)} leads, resuming tomorrow")
+                break
+            before = len(out)
             _collect(fetch_osm(city), seen, run_seen, out)
-            print(f"  [osm] after '{city}' -> running total {len(out)}")
+            gained = len(out) - before
+            if gained:
+                print(f"  [osm] after '{city}' -> running total {len(out)} (+{gained})")
+            else:
+                print(f"  [osm] '{city}' fully worked already (0 fresh) — moving on")
 
     if not out:
         print("No fresh leads found this run (pond may be exhausted in every city).")
