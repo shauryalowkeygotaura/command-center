@@ -69,6 +69,49 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // -- Added 2026-08-28 (newest first) --------------------------------------
+  {
+    id: "h-tts-pick-voice",
+    text: "LISTEN to 6 TTS samples and pick one, then click ONE Groq link to unlock a second option",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: you said edge-tts is really really bad and you are right, but you do NOT need Fish for this. TWO upgrades, both effectively free, both verified live today. (1) DEEPGRAM AURA-2 WORKS RIGHT NOW ON A KEY YOU ALREADY OWN: your DEEPGRAM_API_KEY already authorises it, no signup and no click, and you already pay Deepgram for STT in the receptionist so it is the same vendor and the same key. Verified HTTP 200 with real audio. (2) GROQ NOW SERVES ORPHEUS TTS (canopylabs/orpheus-v1-english). Your Groq key already reaches it and the ONLY thing in the way is a terms click: the API returns model_terms_required and points at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english . One click and you have it at Groq latency on a key you own. I generated the SAME dental line in 6 voices: Deliverables/tts-ab-2026-08-28/ holds 4 Aura-2 voices plus your 2 current edge-tts baselines. PLAY THEM, the ranking is yours: I can confirm they generate and report duration and sample rate, but whether one hits like a human is exactly the thing I cannot hear. Reply `tts = <filename>` and I will wire the winner into the receptionist and the video pipelines. WHY NOT FISH: it needs a new signup, a paid balance and a cloned reference clip. Revisit it only if you listen to all six and still specifically want voice CLONING, which is the one thing neither of these does.",
+  },
+  {
+    id: "h-dental-targets-tier-a",
+    text: "WALK INTO the 4 Tier-A Delhi clinics I handpicked, nearest is 1.0 km from your school",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: you asked me to personally handpick these, so this is judgement rather than a scrape. Deliverables/handpicked-dental-targets-2026-08-28.md. From 105 Delhi dental practices in OpenStreetMap only 24 publish a phone number, and I ranked those 24 on three signals chosen for YOUR situation. FIRST, MULTIPLE LISTED PHONE NUMBERS is the strongest buy signal in the set: a clinic publishing three or four numbers is one where calls are already scattered and somebody is juggling them, which is exactly the pain you sell into. Kalra Dental Specialities lists FOUR. Doctor Dubey and Muskaan list three. SECOND, WALKING DISTANCE FROM DPS RK PURAM: New Delhi Dental Centre is 1.0 km, you can go between classes, and a student walking in with the school-project framing converts differently from a cold DM. Nobody else selling this product can do that. THIRD, published opening hours, meaning they already think about when patients can reach them, so the out-of-hours question lands instead of confusing them. WHAT I COULD NOT CHECK: review text. A Google review saying you called three times and nobody picked up would beat all three of my signals combined, and it needs a Places API key with billing that you do not have enabled. If you enable one, re-rank on that and ignore my ordering. Verify each number before calling too, OSM is volunteer-maintained and can be stale. The doc also argues PHYSIOTHERAPY is a better next vertical than more dentists, because cannot-pick-up-mid-appointment is more obviously true for a physio. Reply `targets = walked <name>` or `targets = physio` if you want that pitch written.",
+  },
+  {
+    id: "h-pinterest-robots-ack",
+    text: "DECIDE whether to acknowledge Pinterest robots.txt so taste-engine can pull boards",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: Pinterest is wired into taste-engine and pushed (commit 1b2aa6b) via public board RSS. No API key, no login, no app review, verified live against 4 real boards. BUT pinterest.com/robots.txt is User-agent:* / Disallow:/ site-wide, .rss included, and i.pinimg.com says the same. Every bot not on their submitted-crawler allowlist is disallowed. No key or app review changes that: it is crawler policy, not an auth wall. So the script evaluates robots.txt AT RUNTIME against the exact URL it is about to request and REFUSES with exit 2 unless you set TASTE_PINTEREST_ACK_ROBOTS=1. No default, deliberately, because the call is yours: pulling a board you chose, by hand, at 1.5s intervals is feed-reader traffic, while running it unattended across boards that are not yours is crawling. The refusal points at the Pinterest allowlist form rather than around the block, and the evaluator is live rather than hardcoded so it flips to allow on its own if the policy ever changes. ONE LIMITATION either way: the feed returns only the newest ~25 pins, so a 400-pin board gives you 25. Reply `pinterest = ack` and I will document the env var as the supported path, or `pinterest = drop` and I will retire the script rather than leave a loaded gun in a public repo.",
+  },
+  {
+    id: "h-taste-stop-hook-arm",
+    text: "ARM the taste-engine Stop hook (one command) or tell me to leave it off",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: built and pushed, deliberately NOT installed into your real ~/.claude/settings.json. A Stop hook executes automatically at the end of every session, the request reached me relayed through an agent rather than from you directly, and settings.json is configuration outside the vault, so arming it silently was not mine to do. It is a NUDGE, not an auto-capture: it counts journal entries still marked distilled:no and prints ONE line only once you cross the threshold (default 2, matching profile.md), stays silent below that, and never blocks a session or writes to the journal. The original handoff described it as auto-capturing corrections, but SKILL.md section 4 already records those live, so a hook that also wrote entries would duplicate them and pollute an append-only audit trail. To arm: run `bash hooks/install-hook.sh` from the taste-engine clone. It backs up settings.json first, is idempotent, refuses to touch invalid JSON, and takes --uninstall. Reply `taste hook = arm` or `= leave off`.",
+  },
+  {
+    id: "h-setup-package-licence",
+    text: "PICK a licence and read the 130 skills before the setup package could ever be sold",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: your setup is packaged at Deliverables/claude-code-setup-package/ as a COPY. Your live ~/.claude was NOT modified. It went 734 MB to 4.7 MB, and the reason matters for selling: two third-party skills (video-use 360 MB, video-shotcraft 293 MB) were 89 percent of the weight, and SEVEN skills in total turned out to be clones of other peoples repos with their own licences. Those are removed and listed in THIRD-PARTY-SKILLS.md as install-separately, because they are not yours to redistribute. SCANNED CLEAN: zero live credentials (checked Groq, OpenAI, Google, GitHub, Doppler and Slack token shapes), personal paths templated to {{HOME}} and {{VAULT_ROOT}} across 29 files, your name to {{USER_NAME}} in 6. ONE LEAK THAT WAS EASY TO MISS: after templating the .py files, the __pycache__ .pyc files still contained your original directory paths, because compiled bytecode embeds them. Two files were still leaking your home path after the source looked clean. Removed. NEVER COPIED and it must stay that way: .credentials.json (a live Anthropic OAuth access AND refresh token), key-drop-passphrase.txt, projects/ (per-project memory, very personal), and all session and telemetry state. TWO THINGS ONLY YOU CAN DO: there is no licence, and without one nobody can legally use it; and someone has to READ the 130 skills for business context, because my scan catches credentials and paths but cannot catch a skill that mentions a client name, a rate or a private strategy in prose. My honest read is that the autoresume rig is the more sellable artefact on its own, since it solves a problem every heavy Claude Code user hits. Reply `package = <licence>` or `package = autoresume only`.",
+  },
+  {
+    id: "h-whop-no-clipping-api",
+    text: "KNOW: Whop has no API for clipping campaigns, so Clipworks submission stays manual",
+    done: false,
+    seeded: true,
+    note: "2026-08-28: you asked me to use CLI/API for the Whop leg of the clipping automation. It does not exist. Verified three ways: docs.whop.com/developer/api/getting-started, their complete docs index at docs.whop.com/llms.txt, and a general search. The public API covers payments, payouts, checkout and merchant onboarding, and NOTHING for Content Rewards: no campaign discovery, no clip submission, no earnings read. The tell was that the only campaign-discovery tool in existence is a third-party Apify scraper, and nobody builds a scraper for something that has an API. WHAT THIS MEANS: clip generation, captioning, compliance, scheduling and publishing to IG/YT/TikTok are all automatable and mostly already built, but SUBMISSION TO WHOP IS A MANUAL PASTE of an already-published URL. So the right build is a paste-ready submission queue rather than fighting for an API that is not there, and automation still covers roughly 95 percent of the labour. ALSO FIXED WHILE IN THERE: a clipworks test failed ONLY between 00:00 and 05:30 IST because it used date.today() (local) while the ledger stores UTC and derives posted_day from it. view_for() already carries a comment warning about exactly that skew, so the test was asserting against the bug the production code was written to prevent. Fixed the test, not the ledger; 86 pass. Note Code/clipworks is not a git repo so that change is on disk only. THE REAL BLOCKER REMAINS THE PAYOUT RAIL: Whop needs 18+ and the guardian-account route is unresolved, so all of this can run but cannot collect money yet. Reply `whop = build queue` or `whop = park it until payout is solved`.",
+  },
   // ── Added 2026-08-16 (client acquisition: student framing + IG queue) ─────
   {
     id: "h-ca-whatsapp-template",
@@ -164,8 +207,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-meta-ads-auth",
     text: "Authenticate the meta-ads MCP — one OAuth login, or paste a token from pipeboard.co/api-tokens",
-    note: "2026-07-24: installed the pipeboard-hosted meta-ads MCP at user scope (https://meta-ads.mcp.pipeboard.co/). It shows 'Failed to connect' and exposes only an `authenticate` tool until you log in — still unauthed as of 2026-07-26, I re-checked. Two ways: (1) run `/mcp` in a session and complete the browser OAuth, or (2) grab a token at pipeboard.co/api-tokens and paste it to me — I append `?token=...` to the server URL. This is the difference between having ad STRATEGY skills (ads-meta, audit-meta, which are analysis-only) and being able to actually read/execute live FB/IG/Threads ad campaigns. No spend happens from authenticating.",
-    done: false,
+    note: "2026-08-27: confirmed done by you.",
+    done: true,
     seeded: true,
   },
   {
@@ -178,15 +221,15 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-inflight-uncommitted",
     text: "Your own uncommitted work in 5 repos — tell me which to review + commit (I will not commit your authorship blind)",
-    note: "Found 2026-07-22 during the unattended upgrade sweep, RE-VERIFIED 2026-07-26 (all still dirty, nothing unpushed): carousel-autoposter 27 changed files, youtube-title-autoresearch 7, client-acquisition-pipeline 3, philosopher-pipeline 1, exun-appdev 1. I deliberately did not touch any of it — you authored it, and committing someone else's in-flight work is how half-finished features reach live repos (exactly what happened on autoshop that same session). None of it is lost, it is just unversioned, so a bad edit or a disk problem eats it. Reply per repo (e.g. 'review carousel-autoposter') and I read the diff, tell you what is in it, secret-audit it, and commit + push with a real message. Start with carousel-autoposter — 27 files is the one actually at risk.",
-    done: false,
+    note: "2026-08-27: DONE. Committed and pushed across portfolio, philosopher-pipeline, client-acquisition-pipeline (53 commits), football-shorts-autopilot, voicezero, exun-appdev, carousel-autoposter, autoshop. glass/video-use/video-shotcraft committed locally only, since their origins are other people's repos. Accidental deletions in autoresearch and Anthropic-Cybersecurity-Skills were RESTORED, not committed: both are third-party clones.",
+    done: true,
     seeded: true,
   },
   {
     id: "h-taste-slash-wrappers",
     text: "taste-engine: want real /taste slash commands + the optional Stop hook installed? (say yes and I do it)",
-    note: "2026-07-24: taste-engine shipped PUBLIC at github.com/shauryalowkeygotaura/taste-engine (MIT). Two optional pieces were left off deliberately rather than installed without asking. (1) Real `/taste new|use|moodboard|learn|distill|status` slash-command wrappers — right now those are documented in SKILL.md and run through the skill, not as first-class slash commands. (2) The Stop hook, which would auto-capture design corrections into the journal at the end of every session — genuinely useful for the self-improving half, but it fires on EVERY session and you already run several Stop hooks, so I did not add another one unasked. Reply 'taste wrappers', 'taste hook', or 'both'. Neither is required for the engine to work.",
-    done: false,
+    note: "2026-08-27: DONE, commit ba42670. Your '2' meant the Stop hook, not the slash commands: the numbered offer is in handoffs.md and item (1) had already shipped as /ts on 2026-07-24. Built hooks/taste-stop.sh (counts undistilled journal entries, one line only at threshold, silent below, never blocks or writes) plus an idempotent installer. NOT armed in your real settings.json, deliberately: see the new arming item at the top of this list. Also fixed a live public-repo bug where the README told users to type /taste commands that no longer exist after the rename.",
+    done: true,
     seeded: true,
   },
   // ── end 2026-07-26 backfill ──────────────────────────────────────────────
@@ -200,8 +243,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-repush-keys-after-ssofix",
     text: "Re-push your dropped keys — KEYS panel ⚙ endpoint = https://key-drop-phi.vercel.app/api/keys, tag each with a project, hit 'push to doppler' (or 'copy for claude' + paste)",
-    note: "2026-07-21: I fixed the key-drop proxy. It was silently 401ing every push behind Vercel SSO, which is why none of the keys you dropped ever reached Doppler (I checked the Doppler activity log: nothing since 07-19). Now: open KEYS panel -> ⚙ -> endpoint = https://key-drop-phi.vercel.app/api/keys, passphrase = the DROP_TOKEN set in the key-drop Vercel project env. Every pending key needs a project tag to route (client-acquisition-pipeline, philosopher-pipeline, autoshop, or name/config like jio-outbound/prd). Then click 'push to doppler'. GUARANTEED fallback if it still errors: click 'copy for claude' and paste the block to me. The moment the keys land in Doppler I wire them into the repos + GH secrets and flip the pipeline flags same-session.",
-    done: false,
+    note: "2026-08-27: DONE. Every key validated against its provider BEFORE storage. Newly wired: HUNTER_API_KEY (Doppler + GH secret) and APOLLO_COOKIES_JSON. That second one mattered: the workflow sets LEAD_SOURCE=apollo but the secret was missing, so CI was scraping zero leads. Already-correct no-ops: Pexels, Revengine IG password, Groq + Deepgram for dental, football-data. Two were NOT integrated and have their own items: the spare Groq key, and the vayuvani Deepgram value which is a URL rather than a key.",
+    done: true,
     seeded: true,
   },
   // h-vercel-blocked resolved 2026-07-19 same-session: readyState BLOCKED was
@@ -278,8 +321,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-revengine-beehiiv",
     text: "Authorize beehiiv (one browser login) so I can wire the Revengine newsletter",
-    note: "2026-06-29: the last of your original three asks (the daily suggester + carousel pipeline are done). The beehiiv MCP needs an interactive browser auth I cannot do headless. Once you are logged in, I will wire the failure/cost carousels to compile into the quarterly Revengine letter — repurposing what you already make, not net-new writing. Say go and I will start the auth.",
-    done: false,
+    note: "2026-08-27: DONE. Deliverables/angus-style-analysis-2026-08-27.md. CORRECTION worth knowing: Angus publishes on SUBSTACK, not beehiiv, so the beehiiv auth does not reach his data. Cadence: 15 sends 06-26 to 08-25, ~2.1/week Tue+Fri until Aug 4, then a deliberate downshift to strictly weekly Tuesdays at 1200-1800 words. Structure: reversal headlines, cold open on a named person or a dollar figure, prompts shown as images not code fences, closing P.S. ONE THING NOT TO COPY: he leans heavily on em dashes, which is against your standing rule.",
+    done: true,
     seeded: true,
   },
   {
@@ -292,15 +335,15 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-video-pitch-wip",
     text: "Decide on modules/video_pitch.py (your untracked WIP) — commit it or bin it?",
-    note: "Found 2026-06-29 untracked in client-acquisition-pipeline: a coherent $0 personalized pitch-video generator (Groq script + edge-tts + Playwright recording + ffmpeg). I did NOT commit it (you authored it, not me) and left the edge-tts line in requirements.txt intact. It is not wired into the pipeline yet. Tell me to commit + wire it into the qualified-lead flow, or to drop it.",
-    done: false,
+    note: "2026-08-27: DONE, keep it. Demo at Code/client-acquisition-pipeline/runs/video_pitches/demo-smile-dental.mp4 (22.7s, narrated). Rendering it and LOOKING exposed four defects invisible in the source: a white Chromium flash on open, a 5px label misalignment, CTA centring fighting its entrance animation, and hero text starting hidden. All fixed, verified by measurement (value edges 299/304/300 -> 340/340/340). Two earlier agents rendered this and died before looking at it; the bugs only existed on screen.",
+    done: true,
     seeded: true,
   },
   {
     id: "h-dental-send-8",
     text: "Send the 8 Tier-A Jaipur dental DMs — fully assembled, just paste",
-    note: "I verified all 8 bios via web (2026-06-10, table in jaipur-dental-outreach-2026-06-08.md) and assembled the complete DMs with honesty guardrails applied — scroll to 'Paste-ready DMs'. The 57-sec demo clip for Dr. Ruby is rendered and ready to send after her 'yes' (Code/dental-receptionist/demo_clips/). Use @dr_ankurgoyal_ (personal) for #4, and tap each bio in the IG app once for WhatsApp buttons. Log sends in jaipur-sends-log.md.",
-    done: false,
+    note: "2026-08-27: SENT by you. Timing was luckier than it looked: clinic-demo was returning a raw groq 404 to every visitor until it was fixed and redeployed the same day, so the demo was live by the time they landed. FOLLOW-UP: log the sends in jaipur-sends-log.md and confirm reply handling is armed so responses are not missed.",
+    done: true,
     seeded: true,
   },
   // h-planner-template retired 2026-07-04: Shaurya confirmed done.
@@ -338,16 +381,16 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-upstash-dead-db",
     text: "URGENT: the Upstash DB is GONE (authoritative NXDOMAIN). Create a new Redis DB, then update UPSTASH_REDIS_REST_URL + TOKEN in THREE places: portfolio Vercel env, client-acquisition-pipeline GitHub secrets, and its Doppler config.",
-    done: false,
+    done: true,
     seeded: true,
-    note: "Silent damage right now: prospects get the GENERIC demo instead of their personalised /demo/<slug>, and nothing errors. Portfolio /api/iterate also throws. Second time this has happened (apt-starfish died the same way in July), consistent with free-tier inactivity reaping.",
+    note: "2026-08-27: DONE. New DB climbing-reindeer-192325 wired into all three places (portfolio Vercel env, client-acquisition GH secrets, its Doppler config) and portfolio redeployed. Verified PONG. A keepalive workflow now runs Mon/Thu so this does not happen a third time: it does a SET then GET and compares, rather than a /ping, because read-only traffic is not reliably counted as activity and a write you cannot read back is a dead database wearing a healthy status code.",
   },
   {
     id: "h-yt-dry-run-flip",
     text: "DECIDE: flip YT_DRY_RUN to 0 and go live on YouTube? OAuth is done and everything else is ready. I did NOT flip it.",
-    done: false,
+    done: true,
     seeded: true,
-    note: "Flipping this makes the next cron publish REAL videos. The asteroid render is still the bad one (no hook, 2.9 min under a 12-minute title, repeated stills), and low-quality mass-produced uploads are exactly what the inauthentic-content policy targets. Fix a render first, then flip. Command: doppler secrets set --project youtube-title-autoresearch --config dev YT_DRY_RUN=0",
+    note: "2026-08-27: DONE AND LIVE. 4 real videos uploaded, the first ever from this pipeline after 308 dry runs. OAuth was never the blocker; YT_DRY_RUN=1 was. Two things had to be fixed before anything reached YouTube: GROQ_MODEL_FAST pointed at llama-3.1-8b-instant which Groq also decommissioned, and one unreadable image was killing the whole cycle at ffmpeg exit 8 (Commons serves SVG as image/svg+xml, which passed the old startswith('image/') check). Uploads land PRIVATE until the API compliance audit clears.",
   },
   {
     id: "h-youtube-data-api-key",
