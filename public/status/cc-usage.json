@@ -1,12 +1,12 @@
 {
-  "ts": "2026-08-27T16:26:01Z",
-  "todayTokens": 447082632,
-  "todayCostUsd": 1020.75,
-  "weekTokens": 668261627,
-  "live5hTokens": 188702039,
-  "live5hCostUsd": 403.79,
-  "peak5hTokens": 192173234,
-  "burnTokPerMin": 614,
-  "burnCostPerHour": 67.83,
+  "ts": "2026-08-27T19:10:51Z",
+  "todayTokens": 482148052,
+  "todayCostUsd": 1149.51,
+  "weekTokens": 703327047,
+  "live5hTokens": 179965672,
+  "live5hCostUsd": 395.79,
+  "peak5hTokens": 197684754,
+  "burnTokPerMin": 4750,
+  "burnCostPerHour": 226.62,
   "limitNote": "Estimated from local transcripts (list-price cost). Rate limits reset on a rolling 5h + weekly window."
 }
