@@ -4,7 +4,10 @@ build_call_list.py - produce today's fresh clinic leads for the dashboard.
 
 Pulls local-business listings (dental clinics, dentists) from Google Maps via
 SerpAPI, dedupes against every lead ever emitted (public/calls/_seen.json), and
-writes the next TARGET fresh leads to ../public/calls/<today>.json. The
+writes the next TARGET fresh leads to ../public/calls/<today>.json. A number is
+withheld only for CALL_OFFER_COOLDOWN_DAYS after it is handed out, not forever:
+being listed once is not evidence it was ever called, and the old permanent
+retirement burned entire cities of un-dialled numbers. The
 dashboard's CALL + MESSAGE panel auto-loads that file on open (CallList.tsx).
 
 Each lead is {number, label, whatsapp, area, website}:
@@ -67,6 +70,14 @@ QUERIES = [
     if q.strip()
 ]
 TARGET = int(os.environ.get("CALL_TARGET", "50"))
+
+# Days before a handed-out number may be offered again. This is a COOLDOWN, not
+# a retirement: the script cannot see which numbers were actually called (that
+# state lives in the dashboard's localStorage), so it must not assume that
+# handing a number over means the number is finished. Anything you never worked
+# comes back after the window; anything you ticked off is suppressed by the
+# dashboard when it returns. 0 disables re-offering entirely (old behaviour).
+OFFER_COOLDOWN_DAYS = int(os.environ.get("CALL_OFFER_COOLDOWN_DAYS", "14"))
 PAGES = int(os.environ.get("CALL_PAGES", "3"))
 
 # Reserve cities, walked only after CITIES is exhausted.
@@ -237,12 +248,46 @@ def load_keys() -> list[str]:
     return [k.strip() for k in raw.split(",") if k.strip()]
 
 
-def load_seen() -> set[str]:
+def load_offered() -> dict[str, str]:
+    """{phone_key: YYYY-MM-DD it was last handed out}.
+
+    Legacy format was a flat list of "numbers ever emitted", which retired a
+    number PERMANENTLY the moment it appeared in one day's file — whether or not
+    it was ever actually called. That burned ~50 numbers a day on nothing: Delhi
+    had 143 phone-tagged clinics, two runs consumed all of them, and the city
+    read "dry" forever after while almost none had been dialled.
+
+    A legacy list is therefore read as "offered long ago", which puts those
+    never-worked numbers straight back in the pool. That is the intended
+    migration, not a bug: they were retired by a rule that should not have
+    existed. Numbers actually checked off stay suppressed on the dashboard side
+    (see components/CallList.tsx — a re-offered number merges into its existing
+    entry and keeps its called flag), so this cannot resurface finished work.
+    """
     try:
         data = json.loads(SEEN_FILE.read_text(encoding="utf-8"))
-        return set(data) if isinstance(data, list) else set()
     except (OSError, json.JSONDecodeError):
+        return {}
+    if isinstance(data, dict):
+        return {str(k): str(v) for k, v in data.items()}
+    if isinstance(data, list):
+        return {str(k): "1970-01-01" for k in data}
+    return {}
+
+
+def _recently_offered(offered: dict[str, str], today: datetime.date) -> set[str]:
+    """Keys still inside the cooldown, i.e. genuinely not worth re-offering yet."""
+    if OFFER_COOLDOWN_DAYS <= 0:
         return set()
+    fresh = set()
+    for key, when in offered.items():
+        try:
+            offered_on = datetime.date.fromisoformat(when)
+        except ValueError:
+            continue  # unparseable stamp -> treat as expired, offer it again
+        if (today - offered_on).days < OFFER_COOLDOWN_DAYS:
+            fresh.add(key)
+    return fresh
 
 
 def phone_key(phone: str) -> str:
@@ -365,7 +410,16 @@ def _collect(items, seen: set[str], run_seen: set[str], out: list[dict]) -> None
 
 def main() -> None:
     keys = load_keys()
-    seen = load_seen()
+    today_d = datetime.date.today()
+    offered = load_offered()
+    # Only numbers still inside the cooldown are withheld. Everything older is
+    # back in play, because being handed to you once is not evidence it was
+    # worked — only your check-off is, and that lives in the dashboard.
+    seen = _recently_offered(offered, today_d)
+    expired = len(offered) - len(seen)
+    if expired > 0:
+        print(f"{expired} previously-offered number(s) are past the "
+              f"{OFFER_COOLDOWN_DAYS}-day cooldown and are eligible again")
     run_seen: set[str] = set()
     out: list[dict] = []
 
@@ -433,14 +487,20 @@ def main() -> None:
     dest = CALLS_DIR / f"{today}.json"
     dest.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    seen |= run_seen
+    # Re-stamp everything handed out today; keep prior stamps for the rest so
+    # each number ages out on its own schedule.
+    stamp = today_d.isoformat()
+    for key in run_seen:
+        offered[key] = stamp
     SEEN_FILE.write_text(
-        json.dumps(sorted(seen), indent=0, ensure_ascii=False), encoding="utf-8"
+        json.dumps(dict(sorted(offered.items())), indent=0, ensure_ascii=False),
+        encoding="utf-8",
     )
 
     wa = sum(1 for x in out if x["whatsapp"])
     print(f"wrote {len(out)} fresh leads -> {dest}  ({wa} messageable on WhatsApp)")
-    print(f"seen pool now {len(seen)} numbers")
+    print(f"offered pool now {len(offered)} numbers "
+          f"({len(seen) + len(run_seen)} inside the {OFFER_COOLDOWN_DAYS}-day cooldown)")
 
 
 if __name__ == "__main__":

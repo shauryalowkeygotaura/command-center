@@ -43,6 +43,51 @@ function waHref(entry: CallEntry): string {
   return `https://wa.me/${wa}?text=${encodeURIComponent(WA_MSG(entry.label))}`;
 }
 
+/** Canonical key for a phone number: +91 98..., 098..., 98... collapse to one.
+ *  Auto-loaded lead ids are built from this and NOT from the date, so when the
+ *  daily top-up offers a number again (it now re-offers anything you never
+ *  worked, instead of retiring it forever) it merges into the entry you already
+ *  have and keeps its checked-off state, rather than returning as fresh work. */
+function leadKey(num: string): string {
+  let d = (num || "").replace(/\D/g, "");
+  // Strip the country code, then the trunk 0, in that order. Both sources can
+  // render one clinic differently ("+91 11 3218206" vs "011-3218206"), and
+  // without collapsing those the same number would occupy two rows and a tick
+  // on one would leave the other looking un-worked.
+  if (d.length > 10 && d.startsWith("91")) d = d.slice(2);
+  d = d.replace(/^0+/, "");
+  return d;
+}
+
+function autoId(num: string): string {
+  return `auto:${leadKey(num)}`;
+}
+
+/** Collapse legacy date-stamped auto ids (`auto:2026-08-17:<num>`) onto the
+ *  stable key. Without this, the same clinic could sit in storage several times
+ *  over and a tick on one copy would not silence the others. Merging is
+ *  called-wins: if any copy was checked off, the survivor is checked off. */
+function normalize(list: CallEntry[]): CallEntry[] {
+  const byId = new Map<string, CallEntry>();
+  for (const e of list) {
+    const id = e.id.startsWith("auto:") ? autoId(e.number) : e.id;
+    const prev = byId.get(id);
+    if (!prev) {
+      byId.set(id, { ...e, id });
+      continue;
+    }
+    byId.set(id, {
+      ...prev,
+      called: prev.called || e.called,
+      dueDate: prev.dueDate > e.dueDate ? prev.dueDate : e.dueDate,
+      label: prev.label || e.label,
+      whatsapp: prev.whatsapp || e.whatsapp,
+      area: prev.area || e.area,
+    });
+  }
+  return [...byId.values()];
+}
+
 type AutoLead = {
   number: string;
   label?: string;
@@ -60,8 +105,9 @@ export function CallList({ today }: { today: string }) {
   useEffect(() => {
     let cancelled = false;
 
-    const loaded = callStore.load();
-    // Roll uncalled numbers from past days forward to today.
+    const loaded = normalize(callStore.load());
+    // Roll uncalled numbers from past days forward to today. Anything you
+    // ticked keeps its original date, so it drops off the list and stays off.
     const rolled = loaded.map((e) =>
       !e.called && e.dueDate < today ? { ...e, dueDate: today } : e,
     );
@@ -79,7 +125,7 @@ export function CallList({ today }: { today: string }) {
           const additions = list
             .filter((x) => x && x.number)
             .map((x) => ({
-              id: `auto:${today}:${x.number}`,
+              id: autoId(x.number),
               number: x.number,
               label: x.label,
               whatsapp: x.whatsapp,
