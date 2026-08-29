@@ -69,13 +69,42 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // -- Added 2026-08-29 (newest first) --------------------------------------
+  {
+    id: "h-asteroid-rerendered",
+    text: "WATCH the re-rendered asteroid video, then decide on the ONE remaining blocker",
+    done: false,
+    seeded: true,
+    note: "2026-08-29: there IS a new video now. output/every-asteroid-that-could-actually-hit-earth-explained/ , 2.4 min, plus 4 shorts. Rendered with Deepgram Aura-2 andromeda, the voice you picked. THE COMPARISON THAT MATTERS: the old render tripped THREE blockers, this one trips ONE. Title is honest so title_duration_conflict is None (the old one claimed 12 minutes over 2:54). The gate reports beat_opener_variety as asteroid x1, where the old script opened 5 of 9 beats on the same word. filler_phrases is empty; the old one said valuable insights three times. The hook is real: there are four specific rocks in space currently on a collision course with our planet, and none of them are theoretical. 75 caption lines are burned in, built from Aura timings. THE ONE REMAINING BLOCKER is the thumbnail: it built two_subject_versus and the format wants scene_no_clear_subject, so it wants a wide environmental frame rather than a subject on a plain background. TWO THINGS I FOUND BY EYEBALLING THAT NUMBERS MISSED, both worth your call. (1) Beat 4 is about uncharted small asteroids and the imagery it fetched is MARS. Wrong subject, exactly the failure your own note warns about. Commons matched on the wrong noun. (2) Beat 2 says Apophis passed within 30,000 km in 2029, in the past tense, but 2029 has not happened. The gate flagged 1 claim as needs_check and that is the one. Reply `asteroid = ship` or `asteroid = fix imagery first`.",
+  },
+  {
+    id: "h-orpheus-now-live",
+    text: "Groq Orpheus is unblocked and you rated it on par with andromeda: pick one as default",
+    done: false,
+    seeded: true,
+    note: "2026-08-29: you accepted the terms, so canopylabs/orpheus-v1-english now works on your Groq key, and you said it is on par with Aura-2 andromeda. Right now andromeda is wired as the format-render default (FR_TTS_PROVIDER=aura) because it was the only one available when I built it. NOT wiring Orpheus yet, deliberately, because on-par quality means the choice is about something other than quality and that is your call: ORPHEUS keeps everything on one vendor and one key, which is simpler, and Groq latency is excellent. AURA-2 is already integrated AND it solves a problem Orpheus does not: burned captions need word timings, and the aura path recovers them by sending its own audio back through Deepgram STT, then aligning those timestamps to the SUBMITTED text so a mishearing never reaches the screen. Wiring Orpheus means rebuilding that timing recovery against a second vendor, or accepting no captions on Orpheus renders. Reply `tts = orpheus default` and I will port the timing recovery, or `tts = keep aura` and I will leave it.",
+  },
+  {
+    id: "h-two-repos-still-unversioned",
+    text: "TWO more repos have no version control: voicezero-space and heart-venture-paper",
+    done: false,
+    seeded: true,
+    note: "2026-08-29: during the end-of-session audit I git-initialised four repos that were holding a full day of work with no history at all: format-render (captions, the aura provider, 29 tests, the quality gates), format-engine (the hardened prompt and script-quality gate), clipworks, and dental-receptionist, which is your LIVE product and had never been versioned. Those four are now committed. TWO REMAIN UNVERSIONED and I did not initialise them because I do not know your intent for either: Code/voicezero-space (contains cookbook-pr/, which looks like a pull request aimed at Groq's own cookbook) and Code/heart-venture-paper. Both had edits from this session sitting on disk. Both also still referenced the decommissioned llama-3.3-70b-versatile and are now fixed; the cookbook one mattered twice over, since a contribution to Groq's cookbook citing a model Groq has retired would fail the moment a reviewer ran it. Reply `git init = both` or tell me which to leave alone.",
+  },
+  {
+    id: "h-format-engine-tpm-bug",
+    text: "KNOW: format-engine brief generation was impossible on your Groq tier until today",
+    done: false,
+    seeded: true,
+    note: "2026-08-29: `formatengine brief` could never have completed on this account, for any model, and this was not a model problem. build() reserved a flat max_tokens=8000 while your on-demand tier has an 8000 tokens-per-minute ceiling, and Groq counts prompt PLUS reserved completion against that limit. Every request therefore asked for about 8950 against a cap of 8000 and came back HTTP 413. I only found it because I tried to generate a fresh asteroid brief and it failed on qwen, then failed identically on gpt-oss-120b, which is what ruled out the model as the cause. The reservation now scales with the requested word count (roughly 3 tokens per word plus structure, clamped to leave room for the prompt), so 450 words reserves 2850 and 3000 words reserves 6800. Worth knowing because it means any past attempt to generate a brief silently failed, and it is also an argument for the Dev tier if you start generating longer scripts.",
+  },
   // -- Added 2026-08-28 (newest first) --------------------------------------
   {
     id: "h-tts-pick-voice",
     text: "LISTEN to 6 TTS samples and pick one, then click ONE Groq link to unlock a second option",
-    done: false,
+    done: true,
     seeded: true,
-    note: "2026-08-28: you said edge-tts is really really bad and you are right, but you do NOT need Fish for this. TWO upgrades, both effectively free, both verified live today. (1) DEEPGRAM AURA-2 WORKS RIGHT NOW ON A KEY YOU ALREADY OWN: your DEEPGRAM_API_KEY already authorises it, no signup and no click, and you already pay Deepgram for STT in the receptionist so it is the same vendor and the same key. Verified HTTP 200 with real audio. (2) GROQ NOW SERVES ORPHEUS TTS (canopylabs/orpheus-v1-english). Your Groq key already reaches it and the ONLY thing in the way is a terms click: the API returns model_terms_required and points at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english . One click and you have it at Groq latency on a key you own. I generated the SAME dental line in 6 voices: Deliverables/tts-ab-2026-08-28/ holds 4 Aura-2 voices plus your 2 current edge-tts baselines. PLAY THEM, the ranking is yours: I can confirm they generate and report duration and sample rate, but whether one hits like a human is exactly the thing I cannot hear. Reply `tts = <filename>` and I will wire the winner into the receptionist and the video pipelines. WHY NOT FISH: it needs a new signup, a paid balance and a cloned reference clip. Revisit it only if you listen to all six and still specifically want voice CLONING, which is the one thing neither of these does.",
+    note: "2026-08-29: ANSWERED. You listened and said andromeda is good, orion is fine, and Prabhat for Hindi. Deepgram Aura-2 andromeda is now the wired default in format-render (FR_TTS_PROVIDER=aura) and it rendered the new asteroid video. Hindi stays on edge-tts PrabhatNeural, since Aura-2 is English only. Wiring it needed more than a swap: edge-tts was the default purely because it returns the word timings burned captions depend on, and kokoro was rejected on exactly that ground. So the aura path synthesises, then sends its own audio back through Deepgram STT and aligns those timestamps to the SUBMITTED text, which means a mishearing can never reach the screen. That alignment had to handle Deepgram expanding numbers: 2029 comes back as twenty twenty nine, 12 submitted tokens against 14 heard, so a token-count check returned no captions at all. 10 tests cover it. Orpheus is now unblocked too and has its own item above.",
   },
   {
     id: "h-dental-targets-tier-a",
