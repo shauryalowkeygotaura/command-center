@@ -69,6 +69,58 @@ export function mergeChecklistSeed(
 // Each item is something I cannot do myself and need your hands/accounts for.
 // Check them off as you go; I retire them here once confirmed done.
 export const HANDOFF_SEED: ChecklistItem[] = [
+  // -- Added 2026-09-03 (newest first) --------------------------------------
+  {
+    id: "h-bandit-orphaned",
+    text: "DECIDE: restore the old philosopher hook wording, or let the bandit relearn from zero",
+    done: false,
+    seeded: true,
+    note: "This is the one that needs YOUR call, not more code. philosopher-pipeline has a genuinely good self-improving bandit: phased so it degrades safely, exploration seeded from SHA-256 so runs stay reproducible. It has never learned anything, and the reason is worse than 'it was never turned on'. The ledger holds 161 rows and 134 of them DO carry real engagement rewards. Not one matches a hook in the current HOOKS list. The ledger says 'the words that shaped western thought.' and HOOKS now says 'the kind of words that hit at 3am.' The wording was rewritten at some point, and a bandit keyed on exact arm text cannot connect a reward to an arm that no longer exists. So it has been round-robinning while sitting on months of real data. Run `python -c \"import bandit,pipeline;print(bandit.loop_status(pipeline.HOOKS)['verdict'])\"` to see it say ORPHANED. Two options, both defensible: restore the old hook strings so 134 observations start counting immediately, or accept that learning restarts from zero because the new hooks are better writing. I did NOT choose for you. Reply `bandit = restore old hooks` or `bandit = start fresh`.",
+  },
+  {
+    id: "h-dental-niche-risk",
+    text: "READ the voice-agent finding: your dental niche is named as the one to avoid",
+    done: false,
+    seeded: true,
+    note: "From 6 Brendan Jowett transcripts (25,700 words, 3yr agency, $12k+ per deployment, 20+ industries). Asked which offer he would personally avoid in 2026 he says: generic appointment booking for low-complexity industries, and names hair salons, barber shops, DENTAL OFFICES and med spas explicitly. Reason: booking is simple, the systems are well known, integrations are minimal, so every newcomer starts there and margins collapse. He ALSO says starting in a simple niche to get first revenue is completely fine, which is exactly your position (gate = first paying client), so this is not 'stop'. It is 'do not plan to defend it on price'. His actual argument: the agent is now the commodity and the MAINTENANCE is the product - a retainer buys monitoring calls, reviewing transcripts, and updating prompts when their scheduler changes its API or they add a service. That reframes our 0/3k/6k tiers, which currently price the agent. Full writeup in Resources/skills/voice-agent-offer/SKILL.md. Also useful: latency budget is ~1400ms total and the LLM is ~800ms of it, so tuning TTS while running a slow model is the wrong axis. He does not use Claude for voice agents; he uses GPT-4.1 or Gemini Flash for turn-taking speed. Reply `dental = reprice on maintenance` or `dental = leave pricing, note taken`.",
+  },
+  {
+    id: "h-whop-key",
+    text: "Add WHOP_API_KEY so the new Whop CLI can actually return data",
+    done: false,
+    seeded: true,
+    note: "Built Code/whop-cli this session, to the CLI-Anything convention you asked for (HKUDS/CLI-Anything, 48.8k stars). I checked their hub: ~90 CLIs published, none for Whop, so this is genuinely new. Five commands - whoami, products, memberships, payments, revenue - each with --json because the primary caller is an agent. The error paths are PROVEN against the live API: a bad key returns a real 401 and the CLI relays Whop's own message instead of a traceback. Every success path is UNVERIFIED because no key exists. One command unblocks it: `doppler secrets set WHOP_API_KEY -p creative-studio -c dev` (key from whop.com/dashboard/developer), then `doppler run -- whop whoami`. The key is read from the environment only, never an argument, so it cannot land in shell history.",
+  },
+  {
+    id: "h-pixabay-key",
+    text: "Free Pixabay key doubles the b-roll pool for zero code",
+    done: false,
+    seeded: true,
+    note: "broll._search_pixabay is already implemented and already wired - it just returns nothing because PIXABAY_API_KEY is unset, so every render currently searches Pexels alone. Free signup at pixabay.com/api/docs, then `doppler secrets set PIXABAY_API_KEY -p creative-studio -c dev`. Zero code changes. Related and already fixed this session: Pexels was only ever reading page 1 while reporting total_results in the thousands (8000 for 'dark city night'), so the pool was about 100x shallower than it looked. That now pages.",
+  },
+  {
+    id: "h-instagram-login",
+    text: "One interactive Instagram login unblocks autoshop AND philosopher POSTING",
+    done: false,
+    seeded: true,
+    note: "Worth doing even though the research it originally blocked is finished. INSTAGRAM_PASSWORD in Doppler autoshop/dev is REJECTED by Instagram (verified with exactly one login attempt - I stopped there deliberately, since repeated failures are what actually locks an account). The saved session.json is from 2026-03-18. Fix: `cd Code/autoshop && doppler run -- python login_instagram.py` interactively, which handles the 2FA/email challenge a headless process cannot. If it still says BadPassword the stored password is simply stale: `doppler secrets set INSTAGRAM_PASSWORD -p autoshop -c dev`. This blocks POSTING from autoshop and philosopher-pipeline, not just research - and it is also what keeps the philosopher bandit's reward pull (insights.py) unable to run. Full runbook: Resources/instagram-access-runbook.md.",
+  },
+  {
+    id: "h-city-grid-render",
+    text: "Render the 2,900-word city-grid brief - the first script at real working-channel length",
+    done: false,
+    seeded: true,
+    note: "format-engine/data/briefs/the-4-levels-of-city-grid-failure-2026-09-02.json. 17 beats, 2,900 words, passing every gate including the two new ones: second person 8.7 per 100 words (floor 4.0) and median sentence 4 words (ceiling 12). Working channels in this format run a 2,462-word median, so this is the first script we have produced at genuine length - previous ones were 313 and 620. It needed chunked generation, because Groq caps at 8000 tokens PER MINUTE counting prompt plus reserved completion, and the non-obvious part is that sizing the calls is not enough: several individually-legal calls fired back to back still breach it, so they are paced 35s apart. Expect ~2.5 hours to render (~225 shots at ~39s each of image generation). Command is at the top of Logs/session-checkpoints/RESUME-HERE.md. TWO THINGS TO DECIDE FIRST, both would be baked into 17 minutes of video: (1) the --tone string currently constrains LOCATION as well as lighting, so every generated shot is an interior in the same blue-grey register - fine for 3 minutes, samey for 17. (2) The title says '4 Levels' while the script has 17 beats, because beat count comes from word count and the title comes from the format; they are derived independently and disagree.",
+  },
+  {
+    id: "h-install-component-taste",
+    text: "What did 'install component taste' mean? I could not resolve it",
+    done: false,
+    seeded: true,
+    note: "From your inbox list. I did the Pinterest half (taste-engine's SKILL.md documented scripts/pinterest.sh in full detail and the script did not exist, so /ts pin would have failed on a missing file - it is written and committed now, with the robots gate exiting 2 verbatim and no workaround offered). But 'install component taste' I could not pin down. Best guesses: (a) a shadcn-style component library wired INTO taste-engine so it can judge real components, (b) installing the taste-engine skill itself somewhere specific, (c) something else entirely. Rather than guess and build the wrong thing, tell me which. Reply `component taste = <what you meant>`.",
+  },
+
+
   // -- Added 2026-08-29 (newest first) --------------------------------------
   {
     id: "h-asteroid-rerendered",
@@ -80,9 +132,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-orpheus-now-live",
     text: "Groq Orpheus is unblocked and you rated it on par with andromeda: pick one as default",
-    done: false,
+    done: true,
     seeded: true,
-    note: "2026-08-29: you accepted the terms, so canopylabs/orpheus-v1-english now works on your Groq key, and you said it is on par with Aura-2 andromeda. Right now andromeda is wired as the format-render default (FR_TTS_PROVIDER=aura) because it was the only one available when I built it. NOT wiring Orpheus yet, deliberately, because on-par quality means the choice is about something other than quality and that is your call: ORPHEUS keeps everything on one vendor and one key, which is simpler, and Groq latency is excellent. AURA-2 is already integrated AND it solves a problem Orpheus does not: burned captions need word timings, and the aura path recovers them by sending its own audio back through Deepgram STT, then aligning those timestamps to the SUBMITTED text so a mishearing never reaches the screen. Wiring Orpheus means rebuilding that timing recovery against a second vendor, or accepting no captions on Orpheus renders. Reply `tts = orpheus default` and I will port the timing recovery, or `tts = keep aura` and I will leave it.",
+    note: "2026-08-29: you accepted the terms, so canopylabs/orpheus-v1-english now works on your Groq key, and you said it is on par with Aura-2 andromeda. Right now andromeda is wired as the format-render default (FR_TTS_PROVIDER=aura) because it was the only one available when I built it. NOT wiring Orpheus yet, deliberately, because on-par quality means the choice is about something other than quality and that is your call: ORPHEUS keeps everything on one vendor and one key, which is simpler, and Groq latency is excellent. AURA-2 is already integrated AND it solves a problem Orpheus does not: burned captions need word timings, and the aura path recovers them by sending its own audio back through Deepgram STT, then aligning those timestamps to the SUBMITTED text so a mishearing never reaches the screen. Wiring Orpheus means rebuilding that timing recovery against a second vendor, or accepting no captions on Orpheus renders. Reply `tts = orpheus default` and I will port the timing recovery, or `tts = keep aura` and I will leave it. || RESOLVED 2026-09-03 by measurement rather than preference, and it corrected a mistake of mine. I had earlier concluded our narration was too slow (119 wpm against a 147-182 band from nine working channels) and sped it up 1.35x. That measurement was wrong: 119 was words divided by TOTAL video duration, including the hook pause and every inter-beat silence. Measured properly on real paragraph text, Aura already speaks at 170 wpm, inside the band, and my correction pushed it to 240 wpm which is far too fast to listen to. Default is back to 1.0 with FR_SPEECH_RATE kept as a tuning knob. The video was never slowly spoken; a 620-word script stretched over runtime that wants 2,500 leaves silence dominating the average, which is the length problem wearing a disguise. Nothing here argues for switching away from andromeda, so aura stays default.",
   },
   {
     id: "h-two-repos-still-unversioned",
