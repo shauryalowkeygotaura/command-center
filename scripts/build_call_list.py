@@ -10,9 +10,16 @@ being listed once is not evidence it was ever called, and the old permanent
 retirement burned entire cities of un-dialled numbers. The
 dashboard's CALL + MESSAGE panel auto-loads that file on open (CallList.tsx).
 
-Each lead is {number, label, whatsapp, area, website}:
+Each lead is {number, label, whatsapp, area, website, description, kind}:
   - whatsapp : wa.me-ready digits (91XXXXXXXXXX) for mobiles, "" for landlines
                 so the panel can offer a one-tap WhatsApp message.
+  - description : one line shown under the number - what the place is, whether
+                it already has a website, rating/hours where the source has them.
+  - kind     : "private" or "chain" (see scripts/lead_quality.py).
+
+Listings that cannot buy are dropped before they reach the file. Government
+facilities were 121 of 516 entries (23%) before this gate existed - CGHS, ESI,
+MCD and civil dispensaries have no owner and no budget. See lead_quality.py.
 
 KEY ROTATION (stay on the free tier)
 ------------------------------------
@@ -56,6 +63,8 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+
+from lead_quality import classify, describe
 
 CITIES = [
     c.strip()
@@ -238,6 +247,13 @@ def fetch_osm(city: str) -> list[dict]:
             "phone": phone,
             "address": addr,
             "website": (tags.get("website") or tags.get("contact:website") or "").strip(),
+            # Carried so _collect can say what the place IS on the call sheet,
+            # and so classify() can see OSM's own ownership tags.
+            "business_type": (tags.get("amenity") or tags.get("healthcare") or "").strip(),
+            "speciality": (tags.get("healthcare:speciality") or "").strip(),
+            "hours": (tags.get("opening_hours") or "").strip(),
+            "operator": (tags.get("operator") or "").strip(),
+            "operator_type": (tags.get("operator:type") or "").strip(),
         })
     print(f"  [osm] '{city}' -> {len(items)} listings with a phone number")
     return items
@@ -386,8 +402,17 @@ def fetch_query(query: str, city: str, rotator: KeyRotator) -> list[dict]:
     return results
 
 
-def _collect(items, seen: set[str], run_seen: set[str], out: list[dict]) -> None:
-    """Append fresh, phone-bearing listings to `out`, deduping as it goes."""
+def _collect(items, seen: set[str], run_seen: set[str], out: list[dict],
+             rejected: dict[str, int] | None = None) -> None:
+    """Append fresh, phone-bearing, SELLABLE listings to `out`.
+
+    The sellability gate is the point. Until it existed the only filter was
+    "has a phone", and 121 of 516 entries across the daily files (23%) were
+    CGHS/ESI/MCD/civil dispensaries: no owner, no budget, nothing to sell to.
+    Government listings are also over-represented among phone-bearing OSM
+    nodes, because civic imports carry numbers where private clinics do not,
+    so "has a phone" actively selected FOR them.
+    """
     for it in items:
         if len(out) >= TARGET:
             return
@@ -398,6 +423,19 @@ def _collect(items, seen: set[str], run_seen: set[str], out: list[dict]) -> None
         pk = phone_key(phone)
         if not pk or pk in seen or pk in run_seen:
             continue
+
+        verdict = classify(
+            name,
+            operator=it.get("operator", ""),
+            operator_type=it.get("operator_type", ""),
+        )
+        if not verdict.sellable:
+            # Burn the number so a later source does not re-offer it this run.
+            run_seen.add(pk)
+            if rejected is not None:
+                rejected[verdict.kind] = rejected.get(verdict.kind, 0) + 1
+            continue
+
         run_seen.add(pk)
         out.append({
             "number": phone,
@@ -405,6 +443,9 @@ def _collect(items, seen: set[str], run_seen: set[str], out: list[dict]) -> None
             "whatsapp": to_whatsapp(phone),
             "area": (it.get("address") or "").strip(),
             "website": (it.get("website") or "").strip(),
+            # What the row says under the number in the CALL panel.
+            "description": describe(it, verdict),
+            "kind": verdict.kind,
         })
 
 
@@ -422,6 +463,10 @@ def main() -> None:
               f"{OFFER_COOLDOWN_DAYS}-day cooldown and are eligible again")
     run_seen: set[str] = set()
     out: list[dict] = []
+    # Counts by reject reason, printed at the end. Without this the gate is
+    # invisible: a short list would look like a dry pond rather than a pond
+    # that was mostly government all along.
+    rejected: dict[str, int] = {}
 
     # SerpAPI first when it has budget; OSM is the floor below it. Without keys
     # we skip straight to OSM rather than exiting empty, which is what left the
@@ -434,7 +479,7 @@ def main() -> None:
         for query in QUERIES:
             if len(out) >= TARGET or rotator.current() is None:
                 break
-            _collect(fetch_query(query, city, rotator), seen, run_seen, out)
+            _collect(fetch_query(query, city, rotator), seen, run_seen, out, rejected)
             print(f"  [maps] '{query} in {city}' -> running total {len(out)}")
         if len(out) >= TARGET or rotator.current() is None:
             break
@@ -471,12 +516,16 @@ def main() -> None:
                       f"stopping at {len(out)} leads, resuming tomorrow")
                 break
             before = len(out)
-            _collect(fetch_osm(city), seen, run_seen, out)
+            _collect(fetch_osm(city), seen, run_seen, out, rejected)
             gained = len(out) - before
             if gained:
                 print(f"  [osm] after '{city}' -> running total {len(out)} (+{gained})")
             else:
                 print(f"  [osm] '{city}' fully worked already (0 fresh) — moving on")
+
+    if rejected:
+        detail = ", ".join(f"{v} {k}" for k, v in sorted(rejected.items()))
+        print(f"skipped {sum(rejected.values())} unsellable listing(s): {detail}")
 
     if not out:
         print("No fresh leads found this run (pond may be exhausted in every city).")
@@ -498,7 +547,9 @@ def main() -> None:
     )
 
     wa = sum(1 for x in out if x["whatsapp"])
-    print(f"wrote {len(out)} fresh leads -> {dest}  ({wa} messageable on WhatsApp)")
+    chains = sum(1 for x in out if x.get("kind") == "chain")
+    print(f"wrote {len(out)} fresh leads -> {dest}  ({wa} messageable on WhatsApp"
+          + (f", {chains} chain" if chains else "") + ")")
     print(f"offered pool now {len(offered)} numbers "
           f"({len(seen) + len(run_seen)} inside the {OFFER_COOLDOWN_DAYS}-day cooldown)")
 

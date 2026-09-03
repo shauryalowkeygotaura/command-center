@@ -83,6 +83,8 @@ function normalize(list: CallEntry[]): CallEntry[] {
       label: prev.label || e.label,
       whatsapp: prev.whatsapp || e.whatsapp,
       area: prev.area || e.area,
+      description: prev.description || e.description,
+      kind: prev.kind || e.kind,
     });
   }
   return [...byId.values()];
@@ -93,6 +95,8 @@ type AutoLead = {
   label?: string;
   whatsapp?: string;
   area?: string;
+  description?: string;
+  kind?: string;
 };
 
 export function CallList({ today }: { today: string }) {
@@ -121,21 +125,45 @@ export function CallList({ today }: { today: string }) {
       .then((list: AutoLead[] | null) => {
         if (cancelled || !Array.isArray(list)) return;
         setEntries((prev) => {
+          const incoming = new Map(
+            list
+              .filter((x) => x && x.number)
+              .map((x) => [autoId(x.number), x] as const),
+          );
+          // Backfill first. A row already in localStorage from an earlier load
+          // keeps its id, so a pure "add what is new" merge would leave every
+          // number you are working today without the description the generator
+          // just started writing. Only ever fills blanks — never overwrites a
+          // note you typed, and never touches `called`.
+          const merged = prev.map((e) => {
+            const x = incoming.get(e.id);
+            if (!x) return e;
+            if (e.description && e.kind) return e;
+            return {
+              ...e,
+              description: e.description || x.description,
+              kind: e.kind || x.kind,
+              label: e.label || x.label,
+              area: e.area || x.area,
+              whatsapp: e.whatsapp || x.whatsapp,
+            };
+          });
           const ids = new Set(prev.map((e) => e.id));
-          const additions = list
-            .filter((x) => x && x.number)
-            .map((x) => ({
-              id: autoId(x.number),
+          const additions = [...incoming.entries()]
+            .filter(([id]) => !ids.has(id))
+            .map(([id, x]) => ({
+              id,
               number: x.number,
               label: x.label,
               whatsapp: x.whatsapp,
               area: x.area,
+              description: x.description,
+              kind: x.kind,
               called: false,
               dueDate: today,
-            }))
-            .filter((e) => !ids.has(e.id));
+            }));
           setAutoLoaded(additions.length);
-          return additions.length ? [...prev, ...additions] : prev;
+          return [...merged, ...additions];
         });
       })
       .catch(() => {});
@@ -166,6 +194,7 @@ export function CallList({ today }: { today: string }) {
         id: crypto.randomUUID(),
         number: p.number,
         label: p.label,
+        description: p.description,
         whatsapp: waDigits(p.number),
         called: false,
         dueDate: today,
@@ -219,7 +248,9 @@ export function CallList({ today }: { today: string }) {
             value={raw}
             onChange={(e) => setRaw(e.target.value)}
             rows={5}
-            placeholder={"Paste numbers — one per line.\n9636180333 Marudhar Dental\n+91 96361 80333, Olive Green"}
+            placeholder={
+              "Paste numbers — one per line.\n9636180333 Marudhar Dental\n+91 96361 80333, Olive Green\nUse | for a note: 9636180333 Marudhar Dental | no website"
+            }
             className="w-full resize-y rounded border border-line bg-ink px-2 py-1.5 font-mono text-xs text-cream outline-none placeholder:text-cream-dim focus:border-burgundy-bright"
           />
           <button
@@ -246,9 +277,9 @@ export function CallList({ today }: { today: string }) {
             return (
               <li
                 key={e.id}
-                className="group flex items-center gap-2 rounded px-2 py-1 hover:bg-panel-2"
+                className="group flex items-start gap-2 rounded px-2 py-1 hover:bg-panel-2"
               >
-                <span className="w-6 shrink-0 text-right font-mono text-[10px] text-cream-dim">
+                <span className="w-6 shrink-0 pt-1 text-right font-mono text-[10px] text-cream-dim">
                   {i + 1}
                 </span>
                 <button
@@ -260,10 +291,14 @@ export function CallList({ today }: { today: string }) {
                       ),
                     )
                   }
-                  className="font-mono text-sm leading-none text-burgundy-bright"
+                  className="pt-1 font-mono text-sm leading-none text-burgundy-bright"
                 >
                   {e.called ? "[x]" : "[ ]"}
                 </button>
+                {/* number + name on one line, the description under it. A bare
+                    list of 50 numbers gives you nothing to choose with. */}
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <div className="flex items-center gap-2">
                 {tel ? (
                   <a
                     href={tel}
@@ -282,11 +317,26 @@ export function CallList({ today }: { today: string }) {
                     {e.number}
                   </span>
                 )}
-                {e.label && (
-                  <span className="truncate font-sans text-xs text-cream-dim">
-                    {e.label}
-                  </span>
-                )}
+                    {e.label && (
+                      <span className="truncate font-sans text-xs text-cream-dim">
+                        {e.label}
+                      </span>
+                    )}
+                    {e.kind === "chain" && (
+                      <span
+                        title="Multi-city group — buys centrally, a cold call rarely reaches the decision"
+                        className="shrink-0 rounded border border-line px-1 font-mono text-[9px] uppercase text-cream-dim"
+                      >
+                        chain
+                      </span>
+                    )}
+                  </div>
+                  {e.description && (
+                    <span className="truncate font-sans text-[10px] leading-tight text-cream-dim">
+                      {e.description}
+                    </span>
+                  )}
+                </div>
                 {wa && (
                   <a
                     href={wa}

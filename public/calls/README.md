@@ -37,6 +37,34 @@ the same top results. When a city's pond thins, add cities via `CALL_CITIES`
 (comma-separated) or top up by hand. The producer rotates SerpAPI keys, so it
 moves to the next account when one runs out of quota.
 
+## Who gets on the list
+
+Government facilities never do. They were **121 of 516 entries (23%)** across
+the first 13 daily files: CGHS dispensaries, ESI dispensaries, MCD/NDMC
+dispensaries, Aam Aadmi polyclinics, Chandigarh civil and ayurvedic
+dispensaries. Two days (08-17, 08-27) were more than half government.
+
+They came in because the Overpass fallback queries `amenity=clinic` alongside
+the dentist tags, and in Indian OSM data that branch is largely public health
+infrastructure. **43% of Delhi's phone-bearing OSM listings are government** —
+worse than the raw share, because civic imports carry phone numbers where
+private clinics often do not, so the old "has a phone" filter actively selected
+for them.
+
+None of them can buy: no owner, no P&L, no marketing budget, spend by tender.
+`scripts/lead_quality.py` now drops them before they reach the file, and prints
+what it dropped so a short list is never mistaken for a dry pond.
+
+Chains (Clove Dental, Apollo) are **labelled, not dropped** — `kind: "chain"`
+puts a badge on the row. They buy centrally, but that is a judgement about the
+offer, not a fact about the entity.
+
+To retrofit the gate onto older files:
+
+```bash
+python scripts/clean_call_lists.py --dry-run   # then without the flag
+```
+
 ## File shape (array of objects)
 
 ```json
@@ -46,13 +74,21 @@ moves to the next account when one runs out of quota.
     "label": "Marudhar Dental",
     "whatsapp": "919636180333",
     "area": "Vaishali Nagar, Jaipur",
-    "website": "https://example.com"
+    "website": "https://example.com",
+    "description": "Dental clinic · 4.6* (128) · has website · Mo-Sa 09:00-20:00",
+    "kind": "private"
   }
 ]
 ```
 
 `whatsapp` is empty for landlines (call-only). The panel shows a `wa` button
 only when it is present.
+
+`description` is the line under the number in the panel: what the place is,
+whether it already has a website (the free-chatbot opener only lands on clinics
+that do not), plus rating and hours where the source had them. Fifty bare
+numbers give you nothing to choose with. Pasting by hand? Use `|` to add one:
+`9636180333 Marudhar Dental | no website`.
 
 ## Ban-safety
 

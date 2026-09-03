@@ -47,3 +47,7 @@ public/status/.push_lock
 
 # local verify screenshots
 .verify/
+
+# python bytecode from scripts/
+__pycache__/
+*.pyc
