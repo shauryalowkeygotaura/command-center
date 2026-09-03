@@ -4,8 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   byRank,
   CallEntry,
+  CallOutcome,
   CALL_TARGET,
   callStore,
+  outcomeExport,
+  outcomeStats,
+  OUTCOMES,
   parseNumbers,
 } from "@/lib/callList";
 
@@ -92,6 +96,22 @@ function autoId(num: string): string {
   return `auto:${leadKey(num)}`;
 }
 
+/** Forget a recorded call, snapshot and all.
+ *
+ *  The snapshot has to go with it. Leaving `tierAtCall` behind means the
+ *  next outcome on that row is filed under the tier the row had BEFORE a
+ *  re-score, which is the stale-attribution bug the snapshot exists to
+ *  prevent — the same one that orphaned 134 rewards in the philosopher
+ *  bandit when its hook text changed. */
+function clearOutcome(e: CallEntry): CallEntry {
+  const next = { ...e };
+  delete next.outcome;
+  delete next.outcomeAt;
+  delete next.tierAtCall;
+  delete next.scoreAtCall;
+  return next;
+}
+
 /** Collapse legacy date-stamped auto ids (`auto:2026-08-17:<num>`) onto the
  *  stable key. Without this, the same clinic could sit in storage several times
  *  over and a tick on one copy would not silence the others. Merging is
@@ -126,6 +146,11 @@ function normalize(list: CallEntry[]): CallEntry[] {
       tier: prev.tier || e.tier,
       score: prev.score ?? e.score,
       reasons: prev.reasons ?? e.reasons,
+      // Recorded evidence, never dropped by a merge.
+      outcome: prev.outcome ?? e.outcome,
+      outcomeAt: prev.outcomeAt ?? e.outcomeAt,
+      tierAtCall: prev.tierAtCall ?? e.tierAtCall,
+      scoreAtCall: prev.scoreAtCall ?? e.scoreAtCall,
     });
   }
   return [...byId.values()];
@@ -149,6 +174,7 @@ export function CallList({ today }: { today: string }) {
   const [raw, setRaw] = useState("");
   const [showPaste, setShowPaste] = useState(false);
   const [autoLoaded, setAutoLoaded] = useState<number | null>(null);
+  const [copied, setCopied] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -238,6 +264,70 @@ export function CallList({ today }: { today: string }) {
   const pct = Math.min(100, (called / CALL_TARGET) * 100);
   const messageable = todays.filter((e) => waDigits(e.number)).length;
 
+  // Across ALL days, not just today. One day of calls cannot separate three
+  // tiers; the question only answers itself over weeks.
+  const stats = useMemo(() => outcomeStats(entries), [entries]);
+
+  /** Record what a call did, freezing the tier as it stands now. */
+  function setOutcome(id: string, outcome: CallOutcome | "") {
+    setEntries((prev) =>
+      prev.map((x) => {
+        if (x.id !== id) return x;
+        if (!outcome) return clearOutcome(x);
+        return {
+          ...x,
+          called: true,
+          outcome,
+          outcomeAt: today,
+          tierAtCall: x.tierAtCall ?? x.tier,
+          scoreAtCall: x.scoreAtCall ?? x.score,
+        };
+      }),
+    );
+  }
+
+  /** Un-ticking a row retracts the call, so the outcome goes with it.
+   *  Otherwise a row marked `booked` and then un-ticked keeps counting in
+   *  the scoreboard while its selector is hidden, so it cannot be cleared. */
+  function toggleCalled(id: string) {
+    setEntries((prev) =>
+      prev.map((x) => {
+        if (x.id !== id) return x;
+        return x.called
+          ? { ...clearOutcome(x), called: false }
+          : { ...x, called: true };
+      }),
+    );
+  }
+
+  function copyOutcomes() {
+    const rows = outcomeExport(entries);
+    if (!rows.length) return;
+    const text = JSON.stringify(rows, null, 2);
+    const fallback = () => {
+      // navigator.clipboard needs a secure context and can reject; this is
+      // the path that works on a phone.
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        setCopied(rows.length);
+      } catch {
+        setCopied(-1);
+      }
+      document.body.removeChild(ta);
+    };
+    if (!navigator.clipboard) {
+      fallback();
+      return;
+    }
+    navigator.clipboard.writeText(text).then(() => setCopied(rows.length), fallback);
+  }
+
   function addBulk() {
     const parsed = parseNumbers(raw);
     if (!parsed.length) return;
@@ -288,6 +378,40 @@ export function CallList({ today }: { today: string }) {
           style={{ width: `${pct}%` }}
         />
       </div>
+
+      {/* Is the ranking real? Shown only once there is something to answer
+          with — zeros would read as failure rather than as no data. */}
+      {stats.length > 0 && (
+        <div className="mx-3 mt-2 rounded border border-line bg-ink px-2 py-1.5">
+          <div className="flex items-baseline justify-between">
+            <span className="font-mono text-[10px] text-cream-dim">
+              does the ranking hold?
+            </span>
+            <button
+              onClick={copyOutcomes}
+              className="font-mono text-[10px] text-cream-dim underline hover:text-burgundy-bright"
+            >
+              {copied === null
+                ? "copy"
+                : copied < 0
+                  ? "copy failed"
+                  : `${copied} copied`}
+            </button>
+          </div>
+          {stats.map((s) => (
+            <p key={s.tier} className="font-mono text-[10px] text-cream-dim">
+              <span className="text-cream">{s.tier}</span> · {s.called} called ·{" "}
+              {s.reached} reached the owner · {s.warm} interested
+              {s.dead ? ` · ${s.dead} dead` : ""}
+            </p>
+          ))}
+          <p className="pt-1 font-mono text-[9px] leading-snug text-cream-dim">
+            If A does not out-reach B and C over a few weeks, the weights in
+            lead_quality.rank() are wrong and should change. Tiers are frozen
+            at call time, so re-scoring later cannot rewrite this.
+          </p>
+        </div>
+      )}
 
       {/* ban-safety advisory: calls are unlimited, cold WhatsApp is not */}
       <p className="px-3 pt-2 font-mono text-[10px] leading-snug text-cream-dim">
@@ -346,13 +470,7 @@ export function CallList({ today }: { today: string }) {
                 </span>
                 <button
                   aria-label={e.called ? "mark not done" : "mark done"}
-                  onClick={() =>
-                    setEntries((prev) =>
-                      prev.map((x) =>
-                        x.id === e.id ? { ...x, called: !x.called } : x,
-                      ),
-                    )
-                  }
+                  onClick={() => toggleCalled(e.id)}
                   className="pt-1 font-mono text-sm leading-none text-burgundy-bright"
                 >
                   {e.called ? "[x]" : "[ ]"}
@@ -397,6 +515,27 @@ export function CallList({ today }: { today: string }) {
                     <span className="truncate font-sans text-[10px] leading-tight text-cream-dim">
                       {e.description}
                     </span>
+                  )}
+                  {/* Only after the call happened: a selector on every
+                      un-dialled row would make 50 rows unreadable. */}
+                  {e.called && (
+                    <select
+                      aria-label="what did the call do"
+                      value={e.outcome ?? ""}
+                      onChange={(ev) =>
+                        setOutcome(e.id, ev.target.value as CallOutcome | "")
+                      }
+                      className={`mt-0.5 w-fit rounded border border-line bg-ink px-1 py-0.5 font-mono text-[10px] outline-none focus:border-burgundy-bright ${
+                        e.outcome ? "text-cream" : "text-cream-dim"
+                      }`}
+                    >
+                      <option value="">outcome?</option>
+                      {OUTCOMES.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
                   )}
                 </div>
                 {wa && (

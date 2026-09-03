@@ -78,12 +78,35 @@ that have to be true before a call can work at all:
 dispensaries — they fail both, which is why they are not leads.
 
 The **score only breaks ties inside a tier, and its weights are stated priors,
-not measured ones.** Nothing here has been checked against call outcomes,
-because no outcome is recorded anywhere: the panel stores a `called` boolean
-and nothing else. Treat the score as an argument, which is why every row
-carries the `reasons` that produced it — hover the tier letter to read them.
-To make it real, record per call whether it reached a decision-maker and
-whether it went anywhere, then compare tiers.
+not measured ones.** Treat it as an argument, which is why every row carries
+the `reasons` that produced it — hover the tier letter to read them.
+
+### Checking whether any of it is true
+
+Tick a row and an outcome selector appears: *no answer · front desk only ·
+owner not interested · owner interested · booked · dead / wrong number*.
+
+Those six exist to test the two things the tier claims, and nothing else.
+`front desk only` versus the three `owner-*` outcomes tests **reach**;
+`owner, not interested` versus `owner, interested` / `booked` tests **fit**.
+`dead` is kept separate from `no answer` on purpose: a wrong or closed number
+is a scraper problem, not a rejection, and merging them would make the pitch
+look bad while the data looked fine.
+
+The panel then shows a per-tier tally — called, reached the owner, interested.
+**If A does not out-reach B and C over a few weeks, the weights are wrong and
+should change.**
+
+Each outcome freezes `tierAtCall` and `scoreAtCall` at the moment it is
+recorded, and analysis must use those, never the live `tier`. `rank()`'s
+weights will change, and scoring old outcomes against re-computed tiers is a
+confident answer to a question nobody asked — the same stale-attribution
+mistake that orphaned 134 rewards in the philosopher-pipeline bandit when its
+hook text changed.
+
+The `copy` link next to the tally puts the recorded outcomes on the clipboard
+as JSON. Everything lives in that browser's `localStorage`, so that link is the
+only way the data leaves the device.
 
 Two priors *are* grounded, in the only two clinics that have actually bought
 (`dental-receptionist/assistant/clinics/*_CLIENT.md`):

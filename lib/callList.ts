@@ -30,7 +30,98 @@ export interface CallEntry {
   score?: number;
   reasons?: string[];
   called: boolean;
+  // What the call actually did. Until this existed the ranking was unfalsifiable:
+  // the panel stored `called` and nothing else, so no weight in rank() could
+  // ever be checked against anything.
+  outcome?: CallOutcome;
+  outcomeAt?: string; // YYYY-MM-DD the outcome was recorded
+  // The tier and score AS THEY WERE when the call was made.
+  //
+  // This is the whole point of the snapshot. rank()'s weights will change, and
+  // comparing outcomes recorded under old rules against tiers recomputed under
+  // new ones produces a confident answer to a question nobody asked. That
+  // exact mistake orphaned 134 rewards in the philosopher-pipeline bandit when
+  // its hook text changed. Analyse against these fields, never against the
+  // live `tier`.
+  tierAtCall?: string;
+  scoreAtCall?: number;
   dueDate: string; // YYYY-MM-DD
+}
+
+/** What a call did. Ordered from "learned nothing" to "learned everything".
+ *
+ *  Chosen to test the two things the tier claims, and nothing else:
+ *    REACH — did the call get past the front desk to someone who can decide?
+ *            `gatekeeper` vs the three `owner-*` outcomes separates that.
+ *    FIT   — given it reached them, did the pitch land? `owner-no` vs
+ *            `owner-maybe` / `booked`.
+ *  `dead` is kept apart from `no-answer` because a wrong or closed number is a
+ *  data-quality problem, not a rejection, and lumping them would make the
+ *  scraper look fine while the pitch looked bad. */
+export type CallOutcome =
+  | "no-answer"
+  | "gatekeeper"
+  | "owner-no"
+  | "owner-maybe"
+  | "booked"
+  | "dead";
+
+export const OUTCOMES: { value: CallOutcome; label: string }[] = [
+  { value: "no-answer", label: "no answer" },
+  { value: "gatekeeper", label: "front desk only" },
+  { value: "owner-no", label: "owner, not interested" },
+  { value: "owner-maybe", label: "owner, interested" },
+  { value: "booked", label: "booked" },
+  { value: "dead", label: "dead / wrong number" },
+];
+
+const REACHED: CallOutcome[] = ["owner-no", "owner-maybe", "booked"];
+const WARM: CallOutcome[] = ["owner-maybe", "booked"];
+
+export interface TierStats {
+  tier: string;
+  called: number;
+  reached: number; // got to a decision-maker
+  warm: number; // that decision-maker wanted to keep talking
+  dead: number; // wrong number or closed
+}
+
+/** Per-tier outcome tally, keyed on the tier RECORDED AT CALL TIME.
+ *
+ *  Reads only rows that carry an outcome, so an untouched list reports
+ *  nothing rather than reporting zeros that look like failure. */
+export function outcomeStats(entries: CallEntry[]): TierStats[] {
+  const by = new Map<string, TierStats>();
+  for (const e of entries) {
+    if (!e.outcome) continue;
+    const tier = e.tierAtCall ?? e.tier ?? "?";
+    const s =
+      by.get(tier) ??
+      { tier, called: 0, reached: 0, warm: 0, dead: 0 };
+    s.called += 1;
+    if (REACHED.includes(e.outcome)) s.reached += 1;
+    if (WARM.includes(e.outcome)) s.warm += 1;
+    if (e.outcome === "dead") s.dead += 1;
+    by.set(tier, s);
+  }
+  return [...by.values()].sort((a, b) => a.tier.localeCompare(b.tier));
+}
+
+/** The rows worth exporting for analysis: one line per recorded outcome.
+ *  Deliberately drops everything else — a dump of the whole store is mostly
+ *  un-worked numbers, and the numbers themselves are not the finding. */
+export function outcomeExport(entries: CallEntry[]) {
+  return entries
+    .filter((e) => e.outcome)
+    .map((e) => ({
+      label: e.label ?? "",
+      area: e.area ?? "",
+      tier: e.tierAtCall ?? e.tier ?? null,
+      score: e.scoreAtCall ?? e.score ?? null,
+      reasons: e.reasons ?? [],
+      outcome: e.outcome,
+      at: e.outcomeAt ?? null,
+    }));
 }
 
 /** Call-sheet order: tier first, then score, best at the top.
@@ -63,7 +154,14 @@ export const callStore = {
   },
   save(entries: CallEntry[]): void {
     if (typeof window === "undefined") return;
-    window.localStorage.setItem(KEY, JSON.stringify(entries));
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(entries));
+    } catch {
+      // Quota exceeded, or storage blocked in a private window. Rows now carry
+      // reasons and outcomes, so the payload only grows from here. Losing one
+      // save is survivable; throwing inside a render effect takes the whole
+      // panel down and loses the day's ticks with it.
+    }
   },
 };
 
