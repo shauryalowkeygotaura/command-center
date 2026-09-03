@@ -59,11 +59,72 @@ Chains (Clove Dental, Apollo) are **labelled, not dropped** — `kind: "chain"`
 puts a badge on the row. They buy centrally, but that is a judgement about the
 offer, not a fact about the entity.
 
-To retrofit the gate onto older files:
+## Order: A, B, C
+
+The day runs out before the list does, so the order is the product. Rows are
+sorted best first and carry a tier.
+
+The **tier is definitional, not a prediction**. It asks the only two things
+that have to be true before a call can work at all:
+
+- **Reach** — can this call land on someone with the authority to say yes? A
+  mobile is usually the dentist's own; a landline is the front desk, which
+  cannot buy and is the role the product touches. A chain branch cannot buy
+  either: procurement is central.
+- **Fit** — does the pitch land? Dental gets two live deployments, a dental
+  demo and a dental system prompt behind it. A diagnostics lab does not.
+
+`A` is both, `B` is one, `C` is neither. That is the same test that removed the
+dispensaries — they fail both, which is why they are not leads.
+
+The **score only breaks ties inside a tier, and its weights are stated priors,
+not measured ones.** Nothing here has been checked against call outcomes,
+because no outcome is recorded anywhere: the panel stores a `called` boolean
+and nothing else. Treat the score as an argument, which is why every row
+carries the `reasons` that produced it — hover the tier letter to read them.
+To make it real, record per call whether it reached a decision-maker and
+whether it went anywhere, then compare tiers.
+
+Two priors *are* grounded, in the only two clinics that have actually bought
+(`dental-receptionist/assistant/clinics/*_CLIENT.md`):
+
+- Both had a website, one with an online booking page, so **a website counts in
+  favour**. The `dental-receptionist/acquisition/README.md` line about
+  prioritising clinics *without* a website belongs to the older free-website-
+  chatbot offer and is stale for a phone product.
+- Both are Jaipur and one carries 1,150+ Google reviews. A busy practice misses
+  more calls, which is the whole pitch.
+
+n=2 sets no weights. It only stops the ranking burying its own customers, which
+is what `test_ranking_matches_real_clients` checks.
+
+Current spread across the 13 files: **A:46, B:180, C:169** — only 12% of what
+the OSM pond yields is both reachable and dental.
+
+## Landlines never get a [wa] button
+
+`0731-2551733` is an Indore landline. Strip the trunk 0 and `7312551733` looks
+exactly like a mobile in the 73xx series, so the old rule handed it a wa.me
+link — to a stranger. 37 of 395 rows were like that, and cold WhatsApp to
+strangers is precisely what gets the personal number banned.
+
+`whatsapp_digits()` now checks the number against the STD codes of every city
+the generator targets. It errs toward landline on purpose: losing a `[wa]`
+button costs nothing because the number is still callable, whereas messaging a
+stranger costs the account. The panel re-derives `whatsapp` from the number on
+every load rather than trusting what is stored, so rows saved before the fix
+heal themselves.
+
+## Retrofitting older files
 
 ```bash
 python scripts/clean_call_lists.py --dry-run   # then without the flag
 ```
+
+Drops the unsellable, corrects `whatsapp`, adds `description`, scores and
+reorders. Idempotent, atomic writes. The generator cannot do this itself:
+every number in those files is stamped in `_seen.json`, so a fresh run would
+skip them all and write an empty file.
 
 ## File shape (array of objects)
 
@@ -76,7 +137,10 @@ python scripts/clean_call_lists.py --dry-run   # then without the flag
     "area": "Vaishali Nagar, Jaipur",
     "website": "https://example.com",
     "description": "Dental clinic · 4.6* (128) · has website · Mo-Sa 09:00-20:00",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 12,
+    "reasons": ["mobile, likely the owner", "dental, the pitch has proof"]
   }
 ]
 ```

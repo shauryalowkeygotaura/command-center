@@ -6,16 +6,14 @@
     "area": "",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91-98101-99763;+91-11-4106-4262",
-    "label": "The Dental Clinic",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Dental clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "dental, the pitch has proof"
+    ]
   },
   {
     "number": "+919711772920",
@@ -24,16 +22,13 @@
     "area": "",
     "website": "",
     "description": "Homeopathy clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+9101127054943",
-    "label": "Dental Health Point",
-    "whatsapp": "",
-    "area": "Sector 6, Rohini",
-    "website": "",
-    "description": "Dental clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
   },
   {
     "number": "+91-98914-85910",
@@ -42,7 +37,13 @@
     "area": "",
     "website": "",
     "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
   },
   {
     "number": "+91 11 4106 4644;+91 99993 35502;+91 78384 52234",
@@ -51,16 +52,44 @@
     "area": "",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "dental, the pitch has proof"
+    ]
   },
   {
-    "number": "+91-92123-93593;+91-92104-90009",
-    "label": "Physio Quantum",
+    "number": "+91-98101-99763;+91-11-4106-4262",
+    "label": "The Dental Clinic",
     "whatsapp": "",
     "area": "",
     "website": "",
-    "description": "Physiotherapist · no website",
-    "kind": "private"
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 3,
+    "reasons": [
+      "landline, likely the front desk",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "+9101127054943",
+    "label": "Dental Health Point",
+    "whatsapp": "",
+    "area": "Sector 6, Rohini",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 3,
+    "reasons": [
+      "landline, likely the front desk",
+      "dental, the pitch has proof"
+    ]
   },
   {
     "number": "+91-11-4172-4187;+91-888-222-1182;+91-98913-04552",
@@ -69,16 +98,13 @@
     "area": "",
     "website": "",
     "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "25983861",
-    "label": "DGD Khyala",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
   },
   {
     "number": "011-23092781",
@@ -87,7 +113,41 @@
     "area": "",
     "website": "",
     "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91-92123-93593;+91-92104-90009",
+    "label": "Physio Quantum",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Physiotherapist · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
+  },
+  {
+    "number": "25983861",
+    "label": "DGD Khyala",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-2616 5959",
@@ -96,7 +156,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25836783",
@@ -105,7 +170,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25314311",
@@ -114,7 +184,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28041571",
@@ -123,7 +198,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28565311",
@@ -132,7 +212,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011 - 23013631",
@@ -141,7 +226,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25322468",
@@ -150,7 +240,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1128353431",
@@ -159,7 +254,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-28116626",
@@ -168,7 +268,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1125271997",
@@ -177,7 +282,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25065397",
@@ -186,7 +296,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28344658",
@@ -195,7 +310,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25063139",
@@ -204,7 +324,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25031345",
@@ -213,7 +338,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25018177",
@@ -222,7 +352,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25631169",
@@ -231,7 +366,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28334276",
@@ -240,7 +380,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25322585",
@@ -249,7 +394,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25063937",
@@ -258,7 +408,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25474141",
@@ -267,6 +422,11 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   }
 ]

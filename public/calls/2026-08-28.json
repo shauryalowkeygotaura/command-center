@@ -6,25 +6,16 @@
     "area": "Rajendra Marg, Jaipur",
     "website": "http://dentalpracticejaipur.com",
     "description": "Dental clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 141 274 3788",
-    "label": "Thaper Dental Clinic",
-    "whatsapp": "",
-    "area": "Sahakar Marg",
-    "website": "https://www.thaperdentalclinic.com/",
-    "description": "Dental clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+912066859900",
-    "label": "VitaLife Clinic",
-    "whatsapp": "",
-    "area": "Pashan-Sus Road, Pune",
-    "website": "https://vitalife.in/pashan/",
-    "description": "Clinic · has website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 10,
+    "reasons": [
+      "mobile, likely the owner",
+      "owner-named",
+      "dental, the pitch has proof",
+      "has a website",
+      "Jaipur, local angle"
+    ]
   },
   {
     "number": "+919373965004",
@@ -33,34 +24,14 @@
     "area": "Destination Centre, Magarpatta City",
     "website": "https://www.apneareamein.com/Magarpattacity-Pune/Doctor%20-%20Dentist%20in%20Magarpatta%20City.php",
     "description": "Dental clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 20 3240 0120",
-    "label": "Dr. Dixit's Dental Speciality Clinic and Implant Centre",
-    "whatsapp": "",
-    "area": "Viman Nagar Road, Pune",
-    "website": "https://www.dixitdentalcare.com/",
-    "description": "Dental clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+918888370371",
-    "label": "Define Aesthetics",
-    "whatsapp": "918888370371",
-    "area": "Vitthalrao Shivarkar Marg, Pune",
-    "website": "https://www.defineaesthetics.com/",
-    "description": "has website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 7588871443 / (020) 41225502",
-    "label": "Dr Rasika's Dental Wellness Centre",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Dental clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 7,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
   },
   {
     "number": "07775866101",
@@ -69,88 +40,13 @@
     "area": "",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "094225 66929",
-    "label": "Vishvand Ayurvedic Clinic",
-    "whatsapp": "919422566929",
-    "area": "",
-    "website": "",
-    "description": "Ayurvedic clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "9860844490",
-    "label": "N. Madhav Ayurvedic",
-    "whatsapp": "919860844490",
-    "area": "",
-    "website": "",
-    "description": "Ayurvedic clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 20 25430418",
-    "label": "Glowdent Clinic",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 992 244 1228;+91 804 806 0114",
-    "label": "Kimaya Skin Clinic",
-    "whatsapp": "",
-    "area": "Sanghvi Kesari Road, Pune",
-    "website": "https://www.drrajshreepatil.com",
-    "description": "Clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 992 244 1228",
-    "label": "Modkharkar Clinic",
-    "whatsapp": "919922441228",
-    "area": "Sanghvi Kesari Road, Pune",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 25883398",
-    "label": "The Inamdar Heart Clinic",
-    "whatsapp": "919125883398",
-    "area": "",
-    "website": "theinamdarheartclinic.in",
-    "description": "Clinic · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+917798640020",
-    "label": "Dwarika Multi-specialty Clinic",
-    "whatsapp": "917798640020",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 20 2528 3595",
-    "label": "Kurtkoti Nursing Home",
-    "whatsapp": "",
-    "area": "Lane 8, Pune",
-    "website": "",
-    "description": "no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 996 072 0849",
-    "label": "Disha Diagnostic Center",
-    "whatsapp": "919960720849",
-    "area": "Sanghvi Kesari Road",
-    "website": "",
-    "description": "Diagnostics lab · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
   },
   {
     "number": "+91 72195 10065",
@@ -159,6 +55,227 @@
     "area": "",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "+91 20 3240 0120",
+    "label": "Dr. Dixit's Dental Speciality Clinic and Implant Centre",
+    "whatsapp": "",
+    "area": "Viman Nagar Road, Pune",
+    "website": "https://www.dixitdentalcare.com/",
+    "description": "Dental clinic · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 5,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 25883398",
+    "label": "The Inamdar Heart Clinic",
+    "whatsapp": "919125883398",
+    "area": "",
+    "website": "theinamdarheartclinic.in",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 5,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 141 274 3788",
+    "label": "Thaper Dental Clinic",
+    "whatsapp": "",
+    "area": "Sahakar Marg",
+    "website": "https://www.thaperdentalclinic.com/",
+    "description": "Dental clinic · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "landline, likely the front desk",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+918888370371",
+    "label": "Define Aesthetics",
+    "whatsapp": "918888370371",
+    "area": "Vitthalrao Shivarkar Marg, Pune",
+    "website": "https://www.defineaesthetics.com/",
+    "description": "has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 7588871443 / (020) 41225502",
+    "label": "Dr Rasika's Dental Wellness Centre",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "094225 66929",
+    "label": "Vishvand Ayurvedic Clinic",
+    "whatsapp": "919422566929",
+    "area": "",
+    "website": "",
+    "description": "Ayurvedic clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "9860844490",
+    "label": "N. Madhav Ayurvedic",
+    "whatsapp": "919860844490",
+    "area": "",
+    "website": "",
+    "description": "Ayurvedic clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 992 244 1228",
+    "label": "Modkharkar Clinic",
+    "whatsapp": "919922441228",
+    "area": "Sanghvi Kesari Road, Pune",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+917798640020",
+    "label": "Dwarika Multi-specialty Clinic",
+    "whatsapp": "917798640020",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 996 072 0849",
+    "label": "Disha Diagnostic Center",
+    "whatsapp": "919960720849",
+    "area": "Sanghvi Kesari Road",
+    "website": "",
+    "description": "Diagnostics lab · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 3,
+    "reasons": [
+      "mobile, likely the owner"
+    ]
+  },
+  {
+    "number": "+912066859900",
+    "label": "VitaLife Clinic",
+    "whatsapp": "",
+    "area": "Pashan-Sus Road, Pune",
+    "website": "https://vitalife.in/pashan/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 992 244 1228;+91 804 806 0114",
+    "label": "Kimaya Skin Clinic",
+    "whatsapp": "",
+    "area": "Sanghvi Kesari Road, Pune",
+    "website": "https://www.drrajshreepatil.com",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 20 25430418",
+    "label": "Glowdent Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 20 2528 3595",
+    "label": "Kurtkoti Nursing Home",
+    "whatsapp": "",
+    "area": "Lane 8, Pune",
+    "website": "",
+    "description": "no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   }
 ]

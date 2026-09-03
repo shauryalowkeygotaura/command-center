@@ -11,7 +11,23 @@ import pytest
 
 from lead_quality import (
     CHAIN, GOVERNMENT, INSTITUTION, PRIVATE, classify, describe, infer_type,
+    rank, sort_key,
 )
+
+# The only two clinics that have actually paid, from
+# Code/dental-receptionist/assistant/clinics/*_CLIENT.md. n=2 sets no weights;
+# it is here so the ranking cannot quietly bury its own customers.
+MARUDHAR = {
+    "label": "Marudhar Dental Centre", "number": "+91 9636180333",
+    "area": "Vaishali Nagar, Jaipur", "website": "https://marudhardentalclinic.com",
+    "business_type": "dentist", "reviews": 1150, "rating": "4.9",
+    "hours": "Mo-Sa 09:30-14:00,17:30-20:00",
+}
+OLIVE_GREEN = {
+    "label": "Olive Green Dental", "number": "+91 8112276936",
+    "area": "Vaishali Nagar, Jaipur", "website": "https://olivegreendental.com",
+    "business_type": "dentist",
+}
 
 # Every one of these was in a daily call list and cannot buy anything.
 GOVERNMENT_NAMES = [
@@ -186,3 +202,181 @@ def test_infer_type_admits_when_it_does_not_know():
 def test_describe_falls_back_to_the_name_when_no_type_tag_exists():
     """A row with only a label still has to say what the place is."""
     assert describe({"label": "Elegance Dental Clinic"}) == "Dental clinic · no website"
+
+
+# --- Ranking ---------------------------------------------------------------
+
+def test_ranking_matches_real_clients():
+    """The two clinics that actually bought must not sink.
+
+    This is a guardrail, not a validation: n=2 proves nothing about the
+    weights. It only fails loudly if a future weight change buries the exact
+    profile that has already converted twice.
+    """
+    for client in (MARUDHAR, OLIVE_GREEN):
+        r = rank(client)
+        assert r["tier"] == "A", f"{client['label']} fell to {r['tier']}: {r['reasons']}"
+
+    generic = rank({"label": "Poly Clinic", "number": "0731-2551733", "area": "Indore"})
+    assert rank(MARUDHAR)["score"] > generic["score"]
+    assert rank(OLIVE_GREEN)["score"] > generic["score"]
+
+
+def test_tier_a_needs_both_reach_and_fit():
+    r = rank({"label": "Elegance Dental Clinic", "number": "9009822818",
+              "business_type": "dentist"})
+    assert r["tier"] == "A"
+
+
+def test_a_dental_clinic_on_a_landline_is_only_tier_b():
+    """The landline reaches the front desk, which cannot buy."""
+    r = rank({"label": "Dental Concepts", "number": "011-26499400",
+              "business_type": "dentist"})
+    assert r["tier"] == "B"
+    assert any("front desk" in x for x in r["reasons"])
+
+
+def test_a_mobile_non_dental_clinic_is_only_tier_b():
+    r = rank({"label": "Muskaan Clinic", "number": "9811147070",
+              "business_type": "clinic"})
+    assert r["tier"] == "B"
+
+
+def test_landline_non_dental_is_tier_c():
+    r = rank({"label": "Star Diagnostic Center", "number": "0731-2551733"})
+    assert r["tier"] == "C"
+
+
+def test_a_chain_is_never_tier_a_however_good_it_looks():
+    """Same authority test that removed the dispensaries: a branch cannot buy."""
+    r = rank({"label": "Clove Dental", "number": "9811111111",
+              "area": "Delhi", "business_type": "dentist", "website": "https://x.in",
+              "reviews": 400})
+    assert r["tier"] != "A"
+    assert any("centrally" in x for x in r["reasons"])
+
+
+def test_missing_data_is_never_a_penalty():
+    """A source that gave no reviews is not evidence of an unpopular clinic.
+
+    A bare row must score no worse than the same row with the optional fields
+    explicitly empty, and must never go negative on absence alone.
+    """
+    bare = rank({"label": "Elegance Dental Clinic", "number": "9009822818"})
+    empty = rank({"label": "Elegance Dental Clinic", "number": "9009822818",
+                  "website": "", "reviews": "", "rating": "", "hours": "", "area": ""})
+    assert bare["score"] == empty["score"]
+    assert bare["score"] > 0
+
+
+def test_reviews_and_website_are_bonus_only():
+    base = rank({"label": "X Dental", "number": "9811111111"})["score"]
+    busy = rank({"label": "X Dental", "number": "9811111111", "reviews": 300})["score"]
+    sited = rank({"label": "X Dental", "number": "9811111111",
+                  "website": "https://x.in"})["score"]
+    assert busy > base and sited > base
+
+
+def test_website_counts_in_favour_not_against():
+    """Both paying clients had one, and this is a phone product, not a web one.
+
+    The old acquisition README prioritised clinics WITHOUT a website; that
+    belonged to the earlier free-website-chatbot offer.
+    """
+    r = rank({"label": "X Dental", "number": "9811111111", "website": "https://x.in"})
+    assert any("website" in x for x in r["reasons"])
+
+
+def test_a_mid_day_shutdown_is_recognised():
+    """Marudhar, a paying client, runs 09:30-14:00 and 17:30-20:00."""
+    r = rank({"label": "X Dental", "number": "9811111111",
+              "hours": "Mo-Sa 09:30-14:00,17:30-20:00"})
+    assert any("shuts mid-day" in x for x in r["reasons"])
+
+    straight = rank({"label": "X Dental", "number": "9811111111",
+                     "hours": "Mo-Su 09:00-21:00"})
+    assert not any("shuts mid-day" in x for x in straight["reasons"])
+
+
+def test_local_cities_get_the_local_angle():
+    for area, city in (("Vaishali Nagar, Jaipur", "Jaipur"), ("Saket, Delhi", "Delhi")):
+        r = rank({"label": "X Dental", "number": "9811111111", "area": area})
+        assert any(city in x for x in r["reasons"])
+
+    away = rank({"label": "X Dental", "number": "9811111111", "area": "nanda nagar, Indore"})
+    assert not any("local angle" in x for x in away["reasons"])
+
+
+def test_an_owner_named_clinic_scores_above_an_anonymous_one():
+    named = rank({"label": "Doctor Dubey's Dental Clinic", "number": "9811111111"})
+    anon = rank({"label": "Dental Concepts", "number": "9811111111"})
+    assert named["score"] > anon["score"]
+
+
+def test_sort_key_puts_tiers_in_order_regardless_of_score():
+    """A high-scoring B must never outrank an A. Tier is the defensible part."""
+    a = {"tier": "A", "score": 1}
+    b = {"tier": "B", "score": 99}
+    c = {"tier": "C", "score": 50}
+    assert [r["tier"] for r in sorted([c, b, a], key=sort_key)] == ["A", "B", "C"]
+
+
+def test_sort_is_stable_for_equal_rows():
+    rows = [{"tier": "A", "score": 5, "label": str(i)} for i in range(5)]
+    assert [r["label"] for r in sorted(rows, key=sort_key)] == ["0", "1", "2", "3", "4"]
+
+
+def test_sort_key_tolerates_a_row_that_was_never_scored():
+    """Hand-pasted rows reach the panel with no tier at all."""
+    rows = [{"tier": "A", "score": 5}, {}, {"tier": "B", "score": 1}]
+    assert [r.get("tier") for r in sorted(rows, key=sort_key)] == ["A", "B", None]
+
+
+@pytest.mark.parametrize("number,label", [
+    ("07312551733", "Indore 0731"),
+    ("07314001400", "Indore 0731"),
+    ("07312550202", "Indore 0731"),
+    ("07123456789", "Nagpur 0712"),
+    ("08012345678", "Bangalore 080"),
+    ("07912345678", "Ahmedabad 079"),
+    ("06123456789", "Patna 0612"),
+])
+def test_a_trunk_dialled_landline_gets_no_whatsapp(number, label):
+    """These reach a stranger, and cold WhatsApp to strangers is what gets the
+    personal number banned. 49 of 395 rows in public/calls were like this."""
+    from lead_quality import whatsapp_digits
+    assert whatsapp_digits(number) == "", label
+
+
+@pytest.mark.parametrize("number,expected", [
+    ("097838 11114", "919783811114"),   # real mobile with a trunk 0
+    ("094225 66929", "919422566929"),
+    ("9009822818", "919009822818"),     # plain 10-digit mobile
+    ("+91 9636180333", "919636180333"),  # Marudhar, a paying client
+    ("+91 8112276936", "918112276936"),  # Olive Green, a paying client
+])
+def test_real_mobiles_still_get_whatsapp(number, expected):
+    from lead_quality import whatsapp_digits
+    assert whatsapp_digits(number) == expected
+
+
+def test_a_landline_is_not_scored_as_the_owners_mobile():
+    """The bug fed the ranking too: 0731 numbers read as 'mobile, likely the
+    owner' and were promoted to tier A on it."""
+    r = rank({"label": "Surana Dental Clinic", "number": "07312571793",
+              "business_type": "dentist"})
+    assert r["tier"] == "B"
+    assert any("front desk" in x for x in r["reasons"])
+
+
+def test_mobile_detection_matches_the_generator():
+    """rank() re-implements to_whatsapp so it can score un-generated rows.
+
+    If the two drift, ranking and the [wa] button disagree about the same
+    number, which is exactly the sort of split nobody notices.
+    """
+    import build_call_list as b
+    from lead_quality import _whatsapp_digits
+    for n in ("+91 9636180333", "+91 8112276936", "011-26499400", "9009822818",
+              "07312551733", "+9101127054943", "", "12345", "0-91-11-4142-1000"):
+        assert _whatsapp_digits(n) == b.to_whatsapp(n), n

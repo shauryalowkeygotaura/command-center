@@ -17,8 +17,34 @@ export interface CallEntry {
   // file at all — they were 23% of it before the gate existed — so this is not
   // a filter, only a warning that a chain buys centrally.
   kind?: string;
+  // "A" | "B" | "C", from scripts/lead_quality.py rank(). The day usually runs
+  // out before the list does, so the order is the product.
+  //
+  // The tier is definitional, not a prediction: A means the call can reach
+  // someone with the authority to say yes AND the pitch lands on this kind of
+  // business, B means one of those, C means neither. Same test that removed
+  // the government listings — a civil dispensary fails both.
+  tier?: string;
+  // Breaks ties inside a tier. Its weights are stated priors, NOT measured
+  // against outcomes, which is why `reasons` travels with it.
+  score?: number;
+  reasons?: string[];
   called: boolean;
   dueDate: string; // YYYY-MM-DD
+}
+
+/** Call-sheet order: tier first, then score, best at the top.
+ *  Tier leads because it is the part that is actually defensible; the score
+ *  only arranges rows that pass or fail the same two tests. Rows with no tier
+ *  (pasted by hand) sort with C rather than to the very bottom — a number you
+ *  typed in yourself was deliberate. Stable, so equal rows keep their order. */
+const TIER_ORDER: Record<string, number> = { A: 0, B: 1, C: 2 };
+
+export function byRank(a: CallEntry, b: CallEntry): number {
+  const ta = TIER_ORDER[a.tier ?? "C"] ?? 2;
+  const tb = TIER_ORDER[b.tier ?? "C"] ?? 2;
+  if (ta !== tb) return ta - tb;
+  return (b.score ?? 0) - (a.score ?? 0);
 }
 
 export const CALL_TARGET = 50;

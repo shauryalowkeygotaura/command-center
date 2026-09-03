@@ -64,7 +64,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-from lead_quality import classify, describe
+from lead_quality import classify, describe, rank, sort_key, whatsapp_digits
 
 CITIES = [
     c.strip()
@@ -79,6 +79,16 @@ QUERIES = [
     if q.strip()
 ]
 TARGET = int(os.environ.get("CALL_TARGET", "50"))
+
+# Candidates gathered before ranking, as a multiple of TARGET.
+#
+# Ranking only means something if there is something to rank. Collection
+# used to stop the instant it had TARGET rows, so the day's 50 were the
+# first 50 the scraper happened to return - Overpass order, which is
+# arbitrary. Gathering a wider pool from the SAME queries costs nothing
+# extra (one Overpass call already returns up to 200) and lets the best
+# 50 be chosen rather than the earliest 50.
+POOL_FACTOR = int(os.environ.get("CALL_POOL_FACTOR", "4"))
 
 # Days before a handed-out number may be offered again. This is a COOLDOWN, not
 # a retirement: the script cannot see which numbers were actually called (that
@@ -313,17 +323,13 @@ def phone_key(phone: str) -> str:
 
 
 def to_whatsapp(phone: str) -> str:
-    """Indian mobile -> 91XXXXXXXXXX for wa.me. Landlines return ''. """
-    d = re.sub(r"\D", "", phone)
-    if d.startswith("00"):
-        d = d[2:]
-    if len(d) == 12 and d.startswith("91") and d[2] in "6789":
-        return d
-    if len(d) == 10 and d[0] in "6789":
-        return "91" + d
-    if len(d) == 11 and d.startswith("0") and d[1] in "6789":
-        return "91" + d[1:]
-    return ""
+    """Indian mobile -> 91XXXXXXXXXX for wa.me. Landlines return ''.
+
+    One definition, in lead_quality, because rank() has to make the same
+    call on rows this generator never produced. A second copy here is how
+    the [wa] button and the ranking end up disagreeing about a number.
+    """
+    return whatsapp_digits(phone)
 
 
 class KeyRotator:
@@ -403,7 +409,8 @@ def fetch_query(query: str, city: str, rotator: KeyRotator) -> list[dict]:
 
 
 def _collect(items, seen: set[str], run_seen: set[str], out: list[dict],
-             rejected: dict[str, int] | None = None) -> None:
+             rejected: dict[str, int] | None = None,
+             limit: int | None = None) -> None:
     """Append fresh, phone-bearing, SELLABLE listings to `out`.
 
     The sellability gate is the point. Until it existed the only filter was
@@ -413,8 +420,9 @@ def _collect(items, seen: set[str], run_seen: set[str], out: list[dict],
     nodes, because civic imports carry numbers where private clinics do not,
     so "has a phone" actively selected FOR them.
     """
+    cap = TARGET if limit is None else limit
     for it in items:
-        if len(out) >= TARGET:
+        if len(out) >= cap:
             return
         phone = (it.get("phone") or "").strip()
         name = (it.get("title") or "").strip()
@@ -447,6 +455,9 @@ def _collect(items, seen: set[str], run_seen: set[str], out: list[dict],
             "description": describe(it, verdict),
             "kind": verdict.kind,
         })
+        # Scored on the source item, which still carries hours, rating and
+        # speciality that the emitted row drops.
+        out[-1].update(rank({**it, **out[-1]}, verdict))
 
 
 def main() -> None:
@@ -462,7 +473,7 @@ def main() -> None:
         print(f"{expired} previously-offered number(s) are past the "
               f"{OFFER_COOLDOWN_DAYS}-day cooldown and are eligible again")
     run_seen: set[str] = set()
-    out: list[dict] = []
+    pool: list[dict] = []
     # Counts by reject reason, printed at the end. Without this the gate is
     # invisible: a short list would look like a dry pond rather than a pond
     # that was mostly government all along.
@@ -475,22 +486,25 @@ def main() -> None:
     if not keys:
         print("No SERPAPI_KEYS / SERPAPI_KEY set — going straight to the OSM fallback.")
 
+    pool_target = max(TARGET, TARGET * POOL_FACTOR)
+
     for city in CITIES if rotator else []:
         for query in QUERIES:
-            if len(out) >= TARGET or rotator.current() is None:
+            if len(pool) >= pool_target or rotator.current() is None:
                 break
-            _collect(fetch_query(query, city, rotator), seen, run_seen, out, rejected)
-            print(f"  [maps] '{query} in {city}' -> running total {len(out)}")
-        if len(out) >= TARGET or rotator.current() is None:
+            _collect(fetch_query(query, city, rotator), seen, run_seen, pool,
+                     rejected, pool_target)
+            print(f"  [maps] '{query} in {city}' -> pool {len(pool)}")
+        if len(pool) >= pool_target or rotator.current() is None:
             break
 
     # OSM floor. Runs whenever SerpAPI could not fill the target — no keys,
     # spent quota, or a pond that has gone dry in these cities. Keyless, so it
     # cannot fail for budget reasons; the same dedupe applies, so it will not
     # re-surface a number that Maps already produced.
-    if len(out) < TARGET:
+    if len(pool) < pool_target:
         if rotator:
-            print(f"[osm] SerpAPI produced {len(out)}/{TARGET} — topping up from OpenStreetMap.")
+            print(f"[osm] SerpAPI produced {len(pool)}/{pool_target} — topping up from OpenStreetMap.")
         # Configured cities first, then the reserve pool, skipping any city
         # already named so a duplicate entry does not cost a wasted request.
         # Walking into the reserve is normal operation, not an error: it just
@@ -507,19 +521,19 @@ def main() -> None:
 
         deadline = time.monotonic() + OSM_BUDGET_S
         for city in CITIES + reserve:
-            if len(out) >= TARGET:
+            if len(pool) >= pool_target:
                 break
             if time.monotonic() > deadline:
                 # Partial list beats an overrunning job. Tomorrow's run starts
                 # at a different rotation offset and picks up where this left off.
                 print(f"  [osm] time budget ({OSM_BUDGET_S}s) reached — "
-                      f"stopping at {len(out)} leads, resuming tomorrow")
+                      f"stopping at {len(pool)} candidates, resuming tomorrow")
                 break
-            before = len(out)
-            _collect(fetch_osm(city), seen, run_seen, out, rejected)
-            gained = len(out) - before
+            before = len(pool)
+            _collect(fetch_osm(city), seen, run_seen, pool, rejected, pool_target)
+            gained = len(pool) - before
             if gained:
-                print(f"  [osm] after '{city}' -> running total {len(out)} (+{gained})")
+                print(f"  [osm] after '{city}' -> pool {len(pool)} (+{gained})")
             else:
                 print(f"  [osm] '{city}' fully worked already (0 fresh) — moving on")
 
@@ -527,20 +541,36 @@ def main() -> None:
         detail = ", ".join(f"{v} {k}" for k, v in sorted(rejected.items()))
         print(f"skipped {sum(rejected.values())} unsellable listing(s): {detail}")
 
-    if not out:
+    if not pool:
         print("No fresh leads found this run (pond may be exhausted in every city).")
         return
+
+    # Best first: tier, then score. Stable, so equal rows keep source order.
+    pool.sort(key=sort_key)
+    out = pool[:TARGET]
+    tiers: dict[str, int] = {}
+    for row in out:
+        tiers[row["tier"]] = tiers.get(row["tier"], 0) + 1
+    print("ranked %d candidates, keeping the top %d (%s)" % (
+        len(pool), len(out),
+        ", ".join("%s:%d" % kv for kv in sorted(tiers.items())) or "unranked"))
 
     today = datetime.date.today().isoformat()
     CALLS_DIR.mkdir(parents=True, exist_ok=True)
     dest = CALLS_DIR / f"{today}.json"
     dest.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # Re-stamp everything handed out today; keep prior stamps for the rest so
-    # each number ages out on its own schedule.
+    # Stamp ONLY the numbers actually written to today's file. run_seen also
+    # holds candidates that lost the ranking cut and listings rejected as
+    # unsellable; stamping those would retire numbers that were never shown
+    # to anyone, which is the exact mistake the cooldown exists to undo.
+    # Rejected government listings simply get re-fetched and re-filtered on a
+    # later run, which costs nothing.
     stamp = today_d.isoformat()
-    for key in run_seen:
-        offered[key] = stamp
+    for row in out:
+        key = phone_key(row["number"])
+        if key:
+            offered[key] = stamp
     SEEN_FILE.write_text(
         json.dumps(dict(sorted(offered.items())), indent=0, ensure_ascii=False),
         encoding="utf-8",
@@ -550,8 +580,8 @@ def main() -> None:
     chains = sum(1 for x in out if x.get("kind") == "chain")
     print(f"wrote {len(out)} fresh leads -> {dest}  ({wa} messageable on WhatsApp"
           + (f", {chains} chain" if chains else "") + ")")
-    print(f"offered pool now {len(offered)} numbers "
-          f"({len(seen) + len(run_seen)} inside the {OFFER_COOLDOWN_DAYS}-day cooldown)")
+    print("offered pool now %d numbers (%d inside the %d-day cooldown)"
+          % (len(offered), len(seen) + len(out), OFFER_COOLDOWN_DAYS))
 
 
 if __name__ == "__main__":

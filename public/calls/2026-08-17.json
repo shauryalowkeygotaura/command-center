@@ -1,12 +1,32 @@
 [
   {
+    "number": "25736101",
+    "label": "NGO Parivar Sewa Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
     "number": "25316450",
     "label": "DGD Chhawla",
     "whatsapp": "",
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25705777",
@@ -15,7 +35,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-23070962",
@@ -24,7 +49,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1128344111",
@@ -33,7 +63,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25875497",
@@ -42,7 +77,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "26783169",
@@ -51,7 +91,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25835843",
@@ -60,7 +105,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25654938",
@@ -69,7 +119,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25318152",
@@ -78,7 +133,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25365499",
@@ -87,7 +147,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28010977",
@@ -96,7 +161,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1125703157",
@@ -105,7 +175,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-28363348",
@@ -114,7 +189,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25315506",
@@ -123,7 +203,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-28523493",
@@ -132,7 +217,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25316651",
@@ -141,7 +231,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "28013068",
@@ -150,7 +245,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "26151641",
@@ -159,7 +259,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "25599437",
@@ -168,7 +273,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-25325584",
@@ -177,7 +287,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1122711407",
@@ -186,16 +301,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
-  },
-  {
-    "number": "25736101",
-    "label": "NGO Parivar Sewa Clinic",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-268010602",
@@ -204,6 +315,11 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   }
 ]

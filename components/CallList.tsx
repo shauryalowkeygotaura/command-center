@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CallEntry, CALL_TARGET, callStore, parseNumbers } from "@/lib/callList";
+import {
+  byRank,
+  CallEntry,
+  CALL_TARGET,
+  callStore,
+  parseNumbers,
+} from "@/lib/callList";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -18,13 +24,33 @@ const WA_MSG = (label?: string) =>
     label ? ` — set up for ${label}` : ""
   }. 2 clinics are already using it, and I can set a free demo up on your details. Can I talk to you about it sometime? Just want some feedback on it.`;
 
+// STD (landline) codes for every city the generator targets, minus the trunk 0.
+// Mirrors _STD_CODES in scripts/lead_quality.py, which is the source of truth.
+//
+// "0731-2551733" is an Indore landline; strip the trunk 0 and "7312551733" is
+// shaped exactly like a mobile in the 73xx series, so the old rule handed it a
+// wa.me link pointing at a stranger. 37 of 395 rows in public/calls were like
+// that. Cold WhatsApp to strangers is precisely what gets the personal number
+// banned, and losing a [wa] button costs nothing because the number is still
+// callable, so this errs toward landline on purpose.
+const STD_PREFIXES = [
+  "11", "20", "22", "33", "40", "44", "79", "80",
+  "141", "161", "172", "253", "261", "265", "422",
+  "484", "512", "522", "562", "612", "712", "731", "755",
+];
+
 /** Indian mobile -> wa.me digits (91XXXXXXXXXX). Landlines return "". */
 function waDigits(num: string): string {
   const d = num.replace(/\D/g, "");
   if (d.length === 10 && /^[6-9]/.test(d)) return "91" + d;
   if (d.length === 12 && d.startsWith("91") && /^[6-9]/.test(d.slice(2))) return d;
-  if (d.length === 11 && d.startsWith("0") && /^[6-9]/.test(d.slice(1)))
-    return "91" + d.slice(1);
+  if (d.length === 11 && d.startsWith("0") && /^[6-9]/.test(d.slice(1))) {
+    const rest = d.slice(1);
+    // A known STD code here means the trunk 0 was dialling a landline, not
+    // prefixing a mobile.
+    if (STD_PREFIXES.some((p) => rest.startsWith(p))) return "";
+    return "91" + rest;
+  }
   return "";
 }
 
@@ -38,7 +64,10 @@ function telHref(num: string): string {
 }
 
 function waHref(entry: CallEntry): string {
-  const wa = entry.whatsapp || waDigits(entry.number);
+  // Derived from the number every time. `entry.whatsapp` can be a value
+  // stored before the STD-code fix, i.e. a wa.me link to a stranger, and
+  // `stored || derived` would keep preferring it.
+  const wa = waDigits(entry.number);
   if (!wa) return "";
   return `https://wa.me/${wa}?text=${encodeURIComponent(WA_MSG(entry.label))}`;
 }
@@ -71,9 +100,15 @@ function normalize(list: CallEntry[]): CallEntry[] {
   const byId = new Map<string, CallEntry>();
   for (const e of list) {
     const id = e.id.startsWith("auto:") ? autoId(e.number) : e.id;
+    // whatsapp is DERIVED from the number, so it is recomputed on every load
+    // rather than trusted. Rows stored before the STD-code fix carry a wa.me
+    // link built from a landline, which points at a stranger; merging "keep
+    // whatever is already there" would leave those live in the browser
+    // forever, since the corrected daily file supplies an empty string and an
+    // empty string loses every `||`.
     const prev = byId.get(id);
     if (!prev) {
-      byId.set(id, { ...e, id });
+      byId.set(id, { ...e, id, whatsapp: waDigits(e.number) });
       continue;
     }
     byId.set(id, {
@@ -81,10 +116,16 @@ function normalize(list: CallEntry[]): CallEntry[] {
       called: prev.called || e.called,
       dueDate: prev.dueDate > e.dueDate ? prev.dueDate : e.dueDate,
       label: prev.label || e.label,
-      whatsapp: prev.whatsapp || e.whatsapp,
+      // From the SURVIVOR's number: `prev` is the row that is kept and
+      // displayed, and leadKey collapses two renderings of one number, so
+      // deriving from `e` could attach a link to a number nobody sees.
+      whatsapp: waDigits(prev.number),
       area: prev.area || e.area,
       description: prev.description || e.description,
       kind: prev.kind || e.kind,
+      tier: prev.tier || e.tier,
+      score: prev.score ?? e.score,
+      reasons: prev.reasons ?? e.reasons,
     });
   }
   return [...byId.values()];
@@ -97,6 +138,9 @@ type AutoLead = {
   area?: string;
   description?: string;
   kind?: string;
+  tier?: string;
+  score?: number;
+  reasons?: string[];
 };
 
 export function CallList({ today }: { today: string }) {
@@ -138,14 +182,17 @@ export function CallList({ today }: { today: string }) {
           const merged = prev.map((e) => {
             const x = incoming.get(e.id);
             if (!x) return e;
-            if (e.description && e.kind) return e;
+            if (e.description && e.kind && e.tier) return e;
             return {
               ...e,
               description: e.description || x.description,
               kind: e.kind || x.kind,
+              tier: e.tier || x.tier,
+              score: e.score ?? x.score,
+              reasons: e.reasons ?? x.reasons,
               label: e.label || x.label,
               area: e.area || x.area,
-              whatsapp: e.whatsapp || x.whatsapp,
+              whatsapp: waDigits(e.number),
             };
           });
           const ids = new Set(prev.map((e) => e.id));
@@ -155,10 +202,13 @@ export function CallList({ today }: { today: string }) {
               id,
               number: x.number,
               label: x.label,
-              whatsapp: x.whatsapp,
+              whatsapp: waDigits(x.number),
               area: x.area,
               description: x.description,
               kind: x.kind,
+              tier: x.tier,
+              score: x.score,
+              reasons: x.reasons,
               called: false,
               dueDate: today,
             }));
@@ -177,13 +227,16 @@ export function CallList({ today }: { today: string }) {
     if (mounted) callStore.save(entries);
   }, [entries, mounted]);
 
+  // Best first. The day runs out before the list does, so working top-down
+  // has to mean working the most promising numbers, not the ones the
+  // scraper happened to return first.
   const todays = useMemo(
-    () => entries.filter((e) => e.dueDate === today),
+    () => entries.filter((e) => e.dueDate === today).sort(byRank),
     [entries, today],
   );
   const called = todays.filter((e) => e.called).length;
   const pct = Math.min(100, (called / CALL_TARGET) * 100);
-  const messageable = todays.filter((e) => e.whatsapp || waDigits(e.number)).length;
+  const messageable = todays.filter((e) => waDigits(e.number)).length;
 
   function addBulk() {
     const parsed = parseNumbers(raw);
@@ -279,8 +332,17 @@ export function CallList({ today }: { today: string }) {
                 key={e.id}
                 className="group flex items-start gap-2 rounded px-2 py-1 hover:bg-panel-2"
               >
-                <span className="w-6 shrink-0 pt-1 text-right font-mono text-[10px] text-cream-dim">
-                  {i + 1}
+                <span
+                  title={
+                    e.reasons?.length
+                      ? e.reasons.join(" · ")
+                      : "no ranking data for this row"
+                  }
+                  className={`w-6 shrink-0 pt-1 text-right font-mono text-[10px] ${
+                    e.tier === "A" ? "text-burgundy-bright" : "text-cream-dim"
+                  }`}
+                >
+                  {e.tier ?? i + 1}
                 </span>
                 <button
                   aria-label={e.called ? "mark not done" : "mark done"}

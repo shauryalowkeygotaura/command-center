@@ -1,39 +1,34 @@
 [
   {
+    "number": "+917762019092",
+    "label": "Balaji Dental and Orthodontic Clinic",
+    "whatsapp": "917762019092",
+    "area": "Sri krishna nagar Road No 4, patna",
+    "website": "http://balajidentalbraces.com",
+    "description": "Orthodontist · has website",
+    "kind": "private",
+    "tier": "A",
+    "score": 7,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
+  },
+  {
     "number": "+91 93007 72999",
     "label": "Smile Bhopal",
     "whatsapp": "919300772999",
     "area": "",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 712 252 2448 x2544836",
-    "label": "Chandak Nursing Home",
-    "whatsapp": "",
-    "area": "Sitabuldi",
-    "website": "https://www.chandaknursinghome.com/",
-    "description": "has website",
-    "kind": "private"
-  },
-  {
-    "number": "09970813734",
-    "label": "Pettewar Clinic",
-    "whatsapp": "919970813734",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 73870 91444",
-    "label": "Mudita Clinic",
-    "whatsapp": "917387091444",
-    "area": "Katol Road, Nagpur",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
   },
   {
     "number": "+918275284636",
@@ -42,43 +37,13 @@
     "area": "Katol Road, Nagpur",
     "website": "",
     "description": "Dental clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 9135426327",
-    "label": "Perfect Vision Eye Clinic",
-    "whatsapp": "919135426327",
-    "area": "Canal Road",
-    "website": "",
-    "description": "Optician · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+917762019092",
-    "label": "Balaji Dental and Orthodontic Clinic",
-    "whatsapp": "917762019092",
-    "area": "Sri krishna nagar Road No 4, patna",
-    "website": "http://balajidentalbraces.com",
-    "description": "Orthodontist · has website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 2522748",
-    "label": "Harsh Clinic",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
-  },
-  {
-    "number": "+91 72609 56035",
-    "label": "Vellore ENT Centre",
-    "whatsapp": "917260956035",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
   },
   {
     "number": "+91-8755053777",
@@ -87,7 +52,14 @@
     "area": "Mahatma Gandhi Road, Near St. Johns college, Agra",
     "website": "https://www.traumaandjointcentre.com/traumaandjointcentre",
     "description": "Clinic · has website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 5,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
   },
   {
     "number": "094574 00601",
@@ -96,6 +68,102 @@
     "area": "Alka Kunj, Kamla Nagar, Agra Towards Kaveri Mandir, from Main Market, Chauraha, Agra",
     "website": "https://mahi-homoeopathic-clinic.grexa.site/",
     "description": "Homeopathy clinic · has website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "B",
+    "score": 5,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "09970813734",
+    "label": "Pettewar Clinic",
+    "whatsapp": "919970813734",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 73870 91444",
+    "label": "Mudita Clinic",
+    "whatsapp": "917387091444",
+    "area": "Katol Road, Nagpur",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 72609 56035",
+    "label": "Vellore ENT Centre",
+    "whatsapp": "917260956035",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 9135426327",
+    "label": "Perfect Vision Eye Clinic",
+    "whatsapp": "919135426327",
+    "area": "Canal Road",
+    "website": "",
+    "description": "Optician · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 3,
+    "reasons": [
+      "mobile, likely the owner"
+    ]
+  },
+  {
+    "number": "+91 712 252 2448 x2544836",
+    "label": "Chandak Nursing Home",
+    "whatsapp": "",
+    "area": "Sitabuldi",
+    "website": "https://www.chandaknursinghome.com/",
+    "description": "has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 2522748",
+    "label": "Harsh Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
   }
 ]

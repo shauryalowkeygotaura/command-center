@@ -1,12 +1,33 @@
 [
   {
+    "number": "011-23646786",
+    "label": "Dr. Munjal Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
     "number": "1123532753",
     "label": "DGD Pulbangash",
     "whatsapp": "",
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "23243145",
@@ -15,7 +36,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "27843924",
@@ -24,7 +50,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "27781004",
@@ -33,7 +64,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1122612490",
@@ -42,7 +78,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-26658444",
@@ -51,7 +92,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-29051383",
@@ -60,7 +106,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-22752593",
@@ -69,7 +120,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "27700432",
@@ -78,16 +134,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
-  },
-  {
-    "number": "011-23646786",
-    "label": "Dr. Munjal Clinic",
-    "whatsapp": "",
-    "area": "",
-    "website": "",
-    "description": "Clinic · no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-266653171",
@@ -96,7 +148,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1123810659",
@@ -105,7 +162,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-22476176",
@@ -114,7 +176,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-23622310",
@@ -123,7 +190,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "1122484941",
@@ -132,7 +204,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "011-22458500",
@@ -141,7 +218,12 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   },
   {
     "number": "27248806",
@@ -150,6 +232,11 @@
     "area": "",
     "website": "",
     "description": "no website",
-    "kind": "private"
+    "kind": "private",
+    "tier": "C",
+    "score": 0,
+    "reasons": [
+      "landline, likely the front desk"
+    ]
   }
 ]

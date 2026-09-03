@@ -2,6 +2,8 @@
 
     python -m pytest scripts/test_build_call_list.py -q
 """
+import json
+
 import build_call_list as b
 
 
@@ -71,6 +73,77 @@ def test_osm_operator_type_is_honoured():
 def test_listing_without_a_phone_is_still_skipped():
     out, rejected = _run([dict(PRIVATE, phone="")])
     assert out == [] and rejected == {}
+
+
+def test_collect_scores_every_row_it_keeps():
+    out, _ = _run([PRIVATE])
+    row = out[0]
+    assert row["tier"] == "A"
+    assert isinstance(row["score"], int)
+    assert any("dental" in r for r in row["reasons"])
+
+
+def test_collect_scores_from_the_source_item_not_just_the_emitted_row():
+    """hours/rating/speciality are dropped from the emitted row, so the score
+    has to be taken while the richer source item is still in hand."""
+    out, _ = _run([dict(PRIVATE, hours="Mo-Sa 09:30-14:00,17:30-20:00")])
+    assert any("shuts mid-day" in r for r in out[0]["reasons"])
+
+
+def test_collect_honours_an_explicit_limit():
+    items = [dict(PRIVATE, phone="90098228%02d" % i, title="Clinic %d" % i)
+             for i in range(10)]
+    out, rejected = [], {}
+    b._collect(items, set(), set(), out, rejected, 3)
+    assert len(out) == 3
+
+
+def test_main_ranks_a_pool_and_keeps_only_the_best(tmp_path, monkeypatch, capsys):
+    """End to end: gather more than TARGET, rank, cut, and stamp ONLY what was
+    handed over. Stamping the losers would retire numbers nobody ever saw,
+    which is the mistake the 14-day cooldown exists to undo."""
+    monkeypatch.setattr(b, "CALLS_DIR", tmp_path)
+    monkeypatch.setattr(b, "SEEN_FILE", tmp_path / "_seen.json")
+    monkeypatch.setattr(b, "load_keys", lambda: [])
+    monkeypatch.setattr(b, "CITIES", ["Testville"])
+    monkeypatch.setattr(b, "FALLBACK_CITIES", [])
+    monkeypatch.setattr(b, "TARGET", 2)
+
+    candidates = [
+        # Two tier-A dental mobiles, the ones that should survive the cut.
+        {"title": "Best Dental Clinic", "phone": "9009822801", "address": "Jaipur",
+         "website": "https://a.in", "business_type": "dentist"},
+        {"title": "Good Dental Clinic", "phone": "9009822802", "address": "Indore",
+         "business_type": "dentist"},
+        # Weaker: landline, non-dental, and a chain.
+        {"title": "Some Clinic", "phone": "07312551733", "address": "Indore",
+         "business_type": "clinic"},
+        {"title": "Clove Dental", "phone": "9009822804", "address": "Delhi",
+         "business_type": "dentist"},
+        # Never a lead at all.
+        {"title": "CGHS Dispensary Inderpuri", "phone": "9009822805",
+         "address": "Delhi", "business_type": "clinic"},
+    ]
+    monkeypatch.setattr(b, "fetch_osm", lambda city: candidates)
+
+    b.main()
+
+    written = sorted(p for p in tmp_path.glob("*.json") if p.name != "_seen.json")
+    assert len(written) == 1
+    rows = json.loads(written[0].read_text(encoding="utf-8"))
+
+    assert len(rows) == 2, "TARGET must cap the file even though the pool was bigger"
+    assert [r["label"] for r in rows] == ["Best Dental Clinic", "Good Dental Clinic"]
+    assert all(r["tier"] == "A" for r in rows)
+
+    seen = json.loads((tmp_path / "_seen.json").read_text(encoding="utf-8"))
+    assert set(seen) == {"9009822801", "9009822802"}, (
+        "only the two emitted numbers may be stamped; the pool losers and the "
+        "rejected dispensary must stay available"
+    )
+
+    out = capsys.readouterr().out
+    assert "ranked" in out and "unsellable" in out
 
 
 def test_description_uses_the_serpapi_field_names_too():
