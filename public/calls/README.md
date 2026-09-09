@@ -59,6 +59,25 @@ Chains (Clove Dental, Apollo) are **labelled, not dropped** — `kind: "chain"`
 puts a badge on the row. They buy centrally, but that is a judgement about the
 offer, not a fact about the entity.
 
+## A lead leaves the list when you check it off, and at no other time
+
+Nothing expires, ages out, or gets trimmed. Uncalled numbers roll forward from
+every past day and sit there until they are worked. Ticking one drops it off
+and keeps it off; the ✕ button is the only other way out.
+
+The generator obeys the same rule. Ranking **reorders, it never discards** —
+it briefly kept only the top 50 and binned the rest, which threw away leads
+nobody had looked at. `CALL_TARGET` is the daily *goal* the meter counts
+against, not a cap on what may be kept, so anything past 50 sits below the fold
+rather than being deleted.
+
+That matters more than it sounds: as of 2026-09-04 the OSM pond holds **385
+distinct numbers and every one is inside the 14-day cooldown**. A discarded
+lead is not one that comes back tomorrow.
+
+The single exception is government listings, which are dropped outright. They
+are not leads (see below).
+
 ## Order: A, B, C
 
 The day runs out before the list does, so the order is the product. Rows are

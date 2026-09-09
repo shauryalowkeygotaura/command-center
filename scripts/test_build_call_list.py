@@ -98,10 +98,17 @@ def test_collect_honours_an_explicit_limit():
     assert len(out) == 3
 
 
-def test_main_ranks_a_pool_and_keeps_only_the_best(tmp_path, monkeypatch, capsys):
-    """End to end: gather more than TARGET, rank, cut, and stamp ONLY what was
-    handed over. Stamping the losers would retire numbers nobody ever saw,
-    which is the mistake the 14-day cooldown exists to undo."""
+def test_main_ranks_everything_and_discards_nothing(tmp_path, monkeypatch, capsys):
+    """End to end: gather more than TARGET, rank it, and keep ALL of it.
+
+    Ranking reorders, it never discards. Keeping only the top TARGET threw away
+    leads nobody had looked at, and with the OSM pond exhausted (385 numbers,
+    every one inside the cooldown as of 2026-09-04) a discarded lead is not one
+    that comes back tomorrow. A lead leaves the list when it is checked off and
+    at no other time.
+
+    Government listings are the one exception, and they are not leads.
+    """
     monkeypatch.setattr(b, "CALLS_DIR", tmp_path)
     monkeypatch.setattr(b, "SEEN_FILE", tmp_path / "_seen.json")
     monkeypatch.setattr(b, "load_keys", lambda: [])
@@ -132,14 +139,22 @@ def test_main_ranks_a_pool_and_keeps_only_the_best(tmp_path, monkeypatch, capsys
     assert len(written) == 1
     rows = json.loads(written[0].read_text(encoding="utf-8"))
 
-    assert len(rows) == 2, "TARGET must cap the file even though the pool was bigger"
-    assert [r["label"] for r in rows] == ["Best Dental Clinic", "Good Dental Clinic"]
-    assert all(r["tier"] == "A" for r in rows)
+    assert len(rows) == 4, (
+        "every sellable lead must survive, even with TARGET=2. Only the "
+        "government listing is dropped, and that was never a lead."
+    )
+    # Reordered best-first, not filtered: the two tier-A dental mobiles lead,
+    # the chain and the landline follow rather than being deleted.
+    assert [r["label"] for r in rows] == [
+        "Best Dental Clinic", "Good Dental Clinic", "Clove Dental", "Some Clinic",
+    ]
+    assert [r["tier"] for r in rows] == ["A", "A", "B", "C"]
+    assert "CGHS Dispensary Inderpuri" not in [r["label"] for r in rows]
 
     seen = json.loads((tmp_path / "_seen.json").read_text(encoding="utf-8"))
-    assert set(seen) == {"9009822801", "9009822802"}, (
-        "only the two emitted numbers may be stamped; the pool losers and the "
-        "rejected dispensary must stay available"
+    assert set(seen) == {"9009822801", "9009822802", "9009822804", "7312551733"}, (
+        "everything handed over is stamped; the rejected dispensary is not, so "
+        "it costs nothing to re-filter it next run"
     )
 
     out = capsys.readouterr().out

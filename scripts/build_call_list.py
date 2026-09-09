@@ -4,7 +4,7 @@ build_call_list.py - produce today's fresh clinic leads for the dashboard.
 
 Pulls local-business listings (dental clinics, dentists) from Google Maps via
 SerpAPI, dedupes against every lead ever emitted (public/calls/_seen.json), and
-writes the next TARGET fresh leads to ../public/calls/<today>.json. A number is
+writes every fresh lead it finds to ../public/calls/<today>.json, best first. A number is
 withheld only for CALL_OFFER_COOLDOWN_DAYS after it is handed out, not forever:
 being listed once is not evidence it was ever called, and the old permanent
 retirement burned entire cities of un-dialled numbers. The
@@ -505,6 +505,9 @@ def main() -> None:
     if len(pool) < pool_target:
         if rotator:
             print(f"[osm] SerpAPI produced {len(pool)}/{pool_target} — topping up from OpenStreetMap.")
+        # NOTE: pool_target bounds how much is GATHERED per run (Overpass
+        # calls cost time), never how much is kept. Everything gathered and
+        # sellable is written.
         # Configured cities first, then the reserve pool, skipping any city
         # already named so a duplicate entry does not cost a wasted request.
         # Walking into the reserve is normal operation, not an error: it just
@@ -546,14 +549,26 @@ def main() -> None:
         return
 
     # Best first: tier, then score. Stable, so equal rows keep source order.
+    #
+    # RANKING REORDERS, IT NEVER DISCARDS. This used to keep only the top
+    # TARGET and drop the rest, which quietly threw away leads nobody had
+    # looked at - and with the OSM pond exhausted (385 numbers, all inside
+    # the cooldown as of 2026-09-04) a discarded lead is not one that comes
+    # back tomorrow. A lead leaves the list when it is checked off, and at
+    # no other time.
+    #
+    # TARGET is the daily GOAL, not a cap on what may be kept. The panel
+    # shows the best first and meters progress against it; anything past 50
+    # sits below the fold rather than being deleted.
     pool.sort(key=sort_key)
-    out = pool[:TARGET]
+    out = pool
     tiers: dict[str, int] = {}
     for row in out:
         tiers[row["tier"]] = tiers.get(row["tier"], 0) + 1
-    print("ranked %d candidates, keeping the top %d (%s)" % (
-        len(pool), len(out),
-        ", ".join("%s:%d" % kv for kv in sorted(tiers.items())) or "unranked"))
+    print("ranked %d lead(s), best first (%s); daily target is %d" % (
+        len(out),
+        ", ".join("%s:%d" % kv for kv in sorted(tiers.items())) or "unranked",
+        TARGET))
 
     today = datetime.date.today().isoformat()
     CALLS_DIR.mkdir(parents=True, exist_ok=True)

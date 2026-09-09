@@ -180,8 +180,17 @@ export function CallList({ today }: { today: string }) {
     let cancelled = false;
 
     const loaded = normalize(callStore.load());
-    // Roll uncalled numbers from past days forward to today. Anything you
-    // ticked keeps its original date, so it drops off the list and stays off.
+    // A LEAD LEAVES THIS LIST WHEN IT IS CHECKED OFF, AND AT NO OTHER TIME.
+    //
+    // Uncalled numbers roll forward from every past day, so nothing ages out
+    // on its own; a number sits here until it is worked. Anything you ticked
+    // keeps its original date, drops off, and stays off. The ✕ button is the
+    // only other way out, and that is a deliberate press.
+    //
+    // The generator obeys the same rule: scripts/build_call_list.py ranks its
+    // candidates but never truncates them (it used to keep only the top 50 and
+    // silently bin the rest). If you are adding a cap, a cooldown, or an
+    // expiry here, that is the rule you are breaking.
     const rolled = loaded.map((e) =>
       !e.called && e.dueDate < today ? { ...e, dueDate: today } : e,
     );
