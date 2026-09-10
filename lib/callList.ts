@@ -165,6 +165,64 @@ export const callStore = {
   },
 };
 
+// Ids you removed with the ✕, remembered so the backfill below cannot bring
+// them back. Without this, "a lead leaves when you check it off" and "nothing
+// is lost" would contradict each other: the backfill would resurrect every row
+// you deliberately dismissed, every reload, forever.
+const DISMISSED_KEY = "revengine.command-center.calls.dismissed.v1";
+
+export const dismissedStore = {
+  load(): Set<string> {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const raw = window.localStorage.getItem(DISMISSED_KEY);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      return new Set(Array.isArray(parsed) ? parsed.filter((x) => typeof x === "string") : []);
+    } catch {
+      return new Set();
+    }
+  },
+  add(id: string): void {
+    if (typeof window === "undefined") return;
+    try {
+      const next = dismissedStore.load();
+      next.add(id);
+      window.localStorage.setItem(DISMISSED_KEY, JSON.stringify([...next]));
+    } catch {
+      // Same reasoning as save(): a lost tombstone is survivable, a throw in a
+      // click handler is not.
+    }
+  },
+};
+
+/** The last `days` dates ending today, newest first, as YYYY-MM-DD.
+ *
+ *  The panel used to fetch only today's file, so every lead published on a day
+ *  the dashboard was not opened was never seen at all — and _seen.json then
+ *  withheld those numbers for the whole 14-day cooldown, so they did not come
+ *  back either. Twelve daily files existed and one of them was ever read.
+ *
+ *  30, NOT 14. Fourteen would match the cooldown, and the tempting argument is
+ *  that anything older has already been re-offered into a newer file by now.
+ *  That argument holds only while the generator is still producing. As of
+ *  2026-09-04 the OSM pond is fully worked — 385 numbers, every one inside the
+ *  cooldown — so recent files are empty or absent and nothing is being
+ *  re-offered. A window equal to the cooldown would strand exactly the leads
+ *  from the period the generator went quiet, which is the period that matters.
+ *
+ *  Cost is 30 parallel requests for small static files, most of them 404s. */
+export function recentDates(today: string, days = 30): string[] {
+  const out: string[] = [];
+  const start = new Date(`${today}T00:00:00Z`);
+  if (Number.isNaN(start.getTime())) return [today];
+  for (let i = 0; i < days; i += 1) {
+    const d = new Date(start);
+    d.setUTCDate(d.getUTCDate() - i);
+    out.push(d.toISOString().slice(0, 10));
+  }
+  return out;
+}
+
 /** Pull one {number, label, description} per non-empty line from pasted text.
  *  Line shapes handled: "9636180333", "+91 96361 80333 Marudhar Dental",
  *  "9636180333, Olive Green". First phone-like run = number, rest = label.

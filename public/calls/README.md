@@ -75,6 +75,21 @@ That matters more than it sounds: as of 2026-09-04 the OSM pond holds **385
 distinct numbers and every one is inside the 14-day cooldown**. A discarded
 lead is not one that comes back tomorrow.
 
+**The panel reads the last 30 days of files, not just today's.** It used to
+fetch one file, so leads published on a day you did not open the dashboard were
+never seen at all, and `_seen.json` then withheld those numbers for the whole
+14-day cooldown so they did not come back either. Twelve daily files existed
+and exactly one of them was ever read. Anything from those days that you never
+worked now appears on your next visit.
+
+30 days rather than 14 on purpose. Fourteen would match the cooldown, on the
+argument that anything older has already been re-offered into a newer file. That
+holds only while the generator is still producing, and right now it is not, so
+a 14-day window would strand exactly the leads from the quiet stretch.
+
+The ✕ button writes a tombstone. A row you remove by hand stays removed;
+without that, the backfill would undo every dismissal on every reload.
+
 The single exception is government listings, which are dropped outright. They
 are not leads (see below).
 

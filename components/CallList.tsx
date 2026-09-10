@@ -7,10 +7,12 @@ import {
   CallOutcome,
   CALL_TARGET,
   callStore,
+  dismissedStore,
   outcomeExport,
   outcomeStats,
   OUTCOMES,
   parseNumbers,
+  recentDates,
 } from "@/lib/callList";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -197,16 +199,34 @@ export function CallList({ today }: { today: string }) {
     setEntries(rolled);
     setMounted(true);
 
-    // Auto-load today's leads written by the daily top-up (public/calls/<date>.json).
-    // Merges by deterministic id so check-off state survives reloads.
-    fetch(`${BASE}/calls/${today}.json`, { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((list: AutoLead[] | null) => {
-        if (cancelled || !Array.isArray(list)) return;
+    // Auto-load the leads the daily top-up publishes (public/calls/<date>.json).
+    //
+    // EVERY recent day, not only today. This fetched one file, so leads
+    // published on a day the dashboard was not opened were never seen at
+    // all, and _seen.json then withheld those numbers for the whole
+    // 14-day cooldown so they did not come back either. Twelve daily
+    // files existed and exactly one of them was ever read.
+    //
+    // Missing days 404 and resolve to null, which is the normal case.
+    Promise.all(
+      recentDates(today).map((date) =>
+        fetch(`${BASE}/calls/${date}.json`, { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+      ),
+    )
+      .then((files) =>
+        (files.filter(Array.isArray) as AutoLead[][]).flat(),
+      )
+      .then((list: AutoLead[]) => {
+        if (cancelled || !list.length) return;
         setEntries((prev) => {
+          // recentDates() is newest-first and Map keeps the LAST write
+          // per key, so reverse to let the freshest row win the id.
           const incoming = new Map(
-            list
+            [...list]
               .filter((x) => x && x.number)
+              .reverse()
               .map((x) => [autoId(x.number), x] as const),
           );
           // Backfill first. A row already in localStorage from an earlier load
@@ -231,8 +251,12 @@ export function CallList({ today }: { today: string }) {
             };
           });
           const ids = new Set(prev.map((e) => e.id));
+          // A row removed with the ✕ stays removed. Without the
+          // tombstone the backfill would undo every dismissal on every
+          // reload, which is its own kind of never-goes-away.
+          const dismissed = dismissedStore.load();
           const additions = [...incoming.entries()]
-            .filter(([id]) => !ids.has(id))
+            .filter(([id]) => !ids.has(id) && !dismissed.has(id))
             .map(([id, x]) => ({
               id,
               number: x.number,
@@ -560,9 +584,12 @@ export function CallList({ today }: { today: string }) {
                 )}
                 <button
                   aria-label="remove"
-                  onClick={() =>
-                    setEntries((prev) => prev.filter((x) => x.id !== e.id))
-                  }
+                  onClick={() => {
+                    // Tombstone first: the id has to outlive the row, or
+                    // the next backfill puts it straight back.
+                    dismissedStore.add(e.id);
+                    setEntries((prev) => prev.filter((x) => x.id !== e.id));
+                  }}
                   className="ml-auto font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
                 >
                   ✕
