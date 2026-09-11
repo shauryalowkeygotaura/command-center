@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Seniors AI Safety: Call Sheet</title>
+<style>
+  :root{
+    --bg:#faf6ef; --card:#fffdf9; --ink:#2b1d1d; --muted:#7a6a62;
+    --burgundy:#6b1f2a; --burgundy-soft:#f3e4e4; --line:#e6dbcd;
+    --ok:#1f6b3a; --warn:#8a5a00; --dead:#7a2222;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    padding-bottom:env(safe-area-inset-bottom)}
+  header{position:sticky;top:0;z-index:10;background:var(--burgundy);color:#fdf7ef;
+    padding:14px 16px 10px}
+  h1{margin:0;font-size:18px;letter-spacing:.01em}
+  .sub{font-size:13px;opacity:.82;margin-top:3px}
+  .bar{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:2px}
+  .bar button{flex:0 0 auto;border:1px solid rgba(255,255,255,.35);background:transparent;
+    color:#fdf7ef;border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer}
+  .bar button[aria-pressed="true"]{background:#fdf7ef;color:var(--burgundy);font-weight:600}
+  main{padding:12px 12px 90px;max-width:720px;margin:0 auto}
+  .notice{background:#fff5d6;border:1px solid #e8d79a;border-radius:10px;
+    padding:10px 12px;font-size:13.5px;margin-bottom:12px;color:#5c4a12}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:13px;margin-bottom:11px}
+  .card.done{opacity:.55}
+  .top{display:flex;gap:8px;align-items:flex-start}
+  .nm{font-weight:650;font-size:16.5px;flex:1;line-height:1.3}
+  .tags{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0 0}
+  .tag{font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;color:var(--muted);white-space:nowrap}
+  .tag.a{background:var(--burgundy-soft);color:var(--burgundy);border-color:#e3c9c9;font-weight:600}
+  .tag.hi{background:#e4f0e6;color:var(--ok);border-color:#c4dfc9;font-weight:600}
+  .tag.vc{background:#fdeaea;color:var(--dead);border-color:#f0cccc;font-weight:600}
+  .area{font-size:13.5px;color:var(--muted);margin-top:6px}
+  .desc{font-size:13px;color:var(--muted);margin-top:5px;font-style:italic}
+  .acts{display:flex;gap:8px;margin-top:11px}
+  .acts a{flex:1;text-align:center;text-decoration:none;border-radius:10px;padding:13px 8px;
+    font-weight:650;font-size:15px;min-height:48px;display:flex;align-items:center;
+    justify-content:center}
+  .call{background:var(--burgundy);color:#fff}
+  .wa{background:#e7f3e9;color:#14682f;border:1px solid #bfdcc6}
+  .num{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);margin-top:7px}
+  .outs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+  .outs button{border:1px solid var(--line);background:#fff;border-radius:9px;
+    padding:11px 6px;font-size:13.5px;cursor:pointer;min-height:44px;color:var(--ink)}
+  .outs button[aria-pressed="true"]{background:var(--burgundy);color:#fff;
+    border-color:var(--burgundy);font-weight:650}
+  .outs button.neg[aria-pressed="true"]{background:var(--dead);border-color:var(--dead)}
+  .outs button.pos[aria-pressed="true"]{background:var(--ok);border-color:var(--ok)}
+  footer{position:fixed;left:0;right:0;bottom:0;background:#fffdf9;
+    border-top:1px solid var(--line);padding:10px 12px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;
+    align-items:center;max-width:720px;margin:0 auto}
+  .prog{flex:1;font-size:13.5px;color:var(--muted)}
+  footer button{border:1px solid var(--burgundy);background:#fff;color:var(--burgundy);
+    border-radius:9px;padding:10px 13px;font-size:14px;font-weight:600;cursor:pointer;
+    min-height:44px}
+  #err{display:none;background:#fdeaea;color:var(--dead);border:1px solid #f0cccc;
+    border-radius:10px;padding:11px;font-size:14px;margin-bottom:12px}
+  dialog{border:1px solid var(--line);border-radius:12px;max-width:92vw;width:560px;padding:14px}
+  dialog textarea{width:100%;height:44vh;font:12px/1.45 ui-monospace,monospace;
+    border:1px solid var(--line);border-radius:8px;padding:9px}
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Safety for Seniors: Call Sheet</h1>
+  <div class="sub" id="sub">loading...</div>
+  <div class="bar" id="filters"></div>
+</header>
+
+<main>
+  <div id="err"></div>
+  <div class="notice" id="note"></div>
+  <div id="list"></div>
+</main>
+
+<footer>
+  <div class="prog" id="prog">0 of 0 called</div>
+  <button id="export">Export</button>
+  <button id="reset">Reset</button>
+</footer>
+
+<dialog id="dlg">
+  <p style="margin:0 0 8px;font-size:14px">Copy this into the vault to record the run.</p>
+  <textarea id="dump" readonly></textarea>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <button id="copy" style="flex:1;padding:11px;border-radius:9px;border:1px solid #6b1f2a;background:#6b1f2a;color:#fff;font-weight:600">Copy</button>
+    <button id="close" style="flex:1;padding:11px;border-radius:9px;border:1px solid #e6dbcd;background:#fff">Close</button>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+
+  // Same two-axis test as CallEntry.CallOutcome in the dashboard: REACH (did
+  // the call get past whoever picked up, to the person who can agree a date)
+  // and FIT (given it reached them, did a free session land). `dead` stays
+  // separate from `no-answer` on purpose: a wrong or disconnected number is a
+  // fault in MY scraper, not a rejection, and pooling them would make the
+  // scrape look fine while the pitch looked bad. Nothing here is human
+  // verified, so that distinction is the point.
+  var OUTCOMES = [
+    {v:"no-answer",    l:"no answer"},
+    {v:"dead",         l:"dead number",  cls:"neg"},
+    {v:"staff-only",   l:"staff only"},
+    {v:"manager-no",   l:"manager: no",  cls:"neg"},
+    {v:"manager-maybe",l:"manager: maybe"},
+    {v:"booked",       l:"BOOKED",       cls:"pos"}
+  ];
+
+  var KEY = "seniors-calls-v1";
+  var CACHE = "seniors-calls-data-v1";
+  var state = {}, entries = [], filter = "All", quotaWarned = false;
+
+  function esc(s){ return String(s == null ? "" : s); }
+
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      var v = raw ? JSON.parse(raw) : {};
+      return (v && typeof v === "object") ? v : {};
+    } catch (e) { return {}; }
+  }
+
+  // localStorage.setItem throws QuotaExceededError, and in Safari private mode
+  // it throws on ANY write. An uncaught throw here would kill the click
+  // handler and lose the tap, so failures degrade to a visible warning and the
+  // session keeps working in memory.
+  function save(){
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) {
+      if (!quotaWarned) {
+        quotaWarned = true;
+        showErr("Could not save to this device (storage full or private mode). "
+              + "Outcomes still work for this session, but export before closing the tab.");
+      }
+    }
+  }
+
+  function showErr(msg){
+    var el = document.getElementById("err");
+    el.textContent = msg;
+    el.style.display = "block";
+  }
+
+  function cities(){
+    var seen = [], i;
+    for (i = 0; i < entries.length; i++){
+      if (seen.indexOf(entries[i].city) === -1) seen.push(entries[i].city);
+    }
+    seen.sort();
+    return ["All"].concat(seen);
+  }
+
+  function visible(){
+    if (filter === "All") return entries;
+    return entries.filter(function(e){ return e.city === filter; });
+  }
+
+  function renderFilters(){
+    var bar = document.getElementById("filters");
+    bar.textContent = "";
+    cities().forEach(function(c){
+      var n = (c === "All" ? entries.length
+                           : entries.filter(function(e){ return e.city === c; }).length);
+      var b = document.createElement("button");
+      b.textContent = c + " (" + n + ")";
+      b.setAttribute("aria-pressed", String(c === filter));
+      b.addEventListener("click", function(){ filter = c; render(); });
+      bar.appendChild(b);
+    });
+  }
+
+  function tag(text, cls){
+    var s = document.createElement("span");
+    s.className = "tag" + (cls ? " " + cls : "");
+    s.textContent = text;
+    return s;
+  }
+
+  function card(e){
+    var st = state[e.id] || {};
+    var d = document.createElement("div");
+    d.className = "card" + (st.outcome ? " done" : "");
+
+    var top = document.createElement("div");
+    top.className = "top";
+    var nm = document.createElement("div");
+    nm.className = "nm";
+    nm.textContent = esc(e.name);
+    top.appendChild(nm);
+    d.appendChild(top);
+
+    var tags = document.createElement("div");
+    tags.className = "tags";
+    tags.appendChild(tag(e.tier === "A" ? "core area" : "metro", e.tier === "A" ? "a" : ""));
+    if (e.confidence === "high") tags.appendChild(tag("high confidence", "hi"));
+    else if (e.confidence) tags.appendChild(tag(e.confidence + " confidence"));
+    if (e.verifyCity) tags.appendChild(tag("VERIFY CITY", "vc"));
+    tags.appendChild(tag(e.city));
+    d.appendChild(tags);
+
+    if (e.area){
+      var a = document.createElement("div");
+      a.className = "area";
+      a.textContent = esc(e.area);
+      d.appendChild(a);
+    }
+    if (e.description){
+      var ds = document.createElement("div");
+      ds.className = "desc";
+      ds.textContent = esc(e.description);
+      d.appendChild(ds);
+    }
+
+    var acts = document.createElement("div");
+    acts.className = "acts";
+    var call = document.createElement("a");
+    call.className = "call";
+    call.href = "tel:" + encodeURIComponent(e.tel);
+    call.textContent = "Call";
+    call.addEventListener("click", function(){
+      var s = state[e.id] || {};
+      if (!s.attempted){
+        s.attempted = true;
+        s.attemptedAt = new Date().toISOString().slice(0, 10);
+        // Snapshot the ranking AS IT WAS at call time. Same reason as
+        // tierAtCall in the dashboard: the tiering rules will change, and
+        // comparing outcomes recorded under old rules against tiers
+        // recomputed under new ones answers a question nobody asked.
+        s.tierAtCall = e.tier;
+        s.confidenceAtCall = e.confidence;
+        state[e.id] = s;
+        save();
+      }
+    });
+    acts.appendChild(call);
+    if (e.whatsapp){
+      var w = document.createElement("a");
+      w.className = "wa";
+      w.target = "_blank";
+      w.rel = "noopener noreferrer";
+      w.href = "https://wa.me/" + encodeURIComponent(e.whatsapp);
+      w.textContent = "WhatsApp";
+      acts.appendChild(w);
+    }
+    d.appendChild(acts);
+
+    var num = document.createElement("div");
+    num.className = "num";
+    num.textContent = esc(e.phone) + (e.phoneAlt ? "   alt: " + esc(e.phoneAlt) : "");
+    d.appendChild(num);
+
+    var outs = document.createElement("div");
+    outs.className = "outs";
+    OUTCOMES.forEach(function(o){
+      var b = document.createElement("button");
+      b.className = o.cls || "";
+      b.textContent = o.l;
+      b.setAttribute("aria-pressed", String(st.outcome === o.v));
+      b.addEventListener("click", function(){
+        var s = state[e.id] || {};
+        s.outcome = (s.outcome === o.v) ? null : o.v;
+        if (s.outcome){
+          s.outcomeAt = new Date().toISOString().slice(0, 10);
+          if (!s.tierAtCall){ s.tierAtCall = e.tier; s.confidenceAtCall = e.confidence; }
+        }
+        state[e.id] = s;
+        save();
+        render();
+      });
+      outs.appendChild(b);
+    });
+    d.appendChild(outs);
+    return d;
+  }
+
+  function render(){
+    renderFilters();
+    var list = document.getElementById("list");
+    list.textContent = "";
+    var v = visible();
+    v.forEach(function(e){ list.appendChild(card(e)); });
+    var done = v.filter(function(e){
+      return state[e.id] && state[e.id].outcome;
+    }).length;
+    var booked = entries.filter(function(e){
+      return state[e.id] && state[e.id].outcome === "booked";
+    }).length;
+    document.getElementById("prog").textContent =
+      done + " of " + v.length + " done" + (booked ? "  ·  " + booked + " booked" : "");
+  }
+
+  function wire(){
+    document.getElementById("export").addEventListener("click", function(){
+      var out = entries.map(function(e){
+        var s = state[e.id] || {};
+        return { name:e.name, city:e.city, area:e.area, phone:e.phone,
+                 tier:e.tier, confidence:e.confidence,
+                 outcome:s.outcome || null, outcomeAt:s.outcomeAt || null,
+                 tierAtCall:s.tierAtCall || null,
+                 confidenceAtCall:s.confidenceAtCall || null };
+      });
+      document.getElementById("dump").value = JSON.stringify(
+        { campaign:"ai-safety-seniors", exported:new Date().toISOString().slice(0,10),
+          results:out }, null, 2);
+      document.getElementById("dlg").showModal();
+    });
+    document.getElementById("copy").addEventListener("click", function(){
+      var t = document.getElementById("dump");
+      t.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      if (navigator.clipboard) { navigator.clipboard.writeText(t.value).catch(function(){}); }
+    });
+    document.getElementById("close").addEventListener("click", function(){
+      document.getElementById("dlg").close();
+    });
+    document.getElementById("reset").addEventListener("click", function(){
+      if (!confirm("Clear every recorded outcome on this device?")) return;
+      state = {};
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      render();
+    });
+  }
+
+  // The fetch is a system boundary, and a cached copy can outlive a schema
+  // change. An entry with no `id` would collide with every other id-less entry
+  // on state[undefined], silently sharing one outcome between unrelated homes,
+  // so those are dropped rather than rendered.
+  function sanitize(data){
+    if (!data || !Array.isArray(data.entries)) return { list: [], dropped: 0 };
+    var list = [], dropped = 0, seen = {};
+    data.entries.forEach(function(e){
+      if (!e || typeof e !== "object" || !e.id || !e.tel || !e.name){ dropped++; return; }
+      if (seen[e.id]){ dropped++; return; }
+      seen[e.id] = true;
+      list.push(e);
+    });
+    return { list: list, dropped: dropped };
+  }
+
+  function boot(data){
+    var clean = sanitize(data);
+    entries = clean.list;
+    if (clean.dropped){
+      showErr(clean.dropped + " entr" + (clean.dropped === 1 ? "y was" : "ies were")
+            + " incomplete and hidden. Re-run emit_callsheet.py.");
+    }
+    if (!entries.length){
+      showErr("The call list loaded but contained no usable entries.");
+    }
+    document.getElementById("sub").textContent =
+      entries.length + " homes  ·  scraped " + ((data && data.generated) || "");
+    document.getElementById("note").textContent = (data && data.note) || "";
+    state = load();
+    render();
+  }
+
+  wire();
+  fetch("./seniors-calls.json", { cache: "no-cache" })
+    .then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function(d){
+      try { localStorage.setItem(CACHE, JSON.stringify(d)); } catch (e) {}
+      boot(d);
+    })
+    .catch(function(err){
+      // Offline or a bad deploy: fall back to the last good copy so the sheet
+      // still works standing outside a home with no signal.
+      var cached = null;
+      try { cached = JSON.parse(localStorage.getItem(CACHE) || "null"); } catch (e) {}
+      if (cached && cached.entries){
+        showErr("Offline. Showing the last loaded copy.");
+        boot(cached);
+      } else {
+        showErr("Could not load the call list (" + err.message
+              + "). Open this page once with a connection first.");
+        document.getElementById("sub").textContent = "failed to load";
+      }
+    });
+})();
+</script>
+</body>
+</html>
