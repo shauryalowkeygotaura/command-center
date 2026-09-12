@@ -1,0 +1,431 @@
+[
+  {
+    "number": "9752650505",
+    "label": "Family Dental Clinic",
+    "whatsapp": "919752650505",
+    "area": "",
+    "website": "https://familydentalcareindore.com/",
+    "description": "Dental clinic · has website",
+    "kind": "private",
+    "tier": "A",
+    "score": 8,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "has a website",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "9827240756",
+    "label": "Rashmi Dental Clinic",
+    "whatsapp": "919827240756",
+    "area": "Scheme No. 54, Vijay Nagar, Indore",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "A",
+    "score": 7,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "9826291309",
+    "label": "Mahendra Dental Clinic",
+    "whatsapp": "919826291309",
+    "area": "Opp. Golden gate near dairy king ,pooja sweets,scheme no. 54 vijay nagar, indore",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "A",
+    "score": 7,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "9425058561",
+    "label": "दांत एवं ऑर्थोडेंटिक चिकित्सा केंद्र - डॉ राकेश ठकराल",
+    "whatsapp": "919425058561",
+    "area": "Indore",
+    "website": "",
+    "description": "Dental clinic · no website · Mo-Sa 10:00-17:00",
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "+918893703600",
+    "label": "Gehm Clinic and Research Centre",
+    "whatsapp": "918893703600",
+    "area": "Lahiya Colony;Main Road, Indore",
+    "website": "www.gehmclinicresearchcentre.com",
+    "description": "Clinic · general physician · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "9827635579",
+    "label": "Dr. Pankaj Chauhan Physician",
+    "whatsapp": "919827635579",
+    "area": "Shivani nagar, Kabeet Khedi Road, Indore",
+    "website": "",
+    "description": "Clinic · Physiologist · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "owner-named",
+      "clinic, proof does not transfer",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "011-23646786",
+    "label": "Dr. Munjal Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "25599437",
+    "label": "DGD Vikaspuri",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-25325584",
+    "label": "DGD Tilangpur Kotla",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "1122711407",
+    "label": "DGD, Himmatpuri",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "25736101",
+    "label": "NGO Parivar Sewa Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-268010602",
+    "label": "DGD, Chattarpur",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "1123532753",
+    "label": "DGD Pulbangash",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "23243145",
+    "label": "DGD, Suiwalan",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "27843924",
+    "label": "DGD, Khera Kalan",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "27781004",
+    "label": "DGD Bhorgarh",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "1122612490",
+    "label": "DGD, Vasundhara Enclave",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-26658444",
+    "label": "DGD, Jonapur",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-29051383",
+    "label": "DGD, Dakshinpuri",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-22752593",
+    "label": "DGD Mayur Vihar Phase 1",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "27700432",
+    "label": "DGD, Holambi Kalan PH2",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-266653171",
+    "label": "DGD, Begumpur",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "1123810659",
+    "label": "DGD, Majnu Ka Tilla",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-22476176",
+    "label": "DGD Mandawali Fazalpur",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-23622310",
+    "label": "DGD, Nabi Karim",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "1122484941",
+    "label": "DGD, Pandav Nagar",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "011-22458500",
+    "label": "DGD, Jagatpuri",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "27248806",
+    "label": "DGD, Model Town",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  }
+]
