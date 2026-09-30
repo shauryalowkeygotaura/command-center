@@ -117,10 +117,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-dental-report-commit",
-    text: "P2 · SAY 'commit' for dental-receptionist report/: the day-7 and monthly generators (89 tests) have never been committed",
+    text: "P2 · SAY 'commit' for dental-receptionist: report/ (day-7 + monthly, 89 tests) and the new digest headline have never been committed",
     done: false,
     seeded: true,
-    note: "Built across the 24-25 Sep sessions and left untracked on purpose because I do not commit your LIVE product without a go-ahead. It is the code that produces the page you put in front of a doctor on day 7 and on the 1st of every month, and right now one bad delete loses it. Second risk: the structured `hours` blocks it needs live in the clinic configs, which are gitignored, so they exist only on this laptop. Reply `report = commit` (and `hours = back up to Doppler` if you want those off-machine too).",
+    note: "Built across the 24-25 Sep sessions and left untracked on purpose because I do not commit your LIVE product without a go-ahead. It is the code that produces the page you put in front of a doctor on day 7 and on the 1st of every month, and right now one bad delete loses it. Since 1 Oct the owner digest changes sit uncommitted beside it too: the email subject and WhatsApp push now lead with the most important item (emergency, then missed callbacks, then bookings) instead of 'see email for the full recap', with 8 new tests. Second risk: the structured `hours` blocks it needs live in the clinic configs, which are gitignored, so they exist only on this laptop. Reply `report = commit` (and `hours = back up to Doppler` if you want those off-machine too).",
   },
   {
     id: "h-portfolio-mic-bugs",
