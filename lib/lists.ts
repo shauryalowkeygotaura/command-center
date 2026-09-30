@@ -77,10 +77,12 @@ export function mergeChecklistSeed(
 //   h-proof-count), h-instagram-creds (dup of h-ca-instagram-creds),
 //   h-autoshop-ig-session (folded into h-instagram-login), h-fish-reference-clip
 //   (folded into h-fish-api-key), h-revengine-post-1 (folded into ig-autopost).
+// Retired 2026-09-25 (later): h-bandit-orphaned (resolved: the 134 reward rows
+//   carry no arm value, so relearning from zero is the only option).
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-sheetal-call",
-    text: "P1 · Take the Sat 26 Sep 10 AM call with Dr. Sheetal Badami yourself (meet.google.com/nhm-itqe-aqo)",
+    text: "P1 · Tell me how the Sat 26 Sep call with Dr. Sheetal Badami went (or that it did not happen)",
     done: false,
     seeded: true,
     note: "The bot flooded her: 16 replies between 17 and 24 Sep, 4 per run, because it re-answered every message in a 7-day window. It also gave her three different made-up reasons for not naming the '2 clinics' (patient privacy, students still in school, confidentiality agreements) and offered to set the demo up on her clinic, which she told you she no longer runs. Fixed in code (commit 8e8fb74) and her lead is now stage=handoff, so nothing automated reaches her again. On the call: open by owning the email mess in one line, and give her ONE straight answer on the clinics. She said she wants to give feedback, not buy; treat it as that. Reply `sheetal = done <what she said>`.",
@@ -100,11 +102,32 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-08-28: you asked me to personally handpick these, so this is judgement rather than a scrape. Deliverables/handpicked-dental-targets-2026-08-28.md. From 105 Delhi dental practices in OpenStreetMap only 24 publish a phone number, and I ranked those 24 on three signals chosen for YOUR situation. FIRST, MULTIPLE LISTED PHONE NUMBERS is the strongest buy signal in the set: a clinic publishing three or four numbers is one where calls are already scattered and somebody is juggling them, which is exactly the pain you sell into. Kalra Dental Specialities lists FOUR. Doctor Dubey and Muskaan list three. SECOND, WALKING DISTANCE FROM DPS RK PURAM: New Delhi Dental Centre is 1.0 km, you can go between classes, and a student walking in with the school-project framing converts differently from a cold DM. Nobody else selling this product can do that. THIRD, published opening hours, meaning they already think about when patients can reach them, so the out-of-hours question lands instead of confusing them. WHAT I COULD NOT CHECK: review text. A Google review saying you called three times and nobody picked up would beat all three of my signals combined, and it needs a Places API key with billing that you do not have enabled. If you enable one, re-rank on that and ignore my ordering. Verify each number before calling too, OSM is volunteer-maintained and can be stale. The doc also argues PHYSIOTHERAPY is a better next vertical than more dentists, because cannot-pick-up-mid-appointment is more obviously true for a physio. Reply `targets = walked <name>` or `targets = physio` if you want that pitch written.",
   },
   {
+    id: "h-t20-deadlines",
+    text: "P1 · T20 deadlines are slipping with nothing on the board: NASA Space Apps is 4-5 Oct, Diamond Challenge registration opened 16 Sep",
+    done: false,
+    seeded: true,
+    note: "Surfaced from Notes/todos.md, where these sat unseen. Space Apps (Delhi local) is the planned VayuVani v2 build weekend, this Sat-Sun, and its registration window was ~17 Jul, so first check whether you are even registered. Diamond Challenge 2027 needs a team of 2-4 registered (concept due 14 Jan 2027). Two more 'check in September' items never got checked: Rise 2027 cohort opening and Conrad (activation expected ~30 Oct). I can verify every date live and draft registrations, but registering and picking teammates is yours. Reply `t20 = spaceapps <registered|not> diamond <team names>`.",
+  },
+  {
     id: "h-revengine-linkedin-token",
     text: "P1 · LinkedIn autopost is NOT live: no LINKEDIN_* secrets in creative-studio/dev, and the minted token dies 14 Oct",
     note: "2026-08-15: OAuth is SOLVED. The dev app is created, Page-verified, both products added, and auth_linkedin.py (new, in Code/carousel-autoposter) runs the whole 3-legged flow and prints both values. A token was minted successfully. Author URN is urn:li:person:eHYDW8eXxZ and is not secret. THREE steps left. (1) Fix the Doppler binding FIRST: that directory currently resolves to client-acquisition-pipeline, not the creative-studio/dev its .doppler.yaml declares, so anything set now lands in the wrong project. Run `doppler setup --project creative-studio --config dev --no-interactive`, then confirm `doppler configure get project --plain` prints creative-studio. (2) In creative-studio/dev set LINKEDIN_ACCESS_TOKEN, LINKEDIN_AUTHOR_URN, LINKEDIN_TOKEN_EXPIRES=2026-10-14, POST_LINKEDIN=1, LINKEDIN_DRAFT=1. (3) Test in two stages: --dry-run renders only and never calls LinkedIn; then with LINKEDIN_DRAFT=1 the full path runs but lands as a draft on your profile instead of your feed. Clear LINKEDIN_DRAFT once a draft looks right. RECURRING: LinkedIn gives consumer apps no refresh token, so this token dies ~2026-10-14 and you re-run auth_linkedin.py every 60 days. That is ~30 seconds and does NOT mean touching the developer portal again, the app config is permanent. post_linkedin.py now warns from 10 days out and labels a 401 as likely expiry.",
     done: false,
     seeded: true,
+  },
+  {
+    id: "h-dental-report-commit",
+    text: "P2 · SAY 'commit' for dental-receptionist report/: the day-7 and monthly generators (89 tests) have never been committed",
+    done: false,
+    seeded: true,
+    note: "Built across the 24-25 Sep sessions and left untracked on purpose because I do not commit your LIVE product without a go-ahead. It is the code that produces the page you put in front of a doctor on day 7 and on the 1st of every month, and right now one bad delete loses it. Second risk: the structured `hours` blocks it needs live in the clinic configs, which are gitignored, so they exist only on this laptop. Reply `report = commit` (and `hours = back up to Doppler` if you want those off-machine too).",
+  },
+  {
+    id: "h-portfolio-mic-bugs",
+    text: "P2 · Portfolio mic works end to end on live for me. Tell me your browser/device and exactly what breaks for you",
+    done: false,
+    seeded: true,
+    note: "Verified 25 Sep with a fake-mic Chromium: transcribe, then voice reply, both fine on the live site. The missing head.glb (404) is the intended fallback, not the bug. So whatever you are seeing is device or browser specific and I cannot reproduce it blind. Reply `mic = <browser> <device> <what happens>`.",
   },
   {
     id: "h-dental-niche-risk",
@@ -142,13 +165,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-08-16: I found and fixed the reason your Instagram outreach has never sent a single DM. `instagram_handle` was being read by instagram.py and written to the leads sheet, but NOTHING IN THE CODE EVER SET IT — so resolve_handle returned None for every lead and every send was skipped, silently, regardless of INSTAGRAM_ENABLED. It now gets extracted from the business's own homepage during the scrape that was already happening (free, no new API). There is also a new daily A-tier queue: `python pipeline.py ig_queue` runs in CI and writes runs/ig_queue.json, ranking score>=7 leads across ALL cities with ties going to the least-messaged city, so it spreads instead of draining Jaipur. WHAT IS LEFT IS A JUDGEMENT CALL, NOT CODE. Sending needs a real IG account, and cold DMs from a cold account get soft-banned fast. So: use a warmed secondary, not your main. Post 5-10 things, follow ~20 dental accounts, like ~50 posts, and let it sit a few days BEFORE flipping INSTAGRAM_ENABLED=1. The cap is already set to 20 DMs/day with 45s spacing. ONE THING TO WEIGH: instagrapi drives the private API and Instagram does ban for it. The account is the thing at risk, so do not use one you would mind losing. Reply `ig = <handle> warmed` when it is ready, or `ig = skip` if you would rather not risk an account and I will leave the queue as a copy-paste list you send by hand.",
   },
   {
-    id: "h-bandit-orphaned",
-    text: "P2 · DECIDE: restore the old philosopher hook wording, or let the bandit relearn from zero",
-    done: false,
-    seeded: true,
-    note: "This is the one that needs YOUR call, not more code. philosopher-pipeline has a genuinely good self-improving bandit: phased so it degrades safely, exploration seeded from SHA-256 so runs stay reproducible. It has never learned anything, and the reason is worse than 'it was never turned on'. The ledger holds 161 rows and 134 of them DO carry real engagement rewards. Not one matches a hook in the current HOOKS list. The ledger says 'the words that shaped western thought.' and HOOKS now says 'the kind of words that hit at 3am.' The wording was rewritten at some point, and a bandit keyed on exact arm text cannot connect a reward to an arm that no longer exists. So it has been round-robinning while sitting on months of real data. Run `python -c \"import bandit,pipeline;print(bandit.loop_status(pipeline.HOOKS)['verdict'])\"` to see it say ORPHANED. Two options, both defensible: restore the old hook strings so 134 observations start counting immediately, or accept that learning restarts from zero because the new hooks are better writing. I did NOT choose for you. Reply `bandit = restore old hooks` or `bandit = start fresh`.",
-  },
-  {
     id: "h-ca-portfolio-os-duplication",
     text: "P2 · DECIDE what to do about portfolio-os existing twice (the answer to 'why is this in here twice')",
     done: false,
@@ -161,6 +177,20 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "Nobody can legally use it and you have no stated terms. Also gates the publikclip question: vendoring its AGPL code would force this repo to AGPL. Cleaner path is to invoke publikclip as a separate program, which keeps your code unencumbered.",
+  },
+  {
+    id: "h-brand-launchpad-stars",
+    text: "P3 · brand-launchpad: 3 clicks only you can make (social preview, pin repo, awesome-claude-code form)",
+    done: false,
+    seeded: true,
+    note: "Sitting in Notes/todos.md since June, never on this board. The GitHub API cannot upload a social preview or pin a repo, and awesome-claude-code accepts only its web issue form (a PR or gh there gets you banned). Paste-ready copy is in Projects/brand-launchpad-product/. The preview card is the biggest click-through lever whenever the link is shared. Reply `launchpad = done`.",
+  },
+  {
+    id: "h-football-yt-oauth",
+    text: "P3 · football-shorts-autopilot: one YouTube OAuth run is the ONLY thing between it and real uploads. Still want it?",
+    done: false,
+    seeded: true,
+    note: "It was folded into the faceless-channel decision below, but football shorts is its own channel and its own project: built, CI green, dry-running daily since June, and `uploader.is_dry()` forces dry mode while the YouTube creds are absent. auth_youtube.py is the one browser login it needs. The same creds would also make format-render's publish step real. Reply `football = go` and we do the login together, or `football = shelve` and I stop the daily dry runs.",
   },
   {
     id: "h-format-channel-decision",
@@ -329,5 +359,19 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "Nothing is broken: no vayuvani code reads Deepgram at all. It is just a misleading entry that looks like a secret.",
+  },
+  {
+    id: "h-gemini-image-key",
+    text: "P3 · Image generation has no working provider. The Gemini value you pasted (AQ.) is an ephemeral token, and it transited chat, so revoke it",
+    done: false,
+    seeded: true,
+    note: "nano-banana is built and blocked only on a real AIza key on a Cloud project with billing on (image models have ~0 free quota). That is also why covers fall back to the ink design. The security half matters more: revoke the AQ. token whether or not you ever make the key. Reply `gemini = key set` or `gemini = revoked, skip images`.",
+  },
+  {
+    id: "h-strix-docker",
+    text: "P3 · Strix pentest agent is installed but cannot run: Docker Desktop is stopped",
+    done: false,
+    seeded: true,
+    note: "Installed 10 Sep with ranked scan targets in Projects/strix/overview.md. It needs the Docker daemon running (29.2.1 is installed, just not started) and runs through Doppler with Groq. Only worth doing if you want your public repos scanned. Reply `strix = docker on` or `strix = drop`.",
   },
 ];
