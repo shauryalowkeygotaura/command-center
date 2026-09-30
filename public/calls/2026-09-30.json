@@ -1,0 +1,96 @@
+[
+  {
+    "number": "+917762019092",
+    "label": "Balaji Dental and Orthodontic Clinic",
+    "whatsapp": "917762019092",
+    "area": "Sri krishna nagar Road No 4, patna",
+    "website": "http://balajidentalbraces.com",
+    "description": "Dental clinic · orthodontics, dentist · has website · Mo-Fr 09:00-21:30",
+    "kind": "private",
+    "tier": "A",
+    "score": 7,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91-8755053777",
+    "label": "Centre For Trauma And Joint Replacement",
+    "whatsapp": "918755053777",
+    "area": "Mahatma Gandhi Road, Near St. Johns college, Agra",
+    "website": "https://www.traumaandjointcentre.com/traumaandjointcentre",
+    "description": "Clinic · Joint Replacement & Trauma Surgery, trauma · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website",
+      "shuts mid-day, the gap the pitch names"
+    ]
+  },
+  {
+    "number": "094574 00601",
+    "label": "Mahi Homeopathic Clinic And Research Centre",
+    "whatsapp": "919457400601",
+    "area": "Alka Kunj, Kamla Nagar, Agra Towards Kaveri Mandir, from Main Market, Chauraha, Agra",
+    "website": "https://mahi-homoeopathic-clinic.grexa.site/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "B",
+    "score": 5,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91 9135426327",
+    "label": "Perfect Vision Eye Clinic",
+    "whatsapp": "919135426327",
+    "area": "Canal Road",
+    "website": "",
+    "description": "Clinic · no website · Mo-Tu, Th-Sa 15:00-21:00",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 72609 56035",
+    "label": "Vellore ENT Centre",
+    "whatsapp": "917260956035",
+    "area": "",
+    "website": "",
+    "description": "Clinic · otolaryngology · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 2522748",
+    "label": "Harsh Clinic",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  }
+]
