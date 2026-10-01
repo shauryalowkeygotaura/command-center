@@ -72,6 +72,8 @@ export function mergeChecklistSeed(
 //   P1 = this week, money or a live person waiting. P2 = unblocks automation
 //   or closes a real risk. P3 = parked or nice to have. RULE: every time a
 //   handoff is added, re-rank the WHOLE list, not just prepend the new one.
+// Retired 2026-10-01: h-harvey-setup (Harvey's safeguards + desk were folded
+//   into client-acquisition-pipeline and the DESK tab; no separate agent to set up).
 // Retired 2026-09-25: all done items, h-format-engine-tpm-bug (info only),
 //   h-clipworks-doppler-slot (resolved), h-ca-verify-first-sends (superseded by
 //   h-proof-count), h-instagram-creds (dup of h-ca-instagram-creds),
@@ -149,13 +151,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "Full list mapped to your projects: Deliverables/github-student-pack-picks-2026-09-25.md. Doppler Team removes the 10-project cap you are stuck at; a domain gives the portfolio a real address and outreach a real sender (gmail cold email is part of why the Sheetal thread read as unserious); Sentry catches portfolio errors with replays; BrowserStack reproduces the mic bug on a real phone. Azure $100 and Stripe are 18+. Reply `pack = <picks>` and I wire each one.",
-  },
-  {
-    id: "h-harvey-setup",
-    text: "P2 · Finish Harvey: Gmail OAuth client, a free Reoon verifier key, confirm signals, then `harvey run`",
-    done: false,
-    seeded: true,
-    note: "Installed at Code/harvey and embedded in the new HARVEY tab here. Configured truthfully as you (student, school project), prospecting PHYSIO clinics in Delhi so it never mails the pipeline's dental leads, capped at 25% of your daily Claude quota (it runs on the same subscription as me), LinkedIn off, and every email waits in its Outbox for your approval. Its own Today screen lists the three setup steps. It has no client-count claim until you answer h-proof-count. Reply `harvey = running`.",
   },
   {
     id: "h-dental-niche-risk",
