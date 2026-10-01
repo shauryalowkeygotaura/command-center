@@ -15,6 +15,11 @@ import {
 
 type SyncStatus = "off" | "syncing" | "synced" | "error";
 
+// Minimum time "sync…" stays up (a 1s floor reads as "it saved", a 40ms flash
+// reads as an error), and how long a removed item can be restored.
+const MIN_SYNC_MS = 1000;
+const UNDO_MS = 5000;
+
 interface Store {
   load: () => ChecklistItem[];
   save: (items: ChecklistItem[]) => void;
@@ -61,11 +66,38 @@ export function Checklist({
   const gistRef = useRef("");
   const readyToPush = useRef(false);
   const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Game feel: which row just got ticked (hit stop), and whether the whole
+  // list was just cleared (boss stop). Both self-clear after their animation.
+  const [hitId, setHitId] = useState<string | null>(null);
+  const [boss, setBoss] = useState(false);
+  // Undo instead of confirm: the last removed item, restorable for UNDO_MS.
+  const [undo, setUndo] = useState<{ item: ChecklistItem; index: number } | null>(null);
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // A fast push flips "sync…" to "sync ✓" in a few ms, which reads as a glitch,
+  // not a save. Hold "syncing" for at least MIN_SYNC_MS so the confirmation is
+  // legible. The sequence number stops a delayed "synced" from overwriting a
+  // newer state (a later push or an error) that landed during the hold.
+  const syncStartedAt = useRef(0);
+  const syncSeq = useRef(0);
+  const beginSync = useCallback(() => {
+    syncStartedAt.current = Date.now();
+    syncSeq.current += 1;
+    setSyncState("syncing");
+  }, []);
+  const settleSync = useCallback((next: SyncStatus) => {
+    const seq = syncSeq.current;
+    if (next !== "synced") return setSyncState(next); // bad news is never delayed
+    const wait = Math.max(0, MIN_SYNC_MS - (Date.now() - syncStartedAt.current));
+    setTimeout(() => {
+      if (syncSeq.current === seq) setSyncState("synced");
+    }, wait);
+  }, []);
 
   // Pull remote, merge with whatever is local, adopt + push the result.
   const startSync = useCallback(
     async (token: string, local: ChecklistItem[]) => {
-      setSyncState("syncing");
+      beginSync();
       setSyncError("");
       try {
         await verifyOwner(token);
@@ -77,14 +109,15 @@ export function Checklist({
         setItems(merged);
         await pushInbox(token, gistId, merged);
         readyToPush.current = true;
-        setSyncState("synced");
+        settleSync("synced");
       } catch (e) {
         readyToPush.current = false;
+        syncSeq.current += 1;
         setSyncState("error");
         setSyncError(e instanceof Error ? e.message : "sync failed");
       }
     },
-    [],
+    [beginSync, settleSync],
   );
 
   useEffect(() => {
@@ -105,13 +138,23 @@ export function Checklist({
     if (sync && readyToPush.current && tokenRef.current && gistRef.current) {
       if (pushTimer.current) clearTimeout(pushTimer.current);
       pushTimer.current = setTimeout(() => {
-        setSyncState("syncing");
+        beginSync();
         pushInbox(tokenRef.current, gistRef.current, items)
-          .then(() => setSyncState("synced"))
-          .catch(() => setSyncState("error"));
+          .then(() => settleSync("synced"))
+          .catch(() => {
+            syncSeq.current += 1;
+            setSyncState("error");
+          });
       }, 2500);
     }
-  }, [items, mounted, store, sync]);
+  }, [items, mounted, store, sync, beginSync, settleSync]);
+
+  useEffect(
+    () => () => {
+      if (undoTimer.current) clearTimeout(undoTimer.current);
+    },
+    [],
+  );
 
   function stamp(p: Partial<ChecklistItem>): Partial<ChecklistItem> {
     return sync ? { ...p, updatedAt: new Date().toISOString() } : p;
@@ -133,10 +176,47 @@ export function Checklist({
     );
   }
 
+  function toggleDone(it: ChecklistItem) {
+    const completing = !it.done;
+    patch(it.id, { done: completing });
+    if (!completing) return;
+    setHitId(it.id);
+    setTimeout(() => setHitId((h) => (h === it.id ? null : h)), 260);
+    // Boss stop only when this tick clears the list, and only for lists with
+    // more than one item: clearing a single chore is not a boss fight.
+    const live = items.filter((x) => !x.deleted);
+    if (live.length > 1 && live.every((x) => x.id === it.id || x.done)) {
+      setBoss(true);
+      setTimeout(() => setBoss(false), 950);
+    }
+  }
+
   function remove(id: string) {
+    const index = items.findIndex((x) => x.id === id);
+    if (index < 0) return;
     // Synced lists tombstone (so the delete propagates); others hard-delete.
     if (sync) patch(id, { deleted: true });
     else setItems((prev) => prev.filter((x) => x.id !== id));
+    if (undoTimer.current) clearTimeout(undoTimer.current);
+    setUndo({ item: items[index], index });
+    undoTimer.current = setTimeout(() => setUndo(null), UNDO_MS);
+  }
+
+  function restore() {
+    if (!undo) return;
+    const { item, index } = undo;
+    if (sync) {
+      // Un-tombstone with a fresh stamp so the restore wins the merge.
+      patch(item.id, { deleted: false });
+    } else {
+      setItems((prev) => {
+        const next = [...prev];
+        next.splice(Math.min(index, next.length), 0, item);
+        return next;
+      });
+    }
+    if (undoTimer.current) clearTimeout(undoTimer.current);
+    setUndo(null);
   }
 
   function connectSync() {
@@ -198,7 +278,7 @@ export function Checklist({
           : null;
 
   return (
-    <section className="rounded-lg border border-line bg-panel">
+    <section className={`relative rounded-lg border border-line bg-panel ${boss ? "cc-boss" : ""}`}>
       <div className="flex items-center justify-between border-b border-line px-3 py-2">
         <span className="font-mono text-sm font-bold text-burgundy-bright">
           {title}
@@ -275,10 +355,10 @@ export function Checklist({
               <div className="flex items-start gap-2">
                 <button
                   aria-label={it.done ? "mark not done" : "mark done"}
-                  onClick={() => patch(it.id, { done: !it.done })}
+                  onClick={() => toggleDone(it)}
                   className={`mt-0.5 font-mono text-sm leading-none ${
                     it.done ? "text-burgundy-bright" : "text-cream-dim"
-                  }`}
+                  } ${hitId === it.id ? "cc-hit" : ""}`}
                 >
                   {/* ASCII on purpose: █ renders as a tofu box on phones whose
                       fallback font lacks the FULL BLOCK glyph */}
@@ -299,7 +379,9 @@ export function Checklist({
                 <button
                   aria-label="remove"
                   onClick={() => remove(it.id)}
-                  className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright"
+                  // Hover-only reveal is an invisible affordance on touch
+                  // screens (there is no hover), so show it dimmed there.
+                  className="font-mono text-xs text-cream-dim opacity-0 transition group-hover:opacity-100 hover:text-burgundy-bright focus-visible:opacity-100 [@media(hover:none)]:opacity-60"
                 >
                   ✕
                 </button>
@@ -345,6 +427,24 @@ export function Checklist({
             </li>
           ))}
         </ul>
+      )}
+
+      {undo && (
+        <div
+          role="status"
+          className="flex items-center justify-between gap-2 border-t border-line bg-panel-2 px-3 py-1.5"
+          style={{ animation: "cc-in 160ms ease-out" }}
+        >
+          <span className="truncate font-mono text-[11px] text-cream-dim">
+            removed “{undo.item.text}”
+          </span>
+          <button
+            onClick={restore}
+            className="shrink-0 font-mono text-[10px] uppercase tracking-wide text-amber transition hover:text-cream"
+          >
+            undo
+          </button>
+        </div>
       )}
 
       <form
