@@ -14,7 +14,7 @@ import raw from "@/data/lockin.json";
 import rawScores from "@/data/lockin-scores.json";
 import { HANDOFF_SEED } from "./lists";
 
-export type Track = "brand" | "seniors" | "clinic" | "t20" | "systems" | "handoff";
+export type Track = "private" | "brand" | "seniors" | "clinic" | "t20" | "systems" | "handoff";
 
 export interface LockItem {
   key: string; // done/outcome key: per-day items carry the date, persistent ones do not
@@ -225,10 +225,106 @@ export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set
     .sort((a, b) => b.rank - a.rank);
 }
 
+// ── PRIVATE items: browser-only, never in the repo ──────────────────────────
+// This repo and its Pages site are public, so personal routines (morning
+// formula, training, non-negotiables) are pasted in by Shaurya and kept in
+// localStorage only. They pin to the top of LOCK IN, are not AI-scored, and
+// are left out of "copy for claude" except as a done count.
+//
+// Format, one item per "- " line, indented lines underneath are its how-to:
+//   - Morning formula + Wim Hof + wall stare | 20
+//       read MORNING FORMULA.md out loud
+//   - Upper A @tue | 75
+// "| N" = minutes (optional). "@mon @thu" = only on those weekdays (optional).
+
+const PRIVATE_KEY = "revengine.command-center.lockin.private.v1";
+const WEEKDAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+export const privateStore = {
+  load(): string {
+    if (typeof window === "undefined") return "";
+    try {
+      return window.localStorage.getItem(PRIVATE_KEY) ?? "";
+    } catch {
+      return "";
+    }
+  },
+  save(text: string): void {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(PRIVATE_KEY, text);
+    } catch {
+      /* quota / private mode: the list just won't persist */
+    }
+  },
+};
+
+interface PrivateDef {
+  title: string;
+  minutes: number;
+  days: number[] | null; // null = every day
+  how: string[];
+}
+
+export function parsePrivate(text: string): PrivateDef[] {
+  const out: PrivateDef[] = [];
+  for (const line of text.split(/\r?\n/)) {
+    const m = line.match(/^\s*[-*]\s+(.+)$/);
+    if (m && !/^\s{2,}/.test(line)) {
+      let rest = m[1];
+      let minutes = 0;
+      const mm = rest.match(/\|\s*(\d+)\s*$/);
+      if (mm) {
+        minutes = Number(mm[1]);
+        rest = rest.slice(0, mm.index).trim();
+      }
+      const days: number[] = [];
+      rest = rest
+        .replace(/@(sun|mon|tue|wed|thu|fri|sat)\b/gi, (_, d: string) => {
+          days.push(WEEKDAYS.indexOf(d.toLowerCase()));
+          return "";
+        })
+        .replace(/\s{2,}/g, " ")
+        .trim();
+      if (rest) out.push({ title: rest, minutes, days: days.length ? days : null, how: [] });
+    } else if (line.trim() && out.length) {
+      out[out.length - 1].how.push(line.trim());
+    }
+  }
+  return out;
+}
+
+function slug(t: string): string {
+  return t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+}
+
+/** Today's private items, pinned above everything AI-ranked. */
+export function buildPrivate(todayISO: string, text: string): LockItem[] {
+  const dow = new Date(todayISO + "T00:00:00").getDay();
+  return parsePrivate(text)
+    .filter((p) => !p.days || p.days.includes(dow))
+    .map((p, i) => ({
+      key: `priv:${slug(p.title) || i}:${todayISO}`,
+      scoreKey: "",
+      track: "private" as Track,
+      title: p.title,
+      how: p.how,
+      minutes: p.minutes,
+      score: 10,
+      rank: 1000 - i, // keep the order you wrote them in
+    }));
+}
+
 /** Plain-text recap to paste back to Claude at the end of the day. */
 export function buildLockExport(todayISO: string, items: LockItem[], state: LockState): string {
   const lines = [`LOCK IN recap ${todayISO} (Day ${lockDayNumber(todayISO)})`, ""];
+  const priv = items.filter((it) => it.track === "private");
+  if (priv.length) {
+    const done = priv.filter((it) => state.done[it.key]).length;
+    lines.push(`private non-negotiables: ${done}/${priv.length} done (titles kept private)`);
+  }
   for (const it of items) {
+    if (it.track === "private") continue;
     const mark = state.done[it.key] ? "[x]" : "[ ]";
     const out = state.outcome[it.key]?.trim();
     lines.push(`${mark} ${it.key} | ${it.title}${out ? `\n    outcome: ${out}` : ""}`);
