@@ -27,6 +27,7 @@ import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 // long scroll. Only the active group mounts at a time.
 const TABS = [
   { id: "lockin", label: "LOCK IN" },
+  { id: "board", label: "BOARD" },
   { id: "planner", label: "PLANNER" },
   { id: "skills", label: "SKILL TREE" },
   { id: "sat", label: "SAT GRIND" },
@@ -107,12 +108,13 @@ export function Board() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <StatusBar todayISO={today} />
+      <StatusBar todayISO={today} done={doneCount} total={todays.length} />
 
       {mounted && (
         <TabNav
           tab={tab}
           onSelect={selectTab}
+          boardBadge={`${doneCount}/${todays.length}`}
         />
       )}
 
@@ -126,6 +128,39 @@ export function Board() {
         ) : (
           <>
             {tab === "lockin" && <LockIn />}
+
+            {tab === "board" && (
+              <div className="flex flex-col gap-6">
+                {/* progress meter — burgundy→amber gradient with a soft glow */}
+                <div className="h-1 w-full overflow-hidden rounded bg-line">
+                  <div
+                    className="h-full bg-gradient-to-r from-burgundy to-amber transition-all duration-300"
+                    style={{
+                      width: todays.length
+                        ? `${(doneCount / todays.length) * 100}%`
+                        : "0%",
+                      boxShadow: "0 0 8px rgba(255, 122, 26, 0.35)",
+                    }}
+                  />
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-3">
+                  {LANES.map((lane) => (
+                    <LaneColumn
+                      key={lane.id}
+                      lane={lane.id}
+                      label={lane.label}
+                      accent={lane.accent}
+                      tasks={todays.filter((t) => t.lane === lane.id)}
+                      onToggle={(id, done) => update(id, { done })}
+                      onEdit={(id, title) => update(id, { title })}
+                      onDelete={remove}
+                      onAdd={(title) => add(lane.id, title)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Planner reads tasks through props and toggles via update() —
                 Board owns the task store; a second writer would clobber it. */}
@@ -213,9 +248,11 @@ export function Board() {
 function TabNav({
   tab,
   onSelect,
+  boardBadge,
 }: {
   tab: TabId;
   onSelect: (id: TabId) => void;
+  boardBadge: string;
 }) {
   return (
     <nav className="sticky top-0 z-20 border-b border-line bg-ink/95 backdrop-blur">
@@ -234,6 +271,13 @@ function TabNav({
               }`}
             >
               <span>{t.label}</span>
+              {t.id === "board" && (
+                <span
+                  className={`tabular-nums ${active ? "text-cream/80" : "text-cream-dim"}`}
+                >
+                  {boardBadge}
+                </span>
+              )}
             </button>
           );
         })}
