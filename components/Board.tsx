@@ -18,12 +18,15 @@ import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
 import { SatGrind } from "./SatGrind";
 import { AngusIdeas } from "./AngusIdeas";
+import { HarveyDeck } from "./HarveyDeck";
+import { LockIn } from "./LockIn";
 import { DeadlineRail } from "./DeadlineRail";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
 // Section groups surfaced as a sticky tab bar so the board stops being one
 // long scroll. Only the active group mounts at a time.
 const TABS = [
+  { id: "lockin", label: "LOCK IN" },
   { id: "board", label: "BOARD" },
   { id: "planner", label: "PLANNER" },
   { id: "skills", label: "SKILL TREE" },
@@ -31,6 +34,7 @@ const TABS = [
   { id: "calls", label: "CALL LIST" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
+  { id: "harvey", label: "HARVEY" },
   { id: "angus", label: "ANGUS" },
   { id: "drops", label: "INBOX · KEYS" },
   { id: "handoffs", label: "HANDOFFS" },
@@ -42,7 +46,7 @@ const TAB_KEY = "cc.activeTab.v1";
 export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [tab, setTab] = useState<TabId>("board");
+  const [tab, setTab] = useState<TabId>("lockin");
   const today = useMemo(() => isoDate(), []);
 
   // Load → roll over yesterday's loose ends → seed today → persist.
@@ -54,9 +58,8 @@ export function Board() {
     const merged = mergeSeed(rolled, buildSeedTasks(today));
     setTasks(merged);
 
-    const saved = localStorage.getItem(TAB_KEY);
-    const match = TABS.find((t) => t.id === saved);
-    if (match) setTab(match.id);
+    // Lock-in mode: every visit opens on LOCK IN. The last-viewed tab is
+    // still saved, it is just no longer restored on load.
 
     setMounted(true);
   }, [today]);
@@ -124,6 +127,8 @@ export function Board() {
           <p className="font-mono text-sm text-cream-dim">loading board…</p>
         ) : (
           <>
+            {tab === "lockin" && <LockIn />}
+
             {tab === "board" && (
               <div className="flex flex-col gap-6">
                 {/* progress meter — burgundy→amber gradient with a soft glow */}
@@ -172,6 +177,8 @@ export function Board() {
             {tab === "sat" && <SatGrind />}
 
             {tab === "pipelines" && <PipelineOps />}
+
+            {tab === "harvey" && <HarveyDeck />}
 
             {tab === "angus" && <AngusIdeas />}
 

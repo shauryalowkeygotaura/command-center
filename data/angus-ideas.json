@@ -367,5 +367,14 @@
     "relevance": "Slots into the n8n-documented acquisition pipeline and opens LinkedIn and WhatsApp, the key channels for Indian clinic owners.",
     "status": "proposed",
     "source": { "subject": "AI Was Supposed to Kill the Sales Guru. Instead, It Made Them Installable", "date": "2026-07-17", "threadId": "19f71b8d1f28c3c6" }
+  },
+  {
+    "id": 42,
+    "title": "Goal-scored to-do list (LOCK IN tab)",
+    "summary": "Feed each task individually to a small model with your goals attached and ask how much it actually moves the needle, then work the list top-down. Built as the LOCK IN tab: data/lockin.json holds goals plus every task with full instructions, scripts/focus_score.py scores them on Groq gpt-oss-20b (cached by text hash), and the tab ranks by score plus deadline urgency.",
+    "effort": "M",
+    "relevance": "Turns the Command Center into the single daily list Shaurya asked for, ranked against first paying clinic, T20 deadlines, senior sessions and the brand.",
+    "status": "built",
+    "source": { "subject": "Instagram reel: founders replacing assistants with Meta Muse (goals feature)", "date": "2026-10-01", "threadId": "ig-reel-Dd6t-NBxk7I" }
   }
 ]

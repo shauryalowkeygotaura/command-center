@@ -1,0 +1,323 @@
+{
+  "_comment": "LOCK IN tab source. Every item carries its full instructions in `how` so Shaurya never has to ask Claude what to do. Ranked by scripts/focus_score.py (goal-scored per item, Angus idea #42). Edit here, then run the scorer and push.",
+  "launchDate": "2026-10-01",
+  "milestone": {
+    "date": "2026-10-21",
+    "label": "Senior session #1 delivered in a real room + 1 clinic on a 7-day trial"
+  },
+  "goals": [
+    { "id": "clinic", "weight": 5, "text": "Land the FIRST paying dental clinic for the AI receptionist (Rs 3,000/month retainer). This is the gate for everything else: T20 essays, Emergent Ventures, the brand's proof." },
+    { "id": "t20", "weight": 4, "text": "Build a T20 (MIT-level) application: hit competition deadlines (NASA Space Apps, Diamond Challenge, Conrad, IRIS, Rise) and show real community impact." },
+    { "id": "seniors", "weight": 3, "text": "Deliver free AI-scam safety sessions at Delhi/Noida senior care homes: community impact for T20, real-world content, and warm access to residents' adult children." },
+    { "id": "brand", "weight": 3, "text": "Grow @revengineee with proof-backed content: named series built from real events (failures, costs, real deployments), not invented topics." },
+    { "id": "systems", "weight": 1, "text": "Keep the automated pipelines and credentials healthy so they keep running without attention." }
+  ],
+  "reelRecipe": [
+    "QUICK REEL RECIPE (same every day):",
+    "1. Series banner on screen in the first 2 seconds (the series name in brand burgundy).",
+    "2. 8 to 10 one-second clips, 15 to 25 seconds total, text on screen for every beat (people watch muted).",
+    "3. Hook line = the first on-screen text. Never start with 'hey guys' or your name.",
+    "4. Post on @revengineee between 7 and 9 PM IST. Caption: hook line, 2 to 3 short lines of context, one question to invite comments.",
+    "5. Blur every client name, phone number and email before it goes on screen.",
+    "6. Out of energy? The lazy backup counts: 20 to 30 seconds of raw screen recording on @revengine.notes. Never skip two days in a row."
+  ],
+  "brandDays": [
+    { "day": 1, "series": "Day 1", "reel": "Day 1: I gave my AI one job, decide what I do today", "linkedin": true,
+      "how": [
+        "SOURCE: this LOCK IN tab itself (the restart of the 30-day plan).",
+        "SHOTS: open the Command Center, scroll the LOCK IN list, zoom on a score badge, tick one item off, end on the progress bar.",
+        "ON SCREEN: 'Day 1 / 30' then 'My AI ranks every task by how much it moves my real goals' then 'Let's see if it's right'.",
+        "CAPTION: 'Restarting at Day 1. For 30 days a small AI model ranks my to-do list against 4 goals: land a paying clinic, ship competition entries, teach seniors about AI scams, build this account. I do what it says, and post what happens.'",
+        "LINKEDIN: same story as a 5-slide PDF: the goals, the scoring rule, today's top 3, what I expect to break."
+      ] },
+    { "day": 2, "series": "Why this automation failed", "reel": "My sales bot sent one doctor 16 replies", "posts": ["Write the full post: what the bot did, why, the fix"],
+      "how": [
+        "SOURCE: client-acquisition-pipeline reply handler bug, fixed in commit 8e8fb74. Real numbers: 16 replies between 17 and 24 Sep, 4 per run, because every run re-answered every message from the last 7 days.",
+        "SHOTS: blurred inbox showing the reply stack, the old code line (7-day window loop), the fixed code (newest message only, skip if older than last reply), a counter going 16 to 1.",
+        "ON SCREEN: 'My bot replied to a doctor 16 times' / 'Each run answered every old email again' / 'Fix: answer only the newest one' / 'Cost: one very annoyed doctor'.",
+        "RULES: never show her name, email or clinic. Say 'a dentist'.",
+        "POST: what happened, the one-line mistake, the fix, the cost, the lesson: anything that runs on a schedule must remember what it already did."
+      ] },
+    { "day": 3, "series": "Why this automation failed", "reel": "It also invented 3 different excuses", "linkedin": true,
+      "how": [
+        "SOURCE: same incident. The doctor asked a question the bot had no true data for, and it gave three different made-up reasons across replies.",
+        "SHOTS: three blurred reply snippets side by side, each with a red 'invented' stamp, then the new rule: lead goes to stage=handoff and a human (you) takes over.",
+        "ON SCREEN: 'She asked 1 question' / 'It gave 3 different answers' / 'All 3 were made up' / 'Now: a hard question = a human answers'.",
+        "LESSON LINE: an AI that cannot say 'I don't know' will lie politely.",
+        "LINKEDIN: carousel version, 'Humans still needed here' angle."
+      ] },
+    { "day": 4, "series": "Cost to run this AI system", "reel": "What my whole automation stack costs per month",
+      "how": [
+        "SOURCE: your real bills. Groq free tier (LLM), GitHub Actions free minutes (all the crons), GitHub Pages (this dashboard), Doppler free (secrets), VAPI per-minute (the clinic agent).",
+        "SHOTS: a simple overlay list with a number next to each line, then the total.",
+        "ON SCREEN: 'Everything I run, every month' / each line with its cost / 'Total: Rs X'.",
+        "RULE: only real numbers you can screenshot. If you do not know one, show 'checking' and fill it in on Day 11."
+      ] },
+    { "day": 5, "series": "Deterministic > agentic", "reel": "Why my dashboard is not an AI agent",
+      "how": [
+        "SOURCE: the Command Center. Plain rules decide the order of the day; the AI only scores tasks against goals.",
+        "SHOTS: the LOCK IN list next to the goal list, then a quick look at the score file.",
+        "ON SCREEN: 'Agents that plan your day drift' / 'Mine: fixed goals, fixed list, AI only gives a number' / 'Boring wins'."
+      ] },
+    { "day": 6, "series": "Week recap", "reel": "Week 1 in 20 seconds", "linkedin": true, "posts": ["Fill the week-1 numbers: reels posted, calls made, homes reached, clinics walked into"],
+      "how": [
+        "SHOTS: your 3 best clips of the week cut together plus one shot of the tally.",
+        "ON SCREEN: 'Week 1' / tally numbers / 'Week 2: my AI wrote confident lies'.",
+        "The teaser for week 2 is the hook that makes people come back."
+      ] },
+    { "day": 7, "series": "B-side", "reel": "Raw: what Space Apps weekend actually looked like",
+      "how": [
+        "Post on @revengine.notes only, low effort: raw clips from the NASA Space Apps weekend (or from whatever you built if you did not enter).",
+        "If you skipped Space Apps, film 20 seconds of the senior-session voice-clone prep instead."
+      ] },
+    { "day": 8, "series": "Why this automation failed", "reel": "My AI video pipeline wrote confident lies 3 times",
+      "how": [
+        "SOURCE: format-engine, Kosmos 954 brief. Three regenerations, three confident fabrications: 'Venera 9 broke apart in Earth orbit in 1978' (it was a Venus mission), the wrong investigation commission, 'an anti-satellite RTG platform' (it was a radar satellite with a uranium reactor). One version had every date right and the facts still wrong.",
+        "SHOTS: each wrong claim on screen with a red strike, then the real fact in cream.",
+        "ON SCREEN: 'I asked AI to write a space documentary' / claim 1 struck / claim 2 struck / claim 3 struck / 'Every date was right. The facts were not.'"
+      ] },
+    { "day": 9, "series": "Humans still needed here", "reel": "The fix: make it read the source first", "linkedin": true,
+      "how": [
+        "SOURCE: format-engine grounding: it now pulls the Wikipedia article first and may only use names, dates and numbers from it. After that, unsupported claims went from 3 to 0.",
+        "SHOTS: diagram 'topic -> Wikipedia -> facts -> script', the verify command printing 0 unsupported, then the one line it still missed ('The Soviets paid', they paid about half).",
+        "ON SCREEN: 'Retrieve first, write second' / '3 lies -> 0' / 'It still missed one. I check every script by eye.'",
+        "LINKEDIN: carousel 'Why AI needs a source, not a better prompt'."
+      ] },
+    { "day": 10, "series": "Deterministic > agentic", "reel": "The bug that was in the input, not the AI",
+      "how": [
+        "SOURCE: the package topic was 'space disaster', a category, which Wikipedia resolved to the Challenger article. Four regenerations were spent fixing the generator for an input problem.",
+        "ON SCREEN: 'I fixed the AI 4 times' / 'The input said space disaster' / 'Wikipedia heard Challenger' / 'Check what goes in before blaming what comes out'."
+      ] },
+    { "day": 11, "series": "Cost to run this AI system", "reel": "What one AI-made video costs me",
+      "how": [
+        "SOURCE: format-render. Groq calls (free tier, paced 35 s apart because of the 8,000 tokens-per-minute cap), stock footage (free Pexels), render time (~39 s per shot on your laptop).",
+        "ON SCREEN: line items with numbers / 'Total money: Rs 0' / 'Total time: X hours' / 'Free is not free, it is slow'.",
+        "Also fill in any number you marked 'checking' on Day 4."
+      ] },
+    { "day": 12, "series": "B-side", "reel": "Raw: recording 60 seconds of my voice for a clone",
+      "how": [
+        "Post on @revengine.notes: the raw recording session for the senior-session demo. Your OWN voice only.",
+        "On screen: 'Teaching old age homes about voice-clone scams. Step 1: clone myself.'"
+      ] },
+    { "day": 13, "series": "Week recap", "reel": "Week 2 in 20 seconds", "linkedin": true, "posts": ["Fill the week-2 tally"],
+      "how": [
+        "SHOTS: best 3 clips + tally (reels, calls, homes booked, clinic walk-ins).",
+        "Teaser: 'Week 3: I cloned my own voice to teach grandparents a lesson'."
+      ] },
+    { "day": 14, "series": "B-side", "reel": "Raw: building the take-home card",
+      "how": ["@revengine.notes: the A5 card (English front, Hindi back) being designed. Show the 4 rules big."] },
+    { "day": 15, "series": "Humans still needed here", "reel": "Can you tell which one is really me?",
+      "how": [
+        "SOURCE: your voice-clone demo clip (own voice, made for the senior session).",
+        "SHOTS: two audio clips over black, 'A' and 'B'. Pause. Reveal which is the clone.",
+        "ON SCREEN: 'One of these is me. One is a computer.' / 'It took 30 seconds of my voice' / 'Scammers do this with your grandchild's voice'.",
+        "ETHICS: only your own voice. Say in the caption that the clone audio gets deleted after the sessions."
+      ] },
+    { "day": 16, "series": "Replacing operational friction", "reel": "The one sentence that beats every voice clone", "linkedin": true,
+      "how": [
+        "SOURCE: the core rule of the senior course: hang up, call back on the number already saved in your phone, plus a family safe word.",
+        "ON SCREEN: 'Detection tips expire in a year' / 'Behaviour does not' / 'Hang up. Call back on the saved number.' / 'Pick a family safe word tonight'.",
+        "LINKEDIN: carousel 'Why I teach seniors a habit, not detection'."
+      ] },
+    { "day": 17, "series": "B-side", "reel": "Raw: calling old age homes, what they said",
+      "how": ["@revengine.notes: your call tally and 1 or 2 anonymous quotes from caretakers. No names, no numbers on screen."] },
+    { "day": 18, "series": "Cost to run this AI system", "reel": "What a free 45-minute safety session costs to run",
+      "how": [
+        "Real line items: card printing and lamination, travel, speaker, your hours. Total it.",
+        "ON SCREEN: 'I teach it for free' / line items / 'Here is what free costs me'."
+      ] },
+    { "day": 19, "series": "Humans still needed here", "reel": "What the care home manager asked me first", "linkedin": true,
+      "how": [
+        "SOURCE: your booking calls. Which scam do they say is actually hitting their residents? (The phone script asks this.)",
+        "ON SCREEN: the question, then the answer in their words (anonymous)."
+      ] },
+    { "day": 20, "series": "B-side", "reel": "Raw: packing the kit the night before",
+      "how": ["@revengine.notes: laptop, speaker, cards, HDMI, pens, offline audio. 'Never trust the venue wifi.'"] },
+    { "day": 21, "series": "Milestone", "reel": "Day 21: I taught a room of grandparents about AI scams", "linkedin": true, "milestone": "Senior session #1 delivered (or the booked date locked) + 1 clinic trial",
+      "how": [
+        "Only film with WRITTEN permission from the home, and never film a resident's face without their own consent. Room shots from behind, your slides, the cards on the table are enough.",
+        "SHOTS: the room from the back, the 'was that me or a computer' reveal moment (audio), hands filling in the safe word on the card.",
+        "ON SCREEN: 'Day 21' / 'I played them my cloned voice' / 'Then gave them one rule' / 'X residents, X cards'.",
+        "If the session is booked for later, film the booking confirmation and the countdown instead. Do not fake the milestone."
+      ] },
+    { "day": 22, "series": "Replacing operational friction", "reel": "What a dental clinic loses when nobody picks up",
+      "how": [
+        "SOURCE: the day-7 report generator in dental-receptionist (report/day7.py): the number that matters most is calls that arrived while the clinic was shut.",
+        "Use the sample week (15 calls, 12 while shut, 6 bookings) and label it clearly as a SIMULATED week unless you have a real clinic's data.",
+        "ON SCREEN: '15 calls in a week' / '12 came while the clinic was shut' / 'That is the whole pitch'."
+      ] },
+    { "day": 23, "series": "Humans still needed here", "reel": "Why my receptionist AI hands emergencies to a human", "linkedin": true,
+      "how": [
+        "SOURCE: the dental agent's hard rule: any 'talk to a human' or emergency goes straight to staff.",
+        "ON SCREEN: 'My AI answers dental calls' / 'Except these 3' / list them / 'A wrong booking is annoying. A missed emergency is not.'"
+      ] },
+    { "day": 24, "series": "Why this automation failed", "reel": "950 empty files: my backup system saved nothing",
+      "how": [
+        "SOURCE: autoresume checkpoints. 950 of 954 checkpoint files held only a placeholder, because the hook that wrote them could not see the task list it was asking for.",
+        "ON SCREEN: '954 backup files' / '950 were empty' / 'For weeks' / 'Silence is not the same as working'.",
+        "Fix shown: it now captures what it can actually see (uncommitted work), 30 s down to 1 s."
+      ] },
+    { "day": 25, "series": "B-side", "reel": "Raw: walking into a dental clinic between classes",
+      "how": ["@revengine.notes: outside shot only (never film inside a clinic without asking), plus what happened, told to camera or as text."] },
+    { "day": 26, "series": "Cost to run this AI system", "reel": "What one AI phone call costs, to the paisa", "linkedin": true,
+      "how": [
+        "SOURCE: VAPI call logs for the dental agent, or jio-outbound's pure-Python Rs 0/min path for comparison.",
+        "ON SCREEN: 'One call' / per-minute cost breakdown / 'vs a receptionist's salary per call'."
+      ] },
+    { "day": 27, "series": "Week recap", "reel": "Week 4 in 20 seconds", "posts": ["Fill the week-4 tally"],
+      "how": ["Best 3 clips + tally. Teaser: 'Day 30: what my AI got right about my priorities, and what it got wrong'."] },
+    { "day": 28, "series": "Deterministic > agentic", "reel": "Did the AI pick the right tasks? 28 days of data",
+      "how": [
+        "SOURCE: your LOCK IN check-offs. Which top-ranked items did you do, which did you skip, which ones mattered in hindsight.",
+        "ON SCREEN: 'My AI ranked my tasks for 28 days' / 'It was right about X' / 'It was wrong about Y'."
+      ] },
+    { "day": 29, "series": "B-side", "reel": "Raw: the numbers table, unfiltered",
+      "how": ["@revengine.notes: the full 30-day tally as a screenshot. Followers, calls, homes, sessions, clinics, money."] },
+    { "day": 30, "series": "Day 30", "reel": "30 days locked in: everything that happened", "linkedin": true, "posts": ["Do the Day-30 review: 5 questions (what got results, what was noise, what to drop, what to double, what next month's one milestone is)"],
+      "how": [
+        "SHOTS: Day 1 clip vs Day 30 clip, the tally, the one best moment (likely the senior session).",
+        "LINKEDIN: long post with the honest numbers, including what did not work.",
+        "Then tell Claude: 'write next month's plan from my Day-30 review'."
+      ] }
+  ],
+  "seniorPrep": [
+    { "id": "sp-helplines", "title": "Verify the 4 helplines and portals still work before anything gets printed", "minutes": 15,
+      "how": [
+        "Check each one is live and correct today: 1930 (cyber crime helpline, call it and listen to the IVR), cybercrime.gov.in, Sanchar Saathi (sancharsaathi.gov.in, Chakshu for reporting fraud calls), PIB Fact Check.",
+        "Write anything that changed in the outcome box. These numbers go on a laminated card, so a wrong one stays wrong for years."
+      ] },
+    { "id": "sp-clone", "title": "Make the voice-clone demo clip from YOUR OWN voice", "minutes": 45,
+      "how": [
+        "Record 60 seconds of yourself reading anything, quiet room, phone mic is fine.",
+        "Clone it with a free tool: search Hugging Face Spaces for 'F5-TTS' and use a public Space, upload your clip, generate a 20-second ordinary line ('Hi, it's me, I'm going to be late, can you call me back on this number?').",
+        "Save the output as an MP3 on your laptop (offline, the venue wifi will fail).",
+        "ETHICS: your voice only, or a staff member with same-day written consent. Never a resident's family member. Delete the clone audio after the sessions and say so on stage."
+      ] },
+    { "id": "sp-test", "title": "Test the reveal on one family member", "minutes": 10,
+      "how": [
+        "Play the clip without warning: 'Was that me speaking, or a computer?'",
+        "If there is no visible reaction, the clip is not good enough. Re-record or pick a more natural line. The whole session hangs on this moment."
+      ] },
+    { "id": "sp-card", "title": "Design and print the A5 take-home card (do this once a date is booked)", "minutes": 60,
+      "how": [
+        "A5, 20pt minimum, English front, Hindi back. Laminate. Print 1.5x the expected headcount (staff want them too).",
+        "FRONT: 1. HANG UP. Call back on the number saved in your phone. 2. Nobody legitimate ever asks for your OTP or PIN. Nobody. 3. Police and CBI do not video call and do not ask for money. 4. Our family safe word is: ________",
+        "BACK: Cyber crime helpline: 1930 / Report online: cybercrime.gov.in / My bank: ____ / Care home staff: ____ / Family contact: ____",
+        "Canva free is enough. Any print shop near school can laminate."
+      ] },
+    { "id": "sp-deck", "title": "Build the 22-slide deck (once a date is booked)", "minutes": 120,
+      "how": [
+        "Full slide-by-slide outline: Deliverables/ai-safety-seniors-course-outline-2026-09-04.md section 5.",
+        "Order: Module 0 hook (play your clone, 4 min) / Voice cloning and the phone call (13 min) / Fake political ads and forwards (10 min) / Spotting AI images (8 min) / If it already happened (6 min) / Close and Q&A.",
+        "Big text, few words, Hindi labels where the home prefers Hindi. Download every audio and video file into the deck folder."
+      ] },
+    { "id": "sp-logistics", "title": "Confirm logistics with the booked home (2 days before)", "minutes": 10,
+      "how": [
+        "Ask: projector or big TV? Expected headcount? English, Hindi or mixed? Best slot (usually mid-morning after breakfast, or after evening tea)? Written permission to photograph?",
+        "Bring: laptop, charger, HDMI + adapters, your own Bluetooth speaker, all media offline, laminated cards, pens, whiteboard marker."
+      ] }
+  ],
+  "seniorCallHow": [
+    "WHEN: caretakers pick up 10 AM to 6 PM. After school (3 to 6 PM) or weekend mornings.",
+    "GOAL OF THIS CALL: get the name of whoever arranges activities and a time to talk. That alone is a successful call.",
+    "OPENING (do not pitch yet): 'Namaste, main Shaurya bol raha hoon. Kya main us vyakti se baat kar sakta hoon jo residents ke liye activities ya programmes arrange karte hain?'",
+    "ONCE YOU HAVE THEM (20 seconds max): 'Sir/Ma'am, main ek student hoon aur voice AI par kaam karta hoon. Main senior citizens ke liye ek free 45-minute session karta hoon, AI phone scams ke upar. Aaj kal scammers awaaz copy karke phone karte hain. Main live demo dikhata hoon aur bachne ka tareeka batata hoon. Bilkul free hai, kuch bechna nahi hai. Kya aapke residents ko yeh useful lagega?'",
+    "THEN STOP TALKING. Do not fill the silence.",
+    "IF YES: 'Kaun sa din theek rahega? Aur kitne log honge, taaki main utne cards print karwa loon?' Also ask: 'Aapke residents ko aajkal kaun se scam calls aa rahe hain?'",
+    "IF 'SEND DETAILS': get their WhatsApp number (not email) and send the WhatsApp text below right away.",
+    "IF NO: 'Koi baat nahi. Agar aap kisi aur home ko jaante hain jinhe zaroorat ho, to bata dijiyega.'",
+    "WHATSAPP TEXT (Hindi): 'Namaste [Name] ji, main Shaurya, Delhi se. Main voice AI systems banata hoon. Main senior citizens ke liye 45 minute ka free session karta hoon, jisme AI phone scams ke baare mein batata hoon. Aaj kal scammers kisi ke bete ya pote ki awaaz copy karke phone karte hain aur emergency bata kar paise maangte hain. Main live dikhata hoon ki yeh kaise hota hai, aur phir woh ek simple niyam sikhata hoon jisse yeh bilkul kaam nahi karega. Sabko ek printed card milta hai jisme helpline number hote hain. Bilkul free hai, kuch bhi bechna nahi hai. Kya [Home Name] mein yeh useful hoga?'",
+    "FOLLOW-UP: day 4 WhatsApp the card image (once it exists), day 9 call again with a specific date, day 16 close it out politely and ask for a referral.",
+    "LOG: write the outcome in the box (who you spoke to, yes/no/callback time). Never collect resident phone numbers, bank details or Aadhaar."
+  ],
+  "seniorHomes": [
+    { "id": "nirmal-chhaya", "name": "Nirmal Chhaya", "area": "Chhattarpur, near Shani Dham Mandir (South Delhi)", "phones": ["9971565632", "9818078122", "9310790787"], "note": "Closest Tier A. Website nirmalchhaya.org." },
+    { "id": "ashirwad-kalibari", "name": "Ashirwad Old Age Home", "area": "Kali Bari Lane, New Delhi (central)", "phones": ["9810625996", "9810844466", "9968205231"] },
+    { "id": "tapasya-noida45", "name": "Tapasya Oldage Home", "area": "Sector 45 Noida, behind Ganeshwaram restaurant", "phones": ["9582050000", "8448229322"], "note": "Tier A in Noida." },
+    { "id": "ashirwad-elders-62", "name": "Ashirwad Elders Home (Cleo County)", "area": "Sector 62 Noida", "phones": ["7011150822", "8178832449"] },
+    { "id": "dua-care-63a", "name": "Dua Care Homes", "area": "Sector 63A Noida", "phones": ["9999790161", "8448229322", "9870110433"] },
+    { "id": "shridham-105", "name": "Shridham Old Age Home", "area": "Sector 105 Noida, near Mother Dairy", "phones": ["9818586597", "9643636601", "8588888999"] },
+    { "id": "hope-house-34", "name": "Hope House Foundation", "area": "Sector 34 Noida", "phones": ["8985545955", "9643984406"] },
+    { "id": "sukoon-villa-112", "name": "Sukoon Villa", "area": "Sector 112 Noida", "phones": ["8105833050", "9871050596"] },
+    { "id": "manop-112", "name": "Manop Foundation", "area": "Sector 112 Noida", "phones": ["9643984406"], "note": "Shares a number with Hope House. If it is the same org, log it once." },
+    { "id": "silver-lining-dwarka", "name": "Silver Lining Old Age Home", "area": "Dwarka, near Jal Board, Old Dharampura", "phones": ["9971109777", "9899183812", "011-25074500"] },
+    { "id": "shiv-ashray-rohini", "name": "Shiv Ashray Senior Citizen Home", "area": "Rohini Sector 9, near Japanese Park gate 1", "phones": ["9818898071", "9811288028"] },
+    { "id": "bhimsen-uttamnagar", "name": "Shree Bhim Sen Shakuntala Kapila Trust", "area": "Uttam Nagar, near Nawada metro", "phones": ["9910229389", "9152799157"] },
+    { "id": "shashiraj-shahdara", "name": "Shashiraj Foundation", "area": "Shahdara", "phones": ["9717298015", "9667797442", "9910229389"], "note": "Its first listed number matches the Bhim Sen trust. Try the other two first." },
+    { "id": "manav-seva-suryanagar", "name": "Manav Seva Sangarsh Samiti Trust", "area": "Surya Nagar, near Raghunath Mandir", "phones": ["9999335166"] },
+    { "id": "balaji-kanjhawala", "name": "Shri Balaji Kailash Old Age Home", "area": "Jaunti village, Kanjhawala (far north-west)", "phones": ["8123932937", "9650906010"] },
+    { "id": "golden-root-loni", "name": "Golden Root Old Age Home", "area": "Loni, near Bharat City", "phones": ["7065000691", "9600222909"] },
+    { "id": "ramlal-gnoida", "name": "Ram Lal Vridh Ashram and Gaushala", "area": "Knowledge Park 2, Greater Noida", "phones": ["8460512791", "9368176647"] }
+  ],
+  "clinicHow": [
+    "WHEN: 11 AM to 12:30 PM or 3 to 5 PM (between patients). Weekday after school works for the nearest one.",
+    "WALK IN, ask for the doctor or owner. If they are busy, ask the front desk one question: 'How many calls do you miss when you are with a patient?' and come back.",
+    "30-SECOND OPENER: 'Hi, I'm Shaurya, a student at DPS RK Puram. I built an AI receptionist that answers your clinic's phone when nobody can, in Hindi and English, and books the appointment. Can I show you in one minute?'",
+    "DEMO: open the VAPI dashboard on your phone, Marudhar Dental assistant, 'Talk to Assistant'. Ask it INFO questions only (timings, location, fees). Do not try a booking live: the booking webhook is not deployed and it hangs for ~20 seconds.",
+    "OFFER: a free 7-day trial on calls they already miss (after hours first). Prices only if they ask: Rs 3,000/month core, Rs 6,000/month full front desk, prepaid, any month with zero bookings is free.",
+    "DO NOT SAY '2 clinics already use it' until that number is confirmed (handoff h-proof-count).",
+    "LEGAL: you are a minor, so a parent or guardian signs any contract later and payments go to the guardian's UPI. The trial needs no signature.",
+    "CAPTURE in the outcome box: who answers calls today, how many numbers they list, rough missed calls per day, their reaction, follow-up date."
+  ],
+  "clinics": [
+    { "id": "ndd-centre", "name": "New Delhi Dental Centre", "area": "1.0 km from DPS RK Puram (walkable between classes)", "phones": ["+91 98114 61274", "+91 99710 76696"], "note": "Open daily 10:30 to 19:45. Two numbers already: calls are split." },
+    { "id": "kalra-dental", "name": "Kalra Dental Specialities", "area": "South Delhi, ~5 km", "phones": ["+91 98111 08729", "+91 98109 85205", "011 4174 5126", "011 2601 7256"], "note": "FOUR listed numbers: the strongest 'calls are scattered' signal in the set." },
+    { "id": "dubey-dental", "name": "Doctor Dubey's Dental Clinic", "area": "~6.3 km", "phones": ["011 4106 4644", "+91 99993 35502", "+91 78384 52234"], "note": "Open daily 11:00 to 19:00." },
+    { "id": "muskaan-clinic", "name": "Muskaan Clinic", "area": "~7.1 km", "phones": ["011 4172 4187", "+91 88822 21182", "+91 98913 04552"], "note": "Looks like a family practice: no dedicated front desk." }
+  ],
+  "dated": [
+    { "id": "d-spaceapps-check", "date": "2026-10-01", "track": "t20", "title": "Check right now: are you registered for NASA Space Apps (4 to 5 Oct, Delhi)?", "minutes": 10,
+      "how": [
+        "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
+        "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
+        "If not registered and the window is closed: write 'missed' in the outcome box and move on. Do not spend tomorrow chasing it."
+      ] },
+    { "id": "d-diamond-team", "date": "2026-10-02", "track": "t20", "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team", "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
+      ] },
+    { "id": "d-spaceapps-scope", "date": "2026-10-03", "track": "t20", "title": "Space Apps eve: write the one-paragraph VayuVani v2 scope (only if registered)", "minutes": 30,
+      "how": [
+        "One paragraph: which challenge, what the demo shows in 2 minutes, which NASA dataset. Smaller than you think.",
+        "Charge laptop, test that the VayuVani app still runs, sleep."
+      ] },
+    { "id": "d-spaceapps-weekend", "date": "2026-10-04", "track": "t20", "title": "NASA Space Apps weekend: build and submit", "minutes": 600,
+      "how": [
+        "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
+      ] },
+    { "id": "d-rise-check", "date": "2026-10-06", "track": "t20", "title": "Rise 2027: check whether the application is open and note the deadline", "minutes": 15,
+      "how": [
+        "apply.risefortheworld.org. Ages 15 to 17, check the age cutoff applies to you. Write the deadline in the outcome box so Claude adds it to the deadline rail."
+      ] },
+    { "id": "d-iris-decide", "date": "2026-10-08", "track": "t20", "title": "IRIS National Fair: decide in or out for the 15 Oct submission window", "minutes": 20,
+      "how": [
+        "IRIS window 2 closes 15 Oct (nationals Jan 2027, path to ISEF May 2027).",
+        "Honest test: do you have real data from a deployment (clinic calls or senior sessions)? If not, write 'out, aim for next cycle' and stop thinking about it."
+      ] },
+    { "id": "d-linkedin-token", "date": "2026-10-12", "track": "systems", "title": "Re-mint the LinkedIn token before it dies on 14 Oct", "minutes": 5,
+      "how": [
+        "In Code/carousel-autoposter run auth_linkedin.py (it does the whole login and prints the new token). About 30 seconds, no developer-portal changes needed.",
+        "Then drop LINKEDIN_ACCESS_TOKEN and LINKEDIN_TOKEN_EXPIRES (60 days out) through the KEYS panel to creative-studio."
+      ] },
+    { "id": "d-conrad-check", "date": "2026-10-15", "track": "t20", "title": "Conrad Challenge: confirm registration is open and the activation deadline (expected ~30 Oct)", "minutes": 15,
+      "how": [
+        "conradchallenge.org. Needs a team (the same Exun pool). Write the confirmed deadline in the outcome box."
+      ] },
+    { "id": "d-conrad-activate", "date": "2026-10-28", "track": "t20", "title": "Conrad activation: finish registration before the ~30 Oct deadline", "minutes": 30,
+      "how": ["Only if you confirmed it on 15 Oct. Otherwise tick it off as skipped."] }
+  ],
+  "standing": [
+    { "id": "s-engage", "track": "brand", "title": "20 minutes: reply to every comment and DM on @revengineee", "minutes": 20,
+      "how": [
+        "Comments within an hour of posting, DMs within 24 hours.",
+        "Pin the best question. Longer replies to builders and anyone who sounds like a clinic owner or a T20 applicant."
+      ] },
+    { "id": "s-log", "track": "systems", "title": "End of day (2 min): fill outcome boxes, then press 'copy for claude' and paste it to me", "minutes": 2,
+      "how": [
+        "Every call, walk-in and post gets one line in its outcome box. Then 'copy for claude' at the top of this tab, and paste it into Claude.",
+        "That paste is how the next day's list gets smarter: booked homes move to prep, interested clinics get a follow-up date."
+      ] }
+  ]
+}

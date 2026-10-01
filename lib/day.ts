@@ -1,8 +1,12 @@
-// Brand + sales clock. Day 1 = launch of the @revengineee 30-day plan.
-export const LAUNCH_DATE = "2026-05-31";
-// Day-21 hard milestone: clinic live on its real number.
-export const MILESTONE_DATE = "2026-06-20";
-export const MILESTONE_LABEL = "Land 1 pilot Jaipur clinic (live on real number)";
+// Brand + sales clock. Day 1 = launch of the current @revengineee 30-day plan.
+// Restarted 2026-10-01 ("locked in"); the source of truth is data/lockin.json,
+// so the BOARD brand lane and the LOCK IN tab always agree on the day number.
+import lockin from "@/data/lockin.json";
+
+export const LAUNCH_DATE = lockin.launchDate;
+// Day-21 hard milestone.
+export const MILESTONE_DATE = lockin.milestone.date;
+export const MILESTONE_LABEL = lockin.milestone.label;
 
 /** Local (not UTC) YYYY-MM-DD for a given date, defaulting to now. */
 export function isoDate(d: Date = new Date()): string {
