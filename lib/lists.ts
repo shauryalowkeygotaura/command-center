@@ -145,10 +145,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-portfolio-mic-bugs",
-    text: "P2 · Portfolio: mic still broken + 'a lot of bugs'. I am doing a full live bug sweep; your browser/device still helps",
+    text: "P2 · Portfolio mic: works end to end live on desktop + phone in my tests, and the noisy-room bug is fixed. Tell me if it still fails for you",
     done: false,
     seeded: true,
-    note: "2026-10-03 inbox: you say the mic still fails and there are many bugs. On 25 Sep the mic worked end to end in a fake-mic Chromium on the live site, so whatever breaks for you is device or browser specific (real mic permission, Safari/iOS audio rules, or a blocked autoplay). Next from me: a full click-through of the live site on desktop and mobile widths, with every bug written down and fixed on a branch. The one thing I cannot reproduce blind is your setup. Reply `mic = <browser> <device> <what happens>` and list any other bug you have seen.",
+    note: "2026-10-03: tested live with a real browser and a fake microphone playing a spoken clip, desktop and phone sizes: transcribe 200, reply 200, spoken back. The real bug: in a room with a fan or traffic the noise sat above the speech threshold, so the turn never ended on silence and you waited 20 seconds on 'listening', which reads as broken. It now measures the room for 400ms and sets the bar above it. Also fixed: project cards were see-through, so the 3D lines cut through their text. If it still fails for you, reply `mic = <browser> <device> <what happens>`.",
   },
   {
     id: "h-sheetal-call",
@@ -198,6 +198,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "You chose 2 or whatever is better; 2 is better (it makes the public repo load-bearing). Not started yet this session because it touches the live site: I will do it on a branch, build, and diff the rendered pages before anything reaches master. Nothing needed from you.",
+  },
+  {
+    id: "h-deepgram-vercel-env",
+    text: "P2 · ONE command turns on the new Aura-2 voice: put DEEPGRAM_API_KEY into Vercel for portfolio + clinic-demo (mine was blocked)",
+    note: "2026-10-03: shipped and live: Aura-2 andromeda voice with fallbacks, Whisper ears that now work on iPhone/Firefox/Brave in the clinic demo, and on-the-fly model switching for brain and ears in both. Verified end to end in production. Until the key lands both demos use the old voice, so nothing is broken. In each of Code/portfolio and Code/clinic-demo run: `doppler run -p dental-receptionist -c dev -- bash -c 'printf %s \"$DEEPGRAM_API_KEY\" | vercel env add DEEPGRAM_API_KEY production'` then `vercel deploy --prod` in clinic-demo (portfolio redeploys on push). Clinic demo routes Hinglish replies to the Neerja voice on purpose: Aura-2 is English-only. Reply `aura = on`.",
+    done: false,
+    seeded: true,
   },
   {
     id: "h-ca-whatsapp-template",
@@ -368,9 +375,9 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
-    id: "h-jobleft-windows",
-    text: "P3 · jobleft (blueturboguy07) is Mac-only. I can try a Windows build; tell me what you want it for",
-    note: "It is a TypeScript desktop app (15 stars, active) that reads employer job boards, scores matches and tailors resumes, shipped only as an Apple-silicon .dmg. If it is a Tauri or Electron app, a Windows build is usually possible from source, but the macOS Keychain part would need replacing. Before I spend that time: what is it for? Internships and summer programs would need a different set of sources than the US tech boards it reads. Reply `jobleft = <what you want to find>`.",
+    id: "h-vayuvani-groq-env",
+    text: "P3 · VayuVani: now on Groq with model switching and git-versioned; set GROQ_API_KEY in its Vercel env before the next deploy",
+    note: "2026-10-03: both vayuvani folders were unversioned, so they are git repos now (baseline commit first). The app and the Python advisory swapped Claude Haiku via AI Gateway for Groq with model switching, plus a check that sends a Hindi reply containing stray foreign words to the next model (qwen once dropped a Turkish word into a Hindi advisory). VAPI config: the invalid model id is fixed, ears are nova-3 multi with a nova-2 fallback, and ElevenLabs multilingual stays the main voice because callers speak Hindi, with Aura-2 as fallback. Not deployed: the app needs GROQ_API_KEY in Vercel first, or advisories fall back to the static lines. No GitHub remote yet either. Reply `vayuvani = deploy` once the key is in.",
     done: false,
     seeded: true,
   },
