@@ -4,8 +4,16 @@
 // full instructions (scripts, phone numbers, shot lists), so nothing needs a
 // question to Claude. Outcome boxes + "copy for claude" close the loop: the
 // pasted recap is how tomorrow's list learns what happened today.
+//
+// Layout follows Apple's "Today" pattern (large title, progress ring, inset
+// grouped glass sections: Non-negotiables / Do this now / Up next / Done) with
+// a web approximation of Liquid Glass (.glass in globals.css). Interaction
+// details follow the interaction-craft skill (Enrico Tartarotti): 44px hit
+// targets, a fixed chevron that opens content below it, optimistic ticks with
+// an undo toast instead of a confirm, a hit stop per tick and a boss stop
+// when the whole day is cleared, all muted under prefers-reduced-motion.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { isoDate } from "@/lib/day";
 import { handoffStore } from "@/lib/lists";
 import {
@@ -22,14 +30,16 @@ import {
 } from "@/lib/lockin";
 
 const TRACK_STYLE: Record<Track, { label: string; cls: string }> = {
-  private: { label: "NON-NEG", cls: "text-amber border-amber/60" },
-  clinic: { label: "CLINIC", cls: "text-burgundy-bright border-burgundy-bright/50" },
-  seniors: { label: "SENIORS", cls: "text-amber border-amber/50" },
-  t20: { label: "T20", cls: "text-indigo border-indigo/50" },
-  brand: { label: "BRAND", cls: "text-cream border-cream/40" },
-  handoff: { label: "HANDOFF", cls: "text-burgundy-bright border-burgundy-bright/50" },
-  systems: { label: "OPS", cls: "text-cream-dim border-line" },
+  private: { label: "Non-neg", cls: "bg-amber/15 text-amber" },
+  clinic: { label: "Clinic", cls: "bg-burgundy-bright/20 text-[#e08a95]" },
+  seniors: { label: "Seniors", cls: "bg-amber/12 text-amber" },
+  t20: { label: "T20", cls: "bg-indigo/18 text-[#a99bff]" },
+  brand: { label: "Brand", cls: "bg-cream/10 text-cream" },
+  handoff: { label: "Handoff", cls: "bg-burgundy-bright/20 text-[#e08a95]" },
+  systems: { label: "Ops", cls: "bg-cream/5 text-cream-dim" },
 };
+
+const UNDO_MS = 5000;
 
 export function LockIn() {
   const [state, setState] = useState<LockState>({ done: {}, outcome: {} });
@@ -39,6 +49,11 @@ export function LockIn() {
   const [copied, setCopied] = useState(false);
   const [privText, setPrivText] = useState("");
   const [editingPriv, setEditingPriv] = useState(false);
+  const [showDone, setShowDone] = useState(false);
+  const [popKey, setPopKey] = useState<string | null>(null);
+  const [boss, setBoss] = useState(false);
+  const [undo, setUndo] = useState<{ key: string; title: string } | null>(null);
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const today = useMemo(() => isoDate(), []);
 
   useEffect(() => {
@@ -46,6 +61,9 @@ export function LockIn() {
     setPrivText(privateStore.load());
     setHandoffDone(new Set(handoffStore.load().filter((h) => h.done).map((h) => h.id)));
     setMounted(true);
+    return () => {
+      if (undoTimer.current) clearTimeout(undoTimer.current);
+    };
   }, []);
 
   const items = useMemo(
@@ -58,9 +76,8 @@ export function LockIn() {
     lockStore.save(next);
   }
 
-  function toggle(it: LockItem) {
+  function setDone(it: LockItem, nowDone: boolean) {
     const done = { ...state.done };
-    const nowDone = !done[it.key];
     if (nowDone) done[it.key] = new Date().toISOString();
     else delete done[it.key];
     update({ ...state, done });
@@ -68,9 +85,35 @@ export function LockIn() {
     if (it.track === "handoff") {
       const id = it.key.replace(/^handoff:/, "");
       const all = handoffStore.load();
-      const exists = all.some((h) => h.id === id);
-      if (exists) handoffStore.save(all.map((h) => (h.id === id ? { ...h, done: nowDone } : h)));
+      if (all.some((h) => h.id === id)) {
+        handoffStore.save(all.map((h) => (h.id === id ? { ...h, done: nowDone } : h)));
+      }
     }
+    return done;
+  }
+
+  function toggle(it: LockItem) {
+    const nowDone = !state.done[it.key];
+    const done = setDone(it, nowDone);
+    if (!nowDone) return;
+    // Hit stop on the row; boss stop if that tick cleared the whole day.
+    setPopKey(it.key);
+    setTimeout(() => setPopKey((k) => (k === it.key ? null : k)), 260);
+    if (items.every((i) => done[i.key])) {
+      setBoss(true);
+      setTimeout(() => setBoss(false), 950);
+    }
+    // Undo instead of "are you sure": the row leaves Up next immediately.
+    if (undoTimer.current) clearTimeout(undoTimer.current);
+    setUndo({ key: it.key, title: it.title });
+    undoTimer.current = setTimeout(() => setUndo(null), UNDO_MS);
+  }
+
+  function undoLast() {
+    if (!undo) return;
+    const it = items.find((i) => i.key === undo.key);
+    if (it) setDone(it, false);
+    setUndo(null);
   }
 
   function setOutcome(key: string, text: string) {
@@ -90,51 +133,60 @@ export function LockIn() {
     }
   }
 
-  if (!mounted) return <p className="font-mono text-sm text-cream-dim">loading lock in…</p>;
+  if (!mounted) return <SkeletonLockIn />;
 
   const day = lockDayNumber(today);
-  const doneCount = items.filter((i) => state.done[i.key]).length;
-  const minutesLeft = items.filter((i) => !state.done[i.key]).reduce((s, i) => s + i.minutes, 0);
-  const pct = items.length ? (doneCount / items.length) * 100 : 0;
+  const isDone = (i: LockItem) => Boolean(state.done[i.key]);
+  const privItems = items.filter((i) => i.track === "private");
+  const ranked = items.filter((i) => i.track !== "private");
+  const pending = ranked.filter((i) => !isDone(i));
+  const now = pending[0];
+  const upNext = pending.slice(1);
+  const doneItems = ranked.filter(isDone);
+  const doneCount = items.filter(isDone).length;
+  const minutesLeft = items.filter((i) => !isDone(i)).reduce((s, i) => s + i.minutes, 0);
+  const dateLine = new Date(today + "T00:00:00")
+    .toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })
+    .toUpperCase();
+
+  const rowProps = (it: LockItem) => ({
+    it,
+    done: isDone(it),
+    open: open === it.key,
+    pop: popKey === it.key,
+    outcome: state.outcome[it.key] ?? "",
+    today,
+    onToggle: () => toggle(it),
+    onOpen: () => setOpen(open === it.key ? null : it.key),
+    onOutcome: (t: string) => setOutcome(it.key, t),
+  });
 
   return (
-    <div className="flex flex-col gap-4">
-      <section className="hud rounded-lg border border-line bg-panel px-4 py-3">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-mono text-sm font-bold text-cream">
-            LOCK IN · DAY {day > 0 ? day : "–"} / 30
-          </h2>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setEditingPriv((v) => !v)}
-              className="font-mono text-[10px] uppercase tracking-wide text-amber transition hover:text-burgundy-bright"
-              title="Your own non-negotiables, saved only in this browser, never on the public site"
-            >
-              {editingPriv ? "close private" : "private items"}
-            </button>
-            <button
-              onClick={copyForClaude}
-              className="font-mono text-[10px] uppercase tracking-wide text-indigo transition hover:text-burgundy-bright"
-              title="Copy today's ticks + outcomes to paste back to Claude"
-            >
-              {copied ? "copied ✓" : "copy for claude"}
-            </button>
-            <span className="font-mono text-xs tabular-nums text-cream-dim">
-              {doneCount}/{items.length} · ~{Math.round(minutesLeft / 6) / 10}h left
+    <div className={`mx-auto flex max-w-3xl flex-col gap-7 rounded-3xl pb-24 ${boss ? "cc-boss" : ""}`}>
+      {/* ── Large title header ─────────────────────────────── */}
+      <header className="flex items-end justify-between gap-4 pt-2">
+        <div className="min-w-0">
+          <p className="font-mono text-[11px] tracking-[0.14em] text-cream-dim">
+            {dateLine} · <span className="whitespace-nowrap">DAY {day > 0 ? day : "–"} OF 30</span>
+          </p>
+          <h1 className="mt-1 font-sans text-[34px] font-bold leading-none tracking-tight text-cream">Lock In</h1>
+          <p className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full bg-amber/10 px-3 py-1 font-sans text-[12px] text-amber">
+            <span aria-hidden>◎</span>
+            <span className="truncate">
+              Day 21 · {LOCKIN.milestone.date.slice(5)}: {LOCKIN.milestone.label}
             </span>
-          </div>
+          </p>
         </div>
-        <p className="mt-1 font-mono text-[11px] leading-snug text-cream-dim">
-          Ranked by how much each task moves your goals (AI-scored), deadlines on top. Tap a row for the
-          full how-to. Day 21 ({LOCKIN.milestone.date}): {LOCKIN.milestone.label}.
-        </p>
-        <div className="mt-2 h-1 w-full overflow-hidden rounded bg-line">
-          <div
-            className="h-full bg-gradient-to-r from-burgundy to-amber transition-all duration-300"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-      </section>
+        <ProgressRing done={doneCount} total={items.length} minutesLeft={minutesLeft} />
+      </header>
+
+      {/* ── Actions: glass capsules ─────────────────────────── */}
+      <div className="-mt-3 flex flex-wrap gap-2">
+        <Capsule onClick={() => setEditingPriv((v) => !v)} active={editingPriv}>
+          {editingPriv ? "Close private list" : "Private list"}
+        </Capsule>
+        <Capsule onClick={copyForClaude}>{copied ? "Copied ✓" : "Copy for Claude"}</Capsule>
+      </div>
 
       {editingPriv && (
         <PrivateEditor
@@ -147,60 +199,300 @@ export function LockIn() {
         />
       )}
 
-      <ol className="flex flex-col gap-2">
-        {items.map((it, idx) => {
-          const done = Boolean(state.done[it.key]);
-          const isOpen = open === it.key;
-          const ts = TRACK_STYLE[it.track];
-          return (
-            <li
-              key={it.key}
-              className={`rounded-lg border border-line bg-panel px-3 py-2 transition ${done ? "opacity-50" : ""}`}
-            >
-              <div className="flex items-start gap-3">
-                <button
-                  aria-label={done ? "mark not done" : "mark done"}
-                  onClick={() => toggle(it)}
-                  className={`mt-0.5 h-4 w-4 shrink-0 rounded-sm border ${
-                    done ? "border-burgundy-bright bg-burgundy-bright" : "border-cream-dim"
-                  }`}
-                />
-                <button
-                  onClick={() => setOpen(isOpen ? null : it.key)}
-                  className="flex min-w-0 flex-1 flex-col items-start text-left"
-                >
-                  <span className={`font-mono text-sm ${done ? "line-through text-cream-dim" : "text-cream"}`}>
-                    <span className="mr-2 tabular-nums text-cream-dim">{idx + 1}.</span>
-                    {it.title}
-                  </span>
-                  <span className="mt-0.5 flex flex-wrap items-center gap-2 font-mono text-[10px] text-cream-dim">
-                    <span className={`rounded border px-1 ${ts.cls}`}>{ts.label}</span>
-                    <span title={it.why ?? "not scored yet"}>score {it.score}/10</span>
-                    {it.due && <span className="text-amber">{it.due < today ? `overdue ${it.due}` : "due today"}</span>}
-                    {it.minutes > 0 && <span>~{it.minutes} min</span>}
-                    {it.why && <span className="italic">· {it.why}</span>}
-                  </span>
-                </button>
-              </div>
+      {/* ── Non-negotiables (private, browser-only) ──────────── */}
+      <Section title="Non-negotiables" count={`${privItems.filter(isDone).length}/${privItems.length}`}>
+        {privItems.length === 0 ? (
+          <button
+            onClick={() => setEditingPriv(true)}
+            className="flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left font-sans text-[14px] text-cream-dim transition hover:text-cream"
+          >
+            <span className="grid h-6 w-6 place-items-center rounded-lg border border-dashed border-cream-dim/50">+</span>
+            Add your morning formula, training and daily rules. Saved only in this browser.
+          </button>
+        ) : (
+          privItems.map((it) => <Row key={it.key} {...rowProps(it)} compact />)
+        )}
+      </Section>
 
-              {isOpen && (
-                <div className="ml-7 mt-2 flex flex-col gap-2">
-                  <div className="whitespace-pre-wrap font-mono text-[11px] leading-relaxed text-cream-dim">
-                    {it.how.join("\n")}
-                  </div>
-                  <textarea
-                    defaultValue={state.outcome[it.key] ?? ""}
-                    onBlur={(e) => setOutcome(it.key, e.target.value)}
-                    placeholder="outcome: who you spoke to, what they said, next step"
-                    rows={2}
-                    className="w-full rounded border border-line bg-transparent px-2 py-1 font-mono text-[11px] text-cream placeholder:text-cream-dim/60 focus:border-burgundy-bright focus:outline-none"
-                  />
+      {/* ── Do this now: the single biggest target (Fitts) ───── */}
+      {now ? (
+        <section>
+          <SectionLabel title="Do this now" />
+          <div className="glass glass-tint overflow-hidden rounded-2xl">
+            <Row {...rowProps(now)} hero />
+          </div>
+        </section>
+      ) : (
+        <div className="glass rounded-2xl px-5 py-8 text-center font-sans">
+          <p className="text-[22px] font-semibold text-cream">Day cleared.</p>
+          <p className="mt-1 text-[13px] text-cream-dim">Fill the outcome boxes, then Copy for Claude.</p>
+        </div>
+      )}
+
+      {/* ── Up next: ranked by goal score + urgency ─────────── */}
+      {upNext.length > 0 && (
+        <Section title="Up next" count={`${upNext.length}`} hint="ranked by goal score, deadlines first">
+          {upNext.map((it) => (
+            <Row key={it.key} {...rowProps(it)} />
+          ))}
+        </Section>
+      )}
+
+      {/* ── Done today: collapsed by default ────────────────── */}
+      {doneItems.length > 0 && (
+        <section>
+          <button
+            onClick={() => setShowDone((v) => !v)}
+            className="mb-2 flex min-h-11 items-center gap-2 px-1 font-sans text-[13px] font-semibold uppercase tracking-wide text-cream-dim transition hover:text-cream"
+            aria-expanded={showDone}
+          >
+            <Chevron open={showDone} />
+            Done today · {doneItems.length}
+          </button>
+          <div className="cc-expand" data-open={showDone}>
+            <div>
+              <div className="glass overflow-hidden rounded-2xl">
+                {doneItems.map((it) => (
+                  <Row key={it.key} {...rowProps(it)} compact />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Undo toast, in context, 5s ───────────────────────── */}
+      {undo && (
+        <div
+          role="status"
+          className="cc-toast glass fixed bottom-6 left-1/2 z-30 flex max-w-[92vw] -translate-x-1/2 items-center gap-4 rounded-full py-2 pl-5 pr-2 font-sans text-[13px] text-cream"
+        >
+          <span className="truncate">Done: {undo.title}</span>
+          <button
+            onClick={undoLast}
+            className="min-h-9 rounded-full bg-cream/10 px-4 font-semibold text-amber transition hover:bg-cream/20"
+          >
+            Undo
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── pieces ──────────────────────────────────────────────────────────────────
+
+function SectionLabel({ title, count, hint }: { title: string; count?: string; hint?: string }) {
+  return (
+    <div className="mb-2 flex items-baseline gap-2 px-1">
+      <h2 className="font-sans text-[13px] font-semibold uppercase tracking-wide text-cream-dim">{title}</h2>
+      {count && <span className="font-mono text-[11px] tabular-nums text-cream-dim/70">{count}</span>}
+      {hint && <span className="ml-auto font-sans text-[11px] text-cream-dim/60">{hint}</span>}
+    </div>
+  );
+}
+
+function Section({ title, count, hint, children }: { title: string; count?: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <SectionLabel title={title} count={count} hint={hint} />
+      <div className="glass divide-y divide-cream/[0.06] overflow-hidden rounded-2xl">{children}</div>
+    </section>
+  );
+}
+
+function Capsule({ children, onClick, active }: { children: React.ReactNode; onClick: () => void; active?: boolean }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`glass min-h-9 rounded-full px-4 font-sans text-[13px] font-medium transition active:translate-y-px ${
+        active ? "text-amber" : "text-cream hover:text-amber"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 12 12"
+      className={`h-3 w-3 shrink-0 transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+      aria-hidden
+    >
+      <path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ProgressRing({ done, total, minutesLeft }: { done: number; total: number; minutesLeft: number }) {
+  const r = 30;
+  const c = 2 * Math.PI * r;
+  const pct = total ? done / total : 0;
+  const hours = Math.round(minutesLeft / 6) / 10;
+  return (
+    <div className="flex shrink-0 flex-col items-center gap-1">
+      <div className="relative h-[76px] w-[76px]">
+        <svg viewBox="0 0 76 76" className="h-full w-full -rotate-90">
+          <circle cx="38" cy="38" r={r} fill="none" stroke="rgba(240,228,204,0.08)" strokeWidth="7" />
+          <circle
+            cx="38"
+            cy="38"
+            r={r}
+            fill="none"
+            stroke="url(#lockin-ring)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeDasharray={c}
+            strokeDashoffset={c * (1 - pct)}
+            style={{ transition: "stroke-dashoffset 500ms cubic-bezier(0.2,0.8,0.2,1)" }}
+          />
+          <defs>
+            <linearGradient id="lockin-ring" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#9a3f4a" />
+              <stop offset="100%" stopColor="#ff7a1a" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div className="absolute inset-0 grid place-items-center">
+          <span className="font-sans text-[17px] font-bold tabular-nums text-cream">
+            {done}
+            <span className="text-[12px] font-medium text-cream-dim">/{total}</span>
+          </span>
+        </div>
+      </div>
+      <span className="font-mono text-[10px] tabular-nums text-cream-dim">~{hours}h left</span>
+    </div>
+  );
+}
+
+function Row({
+  it,
+  done,
+  open,
+  pop,
+  outcome,
+  today,
+  onToggle,
+  onOpen,
+  onOutcome,
+  hero,
+  compact,
+}: {
+  it: LockItem;
+  done: boolean;
+  open: boolean;
+  pop: boolean;
+  outcome: string;
+  today: string;
+  onToggle: () => void;
+  onOpen: () => void;
+  onOutcome: (t: string) => void;
+  hero?: boolean;
+  compact?: boolean;
+}) {
+  const ts = TRACK_STYLE[it.track];
+  const hasDetail = it.how.length > 0 || it.track !== "private";
+  return (
+    <div className={hero ? "px-2 py-3" : ""}>
+      <div className="flex items-start">
+        {/* 44px hit area around a 22px squircle (round would read as a radio button) */}
+        <button
+          aria-label={done ? "mark not done" : "mark done"}
+          onClick={onToggle}
+          className="grid h-11 w-11 shrink-0 place-items-center"
+        >
+          <span
+            className={`grid h-[22px] w-[22px] place-items-center rounded-[7px] border-[1.5px] transition-colors duration-150 ${
+              done ? "border-amber bg-amber text-ink" : "border-cream-dim/70"
+            } ${pop ? "cc-hit" : ""}`}
+          >
+            {done && (
+              <svg viewBox="0 0 12 12" className="h-3 w-3" aria-hidden>
+                <path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </span>
+        </button>
+
+        <button
+          onClick={hasDetail ? onOpen : onToggle}
+          aria-expanded={hasDetail ? open : undefined}
+          className={`flex min-h-11 min-w-0 flex-1 items-start gap-3 py-2.5 pr-4 text-left ${compact ? "" : "pb-3"}`}
+        >
+          <span className="min-w-0 flex-1">
+            <span
+              className={`block font-sans leading-snug ${hero ? "text-[19px] font-semibold" : "text-[15px]"} ${
+                done ? "text-cream-dim line-through decoration-cream-dim/50" : "text-cream"
+              }`}
+            >
+              {it.title}
+            </span>
+            {!compact && (
+              <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10.5px] text-cream-dim">
+                <span className={`rounded-full px-2 py-0.5 font-sans text-[11px] font-medium ${ts.cls}`}>{ts.label}</span>
+                {it.track !== "private" && (
+                  <span className={it.score >= 8 ? "text-amber" : ""} title={it.why ?? "not scored yet"}>
+                    {it.score}/10
+                  </span>
+                )}
+                {it.due && <span className="text-amber">{it.due < today ? `overdue · ${it.due.slice(5)}` : "due today"}</span>}
+                {it.minutes > 0 && <span>{it.minutes} min</span>}
+              </span>
+            )}
+            {hero && it.why && <span className="mt-2 block font-sans text-[12.5px] italic text-cream-dim">{it.why}</span>}
+          </span>
+          {hasDetail && (
+            <span className="mt-1 text-cream-dim">
+              <Chevron open={open} />
+            </span>
+          )}
+        </button>
+      </div>
+
+      {hasDetail && (
+        <div className="cc-expand" data-open={open}>
+          <div>
+            <div className="ml-11 mr-4 flex flex-col gap-3 pb-4">
+              {it.how.length > 0 && (
+                <div className="whitespace-pre-wrap rounded-xl bg-ink/60 px-3.5 py-3 font-mono text-[11.5px] leading-relaxed text-cream-dim">
+                  {it.how.join("\n")}
                 </div>
               )}
-            </li>
-          );
-        })}
-      </ol>
+              <textarea
+                defaultValue={outcome}
+                onBlur={(e) => onOutcome(e.target.value)}
+                placeholder="Outcome: who you spoke to, what they said, next step"
+                rows={2}
+                className="w-full rounded-xl border border-cream/10 bg-ink/40 px-3 py-2 font-sans text-[13px] text-cream placeholder:text-cream-dim/50 focus:border-amber/60 focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Skeleton instead of a blank-then-pop: teaches the layout before data lands.
+function SkeletonLockIn() {
+  return (
+    <div className="mx-auto flex max-w-3xl animate-pulse flex-col gap-7 motion-reduce:animate-none" aria-busy>
+      <div className="flex items-end justify-between pt-2">
+        <div className="flex flex-col gap-2">
+          <div className="h-3 w-48 rounded bg-cream/10" />
+          <div className="h-8 w-32 rounded bg-cream/10" />
+        </div>
+        <div className="h-[76px] w-[76px] rounded-full bg-cream/10" />
+      </div>
+      {[3, 1, 5].map((n, i) => (
+        <div key={i} className="glass flex flex-col gap-4 rounded-2xl p-4">
+          {Array.from({ length: n }).map((_, j) => (
+            <div key={j} className="h-4 w-3/4 rounded bg-cream/10" />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -210,11 +502,11 @@ export function LockIn() {
 function PrivateEditor({ initial, onSave }: { initial: string; onSave: (t: string) => void }) {
   const [text, setText] = useState(initial);
   return (
-    <section className="hud rounded-lg border border-amber/40 bg-panel px-4 py-3">
-      <p className="font-mono text-[11px] leading-snug text-cream-dim">
-        PRIVATE · stays in this browser only (not on the public site, not synced to other devices). One item per
-        &quot;- &quot; line, indented lines under it are its how-to. Optional: &quot;| 20&quot; = minutes,
-        &quot;@tue @sat&quot; = only those days. These pin to the top every day.
+    <section className="glass rounded-2xl px-5 py-4">
+      <p className="font-sans text-[12.5px] leading-snug text-cream-dim">
+        <span className="font-semibold text-amber">Private</span> · stays in this browser only: not on the public site,
+        not synced to other devices. One item per &quot;- &quot; line, indented lines under it are its how-to.
+        Optional: &quot;| 20&quot; = minutes, &quot;@tue @sat&quot; = only those days.
       </p>
       <textarea
         value={text}
@@ -227,13 +519,13 @@ function PrivateEditor({ initial, onSave }: { initial: string; onSave: (t: strin
           "    pulldown 2x4-8, cable lateral raise 2x8-12",
           "- 25 cold calls | 90",
         ].join("\n")}
-        className="mt-2 w-full rounded border border-line bg-transparent px-2 py-1 font-mono text-[11px] text-cream placeholder:text-cream-dim/50 focus:border-amber focus:outline-none"
+        className="mt-3 w-full rounded-xl border border-cream/10 bg-ink/50 px-3 py-2 font-mono text-[12px] text-cream placeholder:text-cream-dim/40 focus:border-amber/60 focus:outline-none"
       />
       <button
         onClick={() => onSave(text)}
-        className="mt-2 rounded border border-amber/60 px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-amber transition hover:bg-amber/10"
+        className="mt-3 min-h-10 rounded-full bg-amber px-5 font-sans text-[13px] font-semibold text-ink transition hover:brightness-110 active:translate-y-px"
       >
-        save private items
+        Save private list
       </button>
     </section>
   );

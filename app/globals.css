@@ -140,3 +140,35 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cc-hit, .cc-boss { animation: none; }
 }
+
+/* Liquid Glass, web approximation (Apple documents the real material for its
+   own platforms only). Translucent fill + backdrop blur + a hairline border
+   + a top highlight, with a solid fallback when the user asks for less
+   transparency. Used by the LOCK IN tab's grouped sections. */
+.glass {
+  background: rgba(29, 23, 20, 0.62);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(240, 228, 204, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(240, 228, 204, 0.06),
+    0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.glass-tint {
+  background: linear-gradient(180deg, rgba(114, 47, 55, 0.42), rgba(29, 23, 20, 0.7));
+  border-color: rgba(154, 63, 74, 0.45);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .glass-tint { background: var(--color-panel); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* Expand/collapse: content grows below a toggle that stays put. */
+.cc-expand { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 260ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.cc-expand[data-open="true"] { grid-template-rows: 1fr; }
+.cc-expand > div { overflow: hidden; }
+@keyframes cc-toast { from { transform: translate(-50%, 16px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+.cc-toast { animation: cc-toast 240ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  .cc-expand { transition: none; }
+  .cc-toast { animation: none; }
+}

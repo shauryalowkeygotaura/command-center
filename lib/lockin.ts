@@ -116,7 +116,7 @@ export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set
       key: `brand-d${day}`,
       scoreKey: `brand-d${day}`,
       track: "brand",
-      title: `Day ${day} reel · ${bd.series}: ${bd.reel}`,
+      title: bd.series.startsWith("Day ") ? `Reel · ${bd.reel}` : `Reel · ${bd.series}: ${bd.reel}`,
       how: [...bd.how, "", ...raw.reelRecipe],
       minutes: 60,
     });

@@ -6,8 +6,8 @@ export function StatusBar({
   total,
 }: {
   todayISO: string;
-  done: number;
-  total: number;
+  done?: number; // omitted since BOARD was removed: LOCK IN shows its own ring
+  total?: number;
 }) {
   const day = dayNumber(todayISO);
   const toMilestone = daysToMilestone(todayISO);
@@ -25,9 +25,12 @@ export function StatusBar({
         <span className="font-bold tracking-tight">&gt; [REVENGINE]</span>
         <span className="opacity-90">day {String(day).padStart(3, "0")}</span>
         <span className="opacity-70">command-center</span>
-        <span className="ml-auto tabular-nums opacity-90">
-          {done}/{total} done
-        </span>
+        <span className="ml-auto" />
+        {total !== undefined && (
+          <span className="tabular-nums opacity-90">
+            {done}/{total} done
+          </span>
+        )}
         <span className="opacity-70">{dateLabel}</span>
       </div>
 
