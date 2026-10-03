@@ -106,11 +106,38 @@ function queue<T extends { id: string }>(
   return [...doneToday, ...pending].slice(0, Math.max(perDay, doneToday.length));
 }
 
+/** Where you are in the 30-day brand plan. It is a QUEUE, not a calendar:
+ *  the plan only moves when you tick a day's reel, so days away from it are
+ *  never skipped. A reel ticked today keeps its day on screen (as done) until
+ *  tomorrow, same as the other queues. Returns null once all 30 are done. */
+export function brandQueueDay(state: LockState, todayISO: string): number | null {
+  const days = [...raw.brandDays].sort((a, b) => a.day - b.day);
+  const doneToday = days.filter((d) => doneOn(state, `brand-d${d.day}`, todayISO));
+  if (doneToday.length) return doneToday[doneToday.length - 1].day;
+  const next = days.find((d) => !state.done[`brand-d${d.day}`]);
+  return next ? next.day : null;
+}
+
+/** Projected date the plan reaches `target` (e.g. the Day-21 milestone) if one
+ *  reel ships per day from here. Drifts later by every day you skip. */
+export function projectedDate(state: LockState, todayISO: string, target: number): string | null {
+  const day = brandQueueDay(state, todayISO);
+  if (day === null || day >= target) return null;
+  // Undone today: today ships `day`, so target lands (target - day) days out.
+  // Done today: tomorrow ships day + 1, which lands on the same date.
+  const d = new Date(todayISO + "T00:00:00");
+  d.setDate(d.getDate() + (target - day));
+  // Local date, not toISOString(): IST midnight is the previous day in UTC.
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${mm}-${dd}`;
+}
+
 export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set<string>): LockItem[] {
   const items: Omit<LockItem, "score" | "why" | "rank">[] = [];
-  const day = lockDayNumber(todayISO);
+  const day = brandQueueDay(state, todayISO) ?? 0;
 
-  // ---- BRAND: today's row of the 30-day plan ----
+  // ---- BRAND: the next unposted row of the 30-day plan ----
   const bd = raw.brandDays.find((d) => d.day === day);
   if (bd) {
     items.push({
@@ -327,7 +354,7 @@ export function buildPrivate(todayISO: string, text: string): LockItem[] {
 
 /** Plain-text recap to paste back to Claude at the end of the day. */
 export function buildLockExport(todayISO: string, items: LockItem[], state: LockState): string {
-  const lines = [`LOCK IN recap ${todayISO} (Day ${lockDayNumber(todayISO)})`, ""];
+  const lines = [`LOCK IN recap ${todayISO} (plan day ${brandQueueDay(state, todayISO) ?? "done"}, calendar day ${lockDayNumber(todayISO)})`, ""];
   const priv = items.filter((it) => it.track === "private");
   if (priv.length) {
     const done = priv.filter((it) => state.done[it.key]).length;

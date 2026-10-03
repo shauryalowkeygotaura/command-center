@@ -24,7 +24,8 @@ import {
   buildLockExport,
   buildLockIn,
   buildPrivate,
-  lockDayNumber,
+  brandQueueDay,
+  projectedDate,
   lockStore,
   privateStore,
 } from "@/lib/lockin";
@@ -135,7 +136,10 @@ export function LockIn() {
 
   if (!mounted) return <SkeletonLockIn />;
 
-  const day = lockDayNumber(today);
+  // Plan position comes from the brand queue, not the calendar: days away
+  // push the plan (and the Day-21 milestone) back instead of skipping reels.
+  const day = brandQueueDay(state, today);
+  const milestoneOn = projectedDate(state, today, 21);
   const isDone = (i: LockItem) => Boolean(state.done[i.key]);
   const privItems = items.filter((i) => i.track === "private");
   const privGroups = [...new Set(privItems.map((i) => i.group ?? "Non-negotiables"))];
@@ -171,13 +175,13 @@ export function LockIn() {
       <header className="flex items-end justify-between gap-4 pt-2">
         <div className="min-w-0">
           <p className="font-mono text-[11px] tracking-[0.14em] text-cream-dim">
-            {dateLine} · <span className="whitespace-nowrap">DAY {day > 0 ? day : "–"} OF 30</span>
+            {dateLine} · <span className="whitespace-nowrap">{day === null ? "PLAN COMPLETE" : `DAY ${day} OF 30`}</span>
           </p>
           <h1 className="mt-1 font-sans text-[34px] font-bold leading-none tracking-tight text-cream">Lock In</h1>
           <p className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full bg-amber/10 px-3 py-1 font-sans text-[12px] text-amber">
             <span aria-hidden>◎</span>
             <span className="truncate">
-              Day 21 · {LOCKIN.milestone.date.slice(5)}: {LOCKIN.milestone.label}
+              Day 21{milestoneOn ? ` · on track for ${milestoneOn.slice(5)}` : " · reached"}: {LOCKIN.milestone.label}
             </span>
           </p>
         </div>
