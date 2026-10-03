@@ -116,6 +116,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
+    id: "h-desk-unlock",
+    text: "P2 \u00b7 Unlock the new DESK tab once (paste DESK_PASSPHRASE) to see names",
+    done: false,
+    seeded: true,
+    note: "DESK is Harvey's dashboard rebuilt on your pipeline: Today (who is waiting on you), Conversations, Sends, Campaigns, Activity, Controls (kill switch + send-gate blocks). The pipeline repo is public, so anything with a clinic's name is encrypted and only your browser decrypts it. Get the passphrase with `doppler secrets get DESK_PASSPHRASE --plain` inside Code/client-acquisition-pipeline, paste it into any locked view, done; it stays in that browser. Reply `desk = unlocked`.",
+  },
+  {
     id: "h-gemini-image-key",
     text: "P2 · Image generation has no working provider. The Gemini value you pasted (AQ.) is an ephemeral token, and it transited chat, so revoke it",
     done: false,
