@@ -123,6 +123,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "DESK is Harvey's dashboard rebuilt on your pipeline: Today (who is waiting on you), Conversations, Sends, Campaigns, Activity, Controls (kill switch + send-gate blocks). The pipeline repo is public, so anything with a clinic's name is encrypted and only your browser decrypts it. Get the passphrase with `doppler secrets get DESK_PASSPHRASE --plain` inside Code/client-acquisition-pipeline, paste it into any locked view, done; it stays in that browser. Reply `desk = unlocked`.",
   },
   {
+    id: "h-reel-brain-login",
+    text: "P2 · reel-brain is built: log into Instagram once and tell me your second account's @, then your saves + DM'd reels become notes, playbooks and skills",
+    done: false,
+    seeded: true,
+    note: "Command: `doppler run -- python login.py` in Code/reel-brain (main account, a Chromium window opens). My first attempt was killed by low RAM before you logged in, so close heavy apps first. The guide's way (Claude in Chrome on your normal browser) also works, but Claude then reads every reel itself: it costs tokens, it only sees captions instead of hearing the audio, and nothing runs unattended. Mine is the same single login, then free Groq Whisper + vision and a monthly sweep, with any reel link you message me processed on the spot. Reply `reels = logged in, alt @<username>` or `reels = use the extension instead`.",
+  },
+  {
     id: "h-gemini-image-key",
     text: "P2 · Image generation has no working provider. The Gemini value you pasted (AQ.) is an ephemeral token, and it transited chat, so revoke it",
     done: false,
