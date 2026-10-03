@@ -138,11 +138,15 @@ export function LockIn() {
   const day = lockDayNumber(today);
   const isDone = (i: LockItem) => Boolean(state.done[i.key]);
   const privItems = items.filter((i) => i.track === "private");
+  const privGroups = [...new Set(privItems.map((i) => i.group ?? "Non-negotiables"))];
   const ranked = items.filter((i) => i.track !== "private");
   const pending = ranked.filter((i) => !isDone(i));
   const now = pending[0];
   const upNext = pending.slice(1);
-  const doneItems = ranked.filter(isDone);
+  // Every tick of the day (private + ranked), newest first, for the corner sheet.
+  const finishedItems = items
+    .filter(isDone)
+    .sort((x, y) => (state.done[y.key] ?? "").localeCompare(state.done[x.key] ?? ""));
   const doneCount = items.filter(isDone).length;
   const minutesLeft = items.filter((i) => !isDone(i)).reduce((s, i) => s + i.minutes, 0);
   const dateLine = new Date(today + "T00:00:00")
@@ -200,8 +204,8 @@ export function LockIn() {
       )}
 
       {/* ── Non-negotiables (private, browser-only) ──────────── */}
-      <Section title="Non-negotiables" count={`${privItems.filter(isDone).length}/${privItems.length}`}>
-        {privItems.length === 0 ? (
+      {privItems.length === 0 ? (
+        <Section title="Non-negotiables" count="0/0">
           <button
             onClick={() => setEditingPriv(true)}
             className="flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left font-sans text-[14px] text-cream-dim transition hover:text-cream"
@@ -209,10 +213,19 @@ export function LockIn() {
             <span className="grid h-6 w-6 place-items-center rounded-lg border border-dashed border-cream-dim/50">+</span>
             Add your morning formula, training and daily rules. Saved only in this browser.
           </button>
-        ) : (
-          privItems.map((it) => <Row key={it.key} {...rowProps(it)} compact />)
-        )}
-      </Section>
+        </Section>
+      ) : (
+        privGroups.map((g) => {
+          const rows = privItems.filter((i) => (i.group ?? "Non-negotiables") === g);
+          return (
+            <Section key={g} title={g} count={`${rows.filter(isDone).length}/${rows.length}`}>
+              {rows.map((it) => (
+                <Row key={it.key} {...rowProps(it)} compact />
+              ))}
+            </Section>
+          );
+        })
+      )}
 
       {/* ── Do this now: the single biggest target (Fitts) ───── */}
       {now ? (
@@ -238,34 +251,48 @@ export function LockIn() {
         </Section>
       )}
 
-      {/* ── Done today: collapsed by default ────────────────── */}
-      {doneItems.length > 0 && (
-        <section>
+      {/* ── Finished: corner button + sheet, every tick of the day is
+          one tap from being undone, long after the 5s toast is gone ─── */}
+      {finishedItems.length > 0 && (
+        <div className="fixed bottom-5 right-4 z-30 flex flex-col items-end gap-2">
+          {showDone && (
+            <div className="cc-toast max-h-[60vh] w-[min(360px,calc(100vw-2rem))] overflow-y-auto rounded-2xl border border-cream/10 bg-panel py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+              <p className="px-4 pb-1 pt-1 font-sans text-[12px] font-semibold uppercase tracking-wide text-cream-dim">
+                Finished today · tap Untick to fix a mistake
+              </p>
+              {finishedItems.map((it) => (
+                <div key={it.key} className="flex min-h-11 items-center gap-3 border-t border-cream/[0.06] px-4 py-2">
+                  <span className="min-w-0 flex-1 truncate font-sans text-[13.5px] text-cream-dim line-through decoration-cream-dim/40">
+                    {it.title}
+                  </span>
+                  <button
+                    onClick={() => setDone(it, false)}
+                    className="min-h-9 shrink-0 rounded-full bg-cream/10 px-3 font-sans text-[12px] font-semibold text-amber transition hover:bg-cream/20"
+                  >
+                    Untick
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           <button
             onClick={() => setShowDone((v) => !v)}
-            className="mb-2 flex min-h-11 items-center gap-2 px-1 font-sans text-[13px] font-semibold uppercase tracking-wide text-cream-dim transition hover:text-cream"
             aria-expanded={showDone}
+            className="glass flex min-h-11 items-center gap-2 rounded-full pl-3 pr-4 font-sans text-[13px] font-semibold text-cream transition hover:text-amber active:translate-y-px"
           >
-            <Chevron open={showDone} />
-            Done today · {doneItems.length}
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-amber text-[12px] font-bold tabular-nums text-ink">
+              {finishedItems.length}
+            </span>
+            {showDone ? "Close" : "Finished"}
           </button>
-          <div className="cc-expand" data-open={showDone}>
-            <div>
-              <div className="glass overflow-hidden rounded-2xl">
-                {doneItems.map((it) => (
-                  <Row key={it.key} {...rowProps(it)} compact />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       )}
 
       {/* ── Undo toast, in context, 5s ───────────────────────── */}
-      {undo && (
+      {undo && !showDone && (
         <div
           role="status"
-          className="cc-toast glass fixed bottom-6 left-1/2 z-30 flex max-w-[92vw] -translate-x-1/2 items-center gap-4 rounded-full py-2 pl-5 pr-2 font-sans text-[13px] text-cream"
+          className="cc-toast glass fixed bottom-20 left-1/2 z-30 flex max-w-[92vw] -translate-x-1/2 items-center gap-4 rounded-full py-2 pl-5 pr-2 font-sans text-[13px] text-cream"
         >
           <span className="truncate">Done: {undo.title}</span>
           <button
@@ -501,13 +528,41 @@ function SkeletonLockIn() {
 // localStorage only: never committed, never synced, never sent to Claude.
 function PrivateEditor({ initial, onSave }: { initial: string; onSave: (t: string) => void }) {
   const [text, setText] = useState(initial);
+  const [fileErr, setFileErr] = useState("");
+
+  // Read a local .md/.txt straight into the box. The file never leaves this
+  // browser: FileReader only, no upload.
+  function loadFile(f: File | undefined) {
+    if (!f) return;
+    setFileErr("");
+    if (f.size > 200_000) {
+      setFileErr("That file is over 200 KB, pick the private list .md.");
+      return;
+    }
+    const r = new FileReader();
+    r.onload = () => setText(String(r.result ?? ""));
+    r.onerror = () => setFileErr("Could not read that file.");
+    r.readAsText(f);
+  }
+
   return (
     <section className="glass rounded-2xl px-5 py-4">
       <p className="font-sans text-[12.5px] leading-snug text-cream-dim">
         <span className="font-semibold text-amber">Private</span> · stays in this browser only: not on the public site,
         not synced to other devices. One item per &quot;- &quot; line, indented lines under it are its how-to.
-        Optional: &quot;| 20&quot; = minutes, &quot;@tue @sat&quot; = only those days.
+        Optional: &quot;| 20&quot; = minutes, &quot;@tue @sat&quot; = only those days, &quot;## Heading&quot; = a
+        new section.
       </p>
+      <label className="mt-3 inline-flex min-h-9 cursor-pointer items-center rounded-full border border-cream/15 px-4 font-sans text-[13px] text-cream transition hover:border-amber/60 hover:text-amber">
+        Load from file
+        <input
+          type="file"
+          accept=".md,.txt,text/markdown,text/plain"
+          className="sr-only"
+          onChange={(e) => loadFile(e.target.files?.[0])}
+        />
+      </label>
+      {fileErr && <p className="mt-2 font-sans text-[12px] text-[#e08a95]">{fileErr}</p>}
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}

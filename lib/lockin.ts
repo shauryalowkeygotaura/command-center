@@ -27,6 +27,7 @@ export interface LockItem {
   score: number;
   why?: string;
   rank: number; // score + urgency, what the list sorts on
+  group?: string; // private items only: the "## Heading" they sit under
 }
 
 interface Scored {
@@ -236,6 +237,7 @@ export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set
 //       read MORNING FORMULA.md out loud
 //   - Upper A @tue | 75
 // "| N" = minutes (optional). "@mon @thu" = only on those weekdays (optional).
+// "## Heading" lines start a named section (e.g. Morning formula, Non-negotiables).
 
 const PRIVATE_KEY = "revengine.command-center.lockin.private.v1";
 const WEEKDAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -264,11 +266,18 @@ interface PrivateDef {
   minutes: number;
   days: number[] | null; // null = every day
   how: string[];
+  group: string;
 }
 
 export function parsePrivate(text: string): PrivateDef[] {
   const out: PrivateDef[] = [];
+  let group = "Non-negotiables";
   for (const line of text.split(/\r?\n/)) {
+    const h = line.match(/^\s*#{1,6}\s+(.+?)\s*$/);
+    if (h) {
+      group = h[1];
+      continue;
+    }
     const m = line.match(/^\s*[-*]\s+(.+)$/);
     if (m && !/^\s{2,}/.test(line)) {
       let rest = m[1];
@@ -286,7 +295,7 @@ export function parsePrivate(text: string): PrivateDef[] {
         })
         .replace(/\s{2,}/g, " ")
         .trim();
-      if (rest) out.push({ title: rest, minutes, days: days.length ? days : null, how: [] });
+      if (rest) out.push({ title: rest, minutes, days: days.length ? days : null, how: [], group });
     } else if (line.trim() && out.length) {
       out[out.length - 1].how.push(line.trim());
     }
@@ -312,6 +321,7 @@ export function buildPrivate(todayISO: string, text: string): LockItem[] {
       minutes: p.minutes,
       score: 10,
       rank: 1000 - i, // keep the order you wrote them in
+      group: p.group,
     }));
 }
 
