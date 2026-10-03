@@ -138,10 +138,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-portfolio-mic-bugs",
-    text: "P2 · Portfolio mic works end to end on live for me. Tell me your browser/device and exactly what breaks for you",
+    text: "P2 · Portfolio: mic still broken + 'a lot of bugs'. I am doing a full live bug sweep; your browser/device still helps",
     done: false,
     seeded: true,
-    note: "Verified 25 Sep with a fake-mic Chromium: transcribe, then voice reply, both fine on the live site. The missing head.glb (404) is the intended fallback, not the bug. So whatever you are seeing is device or browser specific and I cannot reproduce it blind. Reply `mic = <browser> <device> <what happens>`.",
+    note: "2026-10-03 inbox: you say the mic still fails and there are many bugs. On 25 Sep the mic worked end to end in a fake-mic Chromium on the live site, so whatever breaks for you is device or browser specific (real mic permission, Safari/iOS audio rules, or a blocked autoplay). Next from me: a full click-through of the live site on desktop and mobile widths, with every bug written down and fixed on a branch. The one thing I cannot reproduce blind is your setup. Reply `mic = <browser> <device> <what happens>` and list any other bug you have seen.",
   },
   {
     id: "h-sheetal-call",
@@ -155,7 +155,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     text: "P2 · Make a free OpenCode Zen account and put OPENCODE_API_KEY in Doppler + GitHub secrets",
     done: false,
     seeded: true,
-    note: "One key unlocks two things already built and waiting: free Jev (jev-1.13-free, limited time) for the reply classifier, and the Groq pool's new overflow to Zen's free chat models when every Groq key is spent. No billing needed. It goes in client-acquisition-pipeline (Doppler + repo secret), philosopher-pipeline and autoshop. NOT in dental-receptionist: Zen's free models may train on prompts, and that config touches patient data. Reply `opencode = set`.",
+    note: "Answer to 'opencode jev for replacing groq pool?': not a replacement, an overflow, and that is the better design. The Groq pool already falls through to Zen's free models only when every Groq key is spent, and the reply classifier can use free Jev. Replacing Groq outright would be worse for three reasons: Zen's free models are a limited-time offer, they may train on prompts (so never near patient data), and Groq is faster. One key unlocks both paths. It goes in client-acquisition-pipeline (Doppler + repo secret), philosopher-pipeline and autoshop, NOT dental-receptionist. Reply `opencode = set`.",
   },
   {
     id: "h-student-pack-pick",
@@ -331,5 +331,40 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "The pool already does what you described: the best model per pipeline first, downgrade down the chain on failure, rotate keys across accounts. Moving keys between Doppler projects was blocked for me (credential handling), so add ...39ZZ8 as GROQ_API_KEY_3 in philosopher-pipeline, autoshop and client-acquisition-pipeline (plus the repo secret where CI runs). Only worth it if ...39ZZ8 is from a different Groq account than the other two; same-account keys share one quota.",
+  },
+  {
+    id: "h-voice-pacing",
+    text: "P3 · Voice pacing for format-render: pauses so the narration can land on intense words (mine)",
+    note: "From your asteroid reply. Deepgram Aura ignores SSML, so the plan is to mark emphasis beats in the script and split the TTS there, inserting short silences (and a slower pass on the key line), then re-check caption timing. Nothing needed from you; you get a before/after clip to judge.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-quant-explain-ml",
+    text: "P3 · quant-lab: the plain-English answer to 'people earn money with trading', and a basic ML strategy run through the same honest tests (mine)",
+    note: "Simple version: some people do make money, most active traders do not, and the winners mostly have an edge you cannot copy (speed, data, scale) or got lucky; the lab has shown every strategy tried so far earns less than just holding the index. A self-optimising loop is exactly what loses (it was tested: re-searching every fold lost to buy & hold on Nifty and the S&P). A basic ML model is fine to TRY, and ml_strategy.py is already started: it must go through the same walk-forward and trial ledger, so a lucky fit cannot sneak through. Paper only, no real money, as always.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-quant-fish-channel",
+    text: "P3 · Analyse every @not_a_lil_fish video and keep only what is testable in quant-lab (mine)",
+    note: "Pull all transcripts, list each concrete claim or strategy, and test only the ones that fit the lab's rule (a price history in, a position out). Anything that needs news, leverage or 'trust me' gets a one-line reason it was dropped. You get a short scorecard: claim, tested or not, result.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-quant-markets",
+    text: "P3 · Polymarket / Kalshi / crypto in quant-lab: data and paper trading YES, real money NO",
+    note: "Crypto price history (BTC, ETH) drops straight into the existing backtester. Polymarket and Kalshi publish market prices you can read for free, so paper-forecasting against them is a real, interesting test of whether you can beat a crowd. What I will not wire: real accounts or memecoins. Both prediction markets are 18+, India taxes crypto at 30% plus 1% TDS, and memecoins have no price history worth testing (most go to zero). Reply `markets = crypto first` or `= prediction markets first`.",
+    done: false,
+    seeded: true,
+  },
+  {
+    id: "h-jobleft-windows",
+    text: "P3 · jobleft (blueturboguy07) is Mac-only. I can try a Windows build; tell me what you want it for",
+    note: "It is a TypeScript desktop app (15 stars, active) that reads employer job boards, scores matches and tailors resumes, shipped only as an Apple-silicon .dmg. If it is a Tauri or Electron app, a Windows build is usually possible from source, but the macOS Keychain part would need replacing. Before I spend that time: what is it for? Internships and summer programs would need a different set of sources than the US tech boards it reads. Reply `jobleft = <what you want to find>`.",
+    done: false,
+    seeded: true,
   },
 ];
