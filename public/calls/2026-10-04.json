@@ -1,0 +1,324 @@
+[
+  {
+    "number": "+91-9585500171",
+    "label": "Sree Krishna",
+    "whatsapp": "919585500171",
+    "area": "Thondamuthur Main road",
+    "website": "",
+    "description": "Dental clinic · no website · Th-Tu 10:00-21:00",
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "9940977577",
+    "label": "BM Dental Clinic",
+    "whatsapp": "919940977577",
+    "area": "",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "9003961667",
+    "label": "Little Krishna Kids Dental Care",
+    "whatsapp": "919003961667",
+    "area": "",
+    "website": "",
+    "description": "Dental clinic · pediatric, dentist · no website",
+    "kind": "private",
+    "tier": "A",
+    "score": 6,
+    "reasons": [
+      "mobile, likely the owner",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "098155 84988",
+    "label": "Khaira Nursing Home",
+    "whatsapp": "919815584988",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "098724 12582",
+    "label": "Singla Nursing Home, Ludhiana",
+    "whatsapp": "919872412582",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "098150 60622",
+    "label": "K.Deep Nursing Home",
+    "whatsapp": "919815060622",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "087250 01965",
+    "label": "Jawanda Nursing Home",
+    "whatsapp": "918725001965",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 9879849399",
+    "label": "Vinayak Ayurvedic Clinic",
+    "whatsapp": "919879849399",
+    "area": "",
+    "website": "",
+    "description": "Clinic · ayurvedic, panchkarma · no website · Mo-Su 07:00-19:00",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "9894728979",
+    "label": "Acupuncture Home",
+    "whatsapp": "919894728979",
+    "area": "Nachi Angannan Thevar Street",
+    "website": "",
+    "description": "Clinic · no website · Mo-Sa 18:00-21:00",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+914222476036",
+    "label": "GS Dental care",
+    "whatsapp": "",
+    "area": "west ramalingam road",
+    "website": "",
+    "description": "Dental clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 3,
+    "reasons": [
+      "landline, likely the front desk",
+      "dental, the pitch has proof"
+    ]
+  },
+  {
+    "number": "0161-2300633",
+    "label": "Dr Aulakh Clinic",
+    "whatsapp": "",
+    "area": "Ludhiana",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 (0) 161 5044963 , +91 (0) 161 5044694",
+    "label": "Puri Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "https://www.purinursinghospital.com/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 240 6986",
+    "label": "Sadana Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "business.site",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 243 0849",
+    "label": "Pal Nursing Home, Ludhiana",
+    "whatsapp": "",
+    "area": "",
+    "website": "http://www.palhospital.in",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 263 1333",
+    "label": "Chawla Nursing Home, Chauri Sarak",
+    "whatsapp": "",
+    "area": "",
+    "website": "https://www.chawlanursinghome.in/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91-422-2234848",
+    "label": "Clarity Imaging Centre",
+    "whatsapp": "",
+    "area": "Gokale Street",
+    "website": "clarityimaging.net",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "+91-422-4342018",
+    "label": "Microbiological Laboratory",
+    "whatsapp": "",
+    "area": "Maruthamalai Road",
+    "website": "https://microlabindia.com/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 507 8171",
+    "label": "Brar Eye Centre",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0162 823 1403",
+    "label": "Khanna Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0161 230 4030",
+    "label": "Bassi Nursing Home Pvt. Ltd.",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0161 262 1334",
+    "label": "Kapoor Nursing Home - Ludhiana",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  }
+]
