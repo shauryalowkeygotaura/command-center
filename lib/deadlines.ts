@@ -101,8 +101,8 @@ export const DEADLINE_SEED: Deadline[] = [
   {
     id: "dl:spaceapps",
     title: "NASA Space Apps weekend — VayuVani v2",
-    date: "2026-10-04",
-    note: "Oct 4-5, Delhi local. Registration opens ~Jul 17 — register early.",
+    date: "2026-11-14",
+    note: "Nov 14-15 2026 (verified 2026-10-08). Registration opened Aug 26: register before the weekend.",
     done: false,
     seeded: true,
     source: "seed",

@@ -266,24 +266,24 @@
     { "id": "muskaan-clinic", "name": "Muskaan Clinic", "area": "~7.1 km", "phones": ["011 4172 4187", "+91 88822 21182", "+91 98913 04552"], "note": "Looks like a family practice: no dedicated front desk." }
   ],
   "dated": [
-    { "id": "d-spaceapps-check", "date": "2026-10-01", "track": "t20", "title": "Check right now: are you registered for NASA Space Apps (4 to 5 Oct, Delhi)?", "minutes": 10,
+    { "id": "d-spaceapps-check", "date": "2026-10-09", "track": "t20", "title": "Check right now: are you registered for NASA Space Apps (14 to 15 Nov, Delhi)?", "minutes": 10,
       "how": [
         "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
         "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
-        "If not registered and the window is closed: write 'missed' in the outcome box and move on. Do not spend tomorrow chasing it."
+        "If not registered: register now (it opened 26 Aug and is free), join or form a team, pick the New Delhi local event or remote."
       ] },
-    { "id": "d-diamond-team", "date": "2026-10-02", "track": "t20", "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team", "minutes": 30,
+    { "id": "d-diamond-team", "date": "2026-10-12", "track": "t20", "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team", "minutes": 30,
       "how": [
         "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
         "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
         "Register at diamondchallenge.org once 2 have said yes."
       ] },
-    { "id": "d-spaceapps-scope", "date": "2026-10-03", "track": "t20", "title": "Space Apps eve: write the one-paragraph VayuVani v2 scope (only if registered)", "minutes": 30,
+    { "id": "d-spaceapps-scope", "date": "2026-11-13", "track": "t20", "title": "Space Apps eve: write the one-paragraph VayuVani v2 scope (only if registered)", "minutes": 30,
       "how": [
         "One paragraph: which challenge, what the demo shows in 2 minutes, which NASA dataset. Smaller than you think.",
         "Charge laptop, test that the VayuVani app still runs, sleep."
       ] },
-    { "id": "d-spaceapps-weekend", "date": "2026-10-04", "track": "t20", "title": "NASA Space Apps weekend: build and submit", "minutes": 600,
+    { "id": "d-spaceapps-weekend", "date": "2026-11-14", "track": "t20", "title": "NASA Space Apps weekend: build and submit", "minutes": 600,
       "how": [
         "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
       ] },
