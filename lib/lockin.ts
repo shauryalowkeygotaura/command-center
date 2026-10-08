@@ -39,6 +39,7 @@ interface Scored {
 export interface LockState {
   done: Record<string, string>; // key -> ISO timestamp it was ticked
   outcome: Record<string, string>;
+  stamps?: Record<string, string>; // key -> ISO of its last edit, for cross-device LWW (lib/lockinMerge.ts)
 }
 
 const SCORES: Record<string, Scored> = (rawScores as { scores?: Record<string, Scored> }).scores ?? {};
@@ -59,7 +60,7 @@ export const lockStore = {
     try {
       const s = window.localStorage.getItem(STORE_KEY);
       const parsed = s ? (JSON.parse(s) as Partial<LockState>) : {};
-      return { done: parsed.done ?? {}, outcome: parsed.outcome ?? {} };
+      return { done: parsed.done ?? {}, outcome: parsed.outcome ?? {}, stamps: parsed.stamps ?? {} };
     } catch {
       return { done: {}, outcome: {} };
     }

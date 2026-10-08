@@ -29,6 +29,10 @@ import {
   lockStore,
   privateStore,
 } from "@/lib/lockin";
+import { DaySnapshot, applyEntries, mergeDays, mergeEntries, snapshotDay, toEntries } from "@/lib/lockinMerge";
+import { findOrCreateLockinGist, loadSyncToken, pullLockin, pushLockin, verifyOwner } from "@/lib/lockinSync";
+
+type SyncStatus = "off" | "syncing" | "synced" | "error";
 
 const TRACK_STYLE: Record<Track, { label: string; cls: string }> = {
   private: { label: "Non-neg", cls: "bg-amber/15 text-amber" },
@@ -56,14 +60,48 @@ export function LockIn() {
   const [undo, setUndo] = useState<{ key: string; title: string } | null>(null);
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const today = useMemo(() => isoDate(), []);
+  // Gist sync (same PAT as INBOX/HABITS). Off until a token has been pasted.
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>("off");
+  const syncRef = useRef<{ token: string; gist: string; ready: boolean; days: Record<string, DaySnapshot> }>({
+    token: "",
+    gist: "",
+    ready: false,
+    days: {},
+  });
+  const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setState(lockStore.load());
+    const loaded = lockStore.load();
+    setState(loaded);
+    const token = loadSyncToken();
+    if (token) {
+      setSyncStatus("syncing");
+      (async () => {
+        try {
+          await verifyOwner(token);
+          const gist = await findOrCreateLockinGist(token);
+          const remote = await pullLockin(token, gist);
+          syncRef.current = { token, gist, ready: true, days: remote?.days ?? {} };
+          // Functional update: a tick made while the pull was in flight wins
+          // its own LWW stamp instead of being overwritten by `loaded`. Always a
+          // fresh object, so the push effect below fires once on connect.
+          setState((cur) => {
+            const merged = applyEntries(cur, mergeEntries(toEntries(cur), remote?.entries ?? {}));
+            lockStore.save(merged);
+            return merged;
+          });
+          setSyncStatus("synced");
+        } catch {
+          setSyncStatus("error");
+        }
+      })();
+    }
     setPrivText(privateStore.load());
     setHandoffDone(new Set(handoffStore.load().filter((h) => h.done).map((h) => h.id)));
     setMounted(true);
     return () => {
       if (undoTimer.current) clearTimeout(undoTimer.current);
+      if (pushTimer.current) clearTimeout(pushTimer.current);
     };
   }, []);
 
@@ -72,16 +110,47 @@ export function LockIn() {
     [mounted, today, state, handoffDone, privText],
   );
 
+  // Debounced pull-merge-push whenever the list or its ticks change, so a
+  // second device's edits are folded in rather than overwritten. Today's
+  // snapshot (what the list showed) rides along for the vault-side review.
+  useEffect(() => {
+    const sync = syncRef.current;
+    if (!mounted || !sync.ready) return;
+    if (pushTimer.current) clearTimeout(pushTimer.current);
+    pushTimer.current = setTimeout(async () => {
+      setSyncStatus("syncing");
+      try {
+        const remote = await pullLockin(sync.token, sync.gist);
+        const entries = mergeEntries(toEntries(state), remote?.entries ?? {});
+        const days = mergeDays(mergeDays(sync.days, remote?.days ?? {}), {
+          [today]: snapshotDay(items, state, new Date().toISOString()),
+        });
+        sync.days = days;
+        await pushLockin(sync.token, sync.gist, { v: 1, entries, days });
+        const merged = applyEntries(state, entries);
+        if (JSON.stringify(merged.done) !== JSON.stringify(state.done) || JSON.stringify(merged.outcome) !== JSON.stringify(state.outcome)) {
+          setState(merged);
+          lockStore.save(merged);
+        }
+        setSyncStatus("synced");
+      } catch {
+        setSyncStatus("error");
+      }
+    }, 2500);
+  }, [mounted, state, items, today]);
+
   function update(next: LockState) {
     setState(next);
     lockStore.save(next);
   }
 
+  const stamped = (key: string) => ({ ...(state.stamps ?? {}), [key]: new Date().toISOString() });
+
   function setDone(it: LockItem, nowDone: boolean) {
     const done = { ...state.done };
     if (nowDone) done[it.key] = new Date().toISOString();
     else delete done[it.key];
-    update({ ...state, done });
+    update({ ...state, done, stamps: stamped(it.key) });
     // A P1 handoff ticked here is ticked on the HANDOFFS tab too.
     if (it.track === "handoff") {
       const id = it.key.replace(/^handoff:/, "");
@@ -121,7 +190,7 @@ export function LockIn() {
     const outcome = { ...state.outcome };
     if (text.trim() === "") delete outcome[key];
     else outcome[key] = text;
-    update({ ...state, outcome });
+    update({ ...state, outcome, stamps: stamped(key) });
   }
 
   async function copyForClaude() {
@@ -194,6 +263,14 @@ export function LockIn() {
           {editingPriv ? "Close private list" : "Private list"}
         </Capsule>
         <Capsule onClick={copyForClaude}>{copied ? "Copied ✓" : "Copy for Claude"}</Capsule>
+        {syncStatus !== "off" && (
+          <span
+            title="Ticks and outcomes sync to a secret gist; Claude's 23:00 review reads it"
+            className={`self-center font-mono text-[11px] ${syncStatus === "error" ? "text-[#e08a95]" : "text-cream-dim"}`}
+          >
+            {syncStatus === "synced" ? "sync ✓" : syncStatus === "syncing" ? "sync…" : "sync ✕"}
+          </span>
+        )}
       </div>
 
       {editingPriv && (
