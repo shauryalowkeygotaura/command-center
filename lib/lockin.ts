@@ -134,6 +134,22 @@ export function projectedDate(state: LockState, todayISO: string, target: number
   return `${d.getFullYear()}-${mm}-${dd}`;
 }
 
+/** Peek at the following plan day, for a second reel filmed the same day.
+ *  reel-dump (Code/reel-dump) files a second same-evening dump as the next
+ *  plan day automatically; `python reel_dump.py script --next` prints the
+ *  full shooting script. Empty after the last day. */
+export function nextReelPeek(day: number): string[] {
+  const nb = raw.brandDays.find((d) => d.day === day + 1);
+  if (!nb) return [];
+  const title = nb.series.startsWith("Day ") ? nb.reel : `${nb.series}: ${nb.reel}`;
+  return [
+    "",
+    `NEXT REEL (filming a second one today): Day ${nb.day} · ${title}`,
+    ...nb.how.map((h) => `  ${h}`),
+    "  Full script: python reel_dump.py script --next",
+  ];
+}
+
 export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set<string>): LockItem[] {
   const items: Omit<LockItem, "score" | "why" | "rank">[] = [];
   const day = brandQueueDay(state, todayISO) ?? 0;
@@ -146,7 +162,7 @@ export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set
       scoreKey: `brand-d${day}`,
       track: "brand",
       title: bd.series.startsWith("Day ") ? `Reel · ${bd.reel}` : `Reel · ${bd.series}: ${bd.reel}`,
-      how: [...bd.how, "", ...raw.reelRecipe],
+      how: [...bd.how, "", ...raw.reelRecipe, ...nextReelPeek(day)],
       minutes: 60,
     });
     (bd.posts ?? []).forEach((p, i) =>
