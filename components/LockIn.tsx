@@ -31,6 +31,7 @@ import {
 } from "@/lib/lockin";
 import { DaySnapshot, applyEntries, mergeDays, mergeEntries, snapshotDay, toEntries } from "@/lib/lockinMerge";
 import { findOrCreateLockinGist, loadSyncToken, pullLockin, pushLockin, verifyOwner } from "@/lib/lockinSync";
+import { daylogEndpoint, pushDaylog, repliesFrom } from "@/lib/daylogRelay";
 
 type SyncStatus = "off" | "syncing" | "synced" | "error";
 
@@ -137,6 +138,32 @@ export function LockIn() {
         setSyncStatus("error");
       }
     }, 2500);
+  }, [mounted, state, items, today]);
+
+  // Day-log relay (no PAT needed): ticks, outcomes, today's snapshot and the
+  // HANDOFFS replies go to Doppler via the KEYS passphrase, so the 23:00 review
+  // reads what actually happened. Runs alongside the gist, not instead of it.
+  const relayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [relayOk, setRelayOk] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!mounted || !daylogEndpoint().url) return;
+    if (relayTimer.current) clearTimeout(relayTimer.current);
+    relayTimer.current = setTimeout(async () => {
+      const now = new Date().toISOString();
+      try {
+        await pushDaylog({
+          entries: toEntries(state),
+          days: { [today]: snapshotDay(items, state, now) },
+          replies: repliesFrom(handoffStore.load(), now),
+        });
+        setRelayOk(true);
+      } catch {
+        setRelayOk(false);
+      }
+    }, 3000);
+    return () => {
+      if (relayTimer.current) clearTimeout(relayTimer.current);
+    };
   }, [mounted, state, items, today]);
 
   function update(next: LockState) {
@@ -269,6 +296,14 @@ export function LockIn() {
             className={`self-center font-mono text-[11px] ${syncStatus === "error" ? "text-[#e08a95]" : "text-cream-dim"}`}
           >
             {syncStatus === "synced" ? "sync ✓" : syncStatus === "syncing" ? "sync…" : "sync ✕"}
+          </span>
+        )}
+        {relayOk !== null && (
+          <span
+            title="Ticks, outcomes and handoff replies reach Claude's 23:00 review (via the KEYS passphrase)"
+            className={`self-center font-mono text-[11px] ${relayOk ? "text-cream-dim" : "text-[#e08a95]"}`}
+          >
+            {relayOk ? "log ✓" : "log ✕"}
           </span>
         )}
       </div>
