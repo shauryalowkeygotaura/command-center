@@ -677,8 +677,20 @@
       ]
     },
     {
+      "id": "d-conrad-check",
+      "date": "2026-10-15",
+      "track": "t20",
+      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
+      "minutes": 15,
+      "how": [
+        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
+        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
+        "Outcome box: registered / not doing it this year."
+      ]
+    },
+    {
       "id": "d-diamond-team",
-      "date": "2026-10-12",
+      "date": "2026-10-16",
       "track": "t20",
       "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
       "minutes": 30,
@@ -690,7 +702,7 @@
     },
     {
       "id": "d-linkedin-token",
-      "date": "2026-10-12",
+      "date": "2026-10-16",
       "track": "systems",
       "title": "Re-mint the LinkedIn token before it dies on 14 Oct",
       "minutes": 5,
@@ -700,15 +712,15 @@
       ]
     },
     {
-      "id": "d-conrad-check",
-      "date": "2026-10-15",
-      "track": "t20",
-      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
-      "minutes": 15,
+      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
+      "date": "2026-10-16",
+      "track": "brand",
+      "title": "Improve Revengine IG autoposter script",
+      "minutes": 60,
       "how": [
-        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
-        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
-        "Outcome box: registered / not doing it this year."
+        "Review current script errors",
+        "Implement fallback posting",
+        "Test with dummy post"
       ]
     },
     {
