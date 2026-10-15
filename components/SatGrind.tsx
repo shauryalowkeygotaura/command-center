@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { isoDate } from "@/lib/day";
+import { useToday } from "@/lib/useToday";
 import { Math as MathText } from "@/lib/math";
 import {
   Card,
@@ -66,7 +67,7 @@ function isTypingInField(): boolean {
 }
 
 export function SatGrind() {
-  const today = useMemo(() => isoDate(), []);
+  const today = useToday();
   const [state, setState] = useState<SatState | null>(null);
   const [stage, setStage] = useState<Stage>("attempt");
   const [attempt, setAttempt] = useState("");

@@ -1,4 +1,5 @@
-import { dayNumber, daysToMilestone, MILESTONE_DATE, MILESTONE_LABEL } from "@/lib/day";
+import { MILESTONE_LABEL } from "@/lib/day";
+import { brandQueueDay, lockStore, projectedDate } from "@/lib/lockin";
 
 export function StatusBar({
   todayISO,
@@ -9,8 +10,15 @@ export function StatusBar({
   done?: number; // omitted since BOARD was removed: LOCK IN shows its own ring
   total?: number;
 }) {
-  const day = dayNumber(todayISO);
-  const toMilestone = daysToMilestone(todayISO);
+  // Same clock as LOCK IN: the plan day is the brand queue position and the
+  // milestone is its PROJECTED date, so the bar and the tab never disagree.
+  // (StatusBar only renders after mount, so reading localStorage is safe.)
+  const lock = lockStore.load();
+  const day = brandQueueDay(lock, todayISO) ?? 30;
+  const milestoneOn = projectedDate(lock, todayISO, 21);
+  const toMilestone = milestoneOn
+    ? Math.round((new Date(milestoneOn + "T00:00:00").getTime() - new Date(todayISO + "T00:00:00").getTime()) / 86_400_000)
+    : 0;
   const dateLabel = new Date(todayISO + "T00:00:00").toLocaleDateString("en-IN", {
     weekday: "short",
     day: "2-digit",
@@ -38,7 +46,7 @@ export function StatusBar({
       <div className="flex flex-wrap items-center gap-x-2 border-b border-line bg-panel px-4 py-2 text-xs">
         <span className="font-bold text-amber">◎ MILESTONE</span>
         <span className="text-cream">{MILESTONE_LABEL}</span>
-        <span className="text-cream-dim">· {MILESTONE_DATE}</span>
+        <span className="text-cream-dim">· {milestoneOn ?? "reached"}</span>
         <span className="ml-auto font-bold tabular-nums text-amber">
           {toMilestone > 0
             ? `${toMilestone} days left`

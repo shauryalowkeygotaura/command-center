@@ -287,12 +287,16 @@ const PRIVATE_KEY = "revengine.command-center.lockin.private.v1";
 const WEEKDAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 export const privateStore = {
+  // Nothing saved in this browser yet -> the list baked into lockin.json
+  // (Shaurya's morning formula + non-negotiables, published on his say-so
+  // 2026-10-15). A list he edits and saves here always wins, even an empty one.
   load(): string {
-    if (typeof window === "undefined") return "";
+    const fallback = (raw as { defaultPrivate?: string }).defaultPrivate ?? "";
+    if (typeof window === "undefined") return fallback;
     try {
-      return window.localStorage.getItem(PRIVATE_KEY) ?? "";
+      return window.localStorage.getItem(PRIVATE_KEY) ?? fallback;
     } catch {
-      return "";
+      return fallback;
     }
   },
   save(text: string): void {

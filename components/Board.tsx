@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Task, Lane, LANES } from "@/lib/types";
 import { isoDate } from "@/lib/day";
+import { useToday } from "@/lib/useToday";
 import { store } from "@/lib/storage";
 import { buildSeedTasks } from "@/lib/seed";
 import { rolloverIncompleteTasks, mergeSeed } from "@/lib/rollover";
@@ -46,7 +47,7 @@ export function Board() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [mounted, setMounted] = useState(false);
   const [tab, setTab] = useState<TabId>("lockin");
-  const today = useMemo(() => isoDate(), []);
+  const today = useToday();
 
   // Load → roll over yesterday's loose ends → seed today → persist.
   // Also restore the last-viewed tab (kept out of initial render to avoid a

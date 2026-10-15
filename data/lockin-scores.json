@@ -271,41 +271,23 @@
    "why": "Directly pitches first paying client",
    "hash": "d859c37f7354"
   },
+  "d-rise-check": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Quick check, minimal impact",
+   "hash": "fa53d9ee64d0"
+  },
   "d-spaceapps-check": {
    "score": 8,
    "goal": "t20",
    "why": "Quick gate check for upcoming competition deadline",
-   "hash": "064322d9e19f"
+   "hash": "27744d72f670"
   },
   "d-diamond-team": {
    "score": 8,
    "goal": "t20",
    "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "db9686ed661d"
-  },
-  "d-spaceapps-scope": {
-   "score": 5,
-   "goal": "t20",
-   "why": "Prepares for competition deadline, gates further progress",
-   "hash": "fc2042ae6809"
-  },
-  "d-spaceapps-weekend": {
-   "score": 9,
-   "goal": "t20",
-   "why": "Unblocks T20 competition deadline",
-   "hash": "36b6ffe61f8e"
-  },
-  "d-rise-check": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadlines, critical for T20 progress",
-   "hash": "7cd8d7294148"
-  },
-  "d-iris-decide": {
-   "score": 9,
-   "goal": "t20",
-   "why": "Unblocks critical competition deadline",
-   "hash": "50a0da6ed19d"
+   "hash": "e599220b5fa7"
   },
   "d-linkedin-token": {
    "score": 1,
@@ -316,14 +298,38 @@
   "d-conrad-check": {
    "score": 8,
    "goal": "t20",
-   "why": "Unblocks competition entry",
-   "hash": "f304137897ab"
+   "why": "Unblocks competition deadline, critical for T20 progress",
+   "hash": "63798bf34e2b"
   },
   "d-conrad-activate": {
    "score": 8,
    "goal": "t20",
-   "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "a6b8f5b19da1"
+   "why": "Unblocks multiple competition deadlines",
+   "hash": "aabebc425172"
+  },
+  "d-spaceapps-scope": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Prepares for competition deadline, gates further progress",
+   "hash": "0aa33dc2a620"
+  },
+  "d-spaceapps-weekend": {
+   "score": 9,
+   "goal": "t20",
+   "why": "Unblocks T20 competition deadline",
+   "hash": "c8e572ad1e50"
+  },
+  "d-iris-result": {
+   "score": 2,
+   "goal": "t20",
+   "why": "Quick gate check for competition deadline",
+   "hash": "38b0e6c7f6bb"
+  },
+  "d-diamond-concept": {
+   "score": 9,
+   "goal": "t20",
+   "why": "Unblocks competition deadline, critical for T20 progress",
+   "hash": "da6c81658375"
   },
   "s-engage": {
    "score": 1,
@@ -337,17 +343,11 @@
    "why": "Quick admin, minimal impact",
    "hash": "c3d4f814ae07"
   },
-  "handoff:h-sheetal-call": {
+  "handoff:h-lockin-log-check": {
    "score": 1,
-   "goal": "brand",
-   "why": "Informative, low impact on core objectives",
-   "hash": "9e1dacaaf7d6"
-  },
-  "handoff:h-proof-count": {
-   "score": 1,
-   "goal": "clinic",
-   "why": "Low impact verification task",
-   "hash": "015c43790e3b"
+   "goal": "systems",
+   "why": "Minor maintenance, low impact on main goals",
+   "hash": "329957ad2bcd"
   }
  }
 }

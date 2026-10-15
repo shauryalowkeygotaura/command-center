@@ -15,6 +15,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { isoDate } from "@/lib/day";
+import { useToday } from "@/lib/useToday";
 import { handoffStore } from "@/lib/lists";
 import {
   LOCKIN,
@@ -60,7 +61,7 @@ export function LockIn() {
   const [boss, setBoss] = useState(false);
   const [undo, setUndo] = useState<{ key: string; title: string } | null>(null);
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const today = useMemo(() => isoDate(), []);
+  const today = useToday();
   // Gist sync (same PAT as INBOX/HABITS). Off until a token has been pasted.
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("off");
   const syncRef = useRef<{ token: string; gist: string; ready: boolean; days: Record<string, DaySnapshot> }>({
@@ -283,6 +284,23 @@ export function LockIn() {
         </div>
         <ProgressRing done={doneCount} total={items.length} minutesLeft={minutesLeft} />
       </header>
+
+      {/* ── 12-month vision: read-only, always on screen ──────── */}
+      {LOCKIN.vision && (
+        <section className="glass glass-tint rounded-2xl px-5 py-4">
+          <h2 className="font-sans text-[13px] font-semibold uppercase tracking-wide text-amber">
+            {LOCKIN.vision.title}
+          </h2>
+          <ol className="mt-2 grid gap-x-6 gap-y-1.5 font-sans text-[14.5px] text-cream sm:grid-cols-2">
+            {LOCKIN.vision.lines.map((v, i) => (
+              <li key={i} className="flex gap-2">
+                <span className="font-mono text-[11px] tabular-nums leading-6 text-cream-dim">{i + 1}</span>
+                <span>{v}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {/* ── Actions: glass capsules ─────────────────────────── */}
       <div className="-mt-3 flex flex-wrap gap-2">
