@@ -40,7 +40,9 @@ type Conn = "probing" | "live" | "offline";
 
 async function probe(): Promise<boolean> {
   const ctl = new AbortController();
-  const timer = setTimeout(() => ctl.abort(), 1500);
+  // Long on purpose: Chrome holds this request while its one-time "allow local
+  // network access" prompt is open. A closed port still fails instantly.
+  const timer = setTimeout(() => ctl.abort(), 12000);
   try {
     const r = await fetch(`${STUDIO_ORIGIN}/api/ping`, { signal: ctl.signal, cache: "no-store" });
     if (!r.ok) return false;
@@ -307,6 +309,10 @@ function Fallback({ status, openBtn }: { status: PubStatus | null; openBtn: Reac
             </div>
           ))}
         </div>
+        <p className="text-cream-dim">
+          On this PC and the studio is running? If Chrome asked to let this site reach devices on your local network, choose
+          <span className="text-cream"> Allow</span>, then press Retry.
+        </p>
         <p className="text-cream-dim">
           Last run {ago(status?.last_run.finished ?? null)}
           {status?.last_run.error ? " · it failed, open the studio to see why" : ""}.
