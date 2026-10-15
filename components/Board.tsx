@@ -11,6 +11,7 @@ import { StatusBar } from "./StatusBar";
 import { CallList } from "./CallList";
 import { LeadList } from "./LeadList";
 import { PipelineOps } from "./PipelineOps";
+import { ReelStudio } from "./ReelStudio";
 import { Checklist } from "./Checklist";
 import { HabitTracker } from "./HabitTracker";
 import { KeysPanel } from "./KeysPanel";
@@ -34,6 +35,7 @@ const TABS = [
   { id: "calls", label: "CALL LIST" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
+  { id: "studio", label: "STUDIO" },
   { id: "desk", label: "DESK" },
   { id: "angus", label: "ANGUS" },
   { id: "drops", label: "INBOX · KEYS" },
@@ -145,6 +147,8 @@ export function Board() {
             {tab === "sat" && <SatGrind />}
 
             {tab === "pipelines" && <PipelineOps />}
+
+            {tab === "studio" && <ReelStudio />}
 
             {tab === "desk" && <OutreachDesk />}
 

@@ -1,0 +1,18 @@
+{
+ "generated": null,
+ "running": false,
+ "jobs": [],
+ "counts": {
+  "inbox": 0,
+  "ready": 1,
+  "approved": 0,
+  "failed": 0
+ },
+ "last_run": {
+  "state": null,
+  "finished": null,
+  "ok": null,
+  "failed": null,
+  "error": false
+ }
+}

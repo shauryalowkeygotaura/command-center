@@ -44,6 +44,8 @@ out/
 # token-feed publish state (local only — never commit)
 public/status/.last_push
 public/status/.push_lock
+public/status/.last_push_reeldump
+public/status/reel-dump.json.tmp
 
 # local verify screenshots
 .verify/

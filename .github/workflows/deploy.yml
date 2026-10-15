@@ -13,6 +13,9 @@ on:
       # The site-alive feed (shipping + studying) is read from raw GitHub by
       # the portfolio panel; refreshing it must not rebuild Pages either.
       - "public/status/now.json"
+      # Reel Studio status (reel-dump processor/server, throttled ~5min); the
+      # STUDIO tab's offline view reads it from raw GitHub.
+      - "public/status/reel-dump.json"
   workflow_dispatch:
 
 # Run the bundled JS actions (checkout, setup-node, *-pages) on Node 24
