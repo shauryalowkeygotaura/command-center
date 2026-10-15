@@ -81,6 +81,8 @@ export function mergeChecklistSeed(
 //   (folded into h-fish-api-key), h-revengine-post-1 (folded into ig-autopost).
 // Retired 2026-09-25 (later): h-bandit-orphaned (resolved: the 134 reward rows
 //   carry no arm value, so relearning from zero is the only option).
+// Retired 2026-10-15: h-proof-count (confirmed: 2 clinics), h-dental-report-commit
+//   (5cbae1b), h-two-repos-still-unversioned (git init done 2026-10-08).
 // Retired 2026-10-03: football licence (MIT, pushed), taste Stop hook (armed),
 //   pinterest ack (wired, see h-pinterest-boards), setup-package licence (personal
 //   backup, stays private), vayuvani deepgram junk (deleted), YouTube key (verified),
@@ -88,18 +90,11 @@ export function mergeChecklistSeed(
 //   (parked), asteroid video (superseded by voice pacing work).
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
-    id: "h-t20-deadlines",
-    text: "P1 · T20 deadlines are slipping with nothing on the board: NASA Space Apps is 4-5 Oct, Diamond Challenge registration opened 16 Sep",
+    id: "h-lockin-log-check",
+    text: "P1 · OPEN LOCK IN and check for 'log ✓' next to Copy for Claude: it decides whether tonight's review reads your real day",
     done: false,
     seeded: true,
-    note: "Surfaced from Notes/todos.md, where these sat unseen. Space Apps (Delhi local) is the planned VayuVani v2 build weekend, this Sat-Sun, and its registration window was ~17 Jul, so first check whether you are even registered. Diamond Challenge 2027 needs a team of 2-4 registered (concept due 14 Jan 2027). Two more 'check in September' items never got checked: Rise 2027 cohort opening and Conrad (activation expected ~30 Oct). I can verify every date live and draft registrations, but registering and picking teammates is yours. Reply `t20 = spaceapps <registered|not> diamond <team names>`.",
-  },
-  {
-    id: "h-proof-count",
-    text: "P1 · CONFIRM '2 clinics are already using it' is literally true, or tell me the real number",
-    done: false,
-    seeded: true,
-    note: "Every cold email states it (PROOF_CLIENT_COUNT=2 in modules/persona.py). It is exactly what Dr. Badami asked about, and the bot had no true answer to give, so it improvised. If the real number is 0, say so and I switch the line to something true. Reply `proof = <n>`.",
+    note: "2026-10-15: every 23:00 review so far said 'source: plan' because your ticks and handoff replies never left the browser. Now LOCK IN sends them through your KEYS passphrase (no GitHub token, no paste), and the review reads every new reply, writes what happened, and edits tomorrow itself: re-dates what slipped, adds follow-ups your replies create, retires only what your ticks or replies say is finished (max 6 changes, all listed in Notes/claude-notes/lockin-<date>.md). If you see 'log ✕', your browser's saved passphrase is stale: re-enter it in the KEYS panel's settings gear. Reply `log = ok` or `log = x`.",
   },
   {
     id: "h-dental-targets-tier-a",
@@ -110,10 +105,31 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-revengine-linkedin-token",
-    text: "P1 · ONE command makes LinkedIn autopost live: `doppler run -- python auth_linkedin.py` in Code/carousel-autoposter",
+    text: "P1 · LinkedIn: I ran the mint and it stopped: LINKEDIN_CLIENT_ID + SECRET are not in creative-studio. Drop both via KEYS, then I run it",
     note: "2026-10-03: the August token was only ever printed, never stored, so it is gone and a fresh browser mint is unavoidable. auth_linkedin.py now writes the token, author URN, expiry date, POST_LINKEDIN=1 and LINKEDIN_DRAFT=1 straight into creative-studio/dev itself (via stdin, never argv), so there is nothing to paste. It also stores LINKEDIN_CLIENT_ID / SECRET if they are in your env, so every 60-day re-mint after this is the same one command. First real post lands as a DRAFT on your profile; clear LINKEDIN_DRAFT once one looks right. Reply `linkedin = minted`.",
     done: false,
     seeded: true,
+  },
+  {
+    id: "h-t20-deadlines",
+    text: "P2 · T20: Space Apps is 14-15 Nov, Diamond concept due 14 Jan (you were right). Register for Space Apps, lock a Diamond team",
+    done: false,
+    seeded: true,
+    note: "Verified 2026-10-08 and re-dated on LOCK IN and the deadline rail. Space Apps registration has been open since 26 Aug and is free. Diamond needs 2-4 people plus an adult advisor before 14 Jan, so the team is the long pole. Reply `t20 = spaceapps registered, diamond <names>`.",
+  },
+  {
+    id: "h-instagram-login",
+    text: "P2 · Instagram login, attempt 2: 3.0.16 was ALSO refused, now on 3.0.20. Re-run it",
+    done: false,
+    seeded: true,
+    note: "2026-10-08: your traceback showed Instagram refuses the 3.0.16 app version too. instagrapi 3.0.20 is installed and the floor is raised in autoshop, philosopher-pipeline and carousel-autoposter (pushed). Same command, `doppler run -- python login_instagram.py` in Code/autoshop (needs your 2FA). If it says out of date again, the next fix is the official Graph API (h-clipworks-meta-app), not chasing versions. Reply `ig = logged in`.",
+  },
+  {
+    id: "h-portfolio-mic-bugs",
+    text: "P2 · Portfolio mic: 6 real bugs fixed live (phantom words, dead mic, iPhone, Firefox). Try it on your phone",
+    done: false,
+    seeded: true,
+    note: "2026-10-09, ecd0243: tested with real recorded speech, not a beep. Whisper turned fan noise into 'Thank you.' and the bot answered it; a muted mic hung on 'listening' for 20s; iPhone never stopped on its own; Firefox could stick. All fixed, and every failure now shows a message in the panel. If it fails, reply `mic = <the exact message>`.",
   },
   {
     id: "h-desk-unlock",
@@ -135,20 +151,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "nano-banana is built and blocked only on a real AIza key on a Cloud project with billing on (image models have ~0 free quota). That is also why covers fall back to the ink design. The security half matters more: revoke the AQ. token whether or not you ever make the key. Reply `gemini = key set` or `gemini = revoked, skip images`.",
-  },
-  {
-    id: "h-dental-report-commit",
-    text: "P2 · SAY 'commit' for dental-receptionist: report/ (day-7 + monthly, 89 tests) and the new digest headline have never been committed",
-    done: false,
-    seeded: true,
-    note: "Built across the 24-25 Sep sessions and left untracked on purpose because I do not commit your LIVE product without a go-ahead. It is the code that produces the page you put in front of a doctor on day 7 and on the 1st of every month, and right now one bad delete loses it. Since 1 Oct the owner digest changes sit uncommitted beside it too: the email subject and WhatsApp push now lead with the most important item (emergency, then missed callbacks, then bookings) instead of 'see email for the full recap', with 8 new tests. Second risk: the structured `hours` blocks it needs live in the clinic configs, which are gitignored, so they exist only on this laptop. Reply `report = commit` (and `hours = back up to Doppler` if you want those off-machine too).",
-  },
-  {
-    id: "h-portfolio-mic-bugs",
-    text: "P2 · Portfolio mic: works end to end live on desktop + phone in my tests, and the noisy-room bug is fixed. Tell me if it still fails for you",
-    done: false,
-    seeded: true,
-    note: "2026-10-03: tested live with a real browser and a fake microphone playing a spoken clip, desktop and phone sizes: transcribe 200, reply 200, spoken back. The real bug: in a room with a fan or traffic the noise sat above the speech threshold, so the turn never ended on silence and you waited 20 seconds on 'listening', which reads as broken. It now measures the room for 400ms and sets the bar above it. Also fixed: project cards were see-through, so the 3D lines cut through their text. If it still fails for you, reply `mic = <browser> <device> <what happens>`.",
   },
   {
     id: "h-sheetal-call",
@@ -184,13 +186,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "It works and is now in Doppler as portfolio/GITHUB_API_KEY. But that scope set can delete any of your repos, and it is sitting in a secrets store that several automated jobs read.",
-  },
-  {
-    id: "h-instagram-login",
-    text: "P2 · Re-run the Instagram login: the 'app out of date' error is fixed",
-    done: false,
-    seeded: true,
-    note: "2026-10-03: the error was instagrapi 2.6.5 sending a years-old app version, which Instagram now refuses. Upgraded locally to 3.0.16 and raised the floor in autoshop, philosopher-pipeline and carousel-autoposter so CI can never resolve the old one. Run `doppler run -- python login_instagram.py` in Code/autoshop again (it needs your 2FA, so it is yours). Then, for the philosopher hooks you asked to restore: `doppler run -- python scripts/backfill_ledger.py --reattribute` in Code/philosopher-pipeline. The wording never actually changed; the backfill script promised hook matching and never did it, so all 134 old posts were hook=None. That is fixed and pushed, and --reattribute credits them and prints any old opening lines that do not match a current hook. Reply `ig = logged in`.",
   },
   {
     id: "h-deepgram-vercel-env",
@@ -296,13 +291,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-03: wired as you asked. Each taste-engine project now binds ONE board (kept local, gitignored). `/ts pin <url>` binds and pulls it, `/ts pin` alone re-pulls. The robots.txt acknowledgement is set once in your Claude settings. Reply `pin <project> = <board url>` for each.",
     done: false,
     seeded: true,
-  },
-  {
-    id: "h-two-repos-still-unversioned",
-    text: "P3 · git init voicezero-space and heart-venture-paper: blocked for me, 2 commands for you",
-    done: false,
-    seeded: true,
-    note: "You said fix it, but the permission classifier blocked me even from listing those folders, so I could not check them for secrets before a first commit. Run `git init` and `git add -A` in each, glance at `git status` for any .env or key file, then commit. Or allow it and I do it next session.",
   },
   {
     id: "h-revengine-ig-autopost",
