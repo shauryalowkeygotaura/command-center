@@ -107,7 +107,9 @@ export function Board() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <StatusBar todayISO={today} />
+      {/* Date text renders after mount only: the static export bakes the BUILD
+          date into the HTML, which mismatched the real date on hydration. */}
+      {mounted ? <StatusBar todayISO={today} /> : <div className="h-[73px] bg-burgundy/20" aria-hidden />}
 
       {mounted && (
         <TabNav
