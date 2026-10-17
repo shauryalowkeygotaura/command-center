@@ -337,12 +337,6 @@
    "why": "Low impact, just engagement",
    "hash": "628b62b964e2"
   },
-  "s-log": {
-   "score": 1,
-   "goal": "systems",
-   "why": "Quick admin, minimal impact",
-   "hash": "c3d4f814ae07"
-  },
   "handoff:h-lockin-log-check": {
    "score": 1,
    "goal": "systems",

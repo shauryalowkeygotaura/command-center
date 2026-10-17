@@ -2,8 +2,8 @@
 
 // LOCK IN tab: today's whole job in one ranked list. Each row expands into the
 // full instructions (scripts, phone numbers, shot lists), so nothing needs a
-// question to Claude. Outcome boxes + "copy for claude" close the loop: the
-// pasted recap is how tomorrow's list learns what happened today.
+// question to Claude. Ticks + outcome boxes sync on their own and the 23:00
+// review reads them to build tomorrow; "backup copy" is only for when sync is down.
 //
 // Layout follows Apple's "Today" pattern (large title, progress ring, inset
 // grouped glass sections: Non-negotiables / Do this now / Up next / Done) with
@@ -307,7 +307,6 @@ export function LockIn() {
         <Capsule onClick={() => setEditingPriv((v) => !v)} active={editingPriv}>
           {editingPriv ? "Close private list" : "Private list"}
         </Capsule>
-        <Capsule onClick={copyForClaude}>{copied ? "Copied ✓" : "Copy for Claude"}</Capsule>
         {syncStatus !== "off" && (
           <span
             title="Ticks and outcomes sync to a secret gist; Claude's 23:00 review reads it"
@@ -324,6 +323,15 @@ export function LockIn() {
             {relayOk ? "log ✓" : "log ✕"}
           </span>
         )}
+        {/* Fallback only: the 23:00 review reads synced ticks on its own. Paste
+            this to Claude when sync/log shows ✕. */}
+        <button
+          onClick={copyForClaude}
+          title="Only needed if sync or log shows ✕: copies today's list to paste to Claude"
+          className="ml-auto min-h-9 self-center px-1 font-mono text-[11px] text-cream-dim underline decoration-dotted underline-offset-4 hover:text-amber"
+        >
+          {copied ? "copied ✓" : "backup copy"}
+        </button>
       </div>
 
       {editingPriv && (
@@ -372,7 +380,7 @@ export function LockIn() {
       ) : (
         <div className="glass rounded-2xl px-5 py-8 text-center font-sans">
           <p className="text-[22px] font-semibold text-cream">Day cleared.</p>
-          <p className="mt-1 text-[13px] text-cream-dim">Fill the outcome boxes, then Copy for Claude.</p>
+          <p className="mt-1 text-[13px] text-cream-dim">Fill the outcome boxes. Tonight&apos;s review reads them.</p>
         </div>
       )}
 

@@ -91,7 +91,7 @@ export function mergeChecklistSeed(
 export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-lockin-log-check",
-    text: "P1 · OPEN LOCK IN and check for 'log ✓' next to Copy for Claude: it decides whether tonight's review reads your real day",
+    text: "P1 · OPEN LOCK IN and check for 'log ✓' in the button row at the top: it decides whether tonight's review reads your real day",
     done: false,
     seeded: true,
     note: "2026-10-15: every 23:00 review so far said 'source: plan' because your ticks and handoff replies never left the browser. Now LOCK IN sends them through your KEYS passphrase (no GitHub token, no paste), and the review reads every new reply, writes what happened, and edits tomorrow itself: re-dates what slipped, adds follow-ups your replies create, retires only what your ticks or replies say is finished (max 6 changes, all listed in Notes/claude-notes/lockin-<date>.md). If you see 'log ✕', your browser's saved passphrase is stale: re-enter it in the KEYS panel's settings gear. Reply `log = ok` or `log = x`.",
