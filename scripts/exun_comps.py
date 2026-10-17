@@ -58,13 +58,16 @@ STATUSES = ("to be conquered", "over", "conquered")
 MONTHS = {m: i for i, m in enumerate(
     ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
 
-# Which event to enter once a symposium is picked. First match wins: gaming,
-# robotics and media go first ("Quizzard (AI Quiz)" is a quiz, not an AI build),
-# then the specific build words above the generic ones.
+# Which event to enter once a symposium is picked. First match wins: robotics
+# first ("Robo War" is robotics, not gaming), then gaming/media/quiz/debate
+# ("Quizzard (AI Quiz)" is a quiz, not an AI build), then builds, specific first.
 FIT = [
-    (2, "gaming / robotics / media: not your lane",
-     r"valorant|bedwar|strike|counter|gaming|game|robo|drone|line ?follow|soccer|war\b|race|flying|"
-     r"meme|video|cine|reel|frame|edit|photo|snap|nocturne|ready player|virtual warrior|fold"),
+    (8, "robotics: hardware build, judged live, stands out next to software-only entries",
+     r"robo|\bbot\b|drone|line ?follow|manoeuv|flying machine|rocket"),
+    (2, "gaming / media / quiz / debate: not your lane",
+     r"valorant|bedwar|strike|counter|gaming|game|"
+     r"meme|video|cine|reel|frame|edit|photo|snap|nocturne|ready player|virtual warrior|fold|"
+     r"quiz|trivia|rhetoric|debate|crossfire|aawaz|newsroom"),
     (9, "hackathon / build sprint: ships a real project, strongest T20 and brand proof",
      r"hack|impactathon|build ?blitz|buildathon"),
     (9, "AI or innovation challenge: your exact lane",
@@ -73,8 +76,6 @@ FIT = [
      r"app|dashboard|webd|web ?weav|webx|web ?wired|product|saas"),
     (7, "coding / crypto hunt: classic symposium event, judges know it",
      r"code|coding|algo|py|program|consol|crypt|cipher|bid|enigma|sherlock|mystery|hunt"),
-    (6, "quiz / debate / pitch-style talk: recognized format, no build needed",
-     r"quiz|trivia|rhetoric|debate|crossfire|aawaz|newsroom|math|advert|map"),
     (5, "design event: fine, not your strongest",
      r"\bui\b|\bux\b|design|vision"),
 ]

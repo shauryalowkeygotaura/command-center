@@ -71,21 +71,51 @@
           "you_are_in": false
         },
         {
-          "event": "Aawaz",
-          "eligibility": "1x2, 11th-12th",
-          "finalized": [],
+          "event": "Robo Race",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Kyraan katyal",
+            "Harsh Verma"
+          ],
           "signups": [],
           "score": 6,
-          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
-          "event": "Mathematical Advertisement",
-          "eligibility": "1x2, 9th-12th",
-          "finalized": [],
+          "event": "Robo Soccer",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Aahan mohapatra",
+            "Shivang Saxena"
+          ],
           "signups": [],
           "score": 6,
-          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Robo War",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Aryamman Ojha",
+            "Naitik Jindal"
+          ],
+          "signups": [],
+          "score": 6,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Drone Racing",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Shiven Joshi",
+            "Yashraj Kumar"
+          ],
+          "signups": [],
+          "score": 6,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
@@ -135,17 +165,21 @@
           "you_are_in": false
         },
         {
-          "event": "REVERSE RHETORIC",
+          "event": "Mathematical Advertisement",
           "eligibility": "1x2, 9th-12th",
-          "finalized": [
-            "Jiya Sahni [ad-hoc]",
-            "Ashray Kaushik"
-          ],
-          "signups": [
-            "Jiya Sahni [ad-hoc]"
-          ],
+          "finalized": [],
+          "signups": [],
           "score": 4,
-          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; team already full: you'd go in the row below as a reserve",
+          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Aawaz",
+          "eligibility": "1x2, 11th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 2,
+          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
           "you_are_in": false
         },
         {
@@ -156,8 +190,8 @@
             "Jeenesh"
           ],
           "signups": [],
-          "score": 4,
-          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; team already full: you'd go in the row below as a reserve",
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
@@ -166,7 +200,7 @@
           "finalized": [],
           "signups": [],
           "score": 2,
-          "why": "gaming / robotics / media: not your lane; 2 of 2 slots open",
+          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
           "you_are_in": false
         },
         {
@@ -179,7 +213,7 @@
           ],
           "signups": [],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
@@ -194,55 +228,21 @@
           ],
           "signups": [],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
-          "event": "Robo Race",
-          "eligibility": "1x2, Open",
+          "event": "REVERSE RHETORIC",
+          "eligibility": "1x2, 9th-12th",
           "finalized": [
-            "Kyraan katyal",
-            "Harsh Verma"
+            "Jiya Sahni [ad-hoc]",
+            "Ashray Kaushik"
           ],
-          "signups": [],
-          "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
-          "you_are_in": false
-        },
-        {
-          "event": "Robo Soccer",
-          "eligibility": "1x2, Open",
-          "finalized": [
-            "Aahan mohapatra",
-            "Shivang Saxena"
+          "signups": [
+            "Jiya Sahni [ad-hoc]"
           ],
-          "signups": [],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
-          "you_are_in": false
-        },
-        {
-          "event": "Robo War",
-          "eligibility": "1x2, Open",
-          "finalized": [
-            "Aryamman Ojha",
-            "Naitik Jindal"
-          ],
-          "signups": [],
-          "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
-          "you_are_in": false
-        },
-        {
-          "event": "Drone Racing",
-          "eligibility": "1x2, Open",
-          "finalized": [
-            "Shiven Joshi",
-            "Yashraj Kumar"
-          ],
-          "signups": [],
-          "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         }
       ]
@@ -286,14 +286,15 @@
           "you_are_in": false
         },
         {
-          "event": "Trivial Pursuit",
+          "event": "Battle Bot",
           "eligibility": "1x2, 9th-12th",
-          "finalized": [],
-          "signups": [
-            "Vivaan Gupta"
+          "finalized": [
+            "Aryamman Ojha",
+            "Arhan Gupta"
           ],
+          "signups": [],
           "score": 6,
-          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
@@ -316,15 +317,14 @@
           "you_are_in": false
         },
         {
-          "event": "Battle Bot",
+          "event": "Trivial Pursuit",
           "eligibility": "1x2, 9th-12th",
-          "finalized": [
-            "Aryamman Ojha",
-            "Arhan Gupta"
+          "finalized": [],
+          "signups": [
+            "Vivaan Gupta"
           ],
-          "signups": [],
           "score": 2,
-          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
           "you_are_in": false
         },
         {
@@ -352,7 +352,7 @@
           ],
           "signups": [],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         },
         {
@@ -367,7 +367,7 @@
             "Devansh Saini"
           ],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         }
       ]
@@ -380,7 +380,7 @@
       "first_day": "2026-10-24",
       "deadline": "2026-10-14",
       "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "rank": 6.3,
+      "rank": 6.4,
       "why": [
         "Exun tagged it TO BE CONQUERED AT ALL COSTS (their top priority)",
         "25 Exun members want in",
@@ -390,6 +390,34 @@
       ],
       "you_are_in": false,
       "events": [
+        {
+          "event": "RoboSoccer",
+          "eligibility": "1x4, 8th-12th",
+          "finalized": [
+            "Naitik Jindal",
+            "Aryamman Ojha",
+            "Zayan Ali Khan",
+            "Aarav Gosai"
+          ],
+          "signups": [
+            "Aarav Gosai"
+          ],
+          "score": 6,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "LineFollower",
+          "eligibility": "1x2, 8th-12th",
+          "finalized": [
+            "Astha Agarwal",
+            "Ranveer Kalra"
+          ],
+          "signups": [],
+          "score": 6,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
         {
           "event": "dCrypt",
           "eligibility": "1x2, 6th-12th",
@@ -527,35 +555,7 @@
             "Vansh Gupta"
           ],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
-          "you_are_in": false
-        },
-        {
-          "event": "RoboSoccer",
-          "eligibility": "1x4, 8th-12th",
-          "finalized": [
-            "Naitik Jindal",
-            "Aryamman Ojha",
-            "Zayan Ali Khan",
-            "Aarav Gosai"
-          ],
-          "signups": [
-            "Aarav Gosai"
-          ],
-          "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
-          "you_are_in": false
-        },
-        {
-          "event": "LineFollower",
-          "eligibility": "1x2, 8th-12th",
-          "finalized": [
-            "Astha Agarwal",
-            "Ranveer Kalra"
-          ],
-          "signups": [],
-          "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         }
       ]
@@ -647,7 +647,7 @@
           ],
           "signups": [],
           "score": 0,
-          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "why": "gaming / media / quiz / debate: not your lane; team already full: you'd go in the row below as a reserve",
           "you_are_in": false
         }
       ]
