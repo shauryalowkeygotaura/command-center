@@ -206,10 +206,11 @@ def judge_event(s: dict, ev: dict) -> dict:
     if open_slots:
         notes.append(f"{open_slots} of {ev['team']} slots open")
     else:
-        score -= 2
-        notes.append("team already full: you'd go in the row below as a reserve")
+        # No penalty: people drop out last minute all the time and Exun subs in
+        # whoever is in the row below, so a full team is still a way in.
+        notes.append("team full for now, but people drop last minute: go in the row below as a sub")
     return {
-        "event": ev["event"], "eligibility": ev["eligibility"],
+        "event": ev["event"], "eligibility": ev["eligibility"], "team": ev["team"], "full": not open_slots,
         "finalized": ev["finalized"], "signups": ev["signups"],
         "score": max(0, min(10, score)), "why": "; ".join(notes),
         "you_are_in": any(ME in n.lower() for n in ev["finalized"] + ev["signups"]),
@@ -267,6 +268,7 @@ def judge(syms: list[dict], today: date) -> list[dict]:
         out.append({
             "symposium": s["name"], "school": s["school"], "mode": s["mode"],
             "date": s.get("date_text", ""), "first_day": first.isoformat() if first else None,
+            "last_day": max(s["dates"]).isoformat() if s["dates"] else None,
             "deadline": s["deadline"].isoformat() if s["deadline"] else None,
             "incharge": s["incharge"], "rank": r, "why": why,
             "you_are_in": any(e["you_are_in"] for e in events), "events": events,
@@ -294,6 +296,40 @@ def slug(*parts: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", " ".join(parts).lower()).strip("-")[:48]
 
 
+def short_date(s: dict) -> str:
+    if not s["first_day"]:
+        return "date tbd"
+    a, b = date.fromisoformat(s["first_day"]), date.fromisoformat(s["last_day"])
+    mon = a.strftime("%b").lower()
+    return f"{a.day} {mon}" if a == b else f"{a.day}-{b.day} {mon}"
+
+
+def short_event(name: str) -> str:
+    """'HyperStrike PC (PC Gaming)' -> 'hyperstrike pc', 'AI Innovation Challenge' -> 'ai innovation'."""
+    n = re.sub(r"\(.*?\)", "", name).strip().lower()
+    return re.sub(r"\s+(challenge|competition|event)$", "", n)
+
+
+def friend_msg(s: dict) -> str:
+    """Copy-paste text to get a friend on the team, in how Shaurya actually texts."""
+    team = [e for e in s["events"] if e["team"] > 1 and e["score"] >= 5][:2]
+    if not team:
+        e = s["events"][0]
+        return (f"vro {s['symposium'].lower()} is on {short_date(s)}, im going for {short_event(e['event'])}. "
+                f"u shld come too fr, theres other events, check the exun sheet n put ur name down")
+    e = team[0]
+    sym = re.sub(r"\s*(20)?\d\d$|'\d\d$|\s*2k\d\d$", "", s["symposium"], flags=re.I).strip().lower()
+    msg = f"vro i wnna go in {sym} {short_event(e['event'])} thing ({short_date(s)}), its {e['team']} ppl. u in??"
+    if len(team) > 1:
+        msg += f" or {short_event(team[1]['event'])} if thats more ur thing"
+    if e["full"]:
+        msg += ". team's full rn but ppl always drop last min so we go in as subs"
+    if s["deadline"]:
+        d = date.fromisoformat(s["deadline"])
+        msg += f". lmk by {d.day} {d.strftime('%b').lower()} pls" if d >= date.today() else ". lmk asap, deadline's kinda gone"
+    return msg + ", i'll put us both on the exun sheet"
+
+
 def lockin_item(s: dict, first_seen: str) -> dict:
     top = [e for e in s["events"] if e["score"] >= 5][:3] or s["events"][:1]
     best = top[0]
@@ -307,6 +343,7 @@ def lockin_item(s: dict, first_seen: str) -> dict:
         team = ", ".join(e["finalized"]) or "nobody yet"
         lines.append(f"EVENT: {e['event']} ({e['eligibility']}): {e['why']}. Team so far: {team}.")
     lines += [
+        f"MSG A FRIEND (copy this): {friend_msg(s)}",
         "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes "
         "(green = finalized). Then message the student in-charge"
         + (f" ({s['incharge']})" if s["incharge"] and s["incharge"] != "TBD" else "")
