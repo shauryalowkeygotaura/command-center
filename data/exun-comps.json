@@ -1,1178 +1,706 @@
 {
   "checked": "2026-10-17",
   "sheet": "https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-  "events": [
+  "per_month": 4,
+  "symposiums": [
     {
       "symposium": "Compufest'26",
       "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
       "mode": "Hybrid",
       "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
+      "first_day": "2026-10-23",
       "deadline": null,
       "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "AI Innovation Challenge",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [
-        "Yashraj Kumar [Ad-hoc]"
+      "rank": 7.9,
+      "why": [
+        "23 Exun members want in",
+        "24 events",
+        "in person"
       ],
-      "score": 9,
-      "why": "AI build or innovation challenge: your exact lane (AI products that ship); 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Impactathon",
-      "eligibility": "1x4, Open",
-      "finalized": [
-        "Krishnav Bindal [ad-hoc]"
-      ],
-      "signups": [
-        "Krishnav Bindal [ad-hoc]"
-      ],
-      "score": 9,
-      "why": "hackathon / build sprint: ships a real project, strongest T20 and brand proof; 3 of 4 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Idea To Impact",
-      "eligibility": "1x2, Open",
-      "finalized": [],
-      "signups": [],
-      "score": 9,
-      "why": "AI build or innovation challenge: your exact lane (AI products that ship); 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Dashboard Dynamics",
-      "eligibility": "1x2, Open",
-      "finalized": [],
-      "signups": [],
-      "score": 8,
-      "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio; 2 of 2 slots open",
-      "you_are_in": false
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "AI Innovation Challenge",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [
+            "Yashraj Kumar [Ad-hoc]"
+          ],
+          "score": 9,
+          "why": "AI or innovation challenge: your exact lane; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Impactathon",
+          "eligibility": "1x4, Open",
+          "finalized": [
+            "Krishnav Bindal [ad-hoc]"
+          ],
+          "signups": [
+            "Krishnav Bindal [ad-hoc]"
+          ],
+          "score": 9,
+          "why": "hackathon / build sprint: ships a real project, strongest T20 and brand proof; 3 of 4 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Idea To Impact",
+          "eligibility": "1x2, Open",
+          "finalized": [],
+          "signups": [],
+          "score": 9,
+          "why": "AI or innovation challenge: your exact lane; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Dashboard Dynamics",
+          "eligibility": "1x2, Open",
+          "finalized": [],
+          "signups": [],
+          "score": 8,
+          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Sherlocked (Online)",
+          "eligibility": "1x1, Open",
+          "finalized": [],
+          "signups": [],
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 1 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Aawaz",
+          "eligibility": "1x2, 11th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 6,
+          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Mathematical Advertisement",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 6,
+          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Code Bid",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Vardhan Nalluri[ad-hoc]",
+            "vivaan choudhary [adhoc]"
+          ],
+          "signups": [
+            "Vardhan Nalluri[ad-hoc]",
+            "vivaan choudhary [adhoc]"
+          ],
+          "score": 5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Mystery Mayhem",
+          "eligibility": "1x1, Open",
+          "finalized": [
+            "Umar Abdul Majeed (Ad-hoc)"
+          ],
+          "signups": [
+            "Umar Abdul Majeed (Ad-hoc)"
+          ],
+          "score": 5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Visual Suite",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Third Dimension",
+          "eligibility": "1x2, Open",
+          "finalized": [],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "REVERSE RHETORIC",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Jiya Sahni [ad-hoc]",
+            "Ashray Kaushik"
+          ],
+          "signups": [
+            "Jiya Sahni [ad-hoc]"
+          ],
+          "score": 4,
+          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Map Quest",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Aarav Gosai",
+            "Jeenesh"
+          ],
+          "signups": [],
+          "score": 4,
+          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Foldit",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 2,
+          "why": "gaming / robotics / media: not your lane; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Cine Vista",
+          "eligibility": "1x3, Open",
+          "finalized": [
+            "Tanvi Singh",
+            "Vihaan Segal",
+            "Aanvi Agarwal"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Virtual Warriors (Online)",
+          "eligibility": "1x5, Open",
+          "finalized": [
+            "Aarav Gosai",
+            "sonit",
+            "jeenesh vasandani",
+            "vihaan pal singh",
+            "ashray kaushik"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Robo Race",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Kyraan katyal",
+            "Harsh Verma"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Robo Soccer",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Aahan mohapatra",
+            "Shivang Saxena"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Robo War",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Aryamman Ojha",
+            "Naitik Jindal"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Drone Racing",
+          "eligibility": "1x2, Open",
+          "finalized": [
+            "Shiven Joshi",
+            "Yashraj Kumar"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        }
+      ]
     },
     {
       "symposium": "Force Fest 2K26",
       "school": "Apeejay School, Panchsheel Park",
       "mode": "",
       "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
+      "first_day": "2026-10-27",
       "deadline": null,
       "incharge": "Amairaa Gupta(Digex)",
-      "event": "WEBD",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 8,
-      "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio; 2 of 2 slots open",
-      "you_are_in": false
+      "rank": 6.8,
+      "why": [
+        "21 Exun members want in",
+        "9 events",
+        "format not listed"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "WEBD",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 8,
+          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Pygrammar",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "saranya singh(ad hoc)"
+          ],
+          "signups": [
+            "saranya singh(ad hoc)"
+          ],
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Trivial Pursuit",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [
+            "Vivaan Gupta"
+          ],
+          "score": 6,
+          "why": "quiz / debate / pitch-style talk: recognized format, no build needed; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Consoleum",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Tanav Raj",
+            "Adhiraj Batra"
+          ],
+          "signups": [
+            "jai nagrath",
+            "tanav raj",
+            "aadi sharma",
+            "ashray",
+            "arav arora",
+            "aryaveer chugh"
+          ],
+          "score": 5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Battle Bot",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Aryamman Ojha",
+            "Arhan Gupta"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Sakura",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Reanna Batra",
+            "Amairaa Gupta"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Counterstrafe",
+          "eligibility": "1x6, 9th-12th",
+          "finalized": [
+            "Aarav Gosai",
+            "jeenesh",
+            "ashray kaushik (ds+)",
+            "Vihaan Pal Singh",
+            "sonit",
+            "arin jha"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Memegen",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Yashraj Kumar [Ad-hoc]",
+            "Devansh Saini"
+          ],
+          "signups": [
+            "Yashraj Kumar [Ad-hoc]",
+            "Devansh Saini"
+          ],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        }
+      ]
     },
     {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Pygrammar",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "saranya singh(ad hoc)"
-      ],
-      "signups": [
-        "saranya singh(ad hoc)"
-      ],
-      "score": 6,
-      "why": "coding contest: decent signal, less unique than a build; 1 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "Code Clash",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [
-        "Aditya Singh Ghugtyal"
-      ],
-      "score": 6,
-      "why": "coding contest: decent signal, less unique than a build; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "Decode the Frequency",
-      "eligibility": "1x3, 9th-12th",
-      "finalized": [
-        "Saanvi"
-      ],
-      "signups": [
-        "Adhrit Gupta (adhoc)",
-        "Arnav Jain(Ad-hoc)"
-      ],
-      "score": 6,
-      "why": "coding contest: decent signal, less unique than a build; 2 of 3 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
+      "symposium": "nCrypt 2026",
+      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
       "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Innovation Spirit",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 5,
-      "why": "AI build or innovation challenge: your exact lane (AI products that ship); 2 of 2 slots open; happens within a day: too late to prepare",
-      "you_are_in": false
+      "date": "Saturday, 24th October 2026 (Offline)",
+      "first_day": "2026-10-24",
+      "deadline": "2026-10-14",
+      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
+      "rank": 6.3,
+      "why": [
+        "Exun tagged it TO BE CONQUERED AT ALL COSTS (their top priority)",
+        "25 Exun members want in",
+        "11 events",
+        "in person",
+        "school's deadline has passed: only if the in-charge can still add names"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "dCrypt",
+          "eligibility": "1x2, 6th-12th",
+          "finalized": [
+            "Siddhant Dubey",
+            "Vibhas"
+          ],
+          "signups": [
+            "vibhas(adhoc)",
+            "Tushar Khandelwaal",
+            "Adhrit Gupta (adhoc)"
+          ],
+          "score": 5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "eNigma",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Kshitij",
+            "Vibhas (ad-hoc)"
+          ],
+          "signups": [
+            "Vivaan Gupta",
+            "Vibhas (ad-hoc)",
+            "Kshitij",
+            "Ayush"
+          ],
+          "score": 5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "nCreate",
+          "eligibility": "1x4, 9th - 12th",
+          "finalized": [
+            "Yashraj Kumar [Ad-hoc]",
+            "Siddhant Dubey",
+            "Arshi Batra (ad-hoc)",
+            "Kavya Dayal"
+          ],
+          "signups": [
+            "Aarav Gosai [Ad-hoc]",
+            "Yashraj Kumar [Ad-hoc]",
+            "Arshi Batra (ad-hoc)",
+            "Saanvi Verma",
+            "Vihaan Pundir",
+            "Samanvita Kartik",
+            "Adhrit Gupta (adhoc)"
+          ],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "GiT",
+          "eligibility": "1x2, 9th - 12th",
+          "finalized": [
+            "Kavya Dayal",
+            "Riya Tayal"
+          ],
+          "signups": [
+            "Saanvi Verma"
+          ],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "nQuest",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Aarav Gosai",
+            "Tushar Khandelwaal"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "nCoris",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Aru Batra",
+            "Reanna Batra"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "nXpress",
+          "eligibility": "1x1, 9th-12th",
+          "finalized": [
+            "Nikunj Kohli"
+          ],
+          "signups": [
+            "Vivaan Gupta",
+            "Nikunj Kohli"
+          ],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Surprise",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Tushar Khandelwaal",
+            "Siddhant Dubey"
+          ],
+          "signups": [
+            "Yashraj Kumar [Ad-hoc]"
+          ],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "nCinema",
+          "eligibility": "1x4, 9th-12th",
+          "finalized": [
+            "Aru Batra",
+            "Reanna Batra",
+            "Amairaa Gupta",
+            "Vansh Gupta"
+          ],
+          "signups": [
+            "Aru Batra",
+            "Reanna Batra",
+            "Amairaa Gupta",
+            "Vansh Gupta"
+          ],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "RoboSoccer",
+          "eligibility": "1x4, 8th-12th",
+          "finalized": [
+            "Naitik Jindal",
+            "Aryamman Ojha",
+            "Zayan Ali Khan",
+            "Aarav Gosai"
+          ],
+          "signups": [
+            "Aarav Gosai"
+          ],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "LineFollower",
+          "eligibility": "1x2, 8th-12th",
+          "finalized": [
+            "Astha Agarwal",
+            "Ranveer Kalra"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        }
+      ]
+    },
+    {
+      "symposium": "DeVyTe 3.0",
+      "school": "Tagore International School, East of Kailash",
+      "mode": "Online",
+      "date": "Wednesday 28 October 2026",
+      "first_day": "2026-10-28",
+      "deadline": "2026-10-19",
+      "incharge": "TBD",
+      "rank": 4.9,
+      "why": [
+        "13 Exun members want in",
+        "6 events",
+        "online only"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "Code Clash",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [
+            "Aditya Singh Ghugtyal"
+          ],
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Decode the Frequency",
+          "eligibility": "1x3, 9th-12th",
+          "finalized": [
+            "Saanvi"
+          ],
+          "signups": [
+            "Adhrit Gupta (adhoc)",
+            "Arnav Jain(Ad-hoc)"
+          ],
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 3 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Noirwave",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Exectra",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "Krishna Naraayan",
+            "Siddhant Dubey"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "CheckMate",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [
+            "ashray kaushik",
+            "Aarav Gosai"
+          ],
+          "signups": [],
+          "score": 2,
+          "why": "name doesn't say what it is: open the brochure; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        },
+        {
+          "event": "Ready Player One",
+          "eligibility": "1x6, 9th-12th",
+          "finalized": [
+            "Aarav Gosai",
+            "jeenesh",
+            "Vihaan Pal Singh",
+            "sonit",
+            "arnav gupta",
+            "Ashray"
+          ],
+          "signups": [],
+          "score": 0,
+          "why": "gaming / robotics / media: not your lane; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        }
+      ]
     },
     {
       "symposium": "Shalom Tech-2026",
       "school": "Shalom Hills International School",
       "mode": "Hybrid",
       "date": "30th October 2026",
-      "last_day": "2026-10-30",
+      "first_day": "2026-10-30",
       "deadline": "2026-10-16",
       "incharge": "Adyan Siddiqui",
-      "event": "Web Weavers",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 5,
-      "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio; 2 of 2 slots open; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Code Bid",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Vardhan Nalluri[ad-hoc]",
-        "vivaan choudhary [adhoc]"
+      "rank": 1.3,
+      "why": [
+        "6 Exun members want in",
+        "3 events",
+        "in person",
+        "school's deadline has passed: only if the in-charge can still add names"
       ],
-      "signups": [
-        "Vardhan Nalluri[ad-hoc]",
-        "vivaan choudhary [adhoc]"
-      ],
-      "score": 4,
-      "why": "coding contest: decent signal, less unique than a build; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Consoleum",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Tanav Raj",
-        "Adhiraj Batra"
-      ],
-      "signups": [
-        "jai nagrath",
-        "tanav raj",
-        "aadi sharma",
-        "ashray",
-        "arav arora",
-        "aryaveer chugh"
-      ],
-      "score": 4,
-      "why": "coding contest: decent signal, less unique than a build; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Visual Suite",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 3,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Third Dimension",
-      "eligibility": "1x2, Open",
-      "finalized": [],
-      "signups": [],
-      "score": 3,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "Noirwave",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 3,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Virtual Warriors (Online)",
-      "eligibility": "1x5, Open",
-      "finalized": [
-        "Aarav Gosai",
-        "sonit",
-        "jeenesh vasandani",
-        "vihaan pal singh",
-        "ashray kaushik"
-      ],
-      "signups": [],
-      "score": 1,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Sherlocked (Online)",
-      "eligibility": "1x1, Open",
-      "finalized": [],
-      "signups": [],
-      "score": 1,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 1 of 1 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Aawaz",
-      "eligibility": "1x2, 11th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 1,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Mathematical Advertisement",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 1,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Foldit",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 1,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "dCrypt",
-      "eligibility": "1x2, 6th-12th",
-      "finalized": [
-        "Siddhant Dubey",
-        "Vibhas"
-      ],
-      "signups": [
-        "vibhas(adhoc)",
-        "Tushar Khandelwaal",
-        "Adhrit Gupta (adhoc)"
-      ],
-      "score": 1,
-      "why": "coding contest: decent signal, less unique than a build; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Battle Bot",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Aryamman Ojha",
-        "Arhan Gupta"
-      ],
-      "signups": [],
-      "score": 1,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Trivial Pursuit",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [],
-      "signups": [
-        "Vivaan Gupta"
-      ],
-      "score": 1,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 2 of 2 slots open",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Sakura",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Reanna Batra",
-        "Amairaa Gupta"
-      ],
-      "signups": [],
-      "score": 1,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "Exectra",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Krishna Naraayan",
-        "Siddhant Dubey"
-      ],
-      "signups": [],
-      "score": 1,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Quizzard (AI Quiz)",
-      "eligibility": "1x2, 6th-12th",
-      "finalized": [
-        "Anant Singh Ghugtyal",
-        "Anshuman"
-      ],
-      "signups": [
-        "Anshuman",
-        "Vivaan Gupta"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "HyperStrike PC (PC Gaming)",
-      "eligibility": "1x1, 6th-12th",
-      "finalized": [
-        "devyansh"
-      ],
-      "signups": [
-        "aadi sharma",
-        "amay sekhri",
-        "devyansh"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "HyperStrike Mobile (Mobile Gaming)",
-      "eligibility": "1x2, 6th-12th",
-      "finalized": [
-        "yuvaan aggarwaal (ds+)",
-        "arnav agrwaal"
-      ],
-      "signups": [
-        "yuvaan aggarwaal",
-        "nischay singh",
-        "arnav agrwaal",
-        "yashraj",
-        "samarth dhami"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Tech crossfire (Tech Debate)",
-      "eligibility": "1x1, 6th-12th",
-      "finalized": [
-        "Umar Abdul Majeed (ad-hoc)"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "UI/UX Rumble (Web Designing)",
-      "eligibility": "1x1, 6th-12th",
-      "finalized": [
-        "Yashraj Kumar [Ad-hoc]"
-      ],
-      "signups": [
-        "Yashraj Kumar [Ad-hoc]"
-      ],
-      "score": 0,
-      "why": "design event: fine, but not your edge; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "FrameLock (Video Editing)",
-      "eligibility": "1x1, 6th-12th",
-      "finalized": [
-        "Vinayak Raj [Ad-Hoc]"
-      ],
-      "signups": [
-        "Vinayak Raj [Ad-Hoc]"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "TwistTrads",
-      "eligibility": "1x1, 6th-12th",
-      "finalized": [
-        "Piyush Kumar Mishra"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Nocturne",
-      "eligibility": "1x2, 6th-12th",
-      "finalized": [
-        "Anshuman",
-        "Vihaan Sureka"
-      ],
-      "signups": [
-        "Adhrit Gupta (adhoc)"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Manoeuvere (Robot to complete precision task)",
-      "eligibility": "1x3, 6th-12th",
-      "finalized": [],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 3 of 3 slots open; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Robo Soccer (Robotic Soccer)",
-      "eligibility": "1x3, 6th-12th",
-      "finalized": [
-        "Aahan Mohapatra",
-        "Shiven joshi",
-        "Akshay Kumar"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "The Cyber Symphony",
-      "school": "Jagran Public School, Noida",
-      "mode": "Hybrid",
-      "date": "17th October 2026",
-      "last_day": "2026-10-17",
-      "deadline": null,
-      "incharge": "Naitik Jindal(registration) , permission slip(Anshuman)",
-      "event": "Flying Machine(Water Rockets to achieve maximum distance)",
-      "eligibility": "1x3, 6th-12th",
-      "finalized": [
-        "Vihaan Mehrotra",
-        "Advit Gupta"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; 1 of 3 slots open; happens within a day: too late to prepare",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Cine Vista",
-      "eligibility": "1x3, Open",
-      "finalized": [
-        "Tanvi Singh",
-        "Vihaan Segal",
-        "Aanvi Agarwal"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Mystery Mayhem",
-      "eligibility": "1x1, Open",
-      "finalized": [
-        "Umar Abdul Majeed (Ad-hoc)"
-      ],
-      "signups": [
-        "Umar Abdul Majeed (Ad-hoc)"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Robo Race",
-      "eligibility": "1x2, Open",
-      "finalized": [
-        "Kyraan katyal",
-        "Harsh Verma"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Robo Soccer",
-      "eligibility": "1x2, Open",
-      "finalized": [
-        "Aahan mohapatra",
-        "Shivang Saxena"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Robo War",
-      "eligibility": "1x2, Open",
-      "finalized": [
-        "Aryamman Ojha",
-        "Naitik Jindal"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Drone Racing",
-      "eligibility": "1x2, Open",
-      "finalized": [
-        "Shiven Joshi",
-        "Yashraj Kumar"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "REVERSE RHETORIC",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Jiya Sahni [ad-hoc]",
-        "Ashray Kaushik"
-      ],
-      "signups": [
-        "Jiya Sahni [ad-hoc]"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Compufest'26",
-      "school": "Seth Anandram Jaipuria School, Vasundhara, Ghaziabad",
-      "mode": "Hybrid",
-      "date": "23-24 October 2026",
-      "last_day": "2026-10-24",
-      "deadline": null,
-      "incharge": "Reanna Batra & Amairaa Gupta",
-      "event": "Map Quest",
-      "eligibility": "1x2, Open",
-      "finalized": [
-        "Aarav Gosai",
-        "Jeenesh"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "nCreate",
-      "eligibility": "1x4, 9th - 12th",
-      "finalized": [
-        "Yashraj Kumar [Ad-hoc]",
-        "Siddhant Dubey",
-        "Arshi Batra (ad-hoc)",
-        "Kavya Dayal"
-      ],
-      "signups": [
-        "Aarav Gosai [Ad-hoc]",
-        "Yashraj Kumar [Ad-hoc]",
-        "Arshi Batra (ad-hoc)",
-        "Saanvi Verma",
-        "Vihaan Pundir",
-        "Samanvita Kartik",
-        "Adhrit Gupta (adhoc)"
-      ],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "GiT",
-      "eligibility": "1x2, 9th - 12th",
-      "finalized": [
-        "Kavya Dayal",
-        "Riya Tayal"
-      ],
-      "signups": [
-        "Saanvi Verma"
-      ],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "nQuest",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Aarav Gosai",
-        "Tushar Khandelwaal"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "nCinema",
-      "eligibility": "1x4, 9th-12th",
-      "finalized": [
-        "Aru Batra",
-        "Reanna Batra",
-        "Amairaa Gupta",
-        "Vansh Gupta"
-      ],
-      "signups": [
-        "Aru Batra",
-        "Reanna Batra",
-        "Amairaa Gupta",
-        "Vansh Gupta"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "nCoris",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Aru Batra",
-        "Reanna Batra"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "nXpress",
-      "eligibility": "1x1, 9th-12th",
-      "finalized": [
-        "Nikunj Kohli"
-      ],
-      "signups": [
-        "Vivaan Gupta",
-        "Nikunj Kohli"
-      ],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "eNigma",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Kshitij",
-        "Vibhas (ad-hoc)"
-      ],
-      "signups": [
-        "Vivaan Gupta",
-        "Vibhas (ad-hoc)",
-        "Kshitij",
-        "Ayush"
-      ],
-      "score": 0,
-      "why": "name doesn't say what it is: open the brochure if the school is one you want; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "Surprise",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Tushar Khandelwaal",
-        "Siddhant Dubey"
-      ],
-      "signups": [
-        "Yashraj Kumar [Ad-hoc]"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "RoboSoccer",
-      "eligibility": "1x4, 8th-12th",
-      "finalized": [
-        "Naitik Jindal",
-        "Aryamman Ojha",
-        "Zayan Ali Khan",
-        "Aarav Gosai"
-      ],
-      "signups": [
-        "Aarav Gosai"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "event": "LineFollower",
-      "eligibility": "1x2, 8th-12th",
-      "finalized": [
-        "Astha Agarwal",
-        "Ranveer Kalra"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Counterstrafe",
-      "eligibility": "1x6, 9th-12th",
-      "finalized": [
-        "Aarav Gosai",
-        "jeenesh",
-        "ashray kaushik (ds+)",
-        "Vihaan Pal Singh",
-        "sonit",
-        "arin jha"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "event": "Memegen",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "Yashraj Kumar [Ad-hoc]",
-        "Devansh Saini"
-      ],
-      "signups": [
-        "Yashraj Kumar [Ad-hoc]",
-        "Devansh Saini"
-      ],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "Ready Player One",
-      "eligibility": "1x6, 9th-12th",
-      "finalized": [
-        "Aarav Gosai",
-        "jeenesh",
-        "Vihaan Pal Singh",
-        "sonit",
-        "arnav gupta",
-        "Ashray"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "event": "CheckMate",
-      "eligibility": "1x2, 9th-12th",
-      "finalized": [
-        "ashray kaushik",
-        "Aarav Gosai"
-      ],
-      "signups": [],
-      "score": 0,
-      "why": "gaming / robotics / media / quiz: low fit with your goals; team already full: you'd go in the row below as a reserve",
-      "you_are_in": false
-    },
-    {
-      "symposium": "Shalom Tech-2026",
-      "school": "Shalom Hills International School",
-      "mode": "Hybrid",
-      "date": "30th October 2026",
-      "last_day": "2026-10-30",
-      "deadline": "2026-10-16",
-      "incharge": "Adyan Siddiqui",
-      "event": "Vision Makers",
-      "eligibility": "1x5, 9th-12th",
-      "finalized": [
-        "Vinayak Raj [Ad-Hoc]",
-        "Krishnav Bindal [ad-hoc]",
-        "Adyan Siddiqui",
-        "Aarav Gosai",
-        "Umar Abdul Majeed (Ad-Hoc)"
-      ],
-      "signups": [
-        "Adhrit Gupta (adhoc)",
-        "Umar Abdul Majeed (Ad-Hoc)",
-        "Aarav Gosai",
-        "Krishnav Bindal [ad-hoc]",
-        "Vinayak Raj [Ad-Hoc]",
-        "Adyan Siddiqui"
-      ],
-      "score": 0,
-      "why": "design event: fine, but not your edge; team already full: you'd go in the row below as a reserve; school's deadline has passed: only if the in-charge can still add names",
-      "you_are_in": false
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "Web Weavers",
+          "eligibility": "1x2, 9th-12th",
+          "finalized": [],
+          "signups": [],
+          "score": 8,
+          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Vision Makers",
+          "eligibility": "1x5, 9th-12th",
+          "finalized": [
+            "Vinayak Raj [Ad-Hoc]",
+            "Krishnav Bindal [ad-hoc]",
+            "Adyan Siddiqui",
+            "Aarav Gosai",
+            "Umar Abdul Majeed (Ad-Hoc)"
+          ],
+          "signups": [
+            "Adhrit Gupta (adhoc)",
+            "Umar Abdul Majeed (Ad-Hoc)",
+            "Aarav Gosai",
+            "Krishnav Bindal [ad-hoc]",
+            "Vinayak Raj [Ad-Hoc]",
+            "Adyan Siddiqui"
+          ],
+          "score": 3,
+          "why": "design event: fine, not your strongest; team already full: you'd go in the row below as a reserve",
+          "you_are_in": false
+        }
+      ]
     }
   ]
 }

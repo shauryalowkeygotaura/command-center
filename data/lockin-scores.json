@@ -349,34 +349,28 @@
    "why": "Minor maintenance, low impact on main goals",
    "hash": "329957ad2bcd"
   },
-  "d-exun-compufest-26-ai-innovation-challenge": {
-   "score": 9,
-   "goal": "t20",
-   "why": "AI build or innovation challenge: your exact lane (AI products that ship)",
-   "hash": "exun"
-  },
-  "d-exun-compufest-26-impactathon": {
-   "score": 9,
-   "goal": "t20",
-   "why": "hackathon / build sprint: ships a real project, strongest T20 and brand proof",
-   "hash": "exun"
-  },
-  "d-exun-compufest-26-idea-to-impact": {
-   "score": 9,
-   "goal": "t20",
-   "why": "AI build or innovation challenge: your exact lane (AI products that ship)",
-   "hash": "exun"
-  },
-  "d-exun-compufest-26-dashboard-dynamics": {
+  "d-exun-compufest-26": {
    "score": 8,
    "goal": "t20",
-   "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio",
+   "why": "23 Exun members want in",
    "hash": "exun"
   },
-  "d-exun-force-fest-2k26-webd": {
-   "score": 8,
+  "d-exun-force-fest-2k26": {
+   "score": 7,
    "goal": "t20",
-   "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio",
+   "why": "21 Exun members want in",
+   "hash": "exun"
+  },
+  "d-exun-ncrypt-2026": {
+   "score": 6,
+   "goal": "t20",
+   "why": "Exun tagged it TO BE CONQUERED AT ALL COSTS (their top priority)",
+   "hash": "exun"
+  },
+  "d-exun-devyte-3-0": {
+   "score": 5,
+   "goal": "t20",
+   "why": "13 Exun members want in",
    "hash": "exun"
   }
  }
