@@ -12,8 +12,10 @@
       "last_day": "2026-10-24",
       "deadline": null,
       "incharge": "Reanna Batra & Amairaa Gupta",
-      "rank": 7.9,
+      "rank": 6.8,
+      "prestige": 3.0,
       "why": [
+        "Exun is sending a team",
         "23 Exun members want in",
         "24 events",
         "in person"
@@ -60,6 +62,17 @@
           "you_are_in": false
         },
         {
+          "event": "Dashboard Dynamics",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": false,
+          "finalized": [],
+          "signups": [],
+          "score": 8,
+          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
           "event": "Robo Race",
           "eligibility": "1x2, Open",
           "team": 2,
@@ -69,7 +82,7 @@
             "Harsh Verma"
           ],
           "signups": [],
-          "score": 8,
+          "score": 7.5,
           "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -83,7 +96,7 @@
             "Shivang Saxena"
           ],
           "signups": [],
-          "score": 8,
+          "score": 7.5,
           "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -97,7 +110,7 @@
             "Naitik Jindal"
           ],
           "signups": [],
-          "score": 8,
+          "score": 7.5,
           "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -111,19 +124,19 @@
             "Yashraj Kumar"
           ],
           "signups": [],
-          "score": 8,
+          "score": 7.5,
           "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
-          "event": "Dashboard Dynamics",
-          "eligibility": "1x2, Open",
-          "team": 2,
+          "event": "Sherlocked (Online)",
+          "eligibility": "1x1, Open",
+          "team": 1,
           "full": false,
           "finalized": [],
           "signups": [],
-          "score": 8,
-          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 1 slots open",
           "you_are_in": false
         },
         {
@@ -139,7 +152,7 @@
             "Vardhan Nalluri[ad-hoc]",
             "vivaan choudhary [adhoc]"
           ],
-          "score": 7,
+          "score": 6.5,
           "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -154,19 +167,8 @@
           "signups": [
             "Umar Abdul Majeed (Ad-hoc)"
           ],
-          "score": 7,
+          "score": 6.5,
           "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Sherlocked (Online)",
-          "eligibility": "1x1, Open",
-          "team": 1,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 1 slots open",
           "you_are_in": false
         },
         {
@@ -212,56 +214,8 @@
             "Jeenesh"
           ],
           "signups": [],
-          "score": 4,
+          "score": 3.5,
           "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Cine Vista",
-          "eligibility": "1x3, Open",
-          "team": 3,
-          "full": true,
-          "finalized": [
-            "Tanvi Singh",
-            "Vihaan Segal",
-            "Aanvi Agarwal"
-          ],
-          "signups": [],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Virtual Warriors (Online)",
-          "eligibility": "1x5, Open",
-          "team": 5,
-          "full": true,
-          "finalized": [
-            "Aarav Gosai",
-            "sonit",
-            "jeenesh vasandani",
-            "vihaan pal singh",
-            "ashray kaushik"
-          ],
-          "signups": [],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "REVERSE RHETORIC",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Jiya Sahni [ad-hoc]",
-            "Ashray Kaushik"
-          ],
-          "signups": [
-            "Jiya Sahni [ad-hoc]"
-          ],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
@@ -285,6 +239,54 @@
           "score": 2,
           "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
           "you_are_in": false
+        },
+        {
+          "event": "Cine Vista",
+          "eligibility": "1x3, Open",
+          "team": 3,
+          "full": true,
+          "finalized": [
+            "Tanvi Singh",
+            "Vihaan Segal",
+            "Aanvi Agarwal"
+          ],
+          "signups": [],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Virtual Warriors (Online)",
+          "eligibility": "1x5, Open",
+          "team": 5,
+          "full": true,
+          "finalized": [
+            "Aarav Gosai",
+            "sonit",
+            "jeenesh vasandani",
+            "vihaan pal singh",
+            "ashray kaushik"
+          ],
+          "signups": [],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "REVERSE RHETORIC",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Jiya Sahni [ad-hoc]",
+            "Ashray Kaushik"
+          ],
+          "signups": [
+            "Jiya Sahni [ad-hoc]"
+          ],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
         }
       ]
     },
@@ -297,14 +299,27 @@
       "last_day": "2026-10-28",
       "deadline": null,
       "incharge": "Amairaa Gupta(Digex)",
-      "rank": 6.8,
+      "rank": 5.8,
+      "prestige": 3.0,
       "why": [
+        "Exun is sending a team",
         "21 Exun members want in",
         "9 events",
         "format not listed"
       ],
       "you_are_in": false,
       "events": [
+        {
+          "event": "WEBD",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": false,
+          "finalized": [],
+          "signups": [],
+          "score": 8,
+          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "you_are_in": false
+        },
         {
           "event": "Battle Bot",
           "eligibility": "1x2, 9th-12th",
@@ -315,19 +330,8 @@
             "Arhan Gupta"
           ],
           "signups": [],
-          "score": 8,
+          "score": 7.5,
           "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "WEBD",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 8,
-          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
           "you_are_in": false
         },
         {
@@ -362,7 +366,7 @@
             "arav arora",
             "aryaveer chugh"
           ],
-          "score": 7,
+          "score": 6.5,
           "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -376,26 +380,8 @@
             "Amairaa Gupta"
           ],
           "signups": [],
-          "score": 4,
+          "score": 3.5,
           "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Counterstrafe",
-          "eligibility": "1x6, 9th-12th",
-          "team": 6,
-          "full": true,
-          "finalized": [
-            "Aarav Gosai",
-            "jeenesh",
-            "ashray kaushik (ds+)",
-            "Vihaan Pal Singh",
-            "sonit",
-            "arin jha"
-          ],
-          "signups": [],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
@@ -412,6 +398,24 @@
           "you_are_in": false
         },
         {
+          "event": "Counterstrafe",
+          "eligibility": "1x6, 9th-12th",
+          "team": 6,
+          "full": true,
+          "finalized": [
+            "Aarav Gosai",
+            "jeenesh",
+            "ashray kaushik (ds+)",
+            "Vihaan Pal Singh",
+            "sonit",
+            "arin jha"
+          ],
+          "signups": [],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
           "event": "Memegen",
           "eligibility": "1x2, 9th-12th",
           "team": 2,
@@ -424,218 +428,7 @@
             "Yashraj Kumar [Ad-hoc]",
             "Devansh Saini"
           ],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        }
-      ]
-    },
-    {
-      "symposium": "nCrypt 2026",
-      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
-      "mode": "Hybrid",
-      "date": "Saturday, 24th October 2026 (Offline)",
-      "first_day": "2026-10-24",
-      "last_day": "2026-10-24",
-      "deadline": "2026-10-14",
-      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
-      "rank": 6.6,
-      "why": [
-        "Exun tagged it TO BE CONQUERED AT ALL COSTS (their top priority)",
-        "25 Exun members want in",
-        "11 events",
-        "in person",
-        "school's deadline has passed: only if the in-charge can still add names"
-      ],
-      "you_are_in": false,
-      "events": [
-        {
-          "event": "RoboSoccer",
-          "eligibility": "1x4, 8th-12th",
-          "team": 4,
-          "full": true,
-          "finalized": [
-            "Naitik Jindal",
-            "Aryamman Ojha",
-            "Zayan Ali Khan",
-            "Aarav Gosai"
-          ],
-          "signups": [
-            "Aarav Gosai"
-          ],
-          "score": 8,
-          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "LineFollower",
-          "eligibility": "1x2, 8th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Astha Agarwal",
-            "Ranveer Kalra"
-          ],
-          "signups": [],
-          "score": 8,
-          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "dCrypt",
-          "eligibility": "1x2, 6th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Siddhant Dubey",
-            "Vibhas"
-          ],
-          "signups": [
-            "vibhas(adhoc)",
-            "Tushar Khandelwaal",
-            "Adhrit Gupta (adhoc)"
-          ],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "eNigma",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Kshitij",
-            "Vibhas (ad-hoc)"
-          ],
-          "signups": [
-            "Vivaan Gupta",
-            "Vibhas (ad-hoc)",
-            "Kshitij",
-            "Ayush"
-          ],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "nCreate",
-          "eligibility": "1x4, 9th - 12th",
-          "team": 4,
-          "full": true,
-          "finalized": [
-            "Yashraj Kumar [Ad-hoc]",
-            "Siddhant Dubey",
-            "Arshi Batra (ad-hoc)",
-            "Kavya Dayal"
-          ],
-          "signups": [
-            "Aarav Gosai [Ad-hoc]",
-            "Yashraj Kumar [Ad-hoc]",
-            "Arshi Batra (ad-hoc)",
-            "Saanvi Verma",
-            "Vihaan Pundir",
-            "Samanvita Kartik",
-            "Adhrit Gupta (adhoc)"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "GiT",
-          "eligibility": "1x2, 9th - 12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Kavya Dayal",
-            "Riya Tayal"
-          ],
-          "signups": [
-            "Saanvi Verma"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "nQuest",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Aarav Gosai",
-            "Tushar Khandelwaal"
-          ],
-          "signups": [],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "nCoris",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Aru Batra",
-            "Reanna Batra"
-          ],
-          "signups": [],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "nXpress",
-          "eligibility": "1x1, 9th-12th",
-          "team": 1,
-          "full": true,
-          "finalized": [
-            "Nikunj Kohli"
-          ],
-          "signups": [
-            "Vivaan Gupta",
-            "Nikunj Kohli"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Surprise",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Tushar Khandelwaal",
-            "Siddhant Dubey"
-          ],
-          "signups": [
-            "Yashraj Kumar [Ad-hoc]"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "nCinema",
-          "eligibility": "1x4, 9th-12th",
-          "team": 4,
-          "full": true,
-          "finalized": [
-            "Aru Batra",
-            "Reanna Batra",
-            "Amairaa Gupta",
-            "Vansh Gupta"
-          ],
-          "signups": [
-            "Aru Batra",
-            "Reanna Batra",
-            "Amairaa Gupta",
-            "Vansh Gupta"
-          ],
-          "score": 2,
+          "score": 1.5,
           "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         }
@@ -650,8 +443,11 @@
       "last_day": "2026-10-28",
       "deadline": "2026-10-19",
       "incharge": "TBD",
-      "rank": 4.9,
+      "rank": 5.2,
+      "prestige": 3.4,
       "why": [
+        "Exun is sending a team",
+        "edition 3, has run before",
         "13 Exun members want in",
         "6 events",
         "online only"
@@ -708,7 +504,7 @@
             "Siddhant Dubey"
           ],
           "signups": [],
-          "score": 4,
+          "score": 3.5,
           "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -722,7 +518,7 @@
             "Aarav Gosai"
           ],
           "signups": [],
-          "score": 4,
+          "score": 3.5,
           "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
@@ -740,7 +536,219 @@
             "Ashray"
           ],
           "signups": [],
-          "score": 2,
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        }
+      ]
+    },
+    {
+      "symposium": "nCrypt 2026",
+      "school": "DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009",
+      "mode": "Hybrid",
+      "date": "Saturday, 24th October 2026 (Offline)",
+      "first_day": "2026-10-24",
+      "last_day": "2026-10-24",
+      "deadline": "2026-10-14",
+      "incharge": "Kavya Dayal, Tushar Khandelwaal and Kanav Lall",
+      "rank": 5.0,
+      "prestige": 4.5,
+      "why": [
+        "Exun tagged it AT ALL COSTS (their top priority)",
+        "25 Exun members want in",
+        "11 events",
+        "in person",
+        "school's deadline has passed: only if the in-charge can still add names"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "RoboSoccer",
+          "eligibility": "1x4, 8th-12th",
+          "team": 4,
+          "full": true,
+          "finalized": [
+            "Naitik Jindal",
+            "Aryamman Ojha",
+            "Zayan Ali Khan",
+            "Aarav Gosai"
+          ],
+          "signups": [
+            "Aarav Gosai"
+          ],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "LineFollower",
+          "eligibility": "1x2, 8th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Astha Agarwal",
+            "Ranveer Kalra"
+          ],
+          "signups": [],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "dCrypt",
+          "eligibility": "1x2, 6th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Siddhant Dubey",
+            "Vibhas"
+          ],
+          "signups": [
+            "vibhas(adhoc)",
+            "Tushar Khandelwaal",
+            "Adhrit Gupta (adhoc)"
+          ],
+          "score": 6.5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "eNigma",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Kshitij",
+            "Vibhas (ad-hoc)"
+          ],
+          "signups": [
+            "Vivaan Gupta",
+            "Vibhas (ad-hoc)",
+            "Kshitij",
+            "Ayush"
+          ],
+          "score": 6.5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "nCreate",
+          "eligibility": "1x4, 9th - 12th",
+          "team": 4,
+          "full": true,
+          "finalized": [
+            "Yashraj Kumar [Ad-hoc]",
+            "Siddhant Dubey",
+            "Arshi Batra (ad-hoc)",
+            "Kavya Dayal"
+          ],
+          "signups": [
+            "Aarav Gosai [Ad-hoc]",
+            "Yashraj Kumar [Ad-hoc]",
+            "Arshi Batra (ad-hoc)",
+            "Saanvi Verma",
+            "Vihaan Pundir",
+            "Samanvita Kartik",
+            "Adhrit Gupta (adhoc)"
+          ],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "GiT",
+          "eligibility": "1x2, 9th - 12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Kavya Dayal",
+            "Riya Tayal"
+          ],
+          "signups": [
+            "Saanvi Verma"
+          ],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "nQuest",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Aarav Gosai",
+            "Tushar Khandelwaal"
+          ],
+          "signups": [],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "nCoris",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Aru Batra",
+            "Reanna Batra"
+          ],
+          "signups": [],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "nXpress",
+          "eligibility": "1x1, 9th-12th",
+          "team": 1,
+          "full": true,
+          "finalized": [
+            "Nikunj Kohli"
+          ],
+          "signups": [
+            "Vivaan Gupta",
+            "Nikunj Kohli"
+          ],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Surprise",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Tushar Khandelwaal",
+            "Siddhant Dubey"
+          ],
+          "signups": [
+            "Yashraj Kumar [Ad-hoc]"
+          ],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "nCinema",
+          "eligibility": "1x4, 9th-12th",
+          "team": 4,
+          "full": true,
+          "finalized": [
+            "Aru Batra",
+            "Reanna Batra",
+            "Amairaa Gupta",
+            "Vansh Gupta"
+          ],
+          "signups": [
+            "Aru Batra",
+            "Reanna Batra",
+            "Amairaa Gupta",
+            "Vansh Gupta"
+          ],
+          "score": 1.5,
           "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         }
@@ -755,8 +763,10 @@
       "last_day": "2026-10-30",
       "deadline": "2026-10-16",
       "incharge": "Adyan Siddiqui",
-      "rank": 1.3,
+      "rank": 1.2,
+      "prestige": 1.6,
       "why": [
+        "Exun is sending a team",
         "6 Exun members want in",
         "3 events",
         "in person",
@@ -795,7 +805,7 @@
             "Vinayak Raj [Ad-Hoc]",
             "Adyan Siddiqui"
           ],
-          "score": 5,
+          "score": 4.5,
           "why": "design event: fine, not your strongest; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         }

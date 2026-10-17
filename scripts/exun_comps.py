@@ -48,6 +48,8 @@ GRADE = 11
 ME = "shaurya"  # matched case-insensitively against participant cells
 PER_MONTH = 4  # symposiums to attend per calendar month
 MIN_RANK = 4.0  # a symposium below this (0-10) is skipped even if the month has room
+LEAD_DAYS = 14  # a pick shows up in LOCK IN this many days before its deadline (or the fest)
+FULL_TEAM = 0.5  # event score hit when the green boxes are full (you'd go in as a sub)
 ID_PREFIX = "d-exun-"
 
 # Fests you know are big that the sheet's signals undersell: name fragment -> bonus.
@@ -206,31 +208,50 @@ def judge_event(s: dict, ev: dict) -> dict:
     if open_slots:
         notes.append(f"{open_slots} of {ev['team']} slots open")
     else:
-        # No penalty: people drop out last minute all the time and Exun subs in
-        # whoever is in the row below, so a full team is still a way in.
+        # Only a small hit: people drop out last minute all the time and Exun
+        # subs in whoever is in the row below, so a full team is still a way in.
+        score -= FULL_TEAM
         notes.append("team full for now, but people drop last minute: go in the row below as a sub")
     return {
         "event": ev["event"], "eligibility": ev["eligibility"], "team": ev["team"], "full": not open_slots,
         "finalized": ev["finalized"], "signups": ev["signups"],
-        "score": max(0, min(10, score)), "why": "; ".join(notes),
+        "score": max(0.0, min(10.0, score)), "why": "; ".join(notes),
         "you_are_in": any(ME in n.lower() for n in ev["finalized"] + ev["signups"]),
     }
 
 
-def rank(s: dict, events: list[dict], today: date) -> tuple[float, list[str]]:
-    """0-10: how recognized the symposium is, from what the sheet says about it."""
-    pts, why = 0.0, []
+def edition(name: str) -> int:
+    """'SYNC 13.0' -> 13, 'DeVyTe 3.0' -> 3. Years ('2K26', '26.0', '2026') are not editions."""
+    m = re.search(r"\b(\d{1,2})\.0\b", name)
+    n = int(m.group(1)) if m else 0
+    return n if 2 <= n <= 19 else 0  # 20+ is a year written as a version (Ordin@trix 26.0)
+
+
+def rank(s: dict, events: list[dict], today: date) -> tuple[float, float, list[str]]:
+    """(rank 0-10, prestige 0-7, reasons). Prestige is most of the rank on purpose."""
+    pres, why = 0.0, []
     status = s["status"]
     if "AT ALL COSTS" in status:
-        pts += 3
-        why.append("Exun tagged it TO BE CONQUERED AT ALL COSTS (their top priority)")
+        pres += 2.5
+        why.append("Exun tagged it AT ALL COSTS (their top priority)")
     elif "TO BE CONQUERED" in status:
-        pts += 1
+        pres += 1
+        why.append("Exun is sending a team")
+    ed = edition(s["name"])
+    if ed:
+        pres += min(2.5, 0.5 + ed / 5)
+        why.append(f"{ed}th edition, so it's an established fest" if ed > 3 else f"edition {ed}, has run before")
     people = {n.lower().split("[")[0].split("(")[0].strip()
               for ev in s["events"] for n in ev["finalized"] + ev["signups"]}
-    pts += min(3.0, len(people) / 6)
+    pres += min(2.0, len(people) / 10)
     why.append(f"{len(people)} Exun members want in")
-    pts += min(2.0, len(s["events"]) / 6)
+    bonus = sum(b for frag, b in PRESTIGE.items() if frag.lower() in s["name"].lower())
+    if bonus:
+        pres += bonus
+        why.append("on your prestige list")
+    pres = min(7.0, pres)
+
+    pts = pres + min(1.5, len(s["events"]) / 8)
     why.append(f"{len(s['events'])} events")
     if s["mode"].lower() in {"offline", "hybrid"}:
         pts += 1
@@ -240,16 +261,11 @@ def rank(s: dict, events: list[dict], today: date) -> tuple[float, list[str]]:
     else:
         pts += 0.5  # sheet doesn't say: don't punish it like an online-only fest
         why.append("format not listed")
-    bonus = sum(b for frag, b in PRESTIGE.items() if frag.lower() in s["name"].lower())
-    if bonus:
-        pts += bonus
-        why.append("on your prestige list")
-    best = max((e["score"] for e in events), default=0)
-    pts += best / 10
+    pts += max((e["score"] for e in events), default=0) * 0.15
     if s["deadline"] and s["deadline"] < today:
         pts -= 3
         why.append("school's deadline has passed: only if the in-charge can still add names")
-    return round(max(0.0, min(10.0, pts)), 1), why
+    return round(max(0.0, min(10.0, pts)), 1), round(pres, 1), why
 
 
 def judge(syms: list[dict], today: date) -> list[dict]:
@@ -264,32 +280,50 @@ def judge(syms: list[dict], today: date) -> list[dict]:
                         key=lambda e: -e["score"])
         if not events:
             continue
-        r, why = rank(s, events, today)
+        r, pres, why = rank(s, events, today)
         out.append({
             "symposium": s["name"], "school": s["school"], "mode": s["mode"],
             "date": s.get("date_text", ""), "first_day": first.isoformat() if first else None,
             "last_day": max(s["dates"]).isoformat() if s["dates"] else None,
             "deadline": s["deadline"].isoformat() if s["deadline"] else None,
-            "incharge": s["incharge"], "rank": r, "why": why,
+            "incharge": s["incharge"], "rank": r, "prestige": pres, "why": why,
             "you_are_in": any(e["you_are_in"] for e in events), "events": events,
         })
     return sorted(out, key=lambda x: (-x["rank"], x["first_day"] or "9999"))
 
 
-def choose(judged: list[dict]) -> list[dict]:
-    """Top PER_MONTH per calendar month; fests you are already on use up a slot."""
+def show_on(s: dict, today: date) -> date:
+    """When the pick appears in LOCK IN: LEAD_DAYS before whatever you must act by."""
+    act_by = s["deadline"] if s["deadline"] and s["deadline"] >= today.isoformat() else s["first_day"]
+    if not act_by:
+        return today
+    return max(today, date.fromisoformat(act_by) - timedelta(days=LEAD_DAYS))
+
+
+def choose(judged: list[dict], shown: set[str]) -> list[dict]:
+    """Top PER_MONTH per calendar month, re-estimated every run as the sheet grows.
+
+    Fests you are already on, and picks LOCK IN has already shown you, hold
+    their slot: a better fest added later fills a free slot, it never bumps
+    something you may already have acted on.
+    """
     picks, used = [], {}
+
+    def month(s: dict) -> str:
+        return (s["first_day"] or "")[:7]
+
     for s in judged:
-        if s["you_are_in"]:
-            m = (s["first_day"] or "")[:7]
-            used[m] = used.get(m, 0) + 1
+        if s["you_are_in"] or slug(s["symposium"]) in shown:
+            used[month(s)] = used.get(month(s), 0) + 1
+            if not s["you_are_in"]:
+                picks.append(s)
     for s in judged:  # already sorted best first
-        m = (s["first_day"] or "")[:7]
-        if s["you_are_in"] or s["rank"] < MIN_RANK or used.get(m, 0) >= PER_MONTH:
+        m = month(s)
+        if s in picks or s["you_are_in"] or s["rank"] < MIN_RANK or used.get(m, 0) >= PER_MONTH:
             continue
         used[m] = used.get(m, 0) + 1
         picks.append(s)
-    return picks
+    return sorted(picks, key=lambda x: (x["first_day"] or "9999", -x["rank"]))
 
 
 def slug(*parts: str) -> str:
@@ -308,7 +342,7 @@ def lockin_item(s: dict, first_seen: str) -> dict:
     dl = f", sign up by {s['deadline']}" if s["deadline"] else ""
     where = ", ".join(x for x in [s["school"], s["mode"]] if x)
     lines = [
-        f"WHY THIS FEST (rank {s['rank']}/10): {'; '.join(s['why'])}.",
+        f"WHY THIS FEST (rank {s['rank']}/10, prestige {s['prestige']}/7): {'; '.join(s['why'])}.",
         f"WHERE: {where}.",
     ]
     for e in top:
@@ -337,22 +371,24 @@ def main() -> None:
     dry = "--dry" in sys.argv
     today = datetime.now(timezone(timedelta(hours=5, minutes=30))).date()  # IST, not the runner's UTC
     judged = judge(parse(fetch_rows(), today), today)
-    picks = choose(judged)
+    data = json.loads(LOCKIN.read_text(encoding="utf-8"))
+    old = {d["id"]: d for d in data["dated"] if d["id"].startswith(ID_PREFIX)}
+    shown = {i[len(ID_PREFIX):] for i, d in old.items() if d["date"] <= today.isoformat()}
+    picks = choose(judged, shown)
 
     for s in judged:
         mark = "IN  " if s["you_are_in"] else "PICK" if s in picks else "    "
         best = s["events"][0]
-        print(f"{mark} {s['rank']:>4}  {s['symposium'][:20]:<20} {(s['first_day'] or '?'):<10} "
+        print(f"{mark} {s['rank']:>4} p{s['prestige']:<4} {s['symposium'][:20]:<20} {(s['first_day'] or '?'):<10} "
               f"best: {best['event'][:26]:<26} | {'; '.join(s['why'])}")
     if dry:
         return
 
-    data = json.loads(LOCKIN.read_text(encoding="utf-8"))
-    old = {d["id"]: d for d in data["dated"] if d["id"].startswith(ID_PREFIX)}
     items = []
     for s in picks:
         iid = ID_PREFIX + slug(s["symposium"])
-        items.append(lockin_item(s, old[iid]["date"] if iid in old else today.isoformat()))
+        keep = iid in old and old[iid]["date"] <= today.isoformat()  # already on screen: don't move it
+        items.append(lockin_item(s, old[iid]["date"] if keep else show_on(s, today).isoformat()))
     data["dated"] = [d for d in data["dated"] if not d["id"].startswith(ID_PREFIX)] + items
     LOCKIN.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
