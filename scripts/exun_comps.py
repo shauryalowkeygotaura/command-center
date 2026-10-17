@@ -296,38 +296,10 @@ def slug(*parts: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", " ".join(parts).lower()).strip("-")[:48]
 
 
-def short_date(s: dict) -> str:
-    if not s["first_day"]:
-        return "date tbd"
-    a, b = date.fromisoformat(s["first_day"]), date.fromisoformat(s["last_day"])
-    mon = a.strftime("%b").lower()
-    return f"{a.day} {mon}" if a == b else f"{a.day}-{b.day} {mon}"
-
-
-def short_event(name: str) -> str:
-    """'HyperStrike PC (PC Gaming)' -> 'hyperstrike pc', 'AI Innovation Challenge' -> 'ai innovation'."""
-    n = re.sub(r"\(.*?\)", "", name).strip().lower()
-    return re.sub(r"\s+(challenge|competition|event)$", "", n)
-
-
-def friend_msg(s: dict) -> str:
-    """Copy-paste text to get a friend on the team, in how Shaurya actually texts."""
-    team = [e for e in s["events"] if e["team"] > 1 and e["score"] >= 5][:2]
-    if not team:
-        e = s["events"][0]
-        return (f"vro {s['symposium'].lower()} is on {short_date(s)}, im going for {short_event(e['event'])}. "
-                f"u shld come too fr, theres other events, check the exun sheet n put ur name down")
-    e = team[0]
-    sym = re.sub(r"\s*(20)?\d\d$|'\d\d$|\s*2k\d\d$", "", s["symposium"], flags=re.I).strip().lower()
-    msg = f"vro i wnna go in {sym} {short_event(e['event'])} thing ({short_date(s)}), its {e['team']} ppl. u in??"
-    if len(team) > 1:
-        msg += f" or {short_event(team[1]['event'])} if thats more ur thing"
-    if e["full"]:
-        msg += ". team's full rn but ppl always drop last min so we go in as subs"
-    if s["deadline"]:
-        d = date.fromisoformat(s["deadline"])
-        msg += f". lmk by {d.day} {d.strftime('%b').lower()} pls" if d >= date.today() else ". lmk asap, deadline's kinda gone"
-    return msg + ", i'll put us both on the exun sheet"
+def comp_list(s: dict) -> str:
+    """One line, comma-separated: the events worth entering at this fest."""
+    good = [e["event"] for e in s["events"] if e["score"] >= 5] or [s["events"][0]["event"]]
+    return ", ".join(good)
 
 
 def lockin_item(s: dict, first_seen: str) -> dict:
@@ -343,7 +315,7 @@ def lockin_item(s: dict, first_seen: str) -> dict:
         team = ", ".join(e["finalized"]) or "nobody yet"
         lines.append(f"EVENT: {e['event']} ({e['eligibility']}): {e['why']}. Team so far: {team}.")
     lines += [
-        f"MSG A FRIEND (copy this): {friend_msg(s)}",
+        f"COMPS: {comp_list(s)}",
         "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes "
         "(green = finalized). Then message the student in-charge"
         + (f" ({s['incharge']})" if s["incharge"] and s["incharge"] != "TBD" else "")
