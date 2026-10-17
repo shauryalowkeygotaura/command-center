@@ -378,24 +378,6 @@
    "goal": "t20",
    "why": "product build (app / dashboard / web): demo-able, reusable for the portfolio",
    "hash": "exun"
-  },
-  "d-exun-force-fest-2k26-pygrammar": {
-   "score": 6,
-   "goal": "t20",
-   "why": "coding contest: decent signal, less unique than a build",
-   "hash": "exun"
-  },
-  "d-exun-devyte-3-0-code-clash": {
-   "score": 6,
-   "goal": "t20",
-   "why": "coding contest: decent signal, less unique than a build",
-   "hash": "exun"
-  },
-  "d-exun-devyte-3-0-decode-the-frequency": {
-   "score": 6,
-   "goal": "t20",
-   "why": "coding contest: decent signal, less unique than a build",
-   "hash": "exun"
   }
  }
 }

@@ -42,7 +42,7 @@ SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?gid={GID}#g
 
 GRADE = 11
 ME = "shaurya"  # matched case-insensitively against participant cells
-PICK_AT = 6  # minimum score (0-10) to become a LOCK IN item
+PICK_AT = 8  # minimum score (0-10) to become a LOCK IN item: builds only, coding contests (6) stay out
 ID_PREFIX = "d-exun-"
 
 MODES = {"online", "hybrid", "offline"}
