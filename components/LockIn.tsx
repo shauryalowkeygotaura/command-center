@@ -2,7 +2,7 @@
 
 // LOCK IN tab: today's whole job in one ranked list. Each row expands into the
 // full instructions (scripts, phone numbers, shot lists), so nothing needs a
-// question to Claude. Ticks + outcome boxes sync on their own and the 23:00
+// question to Claude. Ticks + outcome boxes sync on their own and the 02:00
 // review reads them to build tomorrow; "backup copy" is only for when sync is down.
 //
 // Layout follows Apple's "Today" pattern (large title, progress ring, inset
@@ -142,7 +142,7 @@ export function LockIn() {
   }, [mounted, state, items, today]);
 
   // Day-log relay (no PAT needed): ticks, outcomes, today's snapshot and the
-  // HANDOFFS replies go to Doppler via the KEYS passphrase, so the 23:00 review
+  // HANDOFFS replies go to Doppler via the KEYS passphrase, so the 02:00 review
   // reads what actually happened. Runs alongside the gist, not instead of it.
   const relayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [relayOk, setRelayOk] = useState<boolean | null>(null);
@@ -309,7 +309,7 @@ export function LockIn() {
         </Capsule>
         {syncStatus !== "off" && (
           <span
-            title="Ticks and outcomes sync to a secret gist; Claude's 23:00 review reads it"
+            title="Ticks and outcomes sync to a secret gist; Claude's 02:00 review reads it"
             className={`self-center font-mono text-[11px] ${syncStatus === "error" ? "text-[#e08a95]" : "text-cream-dim"}`}
           >
             {syncStatus === "synced" ? "sync ✓" : syncStatus === "syncing" ? "sync…" : "sync ✕"}
@@ -317,13 +317,13 @@ export function LockIn() {
         )}
         {relayOk !== null && (
           <span
-            title="Ticks, outcomes and handoff replies reach Claude's 23:00 review (via the KEYS passphrase)"
+            title="Ticks, outcomes and handoff replies reach Claude's 02:00 review (via the KEYS passphrase)"
             className={`self-center font-mono text-[11px] ${relayOk ? "text-cream-dim" : "text-[#e08a95]"}`}
           >
             {relayOk ? "log ✓" : "log ✕"}
           </span>
         )}
-        {/* Fallback only: the 23:00 review reads synced ticks on its own. Paste
+        {/* Fallback only: the 02:00 review reads synced ticks on its own. Paste
             this to Claude when sync/log shows ✕. */}
         <button
           onClick={copyForClaude}

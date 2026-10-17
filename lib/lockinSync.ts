@@ -1,7 +1,7 @@
 // Cross-device sync for LOCK IN ticks + outcomes, riding the same secret-gist
 // pattern and the SAME pasted PAT as INBOX and HABITS (habitsSync's token
 // slot): one paste per device covers all three. The vault-side end-of-day
-// review (Vault/Scripts/lockin_eod_review.py, 23:00 IST) reads this gist with
+// review (Vault/Scripts/lockin_eod_review.py, 02:00 IST) reads this gist with
 // the Doppler GITHUB_TOKEN, so it must live on EXPECTED_OWNER's account.
 // Merge logic lives in ./lockinMerge (pure, unit-tested).
 
