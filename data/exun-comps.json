@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-17",
+  "checked": "2026-10-18",
   "sheet": "https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
   "per_month": 4,
   "symposiums": [
@@ -16,7 +16,7 @@
       "prestige": 3.0,
       "why": [
         "Exun is sending a team",
-        "23 Exun members want in",
+        "24 Exun members want in",
         "24 events",
         "in person"
       ],
@@ -134,7 +134,9 @@
           "team": 1,
           "full": false,
           "finalized": [],
-          "signups": [],
+          "signups": [
+            "Leonit Rajora (ad-hoc)"
+          ],
           "score": 7,
           "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 1 slots open",
           "you_are_in": false
@@ -443,12 +445,12 @@
       "last_day": "2026-10-28",
       "deadline": "2026-10-19",
       "incharge": "TBD",
-      "rank": 5.2,
-      "prestige": 3.4,
+      "rank": 5.3,
+      "prestige": 3.5,
       "why": [
         "Exun is sending a team",
         "edition 3, has run before",
-        "13 Exun members want in",
+        "14 Exun members want in",
         "6 events",
         "online only"
       ],
@@ -476,8 +478,9 @@
             "Saanvi"
           ],
           "signups": [
-            "Adhrit Gupta (adhoc)",
-            "Arnav Jain(Ad-hoc)"
+            "Adhirit Gupta(ad-hoc)",
+            "Arnav Jain (ad-hoc)",
+            "Leonit Rajora (ad-hoc)"
           ],
           "score": 7,
           "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 3 slots open",
