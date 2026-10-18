@@ -47,7 +47,7 @@ SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?gid={GID}#g
 GRADE = 11
 ME = "shaurya"  # matched case-insensitively against participant cells
 PER_MONTH = 4  # symposiums to attend per calendar month
-MIN_RANK = 4.0  # a symposium below this (0-10) is skipped even if the month has room
+MIN_RANK = 3.0  # a symposium below this (0-10) is skipped even if the month has room
 LEAD_DAYS = 14  # a pick shows up in LOCK IN this many days before its deadline (or the fest)
 FULL_TEAM = 0.5  # event score hit when the green boxes are full (you'd go in as a sub)
 ID_PREFIX = "d-exun-"
@@ -241,18 +241,21 @@ def rank(s: dict, events: list[dict], today: date) -> tuple[float, float, list[s
     if ed:
         pres += min(2.5, 0.5 + ed / 5)
         why.append(f"{ed}th edition, so it's an established fest" if ed > 3 else f"edition {ed}, has run before")
-    people = {n.lower().split("[")[0].split("(")[0].strip()
-              for ev in s["events"] for n in ev["finalized"] + ev["signups"]}
-    pres += min(2.0, len(people) / 10)
-    why.append(f"{len(people)} Exun members want in")
+    # Demand per slot, not head count: a fest with 24 sub-events collects more
+    # names just by being big. Names signed up / team slots on offer shows how
+    # oversubscribed it is (>1 = more people want in than there is room for).
+    slots = sum(ev["team"] for ev in s["events"]) or 1
+    names_in = sum(len(set(ev["finalized"] + ev["signups"])) for ev in s["events"])
+    fill = names_in / slots
+    pres += min(2.5, fill * 1.7)
+    why.append(f"{names_in} names for {slots} slots ({fill:.0%} demand)")
     bonus = sum(b for frag, b in PRESTIGE.items() if frag.lower() in s["name"].lower())
     if bonus:
         pres += bonus
         why.append("on your prestige list")
     pres = min(7.0, pres)
 
-    pts = pres + min(1.5, len(s["events"]) / 8)
-    why.append(f"{len(s['events'])} events")
+    pts = pres  # event count is deliberately NOT scored: more sub-events is not more prestige
     if s["mode"].lower() in {"offline", "hybrid"}:
         pts += 1
         why.append("in person")
