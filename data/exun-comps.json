@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-19",
+  "checked": "2026-10-20",
   "sheet": "https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
   "per_month": 4,
   "symposiums": [
@@ -289,114 +289,6 @@
           "signups": [
             "Jiya Sahni [ad-hoc]"
           ],
-          "score": 1.5,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        }
-      ]
-    },
-    {
-      "symposium": "DeVyTe 3.0",
-      "school": "Tagore International School, East of Kailash",
-      "mode": "Online",
-      "date": "Wednesday 28 October 2026",
-      "first_day": "2026-10-28",
-      "last_day": "2026-10-28",
-      "deadline": "2026-10-19",
-      "incharge": "TBD",
-      "rank": 4.7,
-      "prestige": 3.6,
-      "why": [
-        "Exun is sending a team",
-        "edition 3, has run before",
-        "15 names for 17 slots (88% demand)",
-        "online only"
-      ],
-      "you_are_in": false,
-      "events": [
-        {
-          "event": "Code Clash",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Aditya Singh Ghugtyal"
-          ],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Decode the Frequency",
-          "eligibility": "1x3, 9th-12th",
-          "team": 3,
-          "full": false,
-          "finalized": [
-            "Saanvi"
-          ],
-          "signups": [
-            "Adhirit Gupta(ad-hoc)",
-            "Arnav Jain (ad-hoc)",
-            "Leonit Rajora (ad-hoc)"
-          ],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 3 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Noirwave",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Exectra",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "Krishna Naraayan",
-            "Siddhant Dubey"
-          ],
-          "signups": [],
-          "score": 3.5,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "CheckMate",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": true,
-          "finalized": [
-            "ashray kaushik",
-            "Aarav Gosai"
-          ],
-          "signups": [],
-          "score": 3.5,
-          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        },
-        {
-          "event": "Ready Player One",
-          "eligibility": "1x6, 9th-12th",
-          "team": 6,
-          "full": true,
-          "finalized": [
-            "Aarav Gosai",
-            "jeenesh",
-            "Vihaan Pal Singh",
-            "sonit",
-            "arnav gupta",
-            "Ashray"
-          ],
-          "signups": [],
           "score": 1.5,
           "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
@@ -751,6 +643,120 @@
             "Amairaa Gupta",
             "Vansh Gupta"
           ],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        }
+      ]
+    },
+    {
+      "symposium": "DeVyTe 3.0",
+      "school": "Tagore International School, East of Kailash",
+      "mode": "Online",
+      "date": "Wednesday 28 October 2026",
+      "first_day": "2026-10-28",
+      "last_day": "2026-10-28",
+      "deadline": "2026-10-19",
+      "incharge": "Vivaan Gupta",
+      "rank": 1.8,
+      "prestige": 3.8,
+      "why": [
+        "Exun is sending a team",
+        "edition 3, has run before",
+        "17 names for 17 slots (100% demand)",
+        "online only",
+        "school's deadline has passed: only if the in-charge can still add names"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "Decode the Frequency",
+          "eligibility": "1x3, 9th-12th",
+          "team": 3,
+          "full": false,
+          "finalized": [
+            "Leonit Rajora (ad-hoc)",
+            "Adhrit Gupta"
+          ],
+          "signups": [
+            "Adhrit Gupta(ad-hoc)",
+            "Arnav Jain (ad-hoc)",
+            "Leonit Rajora (ad-hoc)",
+            "Reaansh Gupta (ad-hoc)"
+          ],
+          "score": 7,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 3 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Code Clash",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Vihaan Pundir",
+            "Aditya Singh Ghugtyal"
+          ],
+          "signups": [
+            "Aditya Singh Ghugtyal"
+          ],
+          "score": 6.5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Noirwave",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": false,
+          "finalized": [],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Exectra",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Krishna Naraayan",
+            "Siddhant Dubey"
+          ],
+          "signups": [],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "CheckMate",
+          "eligibility": "1x2, 9th-12th",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "ashray kaushik",
+            "Aarav Gosai"
+          ],
+          "signups": [],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Ready Player One",
+          "eligibility": "1x6, 9th-12th",
+          "team": 6,
+          "full": true,
+          "finalized": [
+            "Aarav Gosai",
+            "jeenesh",
+            "Vihaan Pal Singh",
+            "sonit",
+            "arnav gupta",
+            "Ashray"
+          ],
+          "signups": [],
           "score": 1.5,
           "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
