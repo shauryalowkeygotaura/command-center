@@ -1,29 +1,29 @@
 {
- "generated": 1792213780,
+ "generated": 1792613252,
  "running": false,
  "jobs": [
   {
    "title": "Day 05 · Deterministic > agentic",
-   "state": "done",
+   "state": "queued",
    "stage": null,
    "stages": {
-    "transcribe": "done",
-    "cut": "done",
-    "audio": "done",
-    "grade": "done",
-    "captions": "done",
-    "broll": "done",
-    "encode": "done",
-    "finish": "done"
+    "transcribe": "pending",
+    "cut": "pending",
+    "audio": "pending",
+    "grade": "pending",
+    "captions": "pending",
+    "broll": "pending",
+    "encode": "pending",
+    "finish": "pending"
    },
    "rerender": true,
    "started": 1792213206,
    "finished": 1792213780,
-   "updated": 1792213780
+   "updated": 1792613252
   }
  ],
  "counts": {
-  "inbox": 0,
+  "inbox": 1,
   "ready": 2,
   "approved": 0,
   "failed": 0
