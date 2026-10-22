@@ -111,7 +111,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     text: "P1 · LinkedIn: the one step I cannot do. Copy the Client ID + Secret from your LinkedIn developer app into KEYS",
     done: false,
     seeded: true,
-    note: "2026-10-22, re 'u do it all': I searched every Doppler project and the vault's env files and the two values do not exist anywhere. They live only behind your login at linkedin.com/developers (My apps, your app, Auth tab). That page and the browser consent screen both need you, so no tool of mine can reach them. Once they are in KEYS (as LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET), I run auth_linkedin.py, it stores the token itself, and every 60-day re-mint after that is one command. Reply `linkedin = keys in`.",
+    note: "2026-10-22, re 'u do it all': I searched all 10 Doppler projects (dev) and the two values are in none of them. They live only behind your login at linkedin.com/developers (My apps, your app, Auth tab). That page and the browser consent screen both need you, so no tool of mine can reach them. Once they are in KEYS (as LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET), I run auth_linkedin.py, it stores the token itself, and every 60-day re-mint after that is one command. Reply `linkedin = keys in`.",
   },
   {
     id: "h-t20-deadlines",
