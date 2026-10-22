@@ -81,6 +81,9 @@ export function mergeChecklistSeed(
 //   (folded into h-fish-api-key), h-revengine-post-1 (folded into ig-autopost).
 // Retired 2026-09-25 (later): h-bandit-orphaned (resolved: the 134 reward rows
 //   carry no arm value, so relearning from zero is the only option).
+// Retired 2026-10-22: h-deepgram-vercel-env (key added, redeployed), h-city-grid-render
+//   (skipped as recommended), h-instagram-login (instagrapi dead; folded into
+//   h-clipworks-meta-app).
 // Retired 2026-10-15: h-proof-count (confirmed: 2 clinics), h-dental-report-commit
 //   (5cbae1b), h-two-repos-still-unversioned (git init done 2026-10-08).
 // Retired 2026-10-03: football licence (MIT, pushed), taste Stop hook (armed),
@@ -105,31 +108,31 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-revengine-linkedin-token",
-    text: "P1 · LinkedIn: I ran the mint and it stopped: LINKEDIN_CLIENT_ID + SECRET are not in creative-studio. Drop both via KEYS, then I run it",
-    note: "2026-10-03: the August token was only ever printed, never stored, so it is gone and a fresh browser mint is unavoidable. auth_linkedin.py now writes the token, author URN, expiry date, POST_LINKEDIN=1 and LINKEDIN_DRAFT=1 straight into creative-studio/dev itself (via stdin, never argv), so there is nothing to paste. It also stores LINKEDIN_CLIENT_ID / SECRET if they are in your env, so every 60-day re-mint after this is the same one command. First real post lands as a DRAFT on your profile; clear LINKEDIN_DRAFT once one looks right. Reply `linkedin = minted`.",
+    text: "P1 · LinkedIn: the one step I cannot do. Copy the Client ID + Secret from your LinkedIn developer app into KEYS",
     done: false,
     seeded: true,
+    note: "2026-10-22, re 'u do it all': I searched every Doppler project and the vault's env files and the two values do not exist anywhere. They live only behind your login at linkedin.com/developers (My apps, your app, Auth tab). That page and the browser consent screen both need you, so no tool of mine can reach them. Once they are in KEYS (as LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET), I run auth_linkedin.py, it stores the token itself, and every 60-day re-mint after that is one command. Reply `linkedin = keys in`.",
   },
   {
     id: "h-t20-deadlines",
-    text: "P2 · T20: Space Apps is 14-15 Nov, Diamond concept due 14 Jan (you were right). Register for Space Apps, lock a Diamond team",
+    text: "P2 · T20: Space Apps 14-15 Nov, Diamond concept due 14 Jan 2027. Register for Space Apps, lock a Diamond team",
     done: false,
     seeded: true,
-    note: "Verified 2026-10-08 and re-dated on LOCK IN and the deadline rail. Space Apps registration has been open since 26 Aug and is free. Diamond needs 2-4 people plus an adult advisor before 14 Jan, so the team is the long pole. Reply `t20 = spaceapps registered, diamond <names>`.",
+    note: "2026-10-22, re 'nasa is nov, diamond till jan right': yes, both right. Space Apps is the hackathon weekend 14-15 Nov 2026, registration free and open now. Diamond's concept is due 14 Jan 2027, 5 PM ET; it needs 2-4 people plus an adult advisor, so the team is the long pole even with time left. Reply `t20 = spaceapps registered, diamond <names>`.",
   },
   {
-    id: "h-instagram-login",
-    text: "P2 · Instagram login, attempt 2: 3.0.16 was ALSO refused, now on 3.0.20. Re-run it",
+    id: "h-clipworks-meta-app",
+    text: "P2 · CREATE a Meta developer app (Instagram Graph API): instagrapi logins are now dead, this is the only Instagram path left",
     done: false,
     seeded: true,
-    note: "2026-10-08: your traceback showed Instagram refuses the 3.0.16 app version too. instagrapi 3.0.20 is installed and the floor is raised in autoshop, philosopher-pipeline and carousel-autoposter (pushed). Same command, `doppler run -- python login_instagram.py` in Code/autoshop (needs your 2FA). If it says out of date again, the next fix is the official Graph API (h-clipworks-meta-app), not chasing versions. Reply `ig = logged in`.",
+    note: "2026-10-22: your 3.0.20 run also got 'Your version of Instagram is out of date'. The newest instagrapi (3.1.0) still sends the same app version (449), so upgrading again changes nothing; that is why the login handoff is retired into this one. Worth it because it pays for itself twice. publikclip already ships an Instagram feedback loop that pulls real Reels insights and calibrates its virality scores against your actual views, so after a few weeks the scorer learns what performs on YOUR account rather than a generic prior. The same app also posts via the official Content Publishing API, which replaces instagrapi and removes the ban vector at zero marginal cost since you need the app regardless. Requires the IG account to be Professional (Creator or Business) linked to a Facebook Page. Send the App ID and Secret through the KEYS panel, not plain chat, then reply `meta = done`.",
   },
   {
     id: "h-portfolio-mic-bugs",
-    text: "P2 · Portfolio mic: 6 real bugs fixed live (phantom words, dead mic, iPhone, Firefox). Try it on your phone",
+    text: "P2 · Portfolio voice is now Andromeda, not the browser voice. Try the demo on your phone once",
     done: false,
     seeded: true,
-    note: "2026-10-09, ecd0243: tested with real recorded speech, not a beep. Whisper turned fan noise into 'Thank you.' and the bot answered it; a muted mic hung on 'listening' for 20s; iPhone never stopped on its own; Firefox could stick. All fixed, and every failure now shows a message in the panel. If it fails, reply `mic = <the exact message>`.",
+    note: "2026-10-22: the voice you called ewww was the browser's built-in fallback. The route was always Andromeda-first, but DEEPGRAM_API_KEY was never in Vercel, so every visitor got the fallback. You added it and redeployed. The 6 mic fixes from 2026-10-09 are still in. If anything fails, the panel shows a message: reply `mic = <that message>`, else `mic = ok`.",
   },
   {
     id: "h-desk-unlock",
@@ -188,18 +191,11 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "It works and is now in Doppler as portfolio/GITHUB_API_KEY. But that scope set can delete any of your repos, and it is sitting in a secrets store that several automated jobs read.",
   },
   {
-    id: "h-deepgram-vercel-env",
-    text: "P2 · ONE command turns on the new Aura-2 voice: put DEEPGRAM_API_KEY into Vercel for portfolio + clinic-demo (mine was blocked)",
-    note: "2026-10-03: shipped and live: Aura-2 andromeda voice with fallbacks, Whisper ears that now work on iPhone/Firefox/Brave in the clinic demo, and on-the-fly model switching for brain and ears in both. Verified end to end in production. Until the key lands both demos use the old voice, so nothing is broken. In each of Code/portfolio and Code/clinic-demo run: `doppler run -p dental-receptionist -c dev -- bash -c 'printf %s \"$DEEPGRAM_API_KEY\" | vercel env add DEEPGRAM_API_KEY production'` then `vercel deploy --prod` in clinic-demo (portfolio redeploys on push). Clinic demo routes Hinglish replies to the Neerja voice on purpose: Aura-2 is English-only. Reply `aura = on`.",
-    done: false,
-    seeded: true,
-  },
-  {
     id: "h-format-channel-decision",
-    text: "P2 · PICK a niche: shortlist of 5 is ready (my pick: engineering disasters + impossible builds)",
+    text: "P2 · PICK a niche: new, more interesting shortlist of 4 (my pick: true survival stories)",
     done: false,
     seeded: true,
-    note: "2026-10-09, from a fresh format-engine scan of 20 live channels: Deliverables/faceless-niche-shortlist-2026-10-09.md. Best numbers are engineering: The Hydraulic Record (125 days old, 26k subs, 2.0M top video, RPM $5-14) and NextGen Manufacturing (169k subs, 6.4M on 'How Japan Built the Impossible 400 km Great Wall'). Also deep-ocean mysteries, old mysteries solved by new science, prehistoric listicles. Skipped: AI fake-factory videos (demonetisation risk) and geopolitics. Reply `niche = 1+2` or a number.",
+    note: "2026-10-22, after 'niche needs to be more interesting': a second live scan seeded on stories, not explainers (22 channels): Deliverables/faceless-niche-shortlist-interesting-2026-10-22.md. 1 true survival stories (Worth Knowing Files: 50 days old, 442 subs, 258k on '4 Men Left on an Arctic Island for 6 Years'), 2 places humans cannot go (BeyondTheGreen 64k subs, 3.1M top; a Hindi version did 1.0M at 7.9k subs), 3 India's hidden vaults and mysteries in English, 4 discoveries that proved experts wrong (crowded by a 2M-sub channel). Heists, con artists and failed experiments had no breakout channel; declassified projects got blocked as conspiracy. The account is yours to pick (best or the god-named one). Reply `niche = 1` or any number.",
   },
   {
     id: "h-voice-pacing",
@@ -244,13 +240,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "Installed 10 Sep with ranked scan targets in Projects/strix/overview.md. It needs the Docker daemon running (29.2.1 is installed, just not started) and runs through Doppler with Groq. Only worth doing if you want your public repos scanned. Reply `strix = docker on` or `strix = drop`.",
   },
   {
-    id: "h-city-grid-render",
-    text: "P3 · City-grid render: SKIP recommended. The script looped (Level 1-8, 1-4, 1-4); generator fixed",
-    done: false,
-    seeded: true,
-    note: "2026-10-09: before rendering I found the 2,900-word script restarted its level count twice, under a title promising 4 levels. Root cause fixed in format-engine (chunks now continue the count, the title count is synced, and a new level_sequence gate fails any restart). The regenerated script counts 1-19 cleanly but is 1,400 words and gate-blocked on title similarity. It's second-person disaster fiction, outside the niche you're about to pick, so 2.5h of rendering is better spent on the first niche video. Reply `city = render anyway` to override.",
-  },
-  {
     id: "h-clipworks-payout-rail",
     text: "P3 · BLOCKER: get a parent or guardian to open the Whop account, and check FIRST whether Whop offers direct bank deposit to India",
     done: false,
@@ -263,13 +252,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "`compliance.py` is built and tested but has no real campaign to validate against, and I refused to invent rules because a validator built on guesses passes clips the campaign then rejects. This matters more than it sounds: Whop verifies clips AFTER the views accrue and rejects retroactively, so a 40,000-view clip missing a credit line pays zero. Paste the brief verbatim and I encode it the same session. Note the Whop API is payments-and-merchant infrastructure only, with no campaign or submission endpoints, so this stays manual. Your Discord idea is good and is now in the spec: streamer Discords list campaigns before Whop does, they often pay direct (which sidesteps the payout blocker but has no escrow), and it can never be automated because self-bots get accounts terminated.",
-  },
-  {
-    id: "h-clipworks-meta-app",
-    text: "P3 · CREATE a Meta developer app (Instagram Graph API): it unlocks both the auto-poster and publikclip's score calibration loop",
-    done: false,
-    seeded: true,
-    note: "Worth it because it pays for itself twice. publikclip already ships an Instagram feedback loop that pulls real Reels insights and calibrates its virality scores against your actual views, so after a few weeks the scorer learns what performs on YOUR account rather than a generic prior. The same app also posts via the official Content Publishing API, which replaces instagrapi and removes the ban vector at zero marginal cost since you need the app regardless. Requires the IG account to be Professional (Creator or Business) linked to a Facebook Page. Send the App ID and Secret through the KEYS panel, not plain chat, then reply `meta = done`.",
   },
   {
     id: "h-pixabay-key",
