@@ -81,7 +81,8 @@ export function mergeChecklistSeed(
 //   (folded into h-fish-api-key), h-revengine-post-1 (folded into ig-autopost).
 // Retired 2026-09-25 (later): h-bandit-orphaned (resolved: the 134 reward rows
 //   carry no arm value, so relearning from zero is the only option).
-// Retired 2026-10-22: h-deepgram-vercel-env (key added, redeployed), h-city-grid-render
+// Retired 2026-10-22: h-revengine-linkedin-token (minted 2026-10-22, 59 days, self-stored),
+//   h-deepgram-vercel-env (key added, redeployed), h-city-grid-render
 //   (skipped as recommended), h-instagram-login (instagrapi dead; folded into
 //   h-clipworks-meta-app).
 // Retired 2026-10-15: h-proof-count (confirmed: 2 clinics), h-dental-report-commit
@@ -105,13 +106,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     done: false,
     seeded: true,
     note: "2026-08-28: you asked me to personally handpick these, so this is judgement rather than a scrape. Deliverables/handpicked-dental-targets-2026-08-28.md. From 105 Delhi dental practices in OpenStreetMap only 24 publish a phone number, and I ranked those 24 on three signals chosen for YOUR situation. FIRST, MULTIPLE LISTED PHONE NUMBERS is the strongest buy signal in the set: a clinic publishing three or four numbers is one where calls are already scattered and somebody is juggling them, which is exactly the pain you sell into. Kalra Dental Specialities lists FOUR. Doctor Dubey and Muskaan list three. SECOND, WALKING DISTANCE FROM DPS RK PURAM: New Delhi Dental Centre is 1.0 km, you can go between classes, and a student walking in with the school-project framing converts differently from a cold DM. Nobody else selling this product can do that. THIRD, published opening hours, meaning they already think about when patients can reach them, so the out-of-hours question lands instead of confusing them. WHAT I COULD NOT CHECK: review text. A Google review saying you called three times and nobody picked up would beat all three of my signals combined, and it needs a Places API key with billing that you do not have enabled. If you enable one, re-rank on that and ignore my ordering. Verify each number before calling too, OSM is volunteer-maintained and can be stale. The doc also argues PHYSIOTHERAPY is a better next vertical than more dentists, because cannot-pick-up-mid-appointment is more obviously true for a physio. Reply `targets = walked <name>` or `targets = physio` if you want that pitch written.",
-  },
-  {
-    id: "h-revengine-linkedin-token",
-    text: "P1 · LinkedIn: the one step I cannot do. Copy the Client ID + Secret from your LinkedIn developer app into KEYS",
-    done: false,
-    seeded: true,
-    note: "2026-10-22, re 'u do it all': I searched all 10 Doppler projects (dev) and the two values are in none of them. They live only behind your login at linkedin.com/developers (My apps, your app, Auth tab). That page and the browser consent screen both need you, so no tool of mine can reach them. Once they are in KEYS (as LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET), I run auth_linkedin.py, it stores the token itself, and every 60-day re-mint after that is one command. Reply `linkedin = keys in`.",
   },
   {
     id: "h-t20-deadlines",
