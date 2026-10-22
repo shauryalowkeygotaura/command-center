@@ -283,23 +283,35 @@
    "why": "Quick gate check for upcoming competition deadline",
    "hash": "27744d72f670"
   },
-  "d-diamond-team": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "e599220b5fa7"
+  "d-auto-2026-10-16-improve-revengine-ig-autoposter-script": {
+   "score": 3,
+   "goal": "brand",
+   "why": "Minor script tweak, modest brand impact",
+   "hash": "4cbc5ced6a41"
   },
   "d-linkedin-token": {
    "score": 1,
    "goal": "systems",
    "why": "Routine maintenance, minimal direct impact",
-   "hash": "c80b834b5a2b"
+   "hash": "34db4f9cf041"
   },
   "d-conrad-check": {
    "score": 8,
    "goal": "t20",
    "why": "Unblocks competition deadline, critical for T20 progress",
-   "hash": "63798bf34e2b"
+   "hash": "ec99aa51f5a1"
+  },
+  "d-diamond-team": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition deadlines, advancing T20 progress",
+   "hash": "55747b6feddf"
+  },
+  "d-auto-2026-10-23-refresh-linkedin-token-for-revengine": {
+   "score": 2,
+   "goal": "systems",
+   "why": "Routine maintenance, keeps pipelines running.",
+   "hash": "5d1c585a5c7f"
   },
   "d-conrad-activate": {
    "score": 8,
@@ -331,6 +343,72 @@
    "why": "Unblocks competition deadline, critical for T20 progress",
    "hash": "da6c81658375"
   },
+  "d-exun-ncrypt-2026": {
+   "score": 1,
+   "goal": "brand",
+   "why": "Minimal direct impact on core goals",
+   "hash": "baf613a0ac7f"
+  },
+  "d-exun-force-fest-2k26": {
+   "score": 4,
+   "goal": "brand",
+   "why": "Networking boosts proof-backed content and audience reach",
+   "hash": "2bff7781d7a0"
+  },
+  "d-exun-devyte-3-0": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Event signup offers minimal direct progress",
+   "hash": "99897db26216"
+  },
+  "d-li-w1-setup": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Minor profile polish, limited direct impact",
+   "hash": "ef81b177e3bb"
+  },
+  "d-li-w1-mon": {
+   "score": 2,
+   "goal": "clinic",
+   "why": "Small outreach, minimal direct impact",
+   "hash": "0350cadfc6af"
+  },
+  "d-li-w1-tue": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Minor proof, low impact on major goals",
+   "hash": "158c340f0fda"
+  },
+  "d-li-w1-wed": {
+   "score": 1,
+   "goal": "brand",
+   "why": "Minimal direct impact on core objectives",
+   "hash": "4e087f5e1091"
+  },
+  "d-li-w1-thu": {
+   "score": 3,
+   "goal": "brand",
+   "why": "Promotes brand, low direct customer impact",
+   "hash": "4c8fc26f4f79"
+  },
+  "d-li-w1-fri": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Shares learning, boosts content credibility",
+   "hash": "594132c62304"
+  },
+  "d-li-w1-sun": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Low impact, just content polish",
+   "hash": "1a80905fbd69"
+  },
+  "d-li-w1-review": {
+   "score": 1,
+   "goal": "brand",
+   "why": "Low impact, routine content review",
+   "hash": "221e58a3a16a"
+  },
   "s-engage": {
    "score": 1,
    "goal": "brand",
@@ -338,28 +416,10 @@
    "hash": "628b62b964e2"
   },
   "handoff:h-lockin-log-check": {
-   "score": 1,
-   "goal": "systems",
-   "why": "Minor maintenance, low impact on main goals",
-   "hash": "329957ad2bcd"
-  },
-  "d-exun-ncrypt-2026": {
-   "score": 4,
-   "goal": "t20",
-   "why": "Exun tagged it AT ALL COSTS (their top priority)",
-   "hash": "exun"
-  },
-  "d-exun-force-fest-2k26": {
-   "score": 4,
-   "goal": "t20",
-   "why": "Exun is sending a team",
-   "hash": "exun"
-  },
-  "d-exun-devyte-3-0": {
    "score": 2,
-   "goal": "t20",
-   "why": "Exun is sending a team",
-   "hash": "exun"
+   "goal": "clinic",
+   "why": "Minor gate check, low direct impact",
+   "hash": "6f5f1551d214"
   }
  }
 }
