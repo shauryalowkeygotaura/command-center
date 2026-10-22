@@ -23,6 +23,7 @@ import { AngusIdeas } from "./AngusIdeas";
 import { OutreachDesk } from "./OutreachDesk";
 import { LockIn } from "./LockIn";
 import { DeadlineRail } from "./DeadlineRail";
+import { LiveCalls } from "./LiveCalls";
 import { lifeStore, handoffStore, inboxStore, HANDOFF_SEED } from "@/lib/lists";
 
 // Section groups surfaced as a sticky tab bar so the board stops being one
@@ -33,6 +34,7 @@ const TABS = [
   { id: "skills", label: "SKILL TREE" },
   { id: "sat", label: "SAT GRIND" },
   { id: "calls", label: "CALL LIST" },
+  { id: "live", label: "LIVE CALLS" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "studio", label: "STUDIO" },
@@ -155,6 +157,8 @@ export function Board() {
             {tab === "angus" && <AngusIdeas />}
 
             {tab === "calls" && <CallList today={today} />}
+
+            {tab === "live" && <LiveCalls />}
 
             {tab === "leads" && (
               <div className="flex flex-col gap-6">
