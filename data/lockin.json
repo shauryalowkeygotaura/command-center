@@ -845,15 +845,13 @@
       "id": "d-li-w1-setup",
       "date": "2026-10-24",
       "track": "brand",
-      "title": "LinkedIn launch prep: fix profile + shoot the 4 photos for next week",
+      "title": "LinkedIn: shoot the photos for Sun / Tue / Thu + 20 min engage",
       "minutes": 60,
       "how": [
-        "PROFILE (15 min, do it first or the posts send people to an empty page): headline = 'Hybrid AI systems that survive contact with reality | AI receptionists for Indian clinics'. Profile photo = clear face, plain background. Banner = burgundy/cream with the hero line. About = 3 short lines: what you build, who for, how to reach you. Run /li-profile in Claude Code for a full rewrite.",
-        "PHOTOS (shoot all 4 now, Saturday batch block):",
-        "1 (Tue): screenshot of the Hindi voice A/B result (Andromeda vs Swara character error rates) from the paralang run, cropped to just the table.",
-        "2 (Thu): a real photo of YOU at your desk with a call transcript open on screen. Face visible, natural light, phone held horizontally. This is your first face post, it matters most.",
-        "3 (Fri): side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
-        "4 (Sun): a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
+        "PHOTOS (shoot all 3 now, Saturday batch block):",
+        "Tue post: a real photo of YOU at your desk with a call transcript open on screen. Face visible, natural light, phone held horizontally. This is your first face post, it matters most.",
+        "Thu post: side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
+        "Sun post: a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
         "DRAFTS: say 'write Tuesday', 'write Thursday', 'write Friday', 'write Sunday' to Claude, one at a time. Check every number against your own notes before scheduling."
       ]
     },
@@ -874,9 +872,9 @@
     },
     {
       "id": "d-li-w1-tue",
-      "date": "2026-10-27",
+      "date": "2026-10-23",
       "track": "brand",
-      "title": "LinkedIn 8:15 AM · PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
+      "title": "LinkedIn TODAY (12:30 PM or 6 PM) · PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
       "minutes": 30,
       "how": [
         "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
@@ -909,9 +907,9 @@
     },
     {
       "id": "d-li-w1-thu",
-      "date": "2026-10-29",
+      "date": "2026-10-27",
       "track": "brand",
-      "title": "LinkedIn 8:15 AM · OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
+      "title": "LinkedIn Tue 8:15 AM · OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
       "minutes": 30,
       "how": [
         "TYPE: Opinion (a position that could lose you followers). HOOK: #1 Contrarian Take.",
@@ -919,7 +917,6 @@
         "HOOK DRAFT: 'Everyone selling AI receptionists is selling the wrong thing.'",
         "PHOTO: #2, you at the desk with a transcript on screen.",
         "CLOSE: one question: 'Builders: what broke first after your agent went live?'",
-        "Conrad Activation is due today too: do that first if it is not done.",
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
         "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
@@ -930,9 +927,9 @@
     },
     {
       "id": "d-li-w1-fri",
-      "date": "2026-10-30",
+      "date": "2026-10-29",
       "track": "brand",
-      "title": "LinkedIn 8:30 AM · TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
+      "title": "LinkedIn Thu 8:15 AM · TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
       "minutes": 30,
       "how": [
         "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
@@ -950,7 +947,7 @@
     },
     {
       "id": "d-li-w1-sun",
-      "date": "2026-11-01",
+      "date": "2026-10-25",
       "track": "brand",
       "title": "LinkedIn 4:00 PM · STORY · #9 Cold Open: 'very boring... not watchable'",
       "minutes": 30,
@@ -971,7 +968,7 @@
     },
     {
       "id": "d-li-w1-review",
-      "date": "2026-11-01",
+      "date": "2026-10-30",
       "track": "brand",
       "title": "LinkedIn week 1 review: write numbers, then plan week 2",
       "minutes": 15,
