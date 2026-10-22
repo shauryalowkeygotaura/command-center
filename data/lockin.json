@@ -677,15 +677,56 @@
       ]
     },
     {
-      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
-      "date": "2026-10-22",
-      "track": "brand",
-      "title": "Improve Revengine IG autoposter script",
-      "minutes": 60,
+      "id": "d-exun-force-fest-2k26",
+      "date": "2026-10-17",
+      "track": "t20",
+      "title": "Exun: get on Force Fest 2K26 (October 27 & 28, 2026), best event for you: WEBD",
+      "minutes": 10,
       "how": [
-        "Review current script errors",
-        "Implement fallback posting",
-        "Test with dummy post"
+        "WHY THIS FEST (rank 4.3/10, prestige 2.6/7): Exun is sending a team; 21 names for 22 slots (95% demand); format not listed.",
+        "WHERE: Apeejay School, Panchsheel Park.",
+        "EVENT: WEBD (1x2, 9th-12th): product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open. Team so far: nobody yet.",
+        "EVENT: Battle Bot (1x2, 9th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Aviral Chadha, Arhan Gupta.",
+        "EVENT: Pygrammar (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open. Team so far: saranya singh(ad hoc).",
+        "COMPS: WEBD, Battle Bot, Pygrammar, Consoleum",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Amairaa Gupta(Digex)) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
+      ]
+    },
+    {
+      "id": "d-exun-devyte-3-0",
+      "date": "2026-10-17",
+      "track": "t20",
+      "title": "Exun: get on DeVyTe 3.0 (Wednesday 28 October 2026), best event for you: Decode the Frequency, sign up by 2026-10-19",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 2.0/10, prestige 4.0/7): Exun is sending a team; edition 3, has run before; 19 names for 17 slots (112% demand); online only; school's deadline has passed: only if the in-charge can still add names.",
+        "WHERE: Tagore International School, East of Kailash, Online.",
+        "EVENT: Decode the Frequency (1x3, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 3 slots open. Team so far: Leonit Rajora (ad-hoc), Adhrit Gupta.",
+        "EVENT: Code Clash (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Vihaan Pundir, Aditya Singh Ghugtyal.",
+        "COMPS: Decode the Frequency, Code Clash",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Vivaan Gupta) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
+      ]
+    },
+    {
+      "id": "d-exun-ncrypt-2026",
+      "date": "2026-10-19",
+      "track": "t20",
+      "title": "Exun: get on nCrypt 2026 (Saturday, 24th October 2026 (Offline)), best event for you: RoboSoccer, sign up by 2026-10-14",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 4.1/10, prestige 5.0/7): Exun tagged it AT ALL COSTS (their top priority); 40 names for 27 slots (148% demand); in person; school's deadline has passed: only if the in-charge can still add names.",
+        "WHERE: DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009, Hybrid.",
+        "EVENT: RoboSoccer (1x4, 8th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Naitik Jindal, Aryamman Ojha, Zayan Ali Khan, Aarav Gosai.",
+        "EVENT: LineFollower (1x2, 8th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Astha Agarwal, Ranveer Kalra.",
+        "EVENT: dCrypt (1x2, 6th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Siddhant Dubey, Vibhas.",
+        "COMPS: RoboSoccer, LineFollower, dCrypt, eNigma",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Kavya Dayal, Tushar Khandelwaal and Kanav Lall) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     },
     {
@@ -697,30 +738,6 @@
       "how": [
         "In Code/carousel-autoposter run auth_linkedin.py (it does the whole login and prints the new token). About 30 seconds, no developer-portal changes needed.",
         "Then drop LINKEDIN_ACCESS_TOKEN and LINKEDIN_TOKEN_EXPIRES (60 days out) through the KEYS panel to creative-studio."
-      ]
-    },
-    {
-      "id": "d-conrad-check",
-      "date": "2026-10-22",
-      "track": "t20",
-      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
-      "minutes": 15,
-      "how": [
-        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
-        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
-        "Outcome box: registered / not doing it this year."
-      ]
-    },
-    {
-      "id": "d-diamond-team",
-      "date": "2026-10-22",
-      "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
-      "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
       ]
     },
     {
@@ -736,6 +753,112 @@
       ]
     },
     {
+      "id": "d-li-w1-tue",
+      "date": "2026-10-23",
+      "track": "brand",
+      "title": "LinkedIn TODAY (12:30 PM or 6 PM) · PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
+      "minutes": 30,
+      "how": [
+        "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
+        "ANGLE: you A/B tested the English voice (Deepgram Andromeda) on Hindi replies: 25 to 42 percent of characters came back wrong when transcribed. Swara got 0 to 6 percent. So the agent now detects Hindi and switches voice mid-call. Lesson: an Indian clinic's callers switch language mid-sentence, and a demo in English hides that completely.",
+        "HOOK DRAFT: '25 to 42 percent of my AI receptionist's Hindi came out wrong. In English it was fine.'",
+        "PHOTO: #1, the A/B table screenshot.",
+        "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
+        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
+      ]
+    },
+    {
+      "id": "d-li-w1-setup",
+      "date": "2026-10-24",
+      "track": "brand",
+      "title": "LinkedIn: shoot the photos for Sun / Tue / Thu + 20 min engage",
+      "minutes": 60,
+      "how": [
+        "PHOTOS (shoot all 3 now, Saturday batch block):",
+        "Tue post: a real photo of YOU at your desk with a call transcript open on screen. Face visible, natural light, phone held horizontally. This is your first face post, it matters most.",
+        "Thu post: side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
+        "Sun post: a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
+        "DRAFTS: say 'write Tuesday', 'write Thursday', 'write Friday', 'write Sunday' to Claude, one at a time. Check every number against your own notes before scheduling."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
+      "date": "2026-10-25",
+      "track": "brand",
+      "title": "Improve Revengine IG autoposter script",
+      "minutes": 60,
+      "how": [
+        "Review current script errors",
+        "Implement fallback posting",
+        "Test with dummy post"
+      ]
+    },
+    {
+      "id": "d-li-w1-sun",
+      "date": "2026-10-25",
+      "track": "brand",
+      "title": "LinkedIn 4:00 PM · STORY · #9 Cold Open: 'very boring... not watchable'",
+      "minutes": 30,
+      "how": [
+        "TYPE: Story (a scene with dialogue and a cost). HOOK: #9 Story Cold Open: start with the real line, ugly parts included.",
+        "ANGLE: you built a pipeline that writes and renders a full documentary-style video by itself. You watched the first one and your own verdict was: boring topic, no music, quiet voice, not watchable. Cost: two full rebuilds. What you changed: the topic gate (people must recognise the subject in 2 seconds), a proper music bed and loudness, faster cuts. Turn: automation does not make something good, it makes a bad thing faster. Same rule you apply to clients: test it on the real audience before calling it done.",
+        "HOOK DRAFT: '\"Very boring. Not watchable.\"' then line 2: 'That was my review of a video my own system spent 6 minutes making.'",
+        "PHOTO: #4, the red 'not watchable' frame next to the fixed one.",
+        "CLOSE: one question: 'What did you automate before it was good?'",
+        "Weekend story slot, lower stakes. Next week's plan (Sat 7 Nov) swaps the Story for an OFFER post: Rs 0 seven-day trial, Rs 3,000 core, and any month with zero bookings is free.",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
+        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
+      ]
+    },
+    {
+      "id": "d-li-w1-mon",
+      "date": "2026-10-26",
+      "track": "brand",
+      "title": "LinkedIn: engage only, 20 min (5 reach / 3 peers / 2 buyers)",
+      "minutes": 20,
+      "how": [
+        "No post today. Monday is for warming the feed so Tuesday's post has people who know your name.",
+        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
+        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
+        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
+        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
+        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
+      ]
+    },
+    {
+      "id": "d-conrad-check",
+      "date": "2026-10-27",
+      "track": "t20",
+      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
+      "minutes": 15,
+      "how": [
+        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
+        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
+        "Outcome box: registered / not doing it this year."
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-10-27",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
+      ]
+    },
+    {
       "id": "d-conrad-activate",
       "date": "2026-10-27",
       "track": "t20",
@@ -743,6 +866,73 @@
       "minutes": 30,
       "how": [
         "Only if you registered. Finish the Activation Stage in the Award Force portal before 29 Oct. Otherwise tick it off as skipped."
+      ]
+    },
+    {
+      "id": "d-li-w1-thu",
+      "date": "2026-10-27",
+      "track": "brand",
+      "title": "LinkedIn Tue 8:15 AM · OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
+      "minutes": 30,
+      "how": [
+        "TYPE: Opinion (a position that could lose you followers). HOOK: #1 Contrarian Take.",
+        "ANGLE: everyone selling AI receptionists sells the agent. Agents are now easy to build and dental is the most crowded niche (a 3-year voice-agency founder says to avoid it). What actually breaks is everything after launch: a new service, a changed scheduler, a Hindi caller, on-hold music. So you sell the monthly reliability work: reviewing transcripts, fixing prompts, failover tested with the line pulled. That is why your offer is a retainer, not a one-time build.",
+        "HOOK DRAFT: 'Everyone selling AI receptionists is selling the wrong thing.'",
+        "PHOTO: #2, you at the desk with a transcript on screen.",
+        "CLOSE: one question: 'Builders: what broke first after your agent went live?'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
+        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
+      ]
+    },
+    {
+      "id": "d-li-w1-wed",
+      "date": "2026-10-28",
+      "track": "brand",
+      "title": "LinkedIn: engage only, 20 min + reply to every comment on Tuesday's post",
+      "minutes": 20,
+      "how": [
+        "No post today (DeVyTe + Force Fest week, keep it light).",
+        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
+        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
+        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
+        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
+        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
+      ]
+    },
+    {
+      "id": "d-li-w1-fri",
+      "date": "2026-10-29",
+      "track": "brand",
+      "title": "LinkedIn Thu 8:15 AM · TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
+      "minutes": 30,
+      "how": [
+        "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
+        "ANGLE: the receptionist prompt was about 4,400 tokens, and about 700 of them were '===' separator lines that did nothing. Cutting decoration + keeping a ~800 token core took it to about 3,300, and raising temperature from 0.2 to 0.4 stopped the small model parroting labels. Give the 3 rules plainly in the post: delete decorative separators, keep one short core block, say a line out loud before every slow tool call so the caller never hears silence.",
+        "HOOK DRAFT: 'About 700 tokens of my AI receptionist's prompt were decoration. Here is the cut. Steal it.'",
+        "PHOTO: #3, the before/after prompt screenshot with the token counts.",
+        "CLOSE: one instruction: 'Open your longest prompt and count the separator lines.'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
+        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
+      ]
+    },
+    {
+      "id": "d-li-w1-review",
+      "date": "2026-10-30",
+      "track": "brand",
+      "title": "LinkedIn week 1 review: write numbers, then plan week 2",
+      "minutes": 15,
+      "how": [
+        "For each of the 4 posts write: impressions, comments, profile views, new connections, and any DM from a clinic or business owner.",
+        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
+        "Then tell Claude: 'li-plan week 2' with what actually happened this week (any clinic walk-in, any call, any build). Posts come from real events."
       ]
     },
     {
@@ -786,196 +976,6 @@
       "minutes": 120,
       "how": [
         "Finish the concept submission this week so the last week is for edits. Deadline 14 Jan 2027, 5:00 PM ET (diamondchallenge.org has the official rules)."
-      ]
-    },
-    {
-      "id": "d-exun-ncrypt-2026",
-      "date": "2026-10-19",
-      "track": "t20",
-      "title": "Exun: get on nCrypt 2026 (Saturday, 24th October 2026 (Offline)), best event for you: RoboSoccer, sign up by 2026-10-14",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 4.1/10, prestige 5.0/7): Exun tagged it AT ALL COSTS (their top priority); 40 names for 27 slots (148% demand); in person; school's deadline has passed: only if the in-charge can still add names.",
-        "WHERE: DPS Sushant Lok, Sushant Lok Phase I, Sector 43, Gurugram, Haryana 122009, Hybrid.",
-        "EVENT: RoboSoccer (1x4, 8th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Naitik Jindal, Aryamman Ojha, Zayan Ali Khan, Aarav Gosai.",
-        "EVENT: LineFollower (1x2, 8th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Astha Agarwal, Ranveer Kalra.",
-        "EVENT: dCrypt (1x2, 6th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Siddhant Dubey, Vibhas.",
-        "COMPS: RoboSoccer, LineFollower, dCrypt, eNigma",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Kavya Dayal, Tushar Khandelwaal and Kanav Lall) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
-      "id": "d-exun-force-fest-2k26",
-      "date": "2026-10-17",
-      "track": "t20",
-      "title": "Exun: get on Force Fest 2K26 (October 27 & 28, 2026), best event for you: WEBD",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 4.3/10, prestige 2.6/7): Exun is sending a team; 21 names for 22 slots (95% demand); format not listed.",
-        "WHERE: Apeejay School, Panchsheel Park.",
-        "EVENT: WEBD (1x2, 9th-12th): product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open. Team so far: nobody yet.",
-        "EVENT: Battle Bot (1x2, 9th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Aviral Chadha, Arhan Gupta.",
-        "EVENT: Pygrammar (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open. Team so far: saranya singh(ad hoc).",
-        "COMPS: WEBD, Battle Bot, Pygrammar, Consoleum",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Amairaa Gupta(Digex)) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
-      "id": "d-exun-devyte-3-0",
-      "date": "2026-10-17",
-      "track": "t20",
-      "title": "Exun: get on DeVyTe 3.0 (Wednesday 28 October 2026), best event for you: Decode the Frequency, sign up by 2026-10-19",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 2.0/10, prestige 4.0/7): Exun is sending a team; edition 3, has run before; 19 names for 17 slots (112% demand); online only; school's deadline has passed: only if the in-charge can still add names.",
-        "WHERE: Tagore International School, East of Kailash, Online.",
-        "EVENT: Decode the Frequency (1x3, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 3 slots open. Team so far: Leonit Rajora (ad-hoc), Adhrit Gupta.",
-        "EVENT: Code Clash (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Vihaan Pundir, Aditya Singh Ghugtyal.",
-        "COMPS: Decode the Frequency, Code Clash",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Vivaan Gupta) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
-      "id": "d-li-w1-setup",
-      "date": "2026-10-24",
-      "track": "brand",
-      "title": "LinkedIn: shoot the photos for Sun / Tue / Thu + 20 min engage",
-      "minutes": 60,
-      "how": [
-        "PHOTOS (shoot all 3 now, Saturday batch block):",
-        "Tue post: a real photo of YOU at your desk with a call transcript open on screen. Face visible, natural light, phone held horizontally. This is your first face post, it matters most.",
-        "Thu post: side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
-        "Sun post: a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
-        "DRAFTS: say 'write Tuesday', 'write Thursday', 'write Friday', 'write Sunday' to Claude, one at a time. Check every number against your own notes before scheduling."
-      ]
-    },
-    {
-      "id": "d-li-w1-mon",
-      "date": "2026-10-26",
-      "track": "brand",
-      "title": "LinkedIn: engage only, 20 min (5 reach / 3 peers / 2 buyers)",
-      "minutes": 20,
-      "how": [
-        "No post today. Monday is for warming the feed so Tuesday's post has people who know your name.",
-        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
-        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
-        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
-        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
-        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
-      ]
-    },
-    {
-      "id": "d-li-w1-tue",
-      "date": "2026-10-23",
-      "track": "brand",
-      "title": "LinkedIn TODAY (12:30 PM or 6 PM) · PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
-      "minutes": 30,
-      "how": [
-        "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
-        "ANGLE: you A/B tested the English voice (Deepgram Andromeda) on Hindi replies: 25 to 42 percent of characters came back wrong when transcribed. Swara got 0 to 6 percent. So the agent now detects Hindi and switches voice mid-call. Lesson: an Indian clinic's callers switch language mid-sentence, and a demo in English hides that completely.",
-        "HOOK DRAFT: '25 to 42 percent of my AI receptionist's Hindi came out wrong. In English it was fine.'",
-        "PHOTO: #1, the A/B table screenshot.",
-        "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
-      "id": "d-li-w1-wed",
-      "date": "2026-10-28",
-      "track": "brand",
-      "title": "LinkedIn: engage only, 20 min + reply to every comment on Tuesday's post",
-      "minutes": 20,
-      "how": [
-        "No post today (DeVyTe + Force Fest week, keep it light).",
-        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
-        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
-        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
-        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
-        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
-      ]
-    },
-    {
-      "id": "d-li-w1-thu",
-      "date": "2026-10-27",
-      "track": "brand",
-      "title": "LinkedIn Tue 8:15 AM · OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
-      "minutes": 30,
-      "how": [
-        "TYPE: Opinion (a position that could lose you followers). HOOK: #1 Contrarian Take.",
-        "ANGLE: everyone selling AI receptionists sells the agent. Agents are now easy to build and dental is the most crowded niche (a 3-year voice-agency founder says to avoid it). What actually breaks is everything after launch: a new service, a changed scheduler, a Hindi caller, on-hold music. So you sell the monthly reliability work: reviewing transcripts, fixing prompts, failover tested with the line pulled. That is why your offer is a retainer, not a one-time build.",
-        "HOOK DRAFT: 'Everyone selling AI receptionists is selling the wrong thing.'",
-        "PHOTO: #2, you at the desk with a transcript on screen.",
-        "CLOSE: one question: 'Builders: what broke first after your agent went live?'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
-      "id": "d-li-w1-fri",
-      "date": "2026-10-29",
-      "track": "brand",
-      "title": "LinkedIn Thu 8:15 AM · TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
-      "minutes": 30,
-      "how": [
-        "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
-        "ANGLE: the receptionist prompt was about 4,400 tokens, and about 700 of them were '===' separator lines that did nothing. Cutting decoration + keeping a ~800 token core took it to about 3,300, and raising temperature from 0.2 to 0.4 stopped the small model parroting labels. Give the 3 rules plainly in the post: delete decorative separators, keep one short core block, say a line out loud before every slow tool call so the caller never hears silence.",
-        "HOOK DRAFT: 'About 700 tokens of my AI receptionist's prompt were decoration. Here is the cut. Steal it.'",
-        "PHOTO: #3, the before/after prompt screenshot with the token counts.",
-        "CLOSE: one instruction: 'Open your longest prompt and count the separator lines.'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
-      "id": "d-li-w1-sun",
-      "date": "2026-10-25",
-      "track": "brand",
-      "title": "LinkedIn 4:00 PM · STORY · #9 Cold Open: 'very boring... not watchable'",
-      "minutes": 30,
-      "how": [
-        "TYPE: Story (a scene with dialogue and a cost). HOOK: #9 Story Cold Open: start with the real line, ugly parts included.",
-        "ANGLE: you built a pipeline that writes and renders a full documentary-style video by itself. You watched the first one and your own verdict was: boring topic, no music, quiet voice, not watchable. Cost: two full rebuilds. What you changed: the topic gate (people must recognise the subject in 2 seconds), a proper music bed and loudness, faster cuts. Turn: automation does not make something good, it makes a bad thing faster. Same rule you apply to clients: test it on the real audience before calling it done.",
-        "HOOK DRAFT: '\"Very boring. Not watchable.\"' then line 2: 'That was my review of a video my own system spent 6 minutes making.'",
-        "PHOTO: #4, the red 'not watchable' frame next to the fixed one.",
-        "CLOSE: one question: 'What did you automate before it was good?'",
-        "Weekend story slot, lower stakes. Next week's plan (Sat 7 Nov) swaps the Story for an OFFER post: Rs 0 seven-day trial, Rs 3,000 core, and any month with zero bookings is free.",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
-      "id": "d-li-w1-review",
-      "date": "2026-10-30",
-      "track": "brand",
-      "title": "LinkedIn week 1 review: write numbers, then plan week 2",
-      "minutes": 15,
-      "how": [
-        "For each of the 4 posts write: impressions, comments, profile views, new connections, and any DM from a clinic or business owner.",
-        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
-        "Then tell Claude: 'li-plan week 2' with what actually happened this week (any clinic walk-in, any call, any build). Posts come from real events."
       ]
     }
   ],
