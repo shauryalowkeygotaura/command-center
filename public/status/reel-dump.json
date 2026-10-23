@@ -1,10 +1,10 @@
 {
  "generated": 1792710990,
- "running": false,
+ "running": true,
  "jobs": [
   {
    "title": "Day 05 · Deterministic > agentic",
-   "state": "interrupted",
+   "state": "running",
    "stage": "encode",
    "stages": {
     "transcribe": "done",
@@ -29,7 +29,7 @@
   "failed": 0
  },
  "last_run": {
-  "state": "interrupted",
+  "state": "running",
   "finished": null,
   "ok": null,
   "failed": null,
