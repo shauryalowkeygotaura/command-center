@@ -707,13 +707,12 @@
       "minutes": 30,
       "how": [
         "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
-        "ANGLE: you A/B tested the English voice (Deepgram Andromeda) on Hindi replies: 25 to 42 percent of characters came back wrong when transcribed. Swara got 0 to 6 percent. So the agent now detects Hindi and switches voice mid-call. Lesson: an Indian clinic's callers switch language mid-sentence, and a demo in English hides that completely.",
-        "HOOK DRAFT: '25 to 42 percent of my AI receptionist's Hindi came out wrong. In English it was fine.'",
-        "PHOTO: #1, the A/B table screenshot.",
+        "READY TO PASTE: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.txt (humanizer 81.3 PASS, 1,151 chars).",
+        "PHOTO READY: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.png (34% vs 14% card + the garbled 'heard' line).",
+        "NUMBERS (paralang samples/hindi_ab/results.json): mean character error rate, English voice (Andromeda) 34%, Hindi voice (Swara) 14%, over 4 lines, Whisper transcription.",
         "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
         "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
         "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
         "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
