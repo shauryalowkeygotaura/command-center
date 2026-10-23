@@ -796,7 +796,7 @@
       "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
       "minutes": 15,
       "how": [
-        "For each of the 4 posts write: impressions, comments, profile views, new connections, and any DM from a clinic or business owner.",
+        "LEARN: make sure each post's outcome box has its numbers, hit 'copy for claude' and paste it with 'next 5 LinkedIn posts'. Claude feeds it to the learning loop (Scripts/li_learn.py), which ranks hook, type, time and length and decides the next batch: 3 repeat what won, 1 varies it, 1 tests a new hook.",
         "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
         "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
         "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
@@ -921,8 +921,9 @@
         "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled."
+        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence.",
+        "24H AFTER IT GOES LIVE: type the numbers in this item's outcome box exactly like `imp 1200 react 40 com 8 pv 30 conn 5 dm 0` (impressions, reactions, comments, profile views, new connections, DMs). The learning loop reads this format."
       ],
       "files": {
         "text": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-23-hindi-voice.txt",
@@ -946,8 +947,9 @@
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
         "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled."
+        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence.",
+        "24H AFTER IT GOES LIVE: type the numbers in this item's outcome box exactly like `imp 1200 react 40 com 8 pv 30 conn 5 dm 0` (impressions, reactions, comments, profile views, new connections, DMs). The learning loop reads this format."
       ],
       "files": {
         "text": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-25-not-watchable.txt",
@@ -970,8 +972,9 @@
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
         "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled."
+        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence.",
+        "24H AFTER IT GOES LIVE: type the numbers in this item's outcome box exactly like `imp 1200 react 40 com 8 pv 30 conn 5 dm 0` (impressions, reactions, comments, profile views, new connections, DMs). The learning loop reads this format."
       ],
       "files": {
         "text": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-27-commodity.txt",
@@ -994,8 +997,9 @@
         "",
         "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
         "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled."
+        "SCHEDULE: open LinkedIn, Start a post, paste the POST FILE text, attach the photo, clock icon next to Post, set the time in the title. Tick this when it is scheduled.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence.",
+        "24H AFTER IT GOES LIVE: type the numbers in this item's outcome box exactly like `imp 1200 react 40 com 8 pv 30 conn 5 dm 0` (impressions, reactions, comments, profile views, new connections, DMs). The learning loop reads this format."
       ],
       "files": {
         "text": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.txt",
