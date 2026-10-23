@@ -343,24 +343,6 @@
    "why": "Unblocks competition deadline, critical for T20 progress",
    "hash": "da6c81658375"
   },
-  "d-exun-ncrypt-2026": {
-   "score": 1,
-   "goal": "brand",
-   "why": "Minimal direct impact on core goals",
-   "hash": "baf613a0ac7f"
-  },
-  "d-exun-force-fest-2k26": {
-   "score": 4,
-   "goal": "brand",
-   "why": "Networking boosts proof-backed content and audience reach",
-   "hash": "2bff7781d7a0"
-  },
-  "d-exun-devyte-3-0": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Event signup offers minimal direct progress",
-   "hash": "99897db26216"
-  },
   "d-li-w1-setup": {
    "score": 2,
    "goal": "brand",
@@ -420,6 +402,18 @@
    "goal": "clinic",
    "why": "Minor gate check, low direct impact",
    "hash": "6f5f1551d214"
+  },
+  "d-exun-force-fest-2k26": {
+   "score": 4,
+   "goal": "t20",
+   "why": "Exun is sending a team",
+   "hash": "exun"
+  },
+  "d-exun-devyte-3-0": {
+   "score": 2,
+   "goal": "t20",
+   "why": "Exun is sending a team",
+   "hash": "exun"
   }
  }
 }
