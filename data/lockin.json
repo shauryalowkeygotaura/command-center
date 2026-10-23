@@ -700,25 +700,6 @@
       ]
     },
     {
-      "id": "d-li-w1-tue",
-      "date": "2026-10-23",
-      "track": "brand",
-      "title": "LinkedIn TODAY (12:30 PM or 6 PM) · PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
-      "minutes": 30,
-      "how": [
-        "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
-        "READY TO PASTE: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.txt (humanizer 81.3 PASS, 1,151 chars).",
-        "PHOTO READY: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.png (34% vs 14% card + the garbled 'heard' line).",
-        "NUMBERS (paralang samples/hindi_ab/results.json): mean character error rate, English voice (Andromeda) 34%, Hindi voice (Swara) 14%, over 4 lines, Whisper transcription.",
-        "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
       "id": "d-li-w1-setup",
       "date": "2026-10-24",
       "track": "brand",
@@ -742,27 +723,6 @@
         "Review current script errors",
         "Implement fallback posting",
         "Test with dummy post"
-      ]
-    },
-    {
-      "id": "d-li-w1-sun",
-      "date": "2026-10-25",
-      "track": "brand",
-      "title": "LinkedIn 4:00 PM · STORY · #9 Cold Open: 'very boring... not watchable'",
-      "minutes": 30,
-      "how": [
-        "TYPE: Story (a scene with dialogue and a cost). HOOK: #9 Story Cold Open: start with the real line, ugly parts included.",
-        "ANGLE: you built a pipeline that writes and renders a full documentary-style video by itself. You watched the first one and your own verdict was: boring topic, no music, quiet voice, not watchable. Cost: two full rebuilds. What you changed: the topic gate (people must recognise the subject in 2 seconds), a proper music bed and loudness, faster cuts. Turn: automation does not make something good, it makes a bad thing faster. Same rule you apply to clients: test it on the real audience before calling it done.",
-        "HOOK DRAFT: '\"Very boring. Not watchable.\"' then line 2: 'That was my review of a video my own system spent 6 minutes making.'",
-        "PHOTO: #4, the red 'not watchable' frame next to the fixed one.",
-        "CLOSE: one question: 'What did you automate before it was good?'",
-        "Weekend story slot, lower stakes. Next week's plan (Sat 7 Nov) swaps the Story for an OFFER post: Rs 0 seven-day trial, Rs 3,000 core, and any month with zero bookings is free.",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
       ]
     },
     {
@@ -815,26 +775,6 @@
       ]
     },
     {
-      "id": "d-li-w1-thu",
-      "date": "2026-10-27",
-      "track": "brand",
-      "title": "LinkedIn Tue 8:15 AM · OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
-      "minutes": 30,
-      "how": [
-        "TYPE: Opinion (a position that could lose you followers). HOOK: #1 Contrarian Take.",
-        "ANGLE: everyone selling AI receptionists sells the agent. Agents are now easy to build and dental is the most crowded niche (a 3-year voice-agency founder says to avoid it). What actually breaks is everything after launch: a new service, a changed scheduler, a Hindi caller, on-hold music. So you sell the monthly reliability work: reviewing transcripts, fixing prompts, failover tested with the line pulled. That is why your offer is a retainer, not a one-time build.",
-        "HOOK DRAFT: 'Everyone selling AI receptionists is selling the wrong thing.'",
-        "PHOTO: #2, you at the desk with a transcript on screen.",
-        "CLOSE: one question: 'Builders: what broke first after your agent went live?'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
-      ]
-    },
-    {
       "id": "d-li-w1-wed",
       "date": "2026-10-28",
       "track": "brand",
@@ -847,26 +787,6 @@
         "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
         "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
         "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
-      ]
-    },
-    {
-      "id": "d-li-w1-fri",
-      "date": "2026-10-29",
-      "track": "brand",
-      "title": "LinkedIn Thu 8:15 AM · TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
-      "minutes": 30,
-      "how": [
-        "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
-        "ANGLE: the receptionist prompt was about 4,400 tokens, and about 700 of them were '===' separator lines that did nothing. Cutting decoration + keeping a ~800 token core took it to about 3,300, and raising temperature from 0.2 to 0.4 stopped the small model parroting labels. Give the 3 rules plainly in the post: delete decorative separators, keep one short core block, say a line out loud before every slow tool call so the caller never hears silence.",
-        "HOOK DRAFT: 'About 700 tokens of my AI receptionist's prompt were decoration. Here is the cut. Steal it.'",
-        "PHOTO: #3, the before/after prompt screenshot with the token counts.",
-        "CLOSE: one instruction: 'Open your longest prompt and count the separator lines.'",
-        "",
-        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters so it survives the mobile 'see more' cut. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
-        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
-        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it the night before with LinkedIn's clock icon so it goes out while you are at school.",
-        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box.",
-        "LIMIT: 4 posts this week. If the old 'Post today's story on LinkedIn as a PDF carousel' item also shows today, skip that one: this is the LinkedIn slot."
       ]
     },
     {
@@ -985,5 +905,79 @@
       "Good gf ig",
       "10k followers and my face on Insta"
     ]
-  }
+  },
+  "linkedinQueue": [
+    {
+      "id": "d-li-w1-tue",
+      "scheduleFor": "Fri 23 Oct, 6:00 PM",
+      "title": "PROOF · #10 Receipt: my voice agent was mangling Hindi, one routing rule fixed it",
+      "minutes": 20,
+      "how": [
+        "TYPE: Proof (something that happened, with a number). HOOK: #10 The Receipt (number first, story behind it).",
+        "READY TO PASTE: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.txt (humanizer 81.3 PASS, 1,151 chars).",
+        "PHOTO READY: Vault/Deliverables/linkedin-post-2026-10-23-hindi-voice.png (34% vs 14% card + the garbled 'heard' line).",
+        "NUMBERS (paralang samples/hindi_ab/results.json): mean character error rate, English voice (Andromeda) 34%, Hindi voice (Swara) 14%, over 4 lines, Whisper transcription.",
+        "CLOSE: one question: 'If you run a clinic in India, what share of your calls are not in English?'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it in LinkedIn: clock icon next to Post, set the time above. Tick this when it is SCHEDULED, the next post appears.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box."
+      ]
+    },
+    {
+      "id": "d-li-w1-sun",
+      "scheduleFor": "Sun 25 Oct, 4:00 PM",
+      "title": "STORY · #9 Cold Open: 'very boring... not watchable'",
+      "minutes": 20,
+      "how": [
+        "TYPE: Story (a scene with dialogue and a cost). HOOK: #9 Story Cold Open: start with the real line, ugly parts included.",
+        "ANGLE: you built a pipeline that writes and renders a full documentary-style video by itself. You watched the first one and your own verdict was: boring topic, no music, quiet voice, not watchable. Cost: two full rebuilds. What you changed: the topic gate (people must recognise the subject in 2 seconds), a proper music bed and loudness, faster cuts. Turn: automation does not make something good, it makes a bad thing faster. Same rule you apply to clients: test it on the real audience before calling it done.",
+        "HOOK DRAFT: '\"Very boring. Not watchable.\"' then line 2: 'That was my review of a video my own system spent 6 minutes making.'",
+        "PHOTO: #4, the red 'not watchable' frame next to the fixed one.",
+        "CLOSE: one question: 'What did you automate before it was good?'",
+        "Weekend story slot, lower stakes. Next week's plan (Sat 7 Nov) swaps the Story for an OFFER post: Rs 0 seven-day trial, Rs 3,000 core, and any month with zero bookings is free.",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it in LinkedIn: clock icon next to Post, set the time above. Tick this when it is SCHEDULED, the next post appears.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box."
+      ]
+    },
+    {
+      "id": "d-li-w1-thu",
+      "scheduleFor": "Tue 27 Oct, 8:15 AM",
+      "title": "OPINION · #1 Contrarian: the AI receptionist is the commodity, the reliability is the product",
+      "minutes": 20,
+      "how": [
+        "TYPE: Opinion (a position that could lose you followers). HOOK: #1 Contrarian Take.",
+        "ANGLE: everyone selling AI receptionists sells the agent. Agents are now easy to build and dental is the most crowded niche (a 3-year voice-agency founder says to avoid it). What actually breaks is everything after launch: a new service, a changed scheduler, a Hindi caller, on-hold music. So you sell the monthly reliability work: reviewing transcripts, fixing prompts, failover tested with the line pulled. That is why your offer is a retainer, not a one-time build.",
+        "HOOK DRAFT: 'Everyone selling AI receptionists is selling the wrong thing.'",
+        "PHOTO: #2, you at the desk with a transcript on screen.",
+        "CLOSE: one question: 'Builders: what broke first after your agent went live?'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it in LinkedIn: clock icon next to Post, set the time above. Tick this when it is SCHEDULED, the next post appears.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box."
+      ]
+    },
+    {
+      "id": "d-li-w1-fri",
+      "scheduleFor": "Thu 29 Oct, 8:15 AM",
+      "title": "TEACH · #21 Direct Value: the prompt cut that removed 1,100 tokens from my receptionist",
+      "minutes": 20,
+      "how": [
+        "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
+        "ANGLE: the receptionist prompt was about 4,400 tokens, and about 700 of them were '===' separator lines that did nothing. Cutting decoration + keeping a ~800 token core took it to about 3,300, and raising temperature from 0.2 to 0.4 stopped the small model parroting labels. Give the 3 rules plainly in the post: delete decorative separators, keep one short core block, say a line out loud before every slow tool call so the caller never hears silence.",
+        "HOOK DRAFT: 'About 700 tokens of my AI receptionist's prompt were decoration. Here is the cut. Steal it.'",
+        "PHOTO: #3, the before/after prompt screenshot with the token counts.",
+        "CLOSE: one instruction: 'Open your longest prompt and count the separator lines.'",
+        "",
+        "FORMAT (li-post winning shape): line 1 = hook alone, under 140 characters, then TWO blank lines so the hook sits alone above 'see more'. Line 2 pays off line 1. Short 1 to 3 line paragraphs, blank line between each. One line near the end that reframes everything. Close with ONE specific question or ONE instruction, never both. 900 to 1,300 characters.",
+        "PHOTO: attach exactly one image, uploaded natively. Blur every clinic name, phone number and patient detail. No link in the post body; if you need one, it goes in the first comment.",
+        "DRAFT IT: in Claude Code say 'write <day> from the LinkedIn plan' (li-post reads ~/.claude/linkedin/plan.md, gives 3 hooks + a humanized draft). Schedule it in LinkedIn: clock icon next to Post, set the time above. Tick this when it is SCHEDULED, the next post appears.",
+        "AFTER POSTING: stay 20 minutes if you can (or reply at lunch). Answer every comment with a real sentence, not 'thanks!'. Write impressions + comments after 24h in the outcome box."
+      ]
+    }
+  ]
 }

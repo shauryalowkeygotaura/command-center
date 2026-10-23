@@ -240,6 +240,16 @@ export function buildLockIn(todayISO: string, state: LockState, handoffDone: Set
     items.push({ key: d.id, scoreKey: d.id, track: d.track as Track, title: d.title, how: d.how, minutes: d.minutes, due: d.date });
   }
 
+  // ---- LINKEDIN QUEUE: one post at a time, whatever the date. He schedules
+  // inside LinkedIn, so ticking (= scheduled) reveals the next post and the
+  // time to set (2026-10-23). A post ticked today stays visible as done. ----
+  const liQueue = (raw as { linkedinQueue?: { id: string; scheduleFor: string; title: string; minutes: number; how: string[] }[] }).linkedinQueue ?? [];
+  const liToday = liQueue.filter((q) => doneOn(state, q.id, todayISO));
+  const liNext = liQueue.find((q) => !state.done[q.id]);
+  for (const q of [...liToday, ...(liNext ? [liNext] : [])]) {
+    items.push({ key: q.id, scoreKey: q.id, track: "brand", title: `LinkedIn: SCHEDULE FOR ${q.scheduleFor} · ${q.title}`, how: q.how, minutes: q.minutes });
+  }
+
   // ---- P1 handoffs (done state shared with the HANDOFFS tab) ----
   for (const h of HANDOFF_SEED) {
     if (!h.text.startsWith("P1") || COVERED_HANDOFFS.has(h.id)) continue;
