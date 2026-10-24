@@ -654,17 +654,6 @@
   ],
   "dated": [
     {
-      "id": "d-rise-check",
-      "date": "2026-10-06",
-      "track": "t20",
-      "title": "Rise 2027: no deadline published yet. Check risefortheworld.org/apply once",
-      "minutes": 15,
-      "how": [
-        "As of 15 Oct 2026 no official 2027 deadline is online. Ages 15 to 17.",
-        "Check risefortheworld.org/apply. If a date is up, write it in the outcome box and Claude adds it here. If not, tick this and it comes back when one is published."
-      ]
-    },
-    {
       "id": "d-spaceapps-check",
       "date": "2026-10-09",
       "track": "t20",
@@ -674,6 +663,41 @@
         "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
         "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
         "If not registered: register now (it opened 26 Aug and is free), join or form a team, pick the New Delhi local event or remote."
+      ]
+    },
+    {
+      "id": "d-exun-force-fest-2k26",
+      "date": "2026-10-17",
+      "track": "t20",
+      "title": "Exun: get on Force Fest 2K26 (October 27 & 28, 2026), best event for you: WEBD",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 4.3/10, prestige 2.6/7): Exun is sending a team; 15 names for 16 slots (94% demand); format not listed.",
+        "WHERE: Apeejay School, Panchsheel Park.",
+        "EVENT: WEBD (1x2, 9th-12th): product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open. Team so far: nobody yet.",
+        "EVENT: Battle Bot (1x2, 9th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Aviral Chadha, Arhan Gupta.",
+        "EVENT: Pygrammar (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open. Team so far: saranya singh(ad hoc).",
+        "COMPS: WEBD, Battle Bot, Pygrammar, Consoleum",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Amairaa Gupta(Digex)) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
+      ]
+    },
+    {
+      "id": "d-exun-devyte-3-0",
+      "date": "2026-10-17",
+      "track": "t20",
+      "title": "Exun: get on DeVyTe 3.0 (Wednesday 28 October 2026), best event for you: Decode the Frequency, sign up by 2026-10-19",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 2.0/10, prestige 4.0/7): Exun is sending a team; edition 3, has run before; 19 names for 17 slots (112% demand); online only; school's deadline has passed: only if the in-charge can still add names.",
+        "WHERE: Tagore International School, East of Kailash, Online.",
+        "EVENT: Decode the Frequency (1x3, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 3 slots open. Team so far: Leonit Rajora (ad-hoc), Adhrit Gupta.",
+        "EVENT: Code Clash (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Vihaan Pundir, Aditya Singh Ghugtyal.",
+        "COMPS: Decode the Frequency, Code Clash",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Vivaan Gupta) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     },
     {
@@ -700,6 +724,17 @@
       ]
     },
     {
+      "id": "d-rise-check",
+      "date": "2026-10-24",
+      "track": "t20",
+      "title": "Rise 2027: no deadline published yet. Check risefortheworld.org/apply once",
+      "minutes": 15,
+      "how": [
+        "As of 15 Oct 2026 no official 2027 deadline is online. Ages 15 to 17.",
+        "Check risefortheworld.org/apply. If a date is up, write it in the outcome box and Claude adds it here. If not, tick this and it comes back when one is published."
+      ]
+    },
+    {
       "id": "d-li-w1-setup",
       "date": "2026-10-24",
       "track": "brand",
@@ -711,6 +746,29 @@
         "Thu post: side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
         "Sun post: a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
         "DRAFTS: say 'write Tuesday', 'write Thursday', 'write Friday', 'write Sunday' to Claude, one at a time. Check every number against your own notes before scheduling."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-24-register-for-space-apps-14-15-nov-lock-d",
+      "date": "2026-10-24",
+      "track": "t20",
+      "title": "Register for Space Apps (14‑15 Nov) & lock Diamond team (by 14 Jan)",
+      "minutes": 30,
+      "how": [
+        "open Space Apps portal",
+        "complete registration",
+        "create Discord channel for Diamond team"
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-24-manually-refresh-revengine-linkedin-toke",
+      "date": "2026-10-24",
+      "track": "systems",
+      "title": "Manually refresh Revengine LinkedIn token after mint failure",
+      "minutes": 10,
+      "how": [
+        "run mint script",
+        "verify token works"
       ]
     },
     {
@@ -843,41 +901,6 @@
       "minutes": 120,
       "how": [
         "Finish the concept submission this week so the last week is for edits. Deadline 14 Jan 2027, 5:00 PM ET (diamondchallenge.org has the official rules)."
-      ]
-    },
-    {
-      "id": "d-exun-force-fest-2k26",
-      "date": "2026-10-17",
-      "track": "t20",
-      "title": "Exun: get on Force Fest 2K26 (October 27 & 28, 2026), best event for you: WEBD",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 4.3/10, prestige 2.6/7): Exun is sending a team; 15 names for 16 slots (94% demand); format not listed.",
-        "WHERE: Apeejay School, Panchsheel Park.",
-        "EVENT: WEBD (1x2, 9th-12th): product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open. Team so far: nobody yet.",
-        "EVENT: Battle Bot (1x2, 9th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Aviral Chadha, Arhan Gupta.",
-        "EVENT: Pygrammar (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open. Team so far: saranya singh(ad hoc).",
-        "COMPS: WEBD, Battle Bot, Pygrammar, Consoleum",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Amairaa Gupta(Digex)) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
-      "id": "d-exun-devyte-3-0",
-      "date": "2026-10-17",
-      "track": "t20",
-      "title": "Exun: get on DeVyTe 3.0 (Wednesday 28 October 2026), best event for you: Decode the Frequency, sign up by 2026-10-19",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 2.0/10, prestige 4.0/7): Exun is sending a team; edition 3, has run before; 19 names for 17 slots (112% demand); online only; school's deadline has passed: only if the in-charge can still add names.",
-        "WHERE: Tagore International School, East of Kailash, Online.",
-        "EVENT: Decode the Frequency (1x3, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; 1 of 3 slots open. Team so far: Leonit Rajora (ad-hoc), Adhrit Gupta.",
-        "EVENT: Code Clash (1x2, 9th-12th): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Vihaan Pundir, Aditya Singh Ghugtyal.",
-        "COMPS: Decode the Frequency, Code Clash",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Vivaan Gupta) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     }
   ],
