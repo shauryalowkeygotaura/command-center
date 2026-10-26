@@ -1,45 +1,71 @@
 {
-  "checked": "2026-10-24",
+  "checked": "2026-10-26",
   "sheet": "https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
   "per_month": 4,
   "symposiums": [
     {
-      "symposium": "Force Fest 2K26",
-      "school": "Apeejay School, Panchsheel Park",
-      "mode": "",
-      "date": "October 27 & 28, 2026",
-      "first_day": "2026-10-27",
-      "last_day": "2026-10-28",
-      "deadline": null,
-      "incharge": "Amairaa Gupta(Digex)",
-      "rank": 4.3,
-      "prestige": 2.6,
+      "symposium": "National Youth Robotics Challenge NYRC 2027",
+      "school": "Amity International School, Mayur Vihar",
+      "mode": "Offline",
+      "date": "30th November 2026",
+      "first_day": "2026-11-30",
+      "last_day": "2026-11-30",
+      "deadline": "2026-11-25",
+      "incharge": "Medhansh T. Pandya",
+      "rank": 5.1,
+      "prestige": 2.8,
       "why": [
-        "Exun is sending a team",
-        "15 names for 16 slots (94% demand)",
-        "format not listed"
+        "Exun tagged it AT ALL COSTS (their top priority)",
+        "12 names for 60 slots (20% demand)",
+        "in person"
       ],
       "you_are_in": false,
       "events": [
         {
-          "event": "WEBD",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
-          "finalized": [],
+          "event": "AI Vision Challenge",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
+          "full": true,
+          "finalized": [
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
+          ],
           "signups": [],
-          "score": 8,
-          "why": "product build (app / dashboard / web): demo-able, goes in the portfolio; 2 of 2 slots open",
+          "score": 8.5,
+          "why": "AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
-          "event": "Battle Bot",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
+          "event": "Innovation Showdown – Senior",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
           "full": true,
           "finalized": [
-            "Aviral Chadha",
-            "Arhan Gupta"
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
+          ],
+          "signups": [],
+          "score": 8.5,
+          "why": "AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Robo Race",
+          "eligibility": "1x5, 6th-12th",
+          "team": 5,
+          "full": true,
+          "finalized": [
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
           ],
           "signups": [],
           "score": 7.5,
@@ -47,48 +73,84 @@
           "you_are_in": false
         },
         {
-          "event": "Pygrammar",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
+          "event": "Robo War",
+          "eligibility": "1x5, 6th-12th",
+          "team": 5,
+          "full": true,
           "finalized": [
-            "saranya singh(ad hoc)"
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
           ],
-          "signups": [
-            "saranya singh(ad hoc)"
-          ],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 2 slots open",
+          "signups": [],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
-          "event": "Consoleum",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
+          "event": "Robo Soccer - Senior",
+          "eligibility": "1x5, 6th-12th",
+          "team": 5,
           "full": true,
           "finalized": [
-            "Tanav Raj",
-            "Adhiraj Batra"
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
           ],
-          "signups": [
-            "jai nagrath",
-            "tanav raj",
-            "ashray",
-            "arav arora",
-            "aryaveer chugh"
-          ],
-          "score": 6.5,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "signups": [],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         },
         {
-          "event": "Sakura",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
+          "event": "Drone Obstacle Race",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
           "full": true,
           "finalized": [
-            "Reanna Batra",
-            "Amairaa Gupta"
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
+          ],
+          "signups": [],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Robotics Startup Pitch",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
+          "full": true,
+          "finalized": [
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
+          ],
+          "signups": [],
+          "score": 7.5,
+          "why": "robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Autonomous Navigation Challenge",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
+          "full": true,
+          "finalized": [
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
           ],
           "signups": [],
           "score": 3.5,
@@ -96,33 +158,20 @@
           "you_are_in": false
         },
         {
-          "event": "Trivial Pursuit",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Vivaan Gupta"
-          ],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Memegen",
-          "eligibility": "1x2, 9th-12th",
-          "team": 2,
+          "event": "Mars Rover Challenge",
+          "eligibility": "1x5, 9th-12th",
+          "team": 5,
           "full": true,
           "finalized": [
-            "Yashraj Kumar [Ad-hoc]",
-            "Devansh Saini"
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights",
+            "Roboknights"
           ],
-          "signups": [
-            "Yashraj Kumar [Ad-hoc]",
-            "Devansh Saini"
-          ],
-          "score": 1.5,
-          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "signups": [],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
           "you_are_in": false
         }
       ]
