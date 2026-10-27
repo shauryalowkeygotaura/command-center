@@ -403,12 +403,6 @@
    "why": "Minor gate check, low direct impact",
    "hash": "6f5f1551d214"
   },
-  "d-exun-devyte-3-0": {
-   "score": 2,
-   "goal": "t20",
-   "why": "Exun is sending a team",
-   "hash": "exun"
-  },
   "d-exun-national-youth-robotics-challenge-nyrc-2027": {
    "score": 5,
    "goal": "t20",
