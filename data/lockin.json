@@ -737,18 +737,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
-      "date": "2026-10-25",
-      "track": "brand",
-      "title": "Improve Revengine IG autoposter script",
-      "minutes": 60,
-      "how": [
-        "Review current script errors",
-        "Implement fallback posting",
-        "Test with dummy post"
-      ]
-    },
-    {
       "id": "d-li-w1-mon",
       "date": "2026-10-26",
       "track": "brand",
@@ -795,6 +783,18 @@
       "minutes": 30,
       "how": [
         "Only if you registered. Finish the Activation Stage in the Award Force portal before 29 Oct. Otherwise tick it off as skipped."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
+      "date": "2026-10-28",
+      "track": "brand",
+      "title": "Improve Revengine IG autoposter script",
+      "minutes": 60,
+      "how": [
+        "Review current script errors",
+        "Implement fallback posting",
+        "Test with dummy post"
       ]
     },
     {
