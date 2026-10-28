@@ -753,7 +753,7 @@
     },
     {
       "id": "d-conrad-check",
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "track": "t20",
       "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
       "minutes": 15,
@@ -765,7 +765,7 @@
     },
     {
       "id": "d-diamond-team",
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "track": "t20",
       "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
       "minutes": 30,
@@ -777,7 +777,7 @@
     },
     {
       "id": "d-conrad-activate",
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "track": "t20",
       "title": "Conrad Activation Stage is due 29 Oct: finish it today or tomorrow",
       "minutes": 30,
@@ -810,6 +810,42 @@
         "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
         "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
         "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
+      "date": "2026-10-28",
+      "track": "brand",
+      "title": "Pick niche for revengineee",
+      "minutes": 30,
+      "how": [
+        "list 4 niche ideas",
+        "choose one",
+        "update content calendar"
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice",
+      "date": "2026-10-28",
+      "track": "seniors",
+      "title": "Record voice‑clone demo from own voice",
+      "minutes": 45,
+      "how": [
+        "record 30‑sec sample",
+        "run voice‑clone script",
+        "upload demo to repo"
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-call-ashirwad-elders-home-to-schedule-sa",
+      "date": "2026-10-28",
+      "track": "seniors",
+      "title": "Call Ashirwad Elders Home to schedule safety session",
+      "minutes": 20,
+      "how": [
+        "dial number",
+        "propose two dates",
+        "confirm attendance"
       ]
     },
     {
