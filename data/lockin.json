@@ -752,40 +752,6 @@
       ]
     },
     {
-      "id": "d-conrad-check",
-      "date": "2026-10-28",
-      "track": "t20",
-      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
-      "minutes": 15,
-      "how": [
-        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
-        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
-        "Outcome box: registered / not doing it this year."
-      ]
-    },
-    {
-      "id": "d-diamond-team",
-      "date": "2026-10-28",
-      "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
-      "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
-      ]
-    },
-    {
-      "id": "d-conrad-activate",
-      "date": "2026-10-28",
-      "track": "t20",
-      "title": "Conrad Activation Stage is due 29 Oct: finish it today or tomorrow",
-      "minutes": 30,
-      "how": [
-        "Only if you registered. Finish the Activation Stage in the Award Force portal before 29 Oct. Otherwise tick it off as skipped."
-      ]
-    },
-    {
       "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
       "date": "2026-10-28",
       "track": "brand",
@@ -795,21 +761,6 @@
         "Review current script errors",
         "Implement fallback posting",
         "Test with dummy post"
-      ]
-    },
-    {
-      "id": "d-li-w1-wed",
-      "date": "2026-10-28",
-      "track": "brand",
-      "title": "LinkedIn: engage only, 20 min + reply to every comment on Tuesday's post",
-      "minutes": 20,
-      "how": [
-        "No post today (DeVyTe + Force Fest week, keep it light).",
-        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
-        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
-        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
-        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
-        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
       ]
     },
     {
@@ -849,6 +800,55 @@
       ]
     },
     {
+      "id": "d-conrad-check",
+      "date": "2026-10-30",
+      "track": "t20",
+      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
+      "minutes": 15,
+      "how": [
+        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
+        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
+        "Outcome box: registered / not doing it this year."
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-10-30",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
+      ]
+    },
+    {
+      "id": "d-conrad-activate",
+      "date": "2026-10-30",
+      "track": "t20",
+      "title": "Conrad Activation Stage is due 29 Oct: finish it today or tomorrow",
+      "minutes": 30,
+      "how": [
+        "Only if you registered. Finish the Activation Stage in the Award Force portal before 29 Oct. Otherwise tick it off as skipped."
+      ]
+    },
+    {
+      "id": "d-li-w1-wed",
+      "date": "2026-10-30",
+      "track": "brand",
+      "title": "LinkedIn: engage only, 20 min + reply to every comment on Tuesday's post",
+      "minutes": 20,
+      "how": [
+        "No post today (DeVyTe + Force Fest week, keep it light).",
+        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
+        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
+        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
+        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
+        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
+      ]
+    },
+    {
       "id": "d-li-w1-review",
       "date": "2026-10-30",
       "track": "brand",
@@ -859,6 +859,24 @@
         "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
         "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
         "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
+      ]
+    },
+    {
+      "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
+      "date": "2026-11-11",
+      "track": "t20",
+      "title": "Exun: get on National Youth Robotics Challenge NYRC 2027 (30th November 2026), best event for you: AI Vision Challenge, sign up by 2026-11-25",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 5.1/10, prestige 2.8/7): Exun tagged it AT ALL COSTS (their top priority); 12 names for 60 slots (20% demand); in person.",
+        "WHERE: Amity International School, Mayur Vihar, Offline.",
+        "EVENT: AI Vision Challenge (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "EVENT: Innovation Showdown – Senior (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "EVENT: Robo Race (1x5, 6th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "COMPS: AI Vision Challenge, Innovation Showdown – Senior, Robo Race, Robo War, Robo Soccer - Senior, Drone Obstacle Race, Robotics Startup Pitch",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Medhansh T. Pandya) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     },
     {
@@ -902,24 +920,6 @@
       "minutes": 120,
       "how": [
         "Finish the concept submission this week so the last week is for edits. Deadline 14 Jan 2027, 5:00 PM ET (diamondchallenge.org has the official rules)."
-      ]
-    },
-    {
-      "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
-      "date": "2026-11-11",
-      "track": "t20",
-      "title": "Exun: get on National Youth Robotics Challenge NYRC 2027 (30th November 2026), best event for you: AI Vision Challenge, sign up by 2026-11-25",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 5.1/10, prestige 2.8/7): Exun tagged it AT ALL COSTS (their top priority); 12 names for 60 slots (20% demand); in person.",
-        "WHERE: Amity International School, Mayur Vihar, Offline.",
-        "EVENT: AI Vision Challenge (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "EVENT: Innovation Showdown – Senior (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "EVENT: Robo Race (1x5, 6th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "COMPS: AI Vision Challenge, Innovation Showdown – Senior, Robo Race, Robo War, Robo Soccer - Senior, Drone Obstacle Race, Robotics Startup Pitch",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Medhansh T. Pandya) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     }
   ],
