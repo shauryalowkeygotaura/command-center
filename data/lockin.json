@@ -1030,6 +1030,7 @@
       "how": [
         "POST FILE: C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.txt",
         "PHOTO FILE: C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.png",
+        "VIDEO FILE: C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.mp4  (9 s animated version of the card. Post the VIDEO instead of the photo: native video holds people longer. Pick one, not both.)",
         "PHOTO: attach the PHOTO FILE natively (data card, 1200x1200). A real photo of you at the desk beats it if you have one: save it over this file.",
         "TYPE: Teach (one thing the reader can do today). HOOK: #21 The Direct Value (give the artifact away in the post).",
         "ANGLE: the receptionist prompt was about 4,400 tokens, and about 700 of them were '===' separator lines that did nothing. Cutting decoration + keeping a ~800 token core took it to about 3,300, and raising temperature from 0.2 to 0.4 stopped the small model parroting labels. Give the 3 rules plainly in the post: delete decorative separators, keep one short core block, say a line out loud before every slow tool call so the caller never hears silence.",
@@ -1043,7 +1044,8 @@
       ],
       "files": {
         "text": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.txt",
-        "photo": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.png"
+        "photo": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.png",
+        "video": "C:\\Users\\shaur\\OneDrive\\Desktop\\Vault\\Deliverables\\linkedin-post-2026-10-29-prompt-cut.mp4"
       }
     }
   ]
