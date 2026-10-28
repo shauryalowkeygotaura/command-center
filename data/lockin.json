@@ -862,6 +862,20 @@
       ]
     },
     {
+      "id": "d-li-comments-2026-11",
+      "date": "2026-11-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Nov): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
       "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
       "date": "2026-11-11",
       "track": "t20",
@@ -913,6 +927,34 @@
       ]
     },
     {
+      "id": "d-li-comments-2026-12",
+      "date": "2026-12-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Dec): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
+      "id": "d-li-comments-2027-01",
+      "date": "2027-01-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Jan): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
       "id": "d-diamond-concept",
       "date": "2027-01-07",
       "track": "t20",
@@ -920,6 +962,48 @@
       "minutes": 120,
       "how": [
         "Finish the concept submission this week so the last week is for edits. Deadline 14 Jan 2027, 5:00 PM ET (diamondchallenge.org has the official rules)."
+      ]
+    },
+    {
+      "id": "d-li-comments-2027-02",
+      "date": "2027-02-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Feb): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
+      "id": "d-li-comments-2027-03",
+      "date": "2027-03-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Mar): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
+      "id": "d-li-comments-2027-04",
+      "date": "2027-04-01",
+      "track": "brand",
+      "title": "LinkedIn comment session (Apr): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
       ]
     }
   ],

@@ -271,23 +271,11 @@
    "why": "Directly pitches first paying client",
    "hash": "d859c37f7354"
   },
-  "d-rise-check": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Quick check, minimal impact",
-   "hash": "fa53d9ee64d0"
-  },
   "d-spaceapps-check": {
    "score": 8,
    "goal": "t20",
    "why": "Quick gate check for upcoming competition deadline",
    "hash": "27744d72f670"
-  },
-  "d-auto-2026-10-16-improve-revengine-ig-autoposter-script": {
-   "score": 3,
-   "goal": "brand",
-   "why": "Minor script tweak, modest brand impact",
-   "hash": "4cbc5ced6a41"
   },
   "d-linkedin-token": {
    "score": 1,
@@ -295,29 +283,107 @@
    "why": "Routine maintenance, minimal direct impact",
    "hash": "34db4f9cf041"
   },
-  "d-conrad-check": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadline, critical for T20 progress",
-   "hash": "ec99aa51f5a1"
-  },
-  "d-diamond-team": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "55747b6feddf"
-  },
   "d-auto-2026-10-23-refresh-linkedin-token-for-revengine": {
    "score": 2,
    "goal": "systems",
    "why": "Routine maintenance, keeps pipelines running.",
    "hash": "5d1c585a5c7f"
   },
+  "d-rise-check": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Low impact, just a preliminary check",
+   "hash": "5e83c0da6f7a"
+  },
+  "d-li-w1-setup": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Light brand visibility, minimal impact on core goals",
+   "hash": "c84a24330665"
+  },
+  "d-auto-2026-10-24-register-for-space-apps-14-15-nov-lock-d": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks key competition deadlines",
+   "hash": "7019f45bf1a0"
+  },
+  "d-auto-2026-10-24-manually-refresh-revengine-linkedin-toke": {
+   "score": 2,
+   "goal": "systems",
+   "why": "Routine maintenance, keeps pipelines running.",
+   "hash": "d7c68d0a21f6"
+  },
+  "d-li-w1-mon": {
+   "score": 2,
+   "goal": "clinic",
+   "why": "Small outreach, minimal direct impact",
+   "hash": "3c7a6cf2731a"
+  },
+  "d-auto-2026-10-16-improve-revengine-ig-autoposter-script": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Minor automation tweak, limited direct impact",
+   "hash": "33a34c4841df"
+  },
+  "d-auto-2026-10-28-pick-niche-for-revengineee": {
+   "score": 3,
+   "goal": "brand",
+   "why": "Niche selection supports content strategy, but not immediate customer gate",
+   "hash": "3679731e64e8"
+  },
+  "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice": {
+   "score": 7,
+   "goal": "clinic",
+   "why": "Demonstrates AI receptionist capability to secure first clinic",
+   "hash": "a9a338ebd194"
+  },
+  "d-auto-2026-10-28-call-ashirwad-elders-home-to-schedule-sa": {
+   "score": 8,
+   "goal": "seniors",
+   "why": "Directly enables real customer session",
+   "hash": "a1cbb8db2aef"
+  },
+  "d-conrad-check": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition deadlines, critical for T20 progress",
+   "hash": "ad405d01fe91"
+  },
+  "d-diamond-team": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition deadlines, advancing T20 progress",
+   "hash": "725590248d93"
+  },
   "d-conrad-activate": {
    "score": 8,
    "goal": "t20",
    "why": "Unblocks multiple competition deadlines",
-   "hash": "aabebc425172"
+   "hash": "2c5a45255645"
+  },
+  "d-li-w1-wed": {
+   "score": 1,
+   "goal": "brand",
+   "why": "Minimal direct impact on core objectives",
+   "hash": "8335440abd52"
+  },
+  "d-li-w1-review": {
+   "score": 4,
+   "goal": "brand",
+   "why": "Supports content pipeline, not direct client acquisition",
+   "hash": "38e287073b37"
+  },
+  "d-li-comments-2026-11": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "d46fd991b8be"
+  },
+  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
+   "score": 2,
+   "goal": "t20",
+   "why": "Supports competition deadline, modest impact",
+   "hash": "d3e4521f3ce7"
   },
   "d-spaceapps-scope": {
    "score": 8,
@@ -337,59 +403,41 @@
    "why": "Quick gate check for competition deadline",
    "hash": "38b0e6c7f6bb"
   },
+  "d-li-comments-2026-12": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "7db55757ec1b"
+  },
+  "d-li-comments-2027-01": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "a1595cd1201e"
+  },
   "d-diamond-concept": {
    "score": 9,
    "goal": "t20",
    "why": "Unblocks competition deadline, critical for T20 progress",
    "hash": "da6c81658375"
   },
-  "d-li-w1-setup": {
+  "d-li-comments-2027-02": {
    "score": 2,
    "goal": "brand",
-   "why": "Minor profile polish, limited direct impact",
-   "hash": "ef81b177e3bb"
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "97b3cfb3914e"
   },
-  "d-li-w1-mon": {
-   "score": 2,
-   "goal": "clinic",
-   "why": "Small outreach, minimal direct impact",
-   "hash": "0350cadfc6af"
-  },
-  "d-li-w1-tue": {
+  "d-li-comments-2027-03": {
    "score": 2,
    "goal": "brand",
-   "why": "Minor proof, low impact on major goals",
-   "hash": "158c340f0fda"
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "5b8a5b4bf9e5"
   },
-  "d-li-w1-wed": {
-   "score": 1,
-   "goal": "brand",
-   "why": "Minimal direct impact on core objectives",
-   "hash": "4e087f5e1091"
-  },
-  "d-li-w1-thu": {
-   "score": 3,
-   "goal": "brand",
-   "why": "Promotes brand, low direct customer impact",
-   "hash": "4c8fc26f4f79"
-  },
-  "d-li-w1-fri": {
+  "d-li-comments-2027-04": {
    "score": 2,
    "goal": "brand",
-   "why": "Shares learning, boosts content credibility",
-   "hash": "594132c62304"
-  },
-  "d-li-w1-sun": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Low impact, just content polish",
-   "hash": "1a80905fbd69"
-  },
-  "d-li-w1-review": {
-   "score": 1,
-   "goal": "brand",
-   "why": "Low impact, routine content review",
-   "hash": "221e58a3a16a"
+   "why": "Low direct impact, minor brand visibility boost",
+   "hash": "cb4f0621289d"
   },
   "s-engage": {
    "score": 1,
@@ -402,12 +450,6 @@
    "goal": "clinic",
    "why": "Minor gate check, low direct impact",
    "hash": "6f5f1551d214"
-  },
-  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
-   "score": 5,
-   "goal": "t20",
-   "why": "Exun tagged it AT ALL COSTS (their top priority)",
-   "hash": "exun"
   }
  }
 }
