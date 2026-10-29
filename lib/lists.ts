@@ -199,6 +199,27 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     seeded: true,
   },
   {
+    id: "h-vtuber-avatar",
+    text: "P2 · VTuber pipeline is built: make YOUR avatar in VRoid Studio, then record one 30-60 s voice take",
+    done: false,
+    seeded: true,
+    note: "2026-10-29: Code/vtuber-render turns a voice recording into a talking 3D avatar video (lip sync from the audio, Groq picks expressions and head gestures per sentence, transparent webm option for b-roll). It runs today on pixiv's sample girl avatar, which is not you. VRoid Studio is free; export VRM 1.0 and drop it in the folder. Earshot (the sound-design tool) is cloned in Code/earshot but installing it was blocked for me: run its install yourself if you want it. Reply `avatar = <path to .vrm>` and `take = <path to audio>`.",
+  },
+  {
+    id: "h-vayuvani-pick",
+    text: "P2 · PICK the VayuVani pivot: 'Kaun?' live pollution blame engine (software) and/or 'Dhuan Node' smoke-ID sensor (hardware)",
+    done: false,
+    seeded: true,
+    note: "2026-10-29: Deliverables/vayuvani-pivot-ideas-2026-10-29.md. Thesis: attribution, not alerts. Delhi's only official source-attribution system (IITM DSS) runs on a 2021 inventory and was suspended in late 2025. Samsung SFT 2026 closed 3 Jul; next window ~May 2027. Winter is peak smog, so the sensor only gets a season of data if it starts now. Reply `vayu = kaun`, `vayu = both` or `vayu = neither, <why>`.",
+  },
+  {
+    id: "h-brutalist-verdict",
+    text: "P3 · LOOK at the dark neo-brutalist portfolio preview and say ship / tweak / kill",
+    done: false,
+    seeded: true,
+    note: "2026-10-29: https://claude.ai/artifact/9snrRwdCLBrZ4wYSmxnGLz (private to you). Same copy as the live site, dark ground, cream 3px borders, hard offset shadows, Archivo Black. Production is untouched: push = prod, so nothing ships until you say so. The accent colour is a tweak on the page. Reply `site = ship`, `site = tweak: <what>` or `site = kill`.",
+  },
+  {
     id: "h-ca-whatsapp-template",
     text: "P3 · WhatsApp has sent 0 messages in the last 8 pipeline runs: no mixed pitch, but a dead channel",
     done: false,
