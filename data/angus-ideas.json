@@ -376,5 +376,32 @@
     "relevance": "Turns the Command Center into the single daily list Shaurya asked for, ranked against first paying clinic, T20 deadlines, senior sessions and the brand.",
     "status": "built",
     "source": { "subject": "Instagram reel: founders replacing assistants with Meta Muse (goals feature)", "date": "2026-10-01", "threadId": "ig-reel-Dd6t-NBxk7I" }
+  },
+  {
+    "id": 43,
+    "title": "Deconstruct any course into an AI skill",
+    "summary": "Feed a course's sales page or content to Claude with a prompt that splits it into mechanical, repeatable steps versus parts that need human taste, negotiation, or physical presence. Turn the mechanical half into a deterministic scheduled skill and name exactly what still needs a human.",
+    "effort": "S",
+    "relevance": "A ready teardown prompt for any paid course Shaurya considers buying, and doubles as content showing how much of a course AI can replace.",
+    "status": "proposed",
+    "source": { "subject": "Can AI Replace a Thousand-Dollar Course?", "date": "2026-10-28", "threadId": "1a182e241c37748f" }
+  },
+  {
+    "id": 44,
+    "title": "Demand-gap location scoring skill",
+    "summary": "A scheduled skill scrapes job boards or business listings for a target group, geocodes the results, queries Google Maps for nearby competing or complementary options within a radius, and scores each location by demand density minus existing supply to rank where to focus.",
+    "effort": "M",
+    "relevance": "The same scrape-geocode-score pattern could rank Delhi or Jaipur clinic clusters by call volume versus existing AI-receptionist coverage, sharpening where outreach sprints go next.",
+    "status": "proposed",
+    "source": { "subject": "Can AI Replace a Thousand-Dollar Course?", "date": "2026-10-28", "threadId": "1a182e241c37748f" }
+  },
+  {
+    "id": 45,
+    "title": "Productize a narrow course unbundler",
+    "summary": "Angus built an AI agent, hired through an MCP, that ingests any course and spins up an installable skill for the automatable parts while coaching the remaining human-only parts from his own vault. A solo dev could ship a narrower version scoped to one niche, such as AI or automation courses, as a lead magnet or paid tool.",
+    "effort": "L",
+    "relevance": "Fits the existing skill-pack monetization thesis for the brand, giving a concrete productized wedge instead of only consuming the idea.",
+    "status": "proposed",
+    "source": { "subject": "Can AI Replace a Thousand-Dollar Course?", "date": "2026-10-28", "threadId": "1a182e241c37748f" }
   }
 ]
