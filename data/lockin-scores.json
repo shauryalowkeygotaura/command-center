@@ -379,12 +379,6 @@
    "why": "Low direct impact, minor brand visibility boost",
    "hash": "d46fd991b8be"
   },
-  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
-   "score": 2,
-   "goal": "t20",
-   "why": "Supports competition deadline, modest impact",
-   "hash": "d3e4521f3ce7"
-  },
   "d-spaceapps-scope": {
    "score": 8,
    "goal": "t20",
@@ -450,6 +444,12 @@
    "goal": "clinic",
    "why": "Minor gate check, low direct impact",
    "hash": "6f5f1551d214"
+  },
+  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
+   "score": 5,
+   "goal": "t20",
+   "why": "Exun tagged it AT ALL COSTS (their top priority)",
+   "hash": "exun"
   }
  }
 }
