@@ -84,6 +84,10 @@ def main() -> None:
             # commits found 2026-10-30)
             if _git("pull", "--rebase", "--autostash", "origin", "main", timeout=60).returncode == 0:
                 push = _git("push", "origin", "HEAD:main", timeout=45)
+            else:
+                # conflict: never leave the repo mid-rebase; abort also
+                # re-applies the autostash, so the working tree is as it was
+                _git("rebase", "--abort")
         if push.returncode != 0:
             print(f"WARN: push failed: {push.stderr.strip()}")
             return
