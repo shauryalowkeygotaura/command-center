@@ -203,10 +203,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-vtuber-avatar",
-    text: "P2 · VTuber is now 2D and runs off ONE photo: confirm the photo in your vault root is you (or drop your own selfie), then record a 60 s voice take for the clone",
+    text: "P1 · Record your voice-clone take (5 min): read Code/vtuber-render/samples/voice/READ-THIS.md into your phone, save as samples/voice/take1.m4a",
     done: false,
     seeded: true,
-    note: "2026-10-30: you asked for 2D. Code/vtuber-render/talk.py now makes one photo talk: MediaPipe finds the face, then every frame warps the jaw, paints the mouth and blinks, and acts 10 emotions per sentence (face warps, colour grade, sparkles/!/?/sweat marks) with punch-in camera moves and word captions. Sample reel: Code/vtuber-render/output/sample-talk.mp4 (download.jpg + free Edge voice en-IN-PrabhatNeural). Nothing from it gets posted until you confirm the person in the photo is you: animating someone else's face on your channel can get it reported. For autopilot in your voice: record 60 s of clean speech; the clone engine plugs in as a third --tts option. Groq's Orpheus voice needs its terms accepted on the Groq org (console.groq.com playground, Orpheus model). Reply `photo = me` (or a path) and `take = <path>`.",
+    note: "2026-10-30: the avatar is now your own manhwa drawing (assets/avatar/manhwa-v1.png + rig-base.png): 10 expressions, jointed arms, robot hands, entrances/camera/b-roll moves (demo: Code/vtuber-render/output/cartoon/moves-demo-v1.mp4). The photo version is retired. HOW TO RECORD: quietest room, fan/AC off, door shut; phone voice recorder 15-20 cm from your mouth, slightly below the chin; no earphone mic; talk with reel energy, don't 'read'; 60-90 s; read the 10 lines in READ-THIS.md (mixed tones on purpose: hype, calm, question, shock). Optional take2-hinglish.m4a with lines 1/3/6/8 the way you'd say them to a friend. Save into Code/vtuber-render/samples/voice/ (gitignored, never pushed). THEN: reply `take = take1.m4a`. I clone it free and locally first (zero-shot clone, no upload); if it doesn't sound like you, the upgrade is ElevenLabs Instant Voice Clone (Starter, about $5/mo), your call. Nothing gets posted without your OK.",
   },
   {
     id: "h-vayuvani-pick",
