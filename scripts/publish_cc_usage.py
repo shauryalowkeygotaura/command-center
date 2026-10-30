@@ -78,6 +78,12 @@ def main() -> None:
             print(f"WARN: commit failed: {commit.stderr.strip()}")
             return
         push = _git("push", "origin", "HEAD:main", timeout=45)
+        if push.returncode != 0 and "rejected" in push.stderr:
+            # CI jobs (leads top-up, scouts) commit to main daily; without this
+            # every push after theirs was refused and the gauge froze (18 stuck
+            # commits found 2026-10-30)
+            if _git("pull", "--rebase", "--autostash", "origin", "main", timeout=60).returncode == 0:
+                push = _git("push", "origin", "HEAD:main", timeout=45)
         if push.returncode != 0:
             print(f"WARN: push failed: {push.stderr.strip()}")
             return
