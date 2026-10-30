@@ -72,6 +72,9 @@ export function mergeChecklistSeed(
 //   P1 = this week, money or a live person waiting. P2 = unblocks automation
 //   or closes a real risk. P3 = parked or nice to have. RULE: every time a
 //   handoff is added, re-rank the WHOLE list, not just prepend the new one.
+// Retired 2026-10-30: h-quant-explain-ml (ml_strategy.py done 10-01: lost to buy & hold),
+//   h-quant-fish-channel (fish_study.py scorecard done 10-08), h-paralang-latency +
+//   h-paralang-listen-perf (v0.3 hybrid mode + prewarmed worker; speed test passes, 0.4 s).
 // Retired 2026-10-01: h-harvey-setup (Harvey's safeguards + desk were folded
 //   into client-acquisition-pipeline and the DESK tab; no separate agent to set up).
 // Retired 2026-09-25: all done items, h-format-engine-tpm-bug (info only),
@@ -200,10 +203,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-vtuber-avatar",
-    text: "P2 · VTuber pipeline is built: make YOUR avatar in VRoid Studio, then record one 30-60 s voice take",
+    text: "P2 · VTuber is now 2D and runs off ONE photo: confirm the photo in your vault root is you (or drop your own selfie), then record a 60 s voice take for the clone",
     done: false,
     seeded: true,
-    note: "2026-10-29: Code/vtuber-render turns a voice recording into a talking 3D avatar video (lip sync from the audio, Groq picks expressions and head gestures per sentence, transparent webm option for b-roll). It runs today on pixiv's sample girl avatar, which is not you. VRoid Studio is free; export VRM 1.0 and drop it in the folder. Earshot (the sound-design tool) is cloned in Code/earshot but installing it was blocked for me: run its install yourself if you want it. Reply `avatar = <path to .vrm>` and `take = <path to audio>`.",
+    note: "2026-10-30: you asked for 2D. Code/vtuber-render/talk.py now makes one photo talk: MediaPipe finds the face, then every frame warps the jaw, paints the mouth and blinks, and acts 10 emotions per sentence (face warps, colour grade, sparkles/!/?/sweat marks) with punch-in camera moves and word captions. Sample reel: Code/vtuber-render/output/sample-talk.mp4 (download.jpg + free Edge voice en-IN-PrabhatNeural). Nothing from it gets posted until you confirm the person in the photo is you: animating someone else's face on your channel can get it reported. For autopilot in your voice: record 60 s of clean speech; the clone engine plugs in as a third --tts option. Groq's Orpheus voice needs its terms accepted on the Groq org (console.groq.com playground, Orpheus model). Reply `photo = me` (or a path) and `take = <path>`.",
   },
   {
     id: "h-vayuvani-pick",
@@ -291,8 +294,8 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-revengine-ig-autopost",
-    text: "P3 · Revengine IG: autoposter improved, now hand-post until @revengineee is aged, then POST_IG=1",
-    note: "2026-10-03 (you said improve the autoposter first): it kept drafting from the same session entry (one entry fed 3 carousels, another fed 4 in two weeks); entries already used now lose to fresh ones. A stale cover test was fixed and the LinkedIn mint now stores itself. The ageing advice stands: hand-upload for 1-2 weeks, then flip POST_IG=1.",
+    text: "P3 · Revengine IG: each day's carousel now lands in carousel-autoposter/ready-to-post/<date>/ on your phone (OneDrive). Post it by hand until @revengineee is aged",
+    note: "2026-10-30 (LOCK IN task): the cron was dying on no-network at wake (3 days lost) and LinkedIn rejected a retired API version (426). Fixed: waits up to 20 min for the network, LinkedIn version rolls itself, one platform failing no longer kills the rest, and whenever auto-post is off or fails you get a hand-post bundle (numbered JPGs + caption.txt). Expired IG session = one re-login retry; any other IG error is never retried, so it cannot double-post. Flip POST_IG=1 once the account is aged (Meta app handoff is the long-term route).",
     done: false,
     seeded: true,
   },
@@ -332,20 +335,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "The pool already does what you described: the best model per pipeline first, downgrade down the chain on failure, rotate keys across accounts. Moving keys between Doppler projects was blocked for me (credential handling), so add ...39ZZ8 as GROQ_API_KEY_3 in philosopher-pipeline, autoshop and client-acquisition-pipeline (plus the repo secret where CI runs). Only worth it if ...39ZZ8 is from a different Groq account than the other two; same-account keys share one quota.",
   },
   {
-    id: "h-quant-explain-ml",
-    text: "P3 · quant-lab: the plain-English answer to 'people earn money with trading', and a basic ML strategy run through the same honest tests (mine)",
-    note: "Simple version: some people do make money, most active traders do not, and the winners mostly have an edge you cannot copy (speed, data, scale) or got lucky; the lab has shown every strategy tried so far earns less than just holding the index. A self-optimising loop is exactly what loses (it was tested: re-searching every fold lost to buy & hold on Nifty and the S&P). A basic ML model is fine to TRY, and ml_strategy.py is already started: it must go through the same walk-forward and trial ledger, so a lucky fit cannot sneak through. Paper only, no real money, as always.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-quant-fish-channel",
-    text: "P3 · Analyse every @not_a_lil_fish video and keep only what is testable in quant-lab (mine)",
-    note: "Pull all transcripts, list each concrete claim or strategy, and test only the ones that fit the lab's rule (a price history in, a position out). Anything that needs news, leverage or 'trust me' gets a one-line reason it was dropped. You get a short scorecard: claim, tested or not, result.",
-    done: false,
-    seeded: true,
-  },
-  {
     id: "h-quant-markets",
     text: "P3 · Polymarket / Kalshi / crypto in quant-lab: data and paper trading YES, real money NO",
     note: "Crypto price history (BTC, ETH) drops straight into the existing backtester. Polymarket and Kalshi publish market prices you can read for free, so paper-forecasting against them is a real, interesting test of whether you can beat a crowd. What I will not wire: real accounts or memecoins. Both prediction markets are 18+, India taxes crypto at 30% plus 1% TDS, and memecoins have no price history worth testing (most go to zero). Reply `markets = crypto first` or `= prediction markets first`.",
@@ -356,20 +345,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     id: "h-vayuvani-groq-env",
     text: "P3 · VayuVani: now on Groq with model switching and git-versioned; set GROQ_API_KEY in its Vercel env before the next deploy",
     note: "2026-10-03: both vayuvani folders were unversioned, so they are git repos now (baseline commit first). The app and the Python advisory swapped Claude Haiku via AI Gateway for Groq with model switching, plus a check that sends a Hindi reply containing stray foreign words to the next model (qwen once dropped a Turkish word into a Hindi advisory). VAPI config: the invalid model id is fixed, ears are nova-3 multi with a nova-2 fallback, and ElevenLabs multilingual stays the main voice because callers speak Hindi, with Aura-2 as fallback. Not deployed: the app needs GROQ_API_KEY in Vercel first, or advisories fall back to the static lines. No GitHub remote yet either. Reply `vayuvani = deploy` once the key is in.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-paralang-latency",
-    text: "P3 · paralang's listening side takes 2-13s per turn on this laptop (its own test expects under 0.6s): a risk for the live Jio agent",
-    note: "2026-10-09: found while testing paralang. Analysing a 5-second clip took 13s cold and 2-3.5s warm; the test that guards it fails on the untouched code too, so it predates today. The laptop may have been loaded at the time, but a multi-second analysis delay would wreck a live call. Worth re-measuring on an idle machine before the live mic test of rt_agent. Reply `paralang perf = check` and I will profile it.",
-    done: false,
-    seeded: true,
-  },
-  {
-    id: "h-paralang-listen-perf",
-    text: "P3 · paralang listening side: turn analysis takes 2-13s against a 600ms budget. Check before the Jio agent goes live",
-    note: "2026-10-09: the extraction speed test fails on the untouched baseline too (first call 13s, warm 2-3.5s for 5s of audio). It runs off the event loop, but a multi-second lag on every caller turn would make cues arrive after the reply. Possibly CPU load at the time. Next: profile openSMILE warm-up and pre-warm at call start. Nothing needed from you unless the live agent feels laggy.",
     done: false,
     seeded: true,
   },
