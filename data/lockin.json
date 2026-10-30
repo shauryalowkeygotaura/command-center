@@ -888,6 +888,30 @@
       ]
     },
     {
+      "id": "d-auto-2026-11-01-review-conrad-activation-numbers-15-min",
+      "date": "2026-11-01",
+      "track": "t20",
+      "title": "Review Conrad activation numbers (15 min)",
+      "minutes": 15,
+      "how": [
+        "Open Conrad portal",
+        "Check registration status",
+        "Note missing items"
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-01-write-next-5-linkedin-posts-30-min",
+      "date": "2026-11-01",
+      "track": "brand",
+      "title": "Write next 5 LinkedIn posts (30 min)",
+      "minutes": 30,
+      "how": [
+        "Draft outlines",
+        "Assign copy to each post",
+        "Schedule in buffer"
+      ]
+    },
+    {
       "id": "d-auto-2026-11-02-call-ashirwad-elders-home",
       "date": "2026-11-02",
       "track": "seniors",
@@ -897,6 +921,18 @@
         "Find contact email",
         "Draft script",
         "Make call"
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa",
+      "date": "2026-11-02",
+      "track": "seniors",
+      "title": "Call Ashirwad Elders Home to schedule safety session (20 min)",
+      "minutes": 20,
+      "how": [
+        "Dial number",
+        "Propose two dates",
+        "Confirm contact person"
       ]
     },
     {
