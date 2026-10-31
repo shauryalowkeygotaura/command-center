@@ -948,24 +948,6 @@
       ]
     },
     {
-      "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
-      "date": "2026-11-11",
-      "track": "t20",
-      "title": "Exun: get on National Youth Robotics Challenge NYRC 2027 (30th November 2026), best event for you: AI Vision Challenge, sign up by 2026-11-25",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 5.1/10, prestige 2.8/7): Exun tagged it AT ALL COSTS (their top priority); 12 names for 60 slots (20% demand); in person.",
-        "WHERE: Amity International School, Mayur Vihar, Offline.",
-        "EVENT: AI Vision Challenge (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "EVENT: Innovation Showdown – Senior (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "EVENT: Robo Race (1x5, 6th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
-        "COMPS: AI Vision Challenge, Innovation Showdown – Senior, Robo Race, Robo War, Robo Soccer - Senior, Drone Obstacle Race, Robotics Startup Pitch",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Medhansh T. Pandya) so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
       "id": "d-spaceapps-scope",
       "date": "2026-11-13",
       "track": "t20",
@@ -1076,6 +1058,24 @@
         "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
         "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
         "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
+      "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
+      "date": "2026-11-11",
+      "track": "t20",
+      "title": "Exun: get on National Youth Robotics Challenge NYRC 2027 (30th November 2026), best event for you: AI Vision Challenge, sign up by 2026-11-25",
+      "minutes": 10,
+      "how": [
+        "WHY THIS FEST (rank 5.1/10, prestige 2.8/7): Exun tagged it AT ALL COSTS (their top priority); 12 names for 60 slots (20% demand); in person.",
+        "WHERE: Amity International School, Mayur Vihar, Offline.",
+        "EVENT: AI Vision Challenge (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "EVENT: Innovation Showdown – Senior (1x5, 9th-12th): AI or innovation challenge: your exact lane; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "EVENT: Robo Race (1x5, 6th-12th): robotics: hardware build, judged live, stands out next to software-only entries; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Roboknights, Roboknights, Roboknights, Roboknights, Roboknights.",
+        "COMPS: AI Vision Challenge, Innovation Showdown – Senior, Robo Race, Robo War, Robo Soccer - Senior, Drone Obstacle Race, Robotics Startup Pitch",
+        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge (Medhansh T. Pandya) so they move you up.",
+        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
+        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
       ]
     }
   ],
