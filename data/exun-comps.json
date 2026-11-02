@@ -1,8 +1,186 @@
 {
-  "checked": "2026-11-01",
+  "checked": "2026-11-02",
   "sheet": "https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
   "per_month": 4,
   "symposiums": [
+    {
+      "symposium": "MINET X",
+      "school": "The Mother's International School",
+      "mode": "Hybrid",
+      "date": "12th,13th November, 2026",
+      "first_day": "2026-11-12",
+      "last_day": "2026-11-13",
+      "deadline": "2026-11-03",
+      "incharge": "TBD",
+      "rank": 6.3,
+      "prestige": 3.9,
+      "why": [
+        "Exun tagged it AT ALL COSTS (their top priority)",
+        "23 names for 27 slots (85% demand)",
+        "in person"
+      ],
+      "you_are_in": false,
+      "events": [
+        {
+          "event": "Pitching",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": false,
+          "finalized": [
+            "Siddhant Dubey"
+          ],
+          "signups": [
+            "Adyan Siddiqui"
+          ],
+          "score": 9,
+          "why": "AI or innovation challenge: your exact lane; 1 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Programming",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Vihaan Pundir",
+            "Hursh Bajaj"
+          ],
+          "signups": [],
+          "score": 6.5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "CryptX",
+          "eligibility": "Open, Open",
+          "team": 1,
+          "full": true,
+          "finalized": [
+            "[Cryptic Hunts Department]"
+          ],
+          "signups": [],
+          "score": 6.5,
+          "why": "coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Design",
+          "eligibility": "1x3, Open",
+          "team": 3,
+          "full": false,
+          "finalized": [
+            "Yashraj Kumar"
+          ],
+          "signups": [
+            "Navya (ad-hoc)",
+            "Saanvi Verma",
+            "Divij Choradia",
+            "Saanvi Verma",
+            "Nikunj Kohli"
+          ],
+          "score": 5,
+          "why": "design event: fine, not your strongest; 2 of 3 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Make",
+          "eligibility": "1x5, Open",
+          "team": 5,
+          "full": false,
+          "finalized": [
+            "[composed from design and pitching participants]"
+          ],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 4 of 5 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Surprise",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": false,
+          "finalized": [
+            "Anika Gupta"
+          ],
+          "signups": [
+            "Arnav Jain (ad-hoc)",
+            "Akshaj (ad-hoc)",
+            "Adhiraj Purohit"
+          ],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 1 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Filmmaking",
+          "eligibility": "1x4, Open",
+          "team": 4,
+          "full": false,
+          "finalized": [],
+          "signups": [],
+          "score": 4,
+          "why": "name doesn't say what it is: open the brochure; 4 of 4 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Group Discussion",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Tushar Khandelwaal",
+            "Gurnoor Narula (ad-hoc)"
+          ],
+          "signups": [
+            "Yuvaan Aggarwal",
+            "Arin Jha"
+          ],
+          "score": 3.5,
+          "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        },
+        {
+          "event": "Quiz",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": false,
+          "finalized": [],
+          "signups": [
+            "Anant Singh Ghugtyal",
+            "Vivaan Gupta"
+          ],
+          "score": 2,
+          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Photography",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": false,
+          "finalized": [],
+          "signups": [],
+          "score": 2,
+          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
+          "you_are_in": false
+        },
+        {
+          "event": "Gaming",
+          "eligibility": "1x2, Open",
+          "team": 2,
+          "full": true,
+          "finalized": [
+            "Sonit Sindwani",
+            "Jeenesh Vasandani"
+          ],
+          "signups": [],
+          "score": 1.5,
+          "why": "gaming / media / quiz / debate: not your lane; team full for now, but people drop last minute: go in the row below as a sub",
+          "you_are_in": false
+        }
+      ]
+    },
     {
       "symposium": "National Youth Robotics Challenge NYRC 2027",
       "school": "Amity International School, Mayur Vihar",
@@ -172,156 +350,6 @@
           "signups": [],
           "score": 3.5,
           "why": "name doesn't say what it is: open the brochure; team full for now, but people drop last minute: go in the row below as a sub",
-          "you_are_in": false
-        }
-      ]
-    },
-    {
-      "symposium": "MINET X",
-      "school": "The Mother's International School",
-      "mode": "Hybrid",
-      "date": "3rd to 13th November, 2026",
-      "first_day": "2026-11-03",
-      "last_day": "2026-11-13",
-      "deadline": "2026-11-03",
-      "incharge": "TBD",
-      "rank": 3.7,
-      "prestige": 1.3,
-      "why": [
-        "Exun is sending a team",
-        "5 names for 27 slots (19% demand)",
-        "in person"
-      ],
-      "you_are_in": false,
-      "events": [
-        {
-          "event": "Pitching",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 9,
-          "why": "AI or innovation challenge: your exact lane; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Programming",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "CryptX",
-          "eligibility": "Open, Open",
-          "team": 1,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 7,
-          "why": "coding / crypto hunt: classic symposium event, judges know it; 1 of 1 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Design",
-          "eligibility": "1x3, Open",
-          "team": 3,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Navya (ad-hoc)"
-          ],
-          "score": 5,
-          "why": "design event: fine, not your strongest; 3 of 3 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Make",
-          "eligibility": "1x5, Open",
-          "team": 5,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Divij Choradia"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; 5 of 5 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Group Discussion",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Surprise",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Arnav Jain (ad-hoc)"
-          ],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Filmmaking",
-          "eligibility": "1x4, Open",
-          "team": 4,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 4,
-          "why": "name doesn't say what it is: open the brochure; 4 of 4 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Quiz",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [
-            "Anant Singh Ghugtyal",
-            "Vivaan Gupta"
-          ],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Gaming",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
-          "you_are_in": false
-        },
-        {
-          "event": "Photography",
-          "eligibility": "1x2, Open",
-          "team": 2,
-          "full": false,
-          "finalized": [],
-          "signups": [],
-          "score": 2,
-          "why": "gaming / media / quiz / debate: not your lane; 2 of 2 slots open",
           "you_are_in": false
         }
       ]
