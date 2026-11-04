@@ -1,0 +1,202 @@
+[
+  {
+    "number": "098155 84988",
+    "label": "Khaira Nursing Home",
+    "whatsapp": "919815584988",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "098724 12582",
+    "label": "Singla Nursing Home, Ludhiana",
+    "whatsapp": "919872412582",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "098150 60622",
+    "label": "K.Deep Nursing Home",
+    "whatsapp": "919815060622",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "087250 01965",
+    "label": "Jawanda Nursing Home",
+    "whatsapp": "918725001965",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "mobile, likely the owner",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0161-2300633",
+    "label": "Dr Aulakh Clinic",
+    "whatsapp": "",
+    "area": "Ludhiana",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "owner-named",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "+91 (0) 161 5044963 , +91 (0) 161 5044694",
+    "label": "Puri Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "https://www.purinursinghospital.com/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 240 6986",
+    "label": "Sadana Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "business.site",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 243 0849",
+    "label": "Pal Nursing Home, Ludhiana",
+    "whatsapp": "",
+    "area": "",
+    "website": "http://www.palhospital.in",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 263 1333",
+    "label": "Chawla Nursing Home, Chauri Sarak",
+    "whatsapp": "",
+    "area": "",
+    "website": "https://www.chawlanursinghome.in/",
+    "description": "Clinic · has website",
+    "kind": "private",
+    "tier": "C",
+    "score": 2,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer",
+      "has a website"
+    ]
+  },
+  {
+    "number": "0161 507 8171",
+    "label": "Brar Eye Centre",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0162 823 1403",
+    "label": "Khanna Nursing Home",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0161 230 4030",
+    "label": "Bassi Nursing Home Pvt. Ltd.",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  },
+  {
+    "number": "0161 262 1334",
+    "label": "Kapoor Nursing Home - Ludhiana",
+    "whatsapp": "",
+    "area": "",
+    "website": "",
+    "description": "Clinic · no website",
+    "kind": "private",
+    "tier": "C",
+    "score": 1,
+    "reasons": [
+      "landline, likely the front desk",
+      "clinic, proof does not transfer"
+    ]
+  }
+]
