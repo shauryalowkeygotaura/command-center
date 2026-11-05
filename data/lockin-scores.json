@@ -283,12 +283,6 @@
    "why": "Routine maintenance, minimal direct impact",
    "hash": "34db4f9cf041"
   },
-  "d-auto-2026-10-23-refresh-linkedin-token-for-revengine": {
-   "score": 2,
-   "goal": "systems",
-   "why": "Routine maintenance, keeps pipelines running.",
-   "hash": "5d1c585a5c7f"
-  },
   "d-rise-check": {
    "score": 2,
    "goal": "brand",
@@ -300,18 +294,6 @@
    "goal": "brand",
    "why": "Light brand visibility, minimal impact on core goals",
    "hash": "c84a24330665"
-  },
-  "d-auto-2026-10-24-register-for-space-apps-14-15-nov-lock-d": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks key competition deadlines",
-   "hash": "7019f45bf1a0"
-  },
-  "d-auto-2026-10-24-manually-refresh-revengine-linkedin-toke": {
-   "score": 2,
-   "goal": "systems",
-   "why": "Routine maintenance, keeps pipelines running.",
-   "hash": "d7c68d0a21f6"
   },
   "d-li-w1-mon": {
    "score": 2,
@@ -325,59 +307,71 @@
    "why": "Minor automation tweak, limited direct impact",
    "hash": "33a34c4841df"
   },
-  "d-auto-2026-10-28-pick-niche-for-revengineee": {
-   "score": 3,
-   "goal": "brand",
-   "why": "Niche selection supports content strategy, but not immediate customer gate",
-   "hash": "3679731e64e8"
-  },
-  "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice": {
-   "score": 7,
-   "goal": "clinic",
-   "why": "Demonstrates AI receptionist capability to secure first clinic",
-   "hash": "a9a338ebd194"
-  },
-  "d-auto-2026-10-28-call-ashirwad-elders-home-to-schedule-sa": {
-   "score": 8,
-   "goal": "seniors",
-   "why": "Directly enables real customer session",
-   "hash": "a1cbb8db2aef"
-  },
-  "d-conrad-check": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadlines, critical for T20 progress",
-   "hash": "ad405d01fe91"
-  },
-  "d-diamond-team": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "725590248d93"
-  },
-  "d-conrad-activate": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks multiple competition deadlines",
-   "hash": "2c5a45255645"
-  },
   "d-li-w1-wed": {
    "score": 1,
    "goal": "brand",
    "why": "Minimal direct impact on core objectives",
    "hash": "8335440abd52"
   },
+  "d-auto-2026-10-28-pick-niche-for-revengineee": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Strategic planning, low immediate impact",
+   "hash": "4966dd1e099a"
+  },
+  "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice": {
+   "score": 3,
+   "goal": "brand",
+   "why": "Demonstrates content creation for proof-backed brand",
+   "hash": "c7f8b6cc7349"
+  },
   "d-li-w1-review": {
    "score": 4,
    "goal": "brand",
    "why": "Supports content pipeline, not direct client acquisition",
-   "hash": "38e287073b37"
+   "hash": "49519405cb98"
+  },
+  "d-conrad-check": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition entry, critical for T20 deadlines",
+   "hash": "400a69d840a2"
+  },
+  "d-diamond-team": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition deadlines, advancing T20 progress",
+   "hash": "965d65d32cef"
   },
   "d-li-comments-2026-11": {
    "score": 2,
    "goal": "brand",
    "why": "Low direct impact, minor brand visibility boost",
    "hash": "d46fd991b8be"
+  },
+  "d-exun-minet-x": {
+   "score": 5,
+   "goal": "brand",
+   "why": "Networking boosts brand visibility and potential leads",
+   "hash": "5b56f4c7b962"
+  },
+  "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa": {
+   "score": 8,
+   "goal": "seniors",
+   "why": "Schedules real session, unlocking community impact",
+   "hash": "af4e14476e75"
+  },
+  "d-auto-2026-11-03-visit-new-delhi-dental-centre": {
+   "score": 9,
+   "goal": "clinic",
+   "why": "Direct customer engagement, gate for retainer",
+   "hash": "771fb05c4b52"
+  },
+  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Unblocks competition deadline, boosts T20 credibility",
+   "hash": "d3e4521f3ce7"
   },
   "d-spaceapps-scope": {
    "score": 8,
@@ -415,6 +409,12 @@
    "why": "Unblocks competition deadline, critical for T20 progress",
    "hash": "da6c81658375"
   },
+  "d-james-hush-checkin": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Initial outreach, minimal immediate impact",
+   "hash": "d9cc3dd93e2f"
+  },
   "d-li-comments-2027-02": {
    "score": 2,
    "goal": "brand",
@@ -445,17 +445,11 @@
    "why": "Minor gate check, low direct impact",
    "hash": "6f5f1551d214"
   },
-  "d-exun-minet-x": {
-   "score": 6,
-   "goal": "t20",
-   "why": "Exun tagged it AT ALL COSTS (their top priority)",
-   "hash": "exun"
-  },
-  "d-exun-national-youth-robotics-challenge-nyrc-2027": {
-   "score": 5,
-   "goal": "t20",
-   "why": "Exun tagged it AT ALL COSTS (their top priority)",
-   "hash": "exun"
+  "handoff:h-vtuber-avatar": {
+   "score": 2,
+   "goal": "brand",
+   "why": "Adds content but minimal impact on clinic or T20",
+   "hash": "1ad4085a7446"
   }
  }
 }
