@@ -744,30 +744,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
-      "date": "2026-11-01",
-      "track": "brand",
-      "title": "Pick niche for revengineee",
-      "minutes": 30,
-      "how": [
-        "list 4 niche ideas",
-        "choose one",
-        "update content calendar"
-      ]
-    },
-    {
-      "id": "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice",
-      "date": "2026-11-01",
-      "track": "seniors",
-      "title": "Record voice‑clone demo from own voice",
-      "minutes": 45,
-      "how": [
-        "record 30‑sec sample",
-        "run voice‑clone script",
-        "upload demo to repo"
-      ]
-    },
-    {
       "id": "d-li-w1-review",
       "date": "2026-11-01",
       "track": "brand",
@@ -778,30 +754,6 @@
         "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
         "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
         "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
-      ]
-    },
-    {
-      "id": "d-conrad-check",
-      "date": "2026-11-01",
-      "track": "t20",
-      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
-      "minutes": 15,
-      "how": [
-        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
-        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
-        "Outcome box: registered / not doing it this year."
-      ]
-    },
-    {
-      "id": "d-diamond-team",
-      "date": "2026-11-01",
-      "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
-      "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
       ]
     },
     {
@@ -837,18 +789,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa",
-      "date": "2026-11-02",
-      "track": "seniors",
-      "title": "Call Ashirwad Elders Home to schedule safety session (20 min)",
-      "minutes": 20,
-      "how": [
-        "Dial number",
-        "Propose two dates",
-        "Confirm contact person"
-      ]
-    },
-    {
       "id": "d-auto-2026-11-03-visit-new-delhi-dental-centre",
       "date": "2026-11-03",
       "track": "clinic",
@@ -858,6 +798,66 @@
         "Walk route",
         "Introduce AI receptionist",
         "Negotiate retainer"
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
+      "date": "2026-11-06",
+      "track": "brand",
+      "title": "Pick niche for revengineee",
+      "minutes": 30,
+      "how": [
+        "list 4 niche ideas",
+        "choose one",
+        "update content calendar"
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice",
+      "date": "2026-11-06",
+      "track": "seniors",
+      "title": "Record voice‑clone demo from own voice",
+      "minutes": 45,
+      "how": [
+        "record 30‑sec sample",
+        "run voice‑clone script",
+        "upload demo to repo"
+      ]
+    },
+    {
+      "id": "d-conrad-check",
+      "date": "2026-11-06",
+      "track": "t20",
+      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
+      "minutes": 15,
+      "how": [
+        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
+        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
+        "Outcome box: registered / not doing it this year."
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-11-06",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa",
+      "date": "2026-11-06",
+      "track": "seniors",
+      "title": "Call Ashirwad Elders Home to schedule safety session (20 min)",
+      "minutes": 20,
+      "how": [
+        "Dial number",
+        "Propose two dates",
+        "Confirm contact person"
       ]
     },
     {
