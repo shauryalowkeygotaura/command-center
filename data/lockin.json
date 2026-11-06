@@ -729,21 +729,6 @@
       ]
     },
     {
-      "id": "d-li-w1-wed",
-      "date": "2026-10-30",
-      "track": "brand",
-      "title": "LinkedIn: engage only, 20 min + reply to every comment on Tuesday's post",
-      "minutes": 20,
-      "how": [
-        "No post today (DeVyTe + Force Fest week, keep it light).",
-        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
-        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
-        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
-        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
-        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
-      ]
-    },
-    {
       "id": "d-li-w1-review",
       "date": "2026-11-01",
       "track": "brand",
@@ -789,18 +774,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-11-03-visit-new-delhi-dental-centre",
-      "date": "2026-11-03",
-      "track": "clinic",
-      "title": "Visit New Delhi Dental Centre",
-      "minutes": 45,
-      "how": [
-        "Walk route",
-        "Introduce AI receptionist",
-        "Negotiate retainer"
-      ]
-    },
-    {
       "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
       "date": "2026-11-06",
       "track": "brand",
@@ -810,18 +783,6 @@
         "list 4 niche ideas",
         "choose one",
         "update content calendar"
-      ]
-    },
-    {
-      "id": "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice",
-      "date": "2026-11-06",
-      "track": "seniors",
-      "title": "Record voice‑clone demo from own voice",
-      "minutes": 45,
-      "how": [
-        "record 30‑sec sample",
-        "run voice‑clone script",
-        "upload demo to repo"
       ]
     },
     {
@@ -846,18 +807,6 @@
         "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
         "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
         "Register at diamondchallenge.org once 2 have said yes."
-      ]
-    },
-    {
-      "id": "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa",
-      "date": "2026-11-06",
-      "track": "seniors",
-      "title": "Call Ashirwad Elders Home to schedule safety session (20 min)",
-      "minutes": 20,
-      "how": [
-        "Dial number",
-        "Propose two dates",
-        "Confirm contact person"
       ]
     },
     {
