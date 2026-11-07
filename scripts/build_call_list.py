@@ -64,7 +64,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-from lead_quality import classify, describe, rank, sort_key, whatsapp_digits
+import truecaller
+from lead_quality import apply_tc, classify, describe, rank, sort_key, whatsapp_digits
 
 CITIES = [
     c.strip()
@@ -560,6 +561,15 @@ def main() -> None:
     # TARGET is the daily GOAL, not a cap on what may be kept. The panel
     # shows the best first and meters progress against it; anything past 50
     # sits below the fold rather than being deleted.
+    pool.sort(key=sort_key)
+    # Truecaller on the best rows first: the daily budget is small, so spend it
+    # where you will actually call. Then re-sort, since a confirmed doctor
+    # moves up a tier. Inert without TRUECALLER_INSTALLATION_ID.
+    for row in pool[:TARGET]:
+        role = truecaller.role_for(row["number"], row["label"])
+        if role:
+            apply_tc(row, role)
+    print(truecaller.summary())
     pool.sort(key=sort_key)
     out = pool
     tiers: dict[str, int] = {}

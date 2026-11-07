@@ -368,8 +368,16 @@ def rank(listing: dict, verdict: Verdict | None = None) -> dict:
             reasons.append("%s, local angle" % city.title())
             break
 
+    # --- Truecaller: who really answers (scripts/truecaller.py) -----------
+    # Measured by Shaurya by hand, unlike the shape guess above: it overrides
+    # "mobile, likely the owner" in both directions.
+    delta, tc_reason, tc_doctor = tc_effect(listing.get("tc_role"))
+    score += delta
+    if tc_reason:
+        reasons.append(tc_reason)
+
     # --- Tier --------------------------------------------------------------
-    reachable = mobile and not is_chain
+    reachable = (mobile or tc_doctor) and not is_chain
     if reachable and is_dental:
         tier = TIER_A
     elif reachable or is_dental:
@@ -453,6 +461,32 @@ def whatsapp_digits(phone: str) -> str:
 
 # Kept so existing call sites and tests keep working.
 _whatsapp_digits = whatsapp_digits
+
+
+# What a Truecaller role does to a lead: (score delta, reason, reaches the doctor).
+_TC_EFFECTS = {
+    "doctor": (4, "Truecaller: the doctor's own number", True),
+    "person": (1, "Truecaller: a person's mobile, ask for the doctor", False),
+    "clinic_line": (-1, "Truecaller: the clinic's front desk", False),
+}
+
+
+def tc_effect(role) -> tuple[int, str, bool]:
+    return _TC_EFFECTS.get(role or "", (0, "", False))
+
+
+def apply_tc(row: dict, role: str) -> None:
+    """Fold a Truecaller role into an already-ranked row, exactly as rank()
+    would have, for rows whose source item (hours, reviews) is gone."""
+    row["tc_role"] = role
+    delta, reason, doctor = tc_effect(role)
+    if not reason:
+        return
+    row["score"] = _as_int(row.get("score")) + delta
+    row["reasons"] = list(row.get("reasons") or []) + [reason]
+    if doctor and row.get("tier") == TIER_B and row.get("kind") != CHAIN \
+            and "dental, the pitch has proof" in row["reasons"]:
+        row["tier"] = TIER_A
 
 
 def sort_key(row: dict):

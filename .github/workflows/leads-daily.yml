@@ -34,6 +34,10 @@ jobs:
           SERPAPI_KEYS: ${{ secrets.SERPAPI_KEYS }}
           CALL_CITIES: Delhi
           CALL_TARGET: "50"
+          # Who answers each number (scripts/truecaller.py). Inert until set by
+          # scripts/truecaller_login.py; at most TRUECALLER_BUDGET lookups a day.
+          TRUECALLER_INSTALLATION_ID: ${{ secrets.TRUECALLER_INSTALLATION_ID }}
+          TRUECALLER_BUDGET: "40"
         run: python scripts/build_call_list.py
 
       - name: Commit if there are new leads
