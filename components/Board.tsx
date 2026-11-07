@@ -18,8 +18,7 @@ import { KeysPanel } from "./KeysPanel";
 import { OutreachSends } from "./OutreachSends";
 import { Planner } from "./Planner";
 import { SkillTree } from "./SkillTree";
-import { SatGrind } from "./SatGrind";
-import { AngusIdeas } from "./AngusIdeas";
+import { KaunReports } from "./KaunReports";
 import { OutreachDesk } from "./OutreachDesk";
 import { LockIn } from "./LockIn";
 import { DeadlineRail } from "./DeadlineRail";
@@ -32,14 +31,13 @@ const TABS = [
   { id: "lockin", label: "LOCK IN" },
   { id: "planner", label: "PLANNER" },
   { id: "skills", label: "SKILL TREE" },
-  { id: "sat", label: "SAT GRIND" },
   { id: "calls", label: "CALL LIST" },
   { id: "live", label: "LIVE CALLS" },
   { id: "leads", label: "LEADS" },
   { id: "pipelines", label: "PIPELINES" },
   { id: "studio", label: "STUDIO" },
   { id: "desk", label: "DESK" },
-  { id: "angus", label: "ANGUS" },
+  { id: "kaun", label: "KAUN" },
   { id: "drops", label: "INBOX · KEYS" },
   { id: "handoffs", label: "HANDOFFS" },
   { id: "life", label: "TO DOS · HABITS" },
@@ -146,15 +144,13 @@ export function Board() {
 
             {tab === "skills" && <SkillTree />}
 
-            {tab === "sat" && <SatGrind />}
-
             {tab === "pipelines" && <PipelineOps />}
 
             {tab === "studio" && <ReelStudio />}
 
             {tab === "desk" && <OutreachDesk />}
 
-            {tab === "angus" && <AngusIdeas />}
+            {tab === "kaun" && <KaunReports />}
 
             {tab === "calls" && <CallList today={today} />}
 

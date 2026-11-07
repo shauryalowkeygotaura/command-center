@@ -1,6 +1,6 @@
 """Emit public/status/now.json - the "site-alive" feed the portfolio reads.
 
-Two halves, exactly per the integration contract's nowJsonSchema:
+One half (the SAT "studying" half was removed 2026-11-07 with the SAT tab):
 
   shipping{ last_commit{repo,message,sha,at,url}, commits_7d, active_repo }
       Pulled live from the GitHub events API for GH_OWNER using GITHUB_TOKEN
@@ -8,12 +8,6 @@ Two halves, exactly per the integration contract's nowJsonSchema:
       Token is optional here - the endpoint works unauthenticated at a lower
       rate limit, so a missing token degrades, never crashes.
 
-  studying{ sat_target, sat_test_date, cards_due, cards_reviewed_today,
-            streak_days, current_focus, last_session_at }
-      Comes from the SAT GRIND tab's SM-2 localStorage state, exported by the
-      tab as data/now-studying.json (the only bridge from client state to this
-      static feed). If that snapshot is missing/stale we fall back to seed
-      defaults so the feed still renders.
 
 Plus generated_at (ISO8601 UTC) and a pre-rendered status_line so the portfolio
 needs zero logic.
@@ -36,24 +30,6 @@ from pathlib import Path
 GH_OWNER = "shauryalowkeygotaura"  # mirrors lib/pipelines.ts GH_OWNER
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "public" / "status" / "now.json"
-STUDY_SNAPSHOT = REPO / "data" / "now-studying.json"
-
-# Seed defaults for the studying half - used until the SAT tab exports a
-# fresher data/now-studying.json. Keep in sync with lib/sat.ts SAT_TARGET /
-# SAT_TEST_DATE.
-STUDY_DEFAULT = {
-    "sat_target": 1550,
-    "sat_test_date": "2026-08",
-    "cards_due": 0,
-    "cards_reviewed_today": 0,
-    "streak_days": 0,
-    "current_focus": "SAT math fundamentals",
-    "last_session_at": None,
-}
-
-# Only these keys are accepted from the snapshot (whitelist over trusting the
-# file wholesale) so a malformed export can never inject arbitrary fields.
-STUDY_KEYS = set(STUDY_DEFAULT.keys())
 
 
 def _utc_now_iso() -> str:
@@ -140,26 +116,7 @@ def _parse_iso(s: str | None):
         return None
 
 
-def _studying() -> dict:
-    """Studying half from the SAT tab snapshot, falling back to seed defaults.
-    Whitelist the known keys so a bad export can't inject fields."""
-    out = dict(STUDY_DEFAULT)
-    if not STUDY_SNAPSHOT.exists():
-        return out
-    try:
-        snap = json.loads(STUDY_SNAPSHOT.read_text(encoding="utf-8"))
-    except (ValueError, OSError) as e:
-        print(f"WARN: now-studying snapshot unreadable, using defaults: {e}")
-        return out
-    if not isinstance(snap, dict):
-        return out
-    for k in STUDY_KEYS:
-        if k in snap:
-            out[k] = snap[k]
-    return out
-
-
-def _status_line(shipping: dict, studying: dict) -> str:
+def _status_line(shipping: dict) -> str:
     """One pre-rendered human line so the portfolio needs zero logic."""
     parts: list[str] = []
     active = shipping.get("active_repo")
@@ -167,23 +124,15 @@ def _status_line(shipping: dict, studying: dict) -> str:
         parts.append(f"shipping {active}")
     elif shipping.get("commits_7d"):
         parts.append(f"{shipping['commits_7d']} commits this week")
-    due = studying.get("cards_due", 0)
-    target = studying.get("sat_target")
-    if due:
-        parts.append(f"{due} SAT cards due (target {target})")
-    else:
-        parts.append(f"SAT deck clear (target {target})")
     return " · ".join(parts) if parts else "building in public"
 
 
 def main() -> None:
     shipping = _shipping()
-    studying = _studying()
     feed = {
         "generated_at": _utc_now_iso(),
-        "status_line": _status_line(shipping, studying),
+        "status_line": _status_line(shipping),
         "shipping": shipping,
-        "studying": studying,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(feed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
