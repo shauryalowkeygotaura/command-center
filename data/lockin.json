@@ -729,33 +729,6 @@
       ]
     },
     {
-      "id": "d-li-w1-review",
-      "date": "2026-11-01",
-      "track": "brand",
-      "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
-      "minutes": 15,
-      "how": [
-        "LEARN: make sure each post's outcome box has its numbers, hit 'copy for claude' and paste it with 'next 5 LinkedIn posts'. Claude feeds it to the learning loop (Scripts/li_learn.py), which ranks hook, type, time and length and decides the next batch: 3 repeat what won, 1 varies it, 1 tests a new hook.",
-        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
-        "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
-        "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
-      ]
-    },
-    {
-      "id": "d-li-comments-2026-11",
-      "date": "2026-11-01",
-      "track": "brand",
-      "title": "LinkedIn comment session (Nov): 10 sharp comments on posts that matter",
-      "minutes": 30,
-      "how": [
-        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
-        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
-        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
-        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
-        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
-      ]
-    },
-    {
       "id": "d-exun-minet-x",
       "date": "2026-11-01",
       "track": "t20",
@@ -774,18 +747,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
-      "date": "2026-11-06",
-      "track": "brand",
-      "title": "Pick niche for revengineee",
-      "minutes": 30,
-      "how": [
-        "list 4 niche ideas",
-        "choose one",
-        "update content calendar"
-      ]
-    },
-    {
       "id": "d-conrad-check",
       "date": "2026-11-06",
       "track": "t20",
@@ -798,8 +759,47 @@
       ]
     },
     {
+      "id": "d-li-w1-review",
+      "date": "2026-11-09",
+      "track": "brand",
+      "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
+      "minutes": 15,
+      "how": [
+        "LEARN: make sure each post's outcome box has its numbers, hit 'copy for claude' and paste it with 'next 5 LinkedIn posts'. Claude feeds it to the learning loop (Scripts/li_learn.py), which ranks hook, type, time and length and decides the next batch: 3 repeat what won, 1 varies it, 1 tests a new hook.",
+        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
+        "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
+        "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
+      ]
+    },
+    {
+      "id": "d-li-comments-2026-11",
+      "date": "2026-11-09",
+      "track": "brand",
+      "title": "LinkedIn comment session (Nov): 10 sharp comments on posts that matter",
+      "minutes": 30,
+      "how": [
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
+      "date": "2026-11-09",
+      "track": "brand",
+      "title": "Pick niche for revengineee",
+      "minutes": 30,
+      "how": [
+        "list 4 niche ideas",
+        "choose one",
+        "update content calendar"
+      ]
+    },
+    {
       "id": "d-diamond-team",
-      "date": "2026-11-06",
+      "date": "2026-11-09",
       "track": "t20",
       "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
       "minutes": 30,
