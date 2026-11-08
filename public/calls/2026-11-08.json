@@ -1,0 +1,36 @@
+[
+  {
+    "number": "097838 11114",
+    "label": "Dr. Ramani's Dental Practice",
+    "whatsapp": "919783811114",
+    "area": "Rajendra Marg, Jaipur",
+    "website": "http://dentalpracticejaipur.com",
+    "description": "Hospital · orthodontist, dentist · has website",
+    "kind": "private",
+    "tier": "A",
+    "score": 10,
+    "reasons": [
+      "mobile, likely the owner",
+      "owner-named",
+      "dental, the pitch has proof",
+      "has a website",
+      "Jaipur, local angle"
+    ]
+  },
+  {
+    "number": "+91 141 274 3788",
+    "label": "Thaper Dental Clinic",
+    "whatsapp": "",
+    "area": "Sahakar Marg",
+    "website": "https://www.thaperdentalclinic.com/",
+    "description": "Dental clinic · has website · Mo-Sa 09:00-21:00",
+    "kind": "private",
+    "tier": "B",
+    "score": 4,
+    "reasons": [
+      "landline, likely the front desk",
+      "dental, the pitch has proof",
+      "has a website"
+    ]
+  }
+]
