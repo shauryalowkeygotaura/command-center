@@ -2,14 +2,32 @@
 
 // KAUN tab: VayuVani's pollution source attributions as complaint cards.
 // Data is the public Kaun feed (vayuvani repo, GitHub Pages, written hourly).
-// Nothing is filed automatically: each card copies a ready complaint for the
-// agency's app (Green Delhi / MCD 311 / Sameer have no web form or API) or
-// opens a pre-written X post. "Filed" marks are localStorage-only.
+// Nothing is filed automatically. Each card can open CPCB's Delhi NCR air
+// pollution web form pre-filled (via the kaun-fill userscript; you type the
+// captcha and press Submit), copy the complaint for an app (Green Delhi /
+// MCD 311 have no web form), or open a pre-written X post.
+// "Filed" marks and your contact details are localStorage-only: this repo and
+// site are public, so they never leave your browser except inside the link.
 
 import { useEffect, useMemo, useState } from "react";
 
 const FEED = "https://shauryalowkeygotaura.github.io/vayuvani/data/history.json";
 const FILED_KEY = "cc.kaun.filed.v1";
+const DETAILS_KEY = "cc.kaun.details.v1";
+const CPCB_FORM = "https://cpcb.gov.in/query-form1.php";
+const USERSCRIPT = "kaun-fill.user.js";
+
+// Kaun source -> CPCB form's own subject text (must match exactly; the
+// userscript refuses anything not in CPCB's dropdown).
+const CPCB_SUBJECT: Record<string, string> = {
+  biomass_burning: "Open/Garbage Burning",
+  traffic: "Visible Vehicular Emission",
+  industry: "Industrial Emission",
+  dust: "Road Dust",
+};
+
+type Details = { first_name: string; last_name: string; email: string; mobile: string };
+const NO_DETAILS: Details = { first_name: "", last_name: "", email: "", mobile: "" };
 
 type Attribution = {
   id: string;
@@ -72,6 +90,25 @@ function complaintText(a: Attribution, repeats: number): string {
     .join("\n");
 }
 
+const SECTOR_NAME: Record<string, string> = {
+  N: "north", NE: "north-east", E: "east", SE: "south-east",
+  S: "south", SW: "south-west", W: "west", NW: "north-west",
+};
+
+function cpcbLink(a: Attribution, repeats: number, d: Details): string {
+  const sector = a.sector ? SECTOR_NAME[a.sector] ?? a.sector : null;
+  const payload = {
+    ...d,
+    subject: CPCB_SUBJECT[a.top_source],
+    location:
+      `Around ${a.station_name} air quality monitoring station, Delhi ` +
+      `(${a.latitude.toFixed(4)}, ${a.longitude.toFixed(4)})` +
+      (sector ? `; source likely to the ${sector} of the station` : ""),
+    message: complaintText(a, repeats).slice(0, 1000),
+  };
+  return `${CPCB_FORM}#kaun=${encodeURIComponent(JSON.stringify(payload))}`;
+}
+
 function xText(a: Attribution, repeats: number): string {
   const ag = AGENCY[a.top_source];
   return (
@@ -87,6 +124,8 @@ export function KaunReports() {
   const [filed, setFiled] = useState<Record<string, string>>({});
   const [copied, setCopied] = useState<string | null>(null);
   const [showFiled, setShowFiled] = useState(false);
+  const [details, setDetails] = useState<Details>(NO_DETAILS);
+  const [editDetails, setEditDetails] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -96,6 +135,12 @@ export function KaunReports() {
         if (alive && saved && typeof saved === "object") setFiled(saved);
       } catch {
         /* corrupt or blocked storage: start clean */
+      }
+      try {
+        const d = JSON.parse(localStorage.getItem(DETAILS_KEY) || "null");
+        if (alive && d && typeof d === "object") setDetails({ ...NO_DETAILS, ...d });
+      } catch {
+        /* no saved details yet */
       }
       try {
         const r = await fetch(FEED, { cache: "no-store" });
@@ -141,6 +186,20 @@ export function KaunReports() {
     });
   }
 
+  function saveDetail(key: keyof Details, value: string) {
+    setDetails((prev) => {
+      const next = { ...prev, [key]: value };
+      try {
+        localStorage.setItem(DETAILS_KEY, JSON.stringify(next));
+      } catch {
+        /* quota / private mode */
+      }
+      return next;
+    });
+  }
+
+  const detailsReady = Boolean(details.first_name.trim() && details.email.trim());
+
   async function copy(id: string, text: string) {
     try {
       await navigator.clipboard.writeText(text);
@@ -172,9 +231,42 @@ export function KaunReports() {
           </div>
         </div>
         <p className="mt-1 font-mono text-[11px] text-cream-dim">
-          Medium/high-confidence spikes from the last 7 days. Copy the complaint into the agency app
-          (photo + location needed there), or post it on X. Nothing is sent for you.
+          Medium/high-confidence spikes from the last 7 days. &quot;Fill CPCB form&quot; opens CPCB&apos;s Delhi
+          NCR complaint form already filled in: you type the captcha and press Submit. Nothing is sent for you.
         </p>
+        <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-wide [&_button]:uppercase">
+          <a href={USERSCRIPT} className="text-indigo hover:text-burgundy-bright" title="Needs Tampermonkey or Violentmonkey; install once">
+            install form filler (once)
+          </a>
+          <button onClick={() => setEditDetails((v) => !v)} className="text-indigo hover:text-burgundy-bright">
+            {editDetails ? "done" : detailsReady ? `your details: ${details.first_name}` : "add your details"}
+          </button>
+        </div>
+        {editDetails && (
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {(
+              [
+                ["first_name", "First name *"],
+                ["last_name", "Last name"],
+                ["email", "Email *"],
+                ["mobile", "Mobile"],
+              ] as [keyof Details, string][]
+            ).map(([key, label]) => (
+              <label key={key} className="flex flex-col gap-1 font-mono text-[10px] uppercase text-cream-dim">
+                {label}
+                <input
+                  value={details[key]}
+                  onChange={(e) => saveDetail(key, e.target.value)}
+                  className="rounded border border-line bg-transparent px-2 py-1 font-mono text-xs normal-case text-cream"
+                  autoComplete={key === "email" ? "email" : key === "mobile" ? "tel" : "name"}
+                />
+              </label>
+            ))}
+            <p className="font-mono text-[10px] text-cream-dim sm:col-span-2">
+              Saved only in this browser. CPCB requires a name and email.
+            </p>
+          </div>
+        )}
       </section>
 
       {error && (
@@ -217,6 +309,23 @@ export function KaunReports() {
                 → {ag.name} via {ag.channel}
               </p>
               <div className="mt-3 flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-wide [&_button]:uppercase">
+                {CPCB_SUBJECT[a.top_source] && (
+                  <a
+                    href={cpcbLink(a, repeats, details)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      if (!detailsReady) {
+                        e.preventDefault();
+                        setEditDetails(true);
+                      }
+                    }}
+                    className="font-bold text-burgundy-bright hover:text-cream"
+                    title={detailsReady ? "Opens CPCB's form filled in; type the captcha and submit" : "Add your name and email first"}
+                  >
+                    fill cpcb form
+                  </a>
+                )}
                 <button onClick={() => copy(a.id, text)} className="text-indigo hover:text-burgundy-bright">
                   {copied === a.id ? "copied ✓" : "copy complaint"}
                 </button>
