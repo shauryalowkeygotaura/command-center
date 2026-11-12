@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kaun: CPCB complaint filler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Fills CPCB's Delhi NCR air pollution complaint form when opened from a command center KAUN card. You type the captcha and press Submit.",
   "content_scripts": [
     {

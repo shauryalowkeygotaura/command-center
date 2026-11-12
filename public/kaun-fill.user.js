@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kaun: fill CPCB air pollution complaint
 // @namespace    https://shauryalowkeygotaura.github.io/command-center/
-// @version      1.0.0
+// @version      1.1.0
 // @description  Fills CPCB's Delhi NCR air pollution complaint form from a Kaun card. You type the captcha and press Submit yourself.
 // @match        https://cpcb.gov.in/query-form1.php*
 // @run-at       document-idle
@@ -25,6 +25,15 @@
     return banner("Kaun: could not read the complaint data from the link.", true);
   }
   if (!data || typeof data !== "object") return;
+
+  // CPCB has at times switched the form off on their side: the live form's
+  // onsubmit is hard-wired to alert "Error while submitting form" and bounce.
+  // Filling it would only waste the complaint, so say so instead.
+  const dead = Array.from(document.forms).some((f) =>
+    /Error while submitting form/i.test(f.getAttribute("onsubmit") || ""));
+  if (dead) {
+    return banner("CPCB has switched this form off on their side (every Submit fails with 'Error while submitting form'). Kaun did not fill it. Use Copy complaint in the Green Delhi app, or Post on X.", true);
+  }
 
   // Field id -> (key in data, max length). Whitelist: nothing else is written.
   const FIELDS = {
