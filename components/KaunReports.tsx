@@ -9,13 +9,29 @@
 // "Filed" marks and your contact details are localStorage-only: this repo and
 // site are public, so they never leave your browser except inside the link.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const FEED = "https://shauryalowkeygotaura.github.io/vayuvani/data/history.json";
 const FILED_KEY = "cc.kaun.filed.v1";
 const DETAILS_KEY = "cc.kaun.details.v1";
 const CPCB_FORM = "https://cpcb.gov.in/query-form1.php";
 const USERSCRIPT = "kaun-fill.user.js";
+
+// Same filler as public/kaun-fill.user.js, as a bookmarklet: no extension
+// needed. Click it on the CPCB page that "fill cpcb form" opens. Writes only
+// whitelisted fields, never the captcha, never submits.
+const FILLER_SRC = `(function(){
+var m=location.hash.match(/^#kaun=(.+)$/);
+function b(t,w){var d=document.createElement("div");d.textContent=t;d.style.cssText="position:fixed;top:0;left:0;right:0;z-index:99999;padding:10px 16px;font:14px/1.4 system-ui,sans-serif;color:#fff;background:"+(w?"#9a3412":"#6b1d2a");document.body.appendChild(d);setTimeout(function(){d.remove()},12000)}
+if(location.hostname!=="cpcb.gov.in"||!m){b("Kaun: open this from a card's FILL CPCB FORM button first, then click the bookmark.",true);return}
+var x;try{x=JSON.parse(decodeURIComponent(m[1]))}catch(e){b("Kaun: could not read the complaint data.",true);return}
+var F={name1:["first_name",80],name2:["last_name",80],email:["email",120],mobile:["mobile",15],location:["location",300],message:["message",1000]},miss=[];
+for(var id in F){var el=document.getElementById(id),v=typeof x[F[id][0]]==="string"?x[F[id][0]].slice(0,F[id][1]):"";if(!el){miss.push(id);continue}if(!v)continue;el.value=v;el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}))}
+var s=document.getElementById("subject");if(s&&typeof x.subject==="string"){var o=Array.prototype.find.call(s.options,function(o){return o.text.trim()===x.subject});if(o){s.value=o.value;s.dispatchEvent(new Event("change",{bubbles:true}))}else miss.push("subject")}
+var c=document.getElementById("captcha_code");if(c){c.scrollIntoView({block:"center"});c.focus()}
+b(miss.length?"Kaun filled what it could; not filled: "+miss.join(", ")+". Check before submitting.":"Kaun filled the complaint. Check it, type the captcha, then press Submit.",miss.length>0)
+})();`;
+const BOOKMARKLET = "javascript:" + encodeURIComponent(FILLER_SRC.replace(/\n/g, ""));
 
 // Kaun source -> CPCB form's own subject text (must match exactly; the
 // userscript refuses anything not in CPCB's dropdown).
@@ -235,8 +251,10 @@ export function KaunReports() {
           NCR complaint form already filled in: you type the captcha and press Submit. Nothing is sent for you.
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-wide [&_button]:uppercase">
-          <a href={USERSCRIPT} className="text-indigo hover:text-burgundy-bright" title="Needs Tampermonkey or Violentmonkey; install once">
-            install form filler (once)
+          <BookmarkletLink />
+          <span className="normal-case text-cream-dim">← drag to your bookmarks bar once</span>
+          <a href={USERSCRIPT} className="text-cream-dim hover:text-cream" title="Optional: Tampermonkey version that fills automatically (Chrome needs 'Allow User Scripts' on)">
+            or userscript
           </a>
           <button onClick={() => setEditDetails((v) => !v)} className="text-indigo hover:text-burgundy-bright">
             {editDetails ? "done" : detailsReady ? `your details: ${details.first_name}` : "add your details"}
@@ -354,5 +372,24 @@ export function KaunReports() {
         })}
       </div>
     </div>
+  );
+}
+
+// React refuses javascript: URLs in href, so the bookmarklet is set on the DOM
+// node directly. Clicking it here does nothing; it is meant to be dragged.
+function BookmarkletLink() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    ref.current?.setAttribute("href", BOOKMARKLET);
+  }, []);
+  return (
+    <a
+      ref={ref}
+      onClick={(e) => e.preventDefault()}
+      className="rounded border border-burgundy-bright px-2 py-0.5 font-bold text-burgundy-bright"
+      title="Drag me to your bookmarks bar"
+    >
+      Kaun fill
+    </a>
   );
 }
