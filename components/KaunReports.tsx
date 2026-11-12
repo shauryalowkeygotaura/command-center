@@ -73,6 +73,8 @@ const AGENCY: Record<string, { name: string; channel: string; x: string }> = {
   traffic: { name: "Delhi Traffic Police", channel: "X (@dtptraffic)", x: "@dtptraffic" },
 };
 
+const RANK: Record<Attribution["confidence"], number> = { high: 0, medium: 1, low: 2 };
+
 const SOURCE_LABEL: Record<string, string> = {
   biomass_burning: "burning (garbage / biomass)",
   industry: "industry",
@@ -176,7 +178,7 @@ export function KaunReports() {
   // same station + same source in the feed's 7-day window.
   const cards = useMemo(() => {
     const usable = (rows ?? []).filter(
-      (a) => a.confidence !== "low" && AGENCY[a.top_source],
+      (a) => AGENCY[a.top_source],
     );
     const count = new Map<string, number>();
     for (const a of usable) {
@@ -185,7 +187,12 @@ export function KaunReports() {
     }
     return usable
       .map((a) => ({ a, repeats: count.get(`${a.station_id}|${a.top_source}`) ?? 1 }))
-      .sort((x, y) => y.a.window_end.localeCompare(x.a.window_end));
+      // High first, then medium, then low; newest first within each.
+      .sort(
+        (x, y) =>
+          RANK[x.a.confidence] - RANK[y.a.confidence] ||
+          y.a.window_end.localeCompare(x.a.window_end),
+      );
   }, [rows]);
 
   function toggleFiled(id: string) {
@@ -247,12 +254,15 @@ export function KaunReports() {
           </div>
         </div>
         <p className="mt-1 font-mono text-[11px] text-cream-dim">
-          Medium/high-confidence spikes from the last 7 days. &quot;Fill CPCB form&quot; opens CPCB&apos;s Delhi
+          Spikes from the last 7 days, high confidence first, low last (low = weak evidence, check before filing). &quot;Fill CPCB form&quot; opens CPCB&apos;s Delhi
           NCR complaint form already filled in: you type the captcha and press Submit. Nothing is sent for you.
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-wide [&_button]:uppercase">
           <BookmarkletLink />
-          <span className="normal-case text-cream-dim">← drag to your bookmarks bar once</span>
+          <span className="normal-case text-cream-dim">
+            ← no extension? drag to bookmarks, click it on the CPCB page. With the Kaun extension
+            (repo: extension/kaun-filler, Chrome &gt; Load unpacked) the form fills by itself.
+          </span>
           <a href={USERSCRIPT} className="text-cream-dim hover:text-cream" title="Optional: Tampermonkey version that fills automatically (Chrome needs 'Allow User Scripts' on)">
             or userscript
           </a>
@@ -305,7 +315,7 @@ export function KaunReports() {
           return (
             <article
               key={a.id}
-              className={`rounded-lg border border-line bg-panel p-4 ${isFiled ? "opacity-50" : ""}`}
+              className={`rounded-lg border border-line bg-panel p-4 ${isFiled ? "opacity-50" : a.confidence === "low" ? "opacity-70" : ""}`}
             >
               <div className="flex items-baseline justify-between gap-2">
                 <h3 className="font-mono text-sm font-bold text-cream">{a.station_name}</h3>
