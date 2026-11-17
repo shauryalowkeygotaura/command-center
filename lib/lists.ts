@@ -118,13 +118,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-30: the avatar is now your own manhwa drawing (assets/avatar/manhwa-v1.png + rig-base.png): 10 expressions, jointed arms, robot hands, entrances/camera/b-roll moves (demo: Code/vtuber-render/output/cartoon/moves-demo-v1.mp4). The photo version is retired. HOW TO RECORD: quietest room, fan/AC off, door shut; phone voice recorder 15-20 cm from your mouth, slightly below the chin; no earphone mic; talk with reel energy, don't 'read'; 60-90 s; read the 10 lines in READ-THIS.md (mixed tones on purpose: hype, calm, question, shock). Optional take2-hinglish.m4a with lines 1/3/6/8 the way you'd say them to a friend. Save into Code/vtuber-render/samples/voice/ (gitignored, never pushed). THEN: reply `take = take1.m4a`. I clone it free and locally first (zero-shot clone, no upload); if it doesn't sound like you, the upgrade is ElevenLabs Instant Voice Clone (Starter, about $5/mo), your call. Nothing gets posted without your OK.",
   },
   {
-    id: "h-groq-key-dead",
-    text: "P2 · One Groq key was REVOKED: 3 Doppler projects have no working key, football shorts has failed 7 of its last 8 runs",
-    done: false,
-    seeded: true,
-    note: "2026-11-17 key health check (every Groq key in every Doppler project tested): 6 distinct keys, 5 alive, 1 answers 401. The dead one is the ONLY key in creative-studio (football-shorts CI reads this project; 401 in its log), heart-venture-paper and youtube-title-autoresearch, so those are fully dead. autoshop, philosopher-pipeline and vayuvani also hold it but fall through to live keys. Which key it is: see Notes/claude-notes/groq-key-health-2026-11-17.md (vault only, not on this public page). Also check GitHub repo secrets copied from Doppler (vtuber-render, nightcrew) since I cannot read those. Fix is one command, ready and tested up to the write: `! python Scripts/replace_dead_groq.py` from the vault (swaps it for a live spare in the 3 dead projects, prints only last-4s, re-tests each). The guard blocks me from moving keys between projects even with your OK. Separately, football's TTS step also failed (edge-tts returned no audio). Reply `groq = replaced`.",
-  },
-  {
     id: "h-roblox-creator-ready",
     text: "P2 · ROBLOX account: turn on 2FA and do the age check. Every nightcrew game is stuck 16+ only without it",
     done: false,
@@ -319,6 +312,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-03: wired as you asked. Each taste-engine project now binds ONE board (kept local, gitignored). `/ts pin <url>` binds and pulls it, `/ts pin` alone re-pulls. The robots.txt acknowledgement is set once in your Claude settings. Reply `pin <project> = <board url>` for each.",
     done: false,
     seeded: true,
+  },
+  {
+    id: "h-groq-key-dead",
+    text: "P3 · Groq cleanup: the revoked key still sits first in 3 pools (autoshop, philosopher-pipeline, vayuvani). Delete it there",
+    done: false,
+    seeded: true,
+    note: "2026-11-17: you ran Scripts/replace_dead_groq.py and the 3 projects with no working key are fixed (re-checked: all 200). What is left is cosmetic: autoshop GROQ_API_KEY_2, philosopher-pipeline GROQ_API_KEY and one entry in vayuvani GROQ_API_KEYS still hold the dead key, so each call there wastes one 401 before a live key answers. Also check GitHub repo secrets copied from Doppler (vtuber-render, nightcrew), which I cannot read. Football shorts will still fail at its TTS step (edge-tts returned no audio); that is separate. Re-check anytime with `python Scripts/groq_key_health.py`. Reply `groq = cleaned`.",
   },
   {
     id: "h-revengine-ig-autopost",
