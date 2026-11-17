@@ -122,14 +122,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     text: "P2 · One Groq key was REVOKED: 3 Doppler projects have no working key, football shorts has failed 7 of its last 8 runs",
     done: false,
     seeded: true,
-    note: "2026-11-17 key health check (every Groq key in every Doppler project tested): 6 distinct keys, 5 alive, 1 answers 401. The dead one is the ONLY key in creative-studio (football-shorts CI reads this project; 401 in its log), heart-venture-paper and youtube-title-autoresearch, so those are fully dead. autoshop, philosopher-pipeline and vayuvani also hold it but fall through to live keys. Which key it is: see Notes/claude-notes/groq-key-health-2026-11-17.md (vault only, not on this public page). Also check GitHub repo secrets copied from Doppler (vtuber-render, nightcrew) since I cannot read those. Fix: replace it with a live key from a different Groq account; moving keys between projects is blocked for me. Separately, football's TTS step also failed (edge-tts returned no audio). Reply `groq = replaced`.",
-  },
-  {
-    id: "h-portfolio-cron-push",
-    text: "P2 · PUSH portfolio commit 87a7d45: its self-learning loop has been dead since Google retired Gemini 1.5 Flash",
-    done: false,
-    seeded: true,
-    note: "2026-11-17: both crons (/api/iterate daily copy, /api/iterate-personalization weekly cohorts) called gemini-1.5-flash, which now answers 404, so every run since the retirement proposed nothing and failed quietly. Fixed locally: they now use Groq through the same key pool as the voice demo (qwen3.8-27b, falling back to gpt-oss-120b, retried once after a pause; both models verified returning JSON tonight). I could not push: push to master is a production deploy and the auto-mode guard blocked it, correctly. Run `git push` in Code/portfolio. Reply `portfolio = pushed`.",
+    note: "2026-11-17 key health check (every Groq key in every Doppler project tested): 6 distinct keys, 5 alive, 1 answers 401. The dead one is the ONLY key in creative-studio (football-shorts CI reads this project; 401 in its log), heart-venture-paper and youtube-title-autoresearch, so those are fully dead. autoshop, philosopher-pipeline and vayuvani also hold it but fall through to live keys. Which key it is: see Notes/claude-notes/groq-key-health-2026-11-17.md (vault only, not on this public page). Also check GitHub repo secrets copied from Doppler (vtuber-render, nightcrew) since I cannot read those. Fix is one command, ready and tested up to the write: `! python Scripts/replace_dead_groq.py` from the vault (swaps it for a live spare in the 3 dead projects, prints only last-4s, re-tests each). The guard blocks me from moving keys between projects even with your OK. Separately, football's TTS step also failed (edge-tts returned no audio). Reply `groq = replaced`.",
   },
   {
     id: "h-roblox-creator-ready",
