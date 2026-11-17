@@ -654,18 +654,6 @@
   ],
   "dated": [
     {
-      "id": "d-spaceapps-check",
-      "date": "2026-10-09",
-      "track": "t20",
-      "title": "Check right now: are you registered for NASA Space Apps (14 to 15 Nov, Delhi)?",
-      "minutes": 10,
-      "how": [
-        "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
-        "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
-        "If not registered: register now (it opened 26 Aug and is free), join or form a team, pick the New Delhi local event or remote."
-      ]
-    },
-    {
       "id": "d-linkedin-token",
       "date": "2026-10-22",
       "track": "systems",
@@ -773,18 +761,6 @@
       ]
     },
     {
-      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
-      "date": "2026-11-09",
-      "track": "brand",
-      "title": "Pick niche for revengineee",
-      "minutes": 30,
-      "how": [
-        "list 4 niche ideas",
-        "choose one",
-        "update content calendar"
-      ]
-    },
-    {
       "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
       "date": "2026-11-11",
       "track": "t20",
@@ -816,18 +792,6 @@
       ]
     },
     {
-      "id": "d-diamond-team",
-      "date": "2026-11-13",
-      "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
-      "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
-      ]
-    },
-    {
       "id": "d-spaceapps-scope",
       "date": "2026-11-13",
       "track": "t20",
@@ -836,28 +800,6 @@
       "how": [
         "One paragraph: which challenge, what the demo shows in 2 minutes, which NASA dataset. Smaller than you think.",
         "Charge laptop, test that the VayuVani app still runs, sleep."
-      ]
-    },
-    {
-      "id": "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess",
-      "date": "2026-11-13",
-      "track": "seniors",
-      "title": "Call Dua Care Homes for scam‑safety session",
-      "minutes": 30,
-      "how": [
-        "dial number",
-        "explain session outline",
-        "schedule date"
-      ]
-    },
-    {
-      "id": "d-spaceapps-weekend",
-      "date": "2026-11-14",
-      "track": "t20",
-      "title": "NASA Space Apps weekend: build and submit",
-      "minutes": 600,
-      "how": [
-        "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
       ]
     },
     {
@@ -870,6 +812,64 @@
         "Registration ran 1 Aug to 3 Oct 2026 (register.irisnationalfair.org), so this only applies if you registered before it closed.",
         "Check the IRIS portal and your email for the finalist list. Finalists go on toward Team India for Regeneron ISEF 2027.",
         "Write the result in the outcome box: finalist / not selected / did not register."
+      ]
+    },
+    {
+      "id": "d-spaceapps-check",
+      "date": "2026-11-18",
+      "track": "t20",
+      "title": "Check right now: are you registered for NASA Space Apps (14 to 15 Nov, Delhi)?",
+      "minutes": 10,
+      "how": [
+        "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
+        "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
+        "If not registered: register now (it opened 26 Aug and is free), join or form a team, pick the New Delhi local event or remote."
+      ]
+    },
+    {
+      "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
+      "date": "2026-11-18",
+      "track": "brand",
+      "title": "Pick niche for revengineee",
+      "minutes": 30,
+      "how": [
+        "list 4 niche ideas",
+        "choose one",
+        "update content calendar"
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-11-18",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess",
+      "date": "2026-11-18",
+      "track": "seniors",
+      "title": "Call Dua Care Homes for scam‑safety session",
+      "minutes": 30,
+      "how": [
+        "dial number",
+        "explain session outline",
+        "schedule date"
+      ]
+    },
+    {
+      "id": "d-spaceapps-weekend",
+      "date": "2026-11-18",
+      "track": "t20",
+      "title": "NASA Space Apps weekend: build and submit",
+      "minutes": 600,
+      "how": [
+        "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
       ]
     },
     {
