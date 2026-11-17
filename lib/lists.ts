@@ -118,6 +118,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-30: the avatar is now your own manhwa drawing (assets/avatar/manhwa-v1.png + rig-base.png): 10 expressions, jointed arms, robot hands, entrances/camera/b-roll moves (demo: Code/vtuber-render/output/cartoon/moves-demo-v1.mp4). The photo version is retired. HOW TO RECORD: quietest room, fan/AC off, door shut; phone voice recorder 15-20 cm from your mouth, slightly below the chin; no earphone mic; talk with reel energy, don't 'read'; 60-90 s; read the 10 lines in READ-THIS.md (mixed tones on purpose: hype, calm, question, shock). Optional take2-hinglish.m4a with lines 1/3/6/8 the way you'd say them to a friend. Save into Code/vtuber-render/samples/voice/ (gitignored, never pushed). THEN: reply `take = take1.m4a`. I clone it free and locally first (zero-shot clone, no upload); if it doesn't sound like you, the upgrade is ElevenLabs Instant Voice Clone (Starter, about $5/mo), your call. Nothing gets posted without your OK.",
   },
   {
+    id: "h-groq-key-dead",
+    text: "P2 · One Groq key was REVOKED: 3 Doppler projects have no working key, football shorts has failed 7 of its last 8 runs",
+    done: false,
+    seeded: true,
+    note: "2026-11-17 key health check (every Groq key in every Doppler project tested): 6 distinct keys, 5 alive, 1 answers 401. The dead one is the ONLY key in creative-studio (football-shorts CI reads this project; 401 in its log), heart-venture-paper and youtube-title-autoresearch, so those are fully dead. autoshop, philosopher-pipeline and vayuvani also hold it but fall through to live keys. Which key it is: see Notes/claude-notes/groq-key-health-2026-11-17.md (vault only, not on this public page). Also check GitHub repo secrets copied from Doppler (vtuber-render, nightcrew) since I cannot read those. Fix: replace it with a live key from a different Groq account; moving keys between projects is blocked for me. Separately, football's TTS step also failed (edge-tts returned no audio). Reply `groq = replaced`.",
+  },
+  {
     id: "h-portfolio-cron-push",
     text: "P2 · PUSH portfolio commit 87a7d45: its self-learning loop has been dead since Google retired Gemini 1.5 Flash",
     done: false,
