@@ -118,6 +118,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-30: the avatar is now your own manhwa drawing (assets/avatar/manhwa-v1.png + rig-base.png): 10 expressions, jointed arms, robot hands, entrances/camera/b-roll moves (demo: Code/vtuber-render/output/cartoon/moves-demo-v1.mp4). The photo version is retired. HOW TO RECORD: quietest room, fan/AC off, door shut; phone voice recorder 15-20 cm from your mouth, slightly below the chin; no earphone mic; talk with reel energy, don't 'read'; 60-90 s; read the 10 lines in READ-THIS.md (mixed tones on purpose: hype, calm, question, shock). Optional take2-hinglish.m4a with lines 1/3/6/8 the way you'd say them to a friend. Save into Code/vtuber-render/samples/voice/ (gitignored, never pushed). THEN: reply `take = take1.m4a`. I clone it free and locally first (zero-shot clone, no upload); if it doesn't sound like you, the upgrade is ElevenLabs Instant Voice Clone (Starter, about $5/mo), your call. Nothing gets posted without your OK.",
   },
   {
+    id: "h-portfolio-cron-push",
+    text: "P2 · PUSH portfolio commit 87a7d45: its self-learning loop has been dead since Google retired Gemini 1.5 Flash",
+    done: false,
+    seeded: true,
+    note: "2026-11-17: both crons (/api/iterate daily copy, /api/iterate-personalization weekly cohorts) called gemini-1.5-flash, which now answers 404, so every run since the retirement proposed nothing and failed quietly. Fixed locally: they now use Groq through the same key pool as the voice demo (qwen3.8-27b, falling back to gpt-oss-120b, retried once after a pause; both models verified returning JSON tonight). I could not push: push to master is a production deploy and the auto-mode guard blocked it, correctly. Run `git push` in Code/portfolio. Reply `portfolio = pushed`.",
+  },
+  {
     id: "h-roblox-creator-ready",
     text: "P2 · ROBLOX account: turn on 2FA and do the age check. Every nightcrew game is stuck 16+ only without it",
     done: false,
