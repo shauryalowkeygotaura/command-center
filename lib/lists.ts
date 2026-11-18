@@ -72,6 +72,7 @@ export function mergeChecklistSeed(
 //   P1 = this week, money or a live person waiting. P2 = unblocks automation
 //   or closes a real risk. P3 = parked or nice to have. RULE: every time a
 //   handoff is added, re-rank the WHOLE list, not just prepend the new one.
+// Retired 2026-11-18: h-vayuvani-kaun-merge (PR #4 merged 18 Nov).
 // Retired 2026-10-30: h-quant-explain-ml (ml_strategy.py done 10-01: lost to buy & hold),
 //   h-quant-fish-channel (fish_study.py scorecard done 10-08), h-paralang-latency +
 //   h-paralang-listen-perf (v0.3 hybrid mode + prewarmed worker; speed test passes, 0.4 s).
@@ -104,11 +105,11 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-15: every 23:00 review so far said 'source: plan' because your ticks and handoff replies never left the browser. Now LOCK IN sends them through your KEYS passphrase (no GitHub token, no paste), and the review reads every new reply, writes what happened, and edits tomorrow itself: re-dates what slipped, adds follow-ups your replies create, retires only what your ticks or replies say is finished (max 6 changes, all listed in Notes/claude-notes/lockin-<date>.md). If you see 'log ✕', your browser's saved passphrase is stale: re-enter it in the KEYS panel's settings gear. Reply `log = ok` or `log = x`.",
   },
   {
-    id: "h-vayuvani-kaun-merge",
-    text: "P1 · MERGE VayuVani PR #4 (Kaun 0.2: cause decomposition, land-use v2, regions). It is the T20 build and has sat open since 13 Nov",
+    id: "h-vayuvani-answer-key",
+    text: "P1 · SEND the two VayuVani answer-key requests: email Dr Shahzad Gani (IIT Delhi) and file an RTI with DPCC for the Rouse Avenue supersite data",
+    note: "Kaun failed its blind test: local source calls are at chance level. Measured hourly source data is the only way to tune it to a real 95%. The Gani email is also a mentorship, internship and rec-letter opening, written to that standard. Both drafts are in Code/vayuvani/docs/outreach/answer_key_requests.md, with what to verify before sending. Reply with what came back.",
     done: false,
     seeded: true,
-    note: "2026-11-18: you made VayuVani your T20 focus. Kaun already runs hourly in CI and feeds the KAUN tab, but the 0.2 engine (every attribution names a cause, not just a place) is still on PR #4; my local merge is blocked by the permission guard, so it is one click for you on GitHub. Merge it, then tell me what the KAUN tab should show judges first. Reply `kaun = merged`.",
   },
   {
     id: "h-roblox-creator-ready",
