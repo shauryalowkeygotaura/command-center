@@ -132,6 +132,27 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-11-17: Space Apps was 14-15 Nov; tell me what you entered so it lands in the T20 log. Diamond's concept is due 14 Jan 2027, 5 PM ET, and needs 2-4 people plus an adult advisor, so the team is still the long pole. Reply `t20 = spaceapps <what happened>, diamond <names>`.",
   },
   {
+    id: "h-oracle-free-server",
+    text: "P2 · CLAIM the Oracle Always Free server (2 CPU / 12 GB ARM, free forever): runs the voice agents 24/7 at $0",
+    done: false,
+    seeded: true,
+    note: "2026-11-18: full guide in Deliverables/free-cloud-ai-perks-redemption-guide-2026-11-18.md. One step per line:\n1. Get a Visa or Mastercard CREDIT card ready (RuPay, prepaid, virtual fail). Turn on international transactions in the bank app.\n2. Turn OFF any VPN.\n3. Open oracle.com/cloud/free, click Start for free, country India, verify email.\n4. Pick an account name (it becomes your console URL).\n5. Home region (permanent): Hyderabad or Mumbai for low voice latency; Singapore if those say out of capacity.\n6. Enter address, verify phone by SMS, add the card (~Rs 100 hold, refunded), accept.\n7. Wait for the 'account provisioned' email.\n8. If 'Error Processing Transaction': stop retrying, wait 24h, try another card.\n9. Once in, reply `oracle = in <region>` and I create the server, firewall and SSH setup with you.\nRemember: the limit is 2 CPU / 12 GB total now, not the 4/24 in old videos; anything over gets auto-deleted.",
+  },
+  {
+    id: "h-mistral-free-api",
+    text: "P2 · GET a free Mistral API key (Experiment plan, ~1B tokens/month, no card) as a backup brain next to the Groq pool",
+    done: false,
+    seeded: true,
+    note: "2026-11-18: one step per line:\n1. Open console.mistral.ai and sign up (Google login is fine).\n2. Verify your phone number when asked.\n3. Go to Admin / Billing and choose the free Experiment plan (no card).\n4. Go to Privacy settings and turn OFF 'use my data for training'.\n5. Open API Keys, click Create new key, name it shaurya-main, no expiry.\n6. Copy the key once (it is shown only once).\n7. Run: doppler secrets set MISTRAL_API_KEY in each project that needs it (never paste it in chat).\n8. Reply `mistral = in doppler` and I wire it as the fallback after Groq.",
+  },
+  {
+    id: "h-cloudflare-free",
+    text: "P2 · OPEN a free Cloudflare account: free HTTPS + tunnel in front of the Oracle server, Workers, and 10 GB R2 storage",
+    done: false,
+    seeded: true,
+    note: "2026-11-18: one step per line:\n1. Open dash.cloudflare.com/sign-up, use your main email, verify it.\n2. Skip 'add a domain' for now (use the Student Pack free domain later).\n3. Open Workers & Pages once so the free workers.dev subdomain gets created; pick a subdomain name.\n4. Open R2 and click Enable (free plan, 10 GB; it may ask for a card but does not charge under the free limits).\n5. Go to My Profile, API Tokens, Create Token, template 'Edit Cloudflare Workers'.\n6. Copy the token and Account ID (right sidebar on the dashboard).\n7. Run: doppler secrets set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.\n8. Reply `cloudflare = in` and I set up the tunnel to the Oracle box.",
+  },
+  {
     id: "h-roblox-studio-plugin",
     text: "P2 · INSTALL Roblox's official Claude plugin (/plugin, search Roblox Studio) so I can playtest and screenshot nightcrew games",
     done: false,

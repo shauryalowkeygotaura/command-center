@@ -387,7 +387,7 @@ export function Checklist({
                 </button>
               </div>
               {it.note && !it.done && (
-                <p className="ml-7 mt-0.5 font-mono text-[11px] leading-snug text-cream-dim">
+                <p className="ml-7 mt-0.5 whitespace-pre-line font-mono text-[11px] leading-snug text-cream-dim">
                   {it.note}
                 </p>
               )}
