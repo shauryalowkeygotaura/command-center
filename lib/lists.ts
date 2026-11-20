@@ -169,10 +169,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-dental-sarvam-path",
-    text: "P2 · Dental: a cheaper Hinglish-first stack now exists (Exotel + Pipecat + Sarvam). Test it before the next clinic, or stay on VAPI?",
+    text: "P2 · Dental: test Sarvam ears + voice inside your Pipecat agent on real clinic audio (Hinglish accuracy vs Groq Whisper)",
     done: false,
     seeded: true,
-    note: "2026-11-17 scout: Exotel's Voicebot Applet streams straight into Pipecat (ExotelFrameSerializer), and Sarvam's saaras:v3-realtime STT + bulbul TTS ship in pipecat-ai[sarvam]. Sarvam leads Hindi/Hinglish accuracy in every comparison I found, though all were vendor-run, so it needs a test on real clinic audio. It also fits the rule that the CPaaS is Indian and in the clinic's name. The live VAPI agents are untouched. DPDP: notice, consent and breach duties apply from 13 May 2027. Reply `dental = test sarvam` or `dental = stay vapi`.",
+    note: "2026-11-17 scout: Exotel's Voicebot Applet streams straight into Pipecat (ExotelFrameSerializer), and Sarvam's saaras:v3-realtime STT + bulbul TTS ship in pipecat-ai[sarvam]. Sarvam leads Hindi/Hinglish accuracy in every comparison I found, though all were vendor-run, so it needs a test on real clinic audio. Your agent already runs on Pipecat + Groq, so this is a swap of the STT/TTS services, not a new stack; Exotel's serializer also keeps the CPaaS Indian and in the clinic's name. DPDP: notice, consent and breach duties apply from 13 May 2027. Reply `dental = test sarvam` or `dental = keep groq whisper`.",
   },
   {
     id: "h-rt-agent-mic",
@@ -205,7 +205,7 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   {
     id: "h-vayuvani-groq-env",
     text: "P2 · VayuVani: now on Groq with model switching and git-versioned; set GROQ_API_KEY in its Vercel env before the next deploy",
-    note: "2026-10-03: both vayuvani folders were unversioned, so they are git repos now (baseline commit first). The app and the Python advisory swapped Claude Haiku via AI Gateway for Groq with model switching, plus a check that sends a Hindi reply containing stray foreign words to the next model (qwen once dropped a Turkish word into a Hindi advisory). VAPI config: the invalid model id is fixed, ears are nova-3 multi with a nova-2 fallback, and ElevenLabs multilingual stays the main voice because callers speak Hindi, with Aura-2 as fallback. Not deployed: the app needs GROQ_API_KEY in Vercel first, or advisories fall back to the static lines. No GitHub remote yet either. Reply `vayuvani = deploy` once the key is in.",
+    note: "2026-10-03: both vayuvani folders were unversioned, so they are git repos now (baseline commit first). The app and the Python advisory swapped Claude Haiku via AI Gateway for Groq with model switching, plus a check that sends a Hindi reply containing stray foreign words to the next model (qwen once dropped a Turkish word into a Hindi advisory). Not deployed: the app needs GROQ_API_KEY in Vercel first, or advisories fall back to the static lines. No GitHub remote yet either. Reply `vayuvani = deploy` once the key is in.",
     done: false,
     seeded: true,
   },
