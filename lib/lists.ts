@@ -133,6 +133,13 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-11-17: Space Apps was 14-15 Nov; tell me what you entered so it lands in the T20 log. Diamond's concept is due 14 Jan 2027, 5 PM ET, and needs 2-4 people plus an adult advisor, so the team is still the long pole. Reply `t20 = spaceapps <what happened>, diamond <names>`.",
   },
   {
+    id: "h-li-comment-round",
+    text: "P2 · LINKEDIN comment round: run Scripts/linkedin-feed-copy.js on your scrolled feed, paste the result to me, post the comments I draft yourself",
+    done: false,
+    seeded: true,
+    note: "2026-11-20: a comment on a big post reaches more people than most of your own posts, and you send each one by hand. The snippet only copies posts already on the page (up to 15, no ads, no short ones), so nothing automated touches the account. I draft 2 options per post with li-comment and li-human. Untested on live LinkedIn: if it says 0 posts, send a screenshot of one post opened in Inspect. Reply `li = ran, <n> posts` or `li = 0 posts`.",
+  },
+  {
     id: "h-oracle-free-server",
     text: "P2 · CLAIM the Oracle Always Free server (2 CPU / 12 GB ARM, free forever): runs the voice agents 24/7 at $0",
     done: false,
