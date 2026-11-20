@@ -133,6 +133,20 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-11-17: Space Apps was 14-15 Nov; tell me what you entered so it lands in the T20 log. Diamond's concept is due 14 Jan 2027, 5 PM ET, and needs 2-4 people plus an adult advisor, so the team is still the long pole. Reply `t20 = spaceapps <what happened>, diamond <names>`.",
   },
   {
+    id: "h-clipworks-meta-app",
+    text: "P2 · CREATE a Meta developer app (Instagram Graph API): instagrapi logins are now dead, this is the only Instagram path left, and it unlocks auto trial reels",
+    done: false,
+    seeded: true,
+    note: "2026-10-22: your 3.0.20 run also got 'Your version of Instagram is out of date'. The newest instagrapi (3.1.0) still sends the same app version (449), so upgrading again changes nothing; that is why the login handoff is retired into this one. Worth it because it pays for itself twice. publikclip already ships an Instagram feedback loop that pulls real Reels insights and calibrates its virality scores against your actual views, so after a few weeks the scorer learns what performs on YOUR account rather than a generic prior. The same app also posts via the official Content Publishing API, which replaces instagrapi and removes the ban vector at zero marginal cost since you need the app regardless. Requires the IG account to be Professional (Creator or Business) linked to a Facebook Page. Send the App ID and Secret through the KEYS panel, not plain chat, then reply `meta = done`.",
+  },
+  {
+    id: "h-trial-reels-loop",
+    text: "P2 · TRIAL REELS loop for philosopher-pipeline: is the account Business/Creator linked to a Facebook Page? Yes = I build it",
+    done: false,
+    seeded: true,
+    note: "From the reel you sent (DfzD-XNnDQx): auto-generate hook variants of one reel, post them as trial reels (non-followers only), see which spread, learn why, evolve the hooks. Philosopher-pipeline is the first target because it already has HOOKS + a bandit whose loop never closed; trial reels give a clean A/B (same quote, only the hook differs). Needs the official Graph API (trial_params with SS_PERFORMANCE auto-graduation), so it depends on the Meta app handoff above; instagrapi cannot do it and is what got the account restricted. Unverified: whether insights return reach for trial reels. format-render and vtuber-render follow later (vtuber stays approve-before-post). Reply `trial = yes` or `trial = no page`.",
+  },
+  {
     id: "h-li-comment-round",
     text: "P2 · LINKEDIN comment round: run Scripts/linkedin-feed-copy.js on your scrolled feed, paste the result to me, post the comments I draft yourself",
     done: false,
@@ -257,13 +271,6 @@ export const HANDOFF_SEED: ChecklistItem[] = [
     note: "2026-10-30 (LOCK IN task): the cron was dying on no-network at wake (3 days lost) and LinkedIn rejected a retired API version (426). Fixed: waits up to 20 min for the network, LinkedIn version rolls itself, one platform failing no longer kills the rest, and whenever auto-post is off or fails you get a hand-post bundle (numbered JPGs + caption.txt). Expired IG session = one re-login retry; any other IG error is never retried, so it cannot double-post. Flip POST_IG=1 once the account is aged (Meta app handoff is the long-term route).",
     done: false,
     seeded: true,
-  },
-  {
-    id: "h-clipworks-meta-app",
-    text: "P2 · CREATE a Meta developer app (Instagram Graph API): instagrapi logins are now dead, this is the only Instagram path left",
-    done: false,
-    seeded: true,
-    note: "2026-10-22: your 3.0.20 run also got 'Your version of Instagram is out of date'. The newest instagrapi (3.1.0) still sends the same app version (449), so upgrading again changes nothing; that is why the login handoff is retired into this one. Worth it because it pays for itself twice. publikclip already ships an Instagram feedback loop that pulls real Reels insights and calibrates its virality scores against your actual views, so after a few weeks the scorer learns what performs on YOUR account rather than a generic prior. The same app also posts via the official Content Publishing API, which replaces instagrapi and removes the ban vector at zero marginal cost since you need the app regardless. Requires the IG account to be Professional (Creator or Business) linked to a Facebook Page. Send the App ID and Secret through the KEYS panel, not plain chat, then reply `meta = done`.",
   },
   {
     id: "h-pixabay-key",
