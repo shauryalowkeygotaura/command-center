@@ -779,19 +779,6 @@
       ]
     },
     {
-      "id": "d-li-w1-review",
-      "date": "2026-11-13",
-      "track": "brand",
-      "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
-      "minutes": 15,
-      "how": [
-        "LEARN: make sure each post's outcome box has its numbers, hit 'copy for claude' and paste it with 'next 5 LinkedIn posts'. Claude feeds it to the learning loop (Scripts/li_learn.py), which ranks hook, type, time and length and decides the next batch: 3 repeat what won, 1 varies it, 1 tests a new hook.",
-        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
-        "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
-        "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
-      ]
-    },
-    {
       "id": "d-spaceapps-scope",
       "date": "2026-11-13",
       "track": "t20",
@@ -839,18 +826,6 @@
       ]
     },
     {
-      "id": "d-diamond-team",
-      "date": "2026-11-19",
-      "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
-      "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
-      ]
-    },
-    {
       "id": "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess",
       "date": "2026-11-19",
       "track": "seniors",
@@ -870,6 +845,31 @@
       "minutes": 600,
       "how": [
         "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
+      ]
+    },
+    {
+      "id": "d-li-w1-review",
+      "date": "2026-11-22",
+      "track": "brand",
+      "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
+      "minutes": 15,
+      "how": [
+        "LEARN: make sure each post's outcome box has its numbers, hit 'copy for claude' and paste it with 'next 5 LinkedIn posts'. Claude feeds it to the learning loop (Scripts/li_learn.py), which ranks hook, type, time and length and decides the next batch: 3 repeat what won, 1 varies it, 1 tests a new hook.",
+        "Rule of thumb: if one post beat the others by 2x, the hook type did it, not the day or time. Fix hooks before you touch posting times.",
+        "BATCH 2: tell Claude 'next 5 LinkedIn posts' plus what really happened this week (walk-ins, calls, builds, numbers). Claude writes all 5 to Vault/Deliverables, adds them to this queue with schedule times, and you schedule them in one sitting.",
+        "Rhythm: batches of 5. Each batch is written the day the previous one runs out, after its numbers are in."
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-11-22",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
       ]
     },
     {
