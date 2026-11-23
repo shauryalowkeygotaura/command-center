@@ -9,27 +9,27 @@
     {
       "id": "clinic",
       "weight": 5,
-      "text": "Land the FIRST paying dental clinic for the AI receptionist (Rs 3,000/month retainer). This is the gate for everything else: T20 essays, Emergent Ventures, the brand's proof."
+      "text": "Land the FIRST paying clinic for the voice-agent receptionist (Pipecat + Groq, Rs 3,000/month retainer). Voice agents are the business focus."
     },
     {
       "id": "t20",
       "weight": 4,
-      "text": "Build a T20 (MIT-level) application: hit competition deadlines (NASA Space Apps, Diamond Challenge, Conrad, IRIS, Rise) and show real community impact."
+      "text": "Build the T20 (MIT-level) application around VayuVani Kaun, the live pollution cause engine: get it a real answer key, then Diamond Challenge (concept due 14 Jan 2027) and other competitions."
     },
     {
       "id": "seniors",
-      "weight": 3,
+      "weight": 2,
       "text": "Deliver free AI-scam safety sessions at Delhi/Noida senior care homes: community impact for T20, real-world content, and warm access to residents' adult children."
     },
     {
       "id": "brand",
-      "weight": 3,
+      "weight": 2,
       "text": "Grow @revengineee with proof-backed content: named series built from real events (failures, costs, real deployments), not invented topics."
     },
     {
       "id": "systems",
-      "weight": 1,
-      "text": "Keep the automated pipelines and credentials healthy so they keep running without attention."
+      "weight": 3,
+      "text": "nightcrew passive income: Roblox games built and published on autopilot (account readiness, Studio plugin, first live game), plus keeping pipelines and credentials healthy."
     }
   ],
   "reelRecipe": [
@@ -654,115 +654,32 @@
   ],
   "dated": [
     {
-      "id": "d-linkedin-token",
-      "date": "2026-10-22",
-      "track": "systems",
-      "title": "Re-mint the LinkedIn token before it dies on 14 Oct",
-      "minutes": 5,
-      "how": [
-        "In Code/carousel-autoposter run auth_linkedin.py (it does the whole login and prints the new token). About 30 seconds, no developer-portal changes needed.",
-        "Then drop LINKEDIN_ACCESS_TOKEN and LINKEDIN_TOKEN_EXPIRES (60 days out) through the KEYS panel to creative-studio."
-      ]
-    },
-    {
-      "id": "d-rise-check",
-      "date": "2026-10-24",
-      "track": "t20",
-      "title": "Rise 2027: no deadline published yet. Check risefortheworld.org/apply once",
-      "minutes": 15,
-      "how": [
-        "As of 15 Oct 2026 no official 2027 deadline is online. Ages 15 to 17.",
-        "Check risefortheworld.org/apply. If a date is up, write it in the outcome box and Claude adds it here. If not, tick this and it comes back when one is published."
-      ]
-    },
-    {
-      "id": "d-li-w1-setup",
-      "date": "2026-10-24",
-      "track": "brand",
-      "title": "LinkedIn: shoot the photos for Sun / Tue / Thu + 20 min engage",
-      "minutes": 60,
-      "how": [
-        "PHOTOS (shoot all 3 now, Saturday batch block):",
-        "Tue post: a real photo of YOU at your desk with a call transcript open on screen. Face visible, natural light, phone held horizontally. This is your first face post, it matters most.",
-        "Thu post: side-by-side screenshot of the receptionist prompt before vs after (the '===' separator walls on the left, the cut version on the right), with the token counts 4,400 and 3,300 written on top.",
-        "Sun post: a frame from the first niche video with 'not watchable' written over it in red, and next to it a frame from the fixed version.",
-        "DRAFTS: say 'write Tuesday', 'write Thursday', 'write Friday', 'write Sunday' to Claude, one at a time. Check every number against your own notes before scheduling."
-      ]
-    },
-    {
-      "id": "d-li-w1-mon",
-      "date": "2026-10-27",
-      "track": "brand",
-      "title": "LinkedIn: engage only, 20 min (5 reach / 3 peers / 2 buyers)",
-      "minutes": 20,
-      "how": [
-        "No post today. Monday is for warming the feed so Tuesday's post has people who know your name.",
-        "Do this BEFORE you post, not after. Comments on other people's posts are what make your own post land.",
-        "REACH (comment while they have under 20 comments, add a real point from your own build, never 'great post'): Brendan Jowett (voice-agent agency), Liam Ottley (AI agency), Nick Saraev (automation), Varun Mayya (Indian AI builder), Kunal Shah (Indian founders audience). Check each actually posts on LinkedIn; swap any who do not for a voice-AI or Indian-SMB creator you already follow.",
-        "PEERS (3, they reciprocate): search LinkedIn for 'voice agent' + 'India' and 'n8n' + 'automation' posts from the last week, pick 3 builders at your level, follow and comment on their next post. Write their names here in the outcome box so next week's list is real.",
-        "BUYERS (2, comment for weeks before any DM, NEVER pitch in a comment): dentists who post on LinkedIn in South Delhi (search 'dentist New Delhi', 'dental clinic Delhi'), and the dentists behind the clinics already in your LOCK IN walk-in list if they have profiles.",
-        "Send connection requests to anyone you commented on twice, with no note or a one-line note about their post. No pitch."
-      ]
-    },
-    {
-      "id": "d-auto-2026-10-16-improve-revengine-ig-autoposter-script",
-      "date": "2026-10-28",
-      "track": "brand",
-      "title": "Improve Revengine IG autoposter script",
-      "minutes": 60,
-      "how": [
-        "Review current script errors",
-        "Implement fallback posting",
-        "Test with dummy post"
-      ]
-    },
-    {
-      "id": "d-exun-minet-x",
-      "date": "2026-11-01",
-      "track": "t20",
-      "title": "Exun: get on MINET X (12th,13th November, 2026), best event for you: Pitching, sign up by 2026-11-03",
-      "minutes": 10,
-      "how": [
-        "WHY THIS FEST (rank 6.3/10, prestige 3.9/7): Exun tagged it AT ALL COSTS (their top priority); 23 names for 27 slots (85% demand); in person.",
-        "WHERE: The Mother's International School, Hybrid.",
-        "EVENT: Pitching (1x2, Open): AI or innovation challenge: your exact lane; 1 of 2 slots open. Team so far: Siddhant Dubey.",
-        "EVENT: Programming (1x2, Open): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: Vihaan Pundir, Hursh Bajaj.",
-        "EVENT: CryptX (Open, Open): coding / crypto hunt: classic symposium event, judges know it; team full for now, but people drop last minute: go in the row below as a sub. Team so far: [Cryptic Hunts Department].",
-        "COMPS: Pitching, Programming, CryptX, Design",
-        "HOW: open the Exun sheet, find the event, and type your name in the row UNDER the green boxes (green = finalized). Then message the student in-charge so they move you up.",
-        "SHEET: https://docs.google.com/spreadsheets/d/1RLSXcAJ4t44M_wQ_hKlZqaTVmWjwAXrI8FInjHIZRTw/edit?gid=1274846673#gid=1274846673",
-        "Brochure and registration links are in the symposium's column on the sheet. Tick this once your name is in."
-      ]
-    },
-    {
-      "id": "d-conrad-check",
-      "date": "2026-11-06",
-      "track": "t20",
-      "title": "Conrad Challenge: Activation Stage closes 29 Oct. Confirm your team is registered",
-      "minutes": 15,
-      "how": [
-        "Official 2026-27 student guide: Activation Stage runs 27 Aug to 29 Oct 2026, registration through the Conrad Challenge Award Force portal (conrad.spacecenter.org).",
-        "Needs a team (the Exun pool). If you are in, the next deadline is the Innovation Stage on 7 Jan 2027.",
-        "Outcome box: registered / not doing it this year."
-      ]
-    },
-    {
-      "id": "d-li-comments-2026-11",
-      "date": "2026-11-09",
-      "track": "brand",
-      "title": "LinkedIn comment session (Nov): 10 sharp comments on posts that matter",
+      "id": "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess",
+      "date": "2026-11-23",
+      "track": "seniors",
+      "title": "Call Dua Care Homes for scam‑safety session",
       "minutes": 30,
       "how": [
-        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
-        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
-        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
-        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
-        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
+        "dial number",
+        "explain session outline",
+        "schedule date"
+      ]
+    },
+    {
+      "id": "d-diamond-team",
+      "date": "2026-11-23",
+      "track": "t20",
+      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
+      "minutes": 30,
+      "how": [
+        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
+        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
+        "Register at diamondchallenge.org once 2 have said yes."
       ]
     },
     {
       "id": "d-exun-national-youth-robotics-challenge-nyrc-2027",
-      "date": "2026-11-11",
+      "date": "2026-11-23",
       "track": "t20",
       "title": "Exun: get on National Youth Robotics Challenge NYRC 2027 (30th November 2026), best event for you: AI Vision Challenge, sign up by 2026-11-25",
       "minutes": 10,
@@ -779,19 +696,8 @@
       ]
     },
     {
-      "id": "d-spaceapps-scope",
-      "date": "2026-11-13",
-      "track": "t20",
-      "title": "Space Apps eve: write the one-paragraph VayuVani v2 scope (only if registered)",
-      "minutes": 30,
-      "how": [
-        "One paragraph: which challenge, what the demo shows in 2 minutes, which NASA dataset. Smaller than you think.",
-        "Charge laptop, test that the VayuVani app still runs, sleep."
-      ]
-    },
-    {
       "id": "d-iris-result",
-      "date": "2026-11-15",
+      "date": "2026-11-23",
       "track": "t20",
       "title": "IRIS National Fair: finalist announcement today, check your result",
       "minutes": 10,
@@ -802,20 +708,35 @@
       ]
     },
     {
-      "id": "d-spaceapps-check",
-      "date": "2026-11-18",
-      "track": "t20",
-      "title": "Check right now: are you registered for NASA Space Apps (14 to 15 Nov, Delhi)?",
+      "id": "d-roblox-2fa",
+      "date": "2026-11-23",
+      "track": "systems",
+      "title": "Roblox account: turn on 2FA and do the age check (nightcrew games are 16+ only until you do)",
       "minutes": 10,
       "how": [
-        "Log in at spaceappschallenge.org with the email you would have used. Look for a team and a local event (New Delhi).",
-        "If registered: pick a challenge tonight that VayuVani fits (air quality, NASA TEMPO / Earth data).",
-        "If not registered: register now (it opened 26 Aug and is free), join or form a team, pick the New Delhi local event or remote."
+        "roblox.com > Settings > Security: turn on 2-Step Verification.",
+        "Settings > Account Info > Verify My Age (facial estimation is fine under 18).",
+        "Why: without both, every nightcrew game stays visible to 16+ players only and can never reach Roblox Kids or Select, where most players are.",
+        "Reply to Claude `roblox = 2fa + age checked`."
+      ]
+    },
+    {
+      "id": "d-vayuvani-answer-key",
+      "date": "2026-11-23",
+      "track": "t20",
+      "title": "VayuVani: send the two answer-key requests (Dr Shahzad Gani email + RTI for hourly source data)",
+      "minutes": 30,
+      "how": [
+        "Why: Kaun failed its blind test (local source calls at chance level). Only measured hourly source data can tune it toward a real accuracy number.",
+        "Open Code/vayuvani/docs/outreach/answer_key_requests.md. Both drafts are there, with what to check before sending.",
+        "Send the Dr Shahzad Gani (IIT Delhi) email from your own Gmail. It is also a mentorship and rec-letter opening, so read it once before sending.",
+        "File the RTI online for the hourly source data.",
+        "Tell Claude what came back."
       ]
     },
     {
       "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
-      "date": "2026-11-19",
+      "date": "2026-11-24",
       "track": "brand",
       "title": "Pick niche for revengineee",
       "minutes": 30,
@@ -826,30 +747,22 @@
       ]
     },
     {
-      "id": "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess",
-      "date": "2026-11-19",
-      "track": "seniors",
-      "title": "Call Dua Care Homes for scam‑safety session",
+      "id": "d-li-comments-2026-11",
+      "date": "2026-11-24",
+      "track": "brand",
+      "title": "LinkedIn comment session (Nov): 10 sharp comments on posts that matter",
       "minutes": 30,
       "how": [
-        "dial number",
-        "explain session outline",
-        "schedule date"
-      ]
-    },
-    {
-      "id": "d-spaceapps-weekend",
-      "date": "2026-11-19",
-      "track": "t20",
-      "title": "NASA Space Apps weekend: build and submit",
-      "minutes": 600,
-      "how": [
-        "Submit something working by the deadline over something perfect after it. Record a 30-second screen capture of the demo as you go (it doubles as Day 7 content)."
+        "Why manual: LinkedIn gives no API to read other people's feeds, and bot comments break its User Agreement. A ban would also kill your autopost token.",
+        "Pick 10 fresh posts (under 24h old, ideally under 2h) from: Delhi clinic owners and dentists, Indian AI founders, voice-AI builders, IIT Delhi researchers, people you want a reply from.",
+        "Paste each post's text and author line to Claude with: /li-comment. It writes a comment that adds a fact, a number or a counterpoint. No 'Great post!'.",
+        "Post them yourself. Then reply to anyone who answers you within the day: the reply thread is where the profile visits come from.",
+        "Note in the outcome box which comment got a reply from the author. Claude uses that to aim next month's picks."
       ]
     },
     {
       "id": "d-li-w1-review",
-      "date": "2026-11-22",
+      "date": "2026-11-24",
       "track": "brand",
       "title": "LinkedIn: review batch 1 numbers, then get batch 2 (next 5 posts) written",
       "minutes": 15,
@@ -861,15 +774,14 @@
       ]
     },
     {
-      "id": "d-diamond-team",
-      "date": "2026-11-22",
+      "id": "d-rise-check",
+      "date": "2026-11-24",
       "track": "t20",
-      "title": "Diamond Challenge 2027: pick 1 to 3 teammates and register the team",
-      "minutes": 30,
+      "title": "Rise 2027: no deadline published yet. Check risefortheworld.org/apply once",
+      "minutes": 15,
       "how": [
-        "Registration opened 16 Sep. Team of 2 to 4. Concept is due 14 Jan 2027.",
-        "Pick people who will actually do work (Exun teammates are the obvious pool). Message them today with one line: 'Diamond Challenge team, concept due Jan 14, in?'",
-        "Register at diamondchallenge.org once 2 have said yes."
+        "As of 15 Oct 2026 no official 2027 deadline is online. Ages 15 to 17.",
+        "Check risefortheworld.org/apply. If a date is up, write it in the outcome box and Claude adds it here. If not, tick this and it comes back when one is published."
       ]
     },
     {

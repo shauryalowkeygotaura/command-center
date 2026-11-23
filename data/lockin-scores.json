@@ -2,454 +2,400 @@
  "model": "openai/gpt-oss-20b",
  "scores": {
   "brand-d1": {
-   "score": 3,
+   "score": 2,
    "goal": "brand",
-   "why": "Promotes brand, but low impact on core goals",
-   "hash": "aedc48c92895"
+   "why": "Promotes brand, not direct customer impact",
+   "hash": "bcbee9269b2a"
   },
   "brand-d2": {
    "score": 3,
    "goal": "brand",
-   "why": "Quick brand content, minimal direct impact",
-   "hash": "d9d075168075"
+   "why": "Promotes transparency, boosts brand credibility",
+   "hash": "5df4f49909f0"
   },
   "brand-d2-post0": {
    "score": 2,
    "goal": "brand",
-   "why": "Content creation, low direct impact on key goals",
-   "hash": "1157e29b7c76"
+   "why": "Content creation, low direct impact",
+   "hash": "3f30f99455f9"
   },
   "brand-d3": {
    "score": 1,
    "goal": "brand",
-   "why": "Documentation, not customer-facing progress",
-   "hash": "d24028330be8"
+   "why": "Creates content but no direct customer impact",
+   "hash": "c3ef63bfef31"
   },
   "brand-d4": {
    "score": 2,
    "goal": "brand",
-   "why": "Minor content, no direct customer impact",
-   "hash": "7af19504f7cf"
+   "why": "Low impact, just a cost reel",
+   "hash": "5ef552a5269d"
   },
   "brand-d5": {
    "score": 2,
    "goal": "brand",
-   "why": "Low impact marketing content, no direct customer or deadline",
-   "hash": "8058352d6b73"
+   "why": "Promotes brand, minimal direct impact on core goals",
+   "hash": "f856182b23cd"
   },
   "brand-d6": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Minimal impact, just content polish",
-   "hash": "79792ad0f945"
+   "why": "Quick reel, low impact on core goals",
+   "hash": "0fb598445dbd"
   },
   "brand-d6-post0": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Minimal direct progress, just content creation",
-   "hash": "f49bfd75c8a2"
+   "why": "Brand content, low direct impact on high‑weight goals",
+   "hash": "f9c42b4bb691"
   },
   "brand-d7": {
    "score": 2,
    "goal": "brand",
-   "why": "Low effort content, minimal impact on core goals",
-   "hash": "01a3bcf7c302"
+   "why": "Low effort content, minimal impact on brand growth",
+   "hash": "9b14173456f7"
   },
   "brand-d8": {
-   "score": 1,
+   "score": 3,
    "goal": "brand",
-   "why": "Demonstrates transparency, but minimal impact on core goals",
-   "hash": "b180638c1a1c"
+   "why": "Short reel, low direct impact on core goals",
+   "hash": "2c0815b30cff"
   },
   "brand-d9": {
    "score": 2,
    "goal": "brand",
-   "why": "Polish verification, no direct customer impact",
-   "hash": "83c8c2d94c93"
+   "why": "Demonstrates proof-backed content, modest brand impact",
+   "hash": "b3db5e2744c0"
   },
   "brand-d10": {
-   "score": 1,
+   "score": 3,
    "goal": "brand",
-   "why": "Low impact content creation, no direct customer or deadline",
-   "hash": "f5497ef84d24"
+   "why": "Quick brand content, low direct impact on core goals",
+   "hash": "8800c13ae3a4"
   },
   "brand-d11": {
-   "score": 1,
+   "score": 3,
    "goal": "brand",
-   "why": "Minor content, no direct customer impact",
-   "hash": "687ba723efb9"
+   "why": "Demonstrates cost transparency, modest brand engagement",
+   "hash": "c96e324a9a3b"
   },
   "brand-d12": {
-   "score": 2,
+   "score": 3,
    "goal": "seniors",
-   "why": "Demo prep, no real customer engagement",
-   "hash": "24708cdfae5a"
+   "why": "Demo prep, not live session",
+   "hash": "bbad995fd105"
   },
   "brand-d13": {
-   "score": 2,
+   "score": 3,
    "goal": "brand",
-   "why": "Short reel, low impact on core objectives",
-   "hash": "ce9b4f4092ab"
+   "why": "Promotes brand, not direct customer acquisition",
+   "hash": "79a998a48e9f"
   },
   "brand-d13-post0": {
    "score": 2,
    "goal": "brand",
-   "why": "Quick content, low impact on high‑weight goals",
-   "hash": "734030a5dd4a"
+   "why": "Low impact, routine content creation",
+   "hash": "34b9832e64c5"
   },
   "brand-d14": {
-   "score": 1,
+   "score": 4,
    "goal": "brand",
-   "why": "Reel is low impact, mainly polish.",
-   "hash": "32228df330a7"
+   "why": "Promotes brand, but not direct customer acquisition",
+   "hash": "619702be1083"
   },
   "brand-d15": {
-   "score": 1,
-   "goal": "brand",
-   "why": "Low impact, just a reel for social proof",
-   "hash": "f892cbef5e62"
-  },
-  "brand-d16": {
-   "score": 5,
-   "goal": "seniors",
-   "why": "Promotes senior safety, builds brand credibility",
-   "hash": "d5bf8a46c203"
-  },
-  "brand-d17": {
    "score": 3,
    "goal": "seniors",
-   "why": "Creates content for seniors outreach, modest impact",
-   "hash": "cdd2372f6862"
+   "why": "Creates content for senior sessions, modest impact",
+   "hash": "a50722ea7aa1"
+  },
+  "brand-d16": {
+   "score": 3,
+   "goal": "seniors",
+   "why": "Creates awareness, but no direct customer engagement",
+   "hash": "66f3e131a998"
+  },
+  "brand-d17": {
+   "score": 4,
+   "goal": "seniors",
+   "why": "Collects real senior care insights for brand content",
+   "hash": "5648c2644e82"
   },
   "brand-d18": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Low impact, mainly marketing polish",
-   "hash": "0abe156dbe84"
+   "score": 4,
+   "goal": "seniors",
+   "why": "Build credibility, attract senior homes, supports brand",
+   "hash": "5223cd4749cf"
   },
   "brand-d19": {
    "score": 3,
-   "goal": "brand",
-   "why": "Promotes brand, not direct clinic or T20 impact",
-   "hash": "00f14e048758"
+   "goal": "seniors",
+   "why": "Creates content for senior outreach, modest impact",
+   "hash": "8cc499d5f851"
   },
   "brand-d20": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Reel is low impact, no customer or deadline",
-   "hash": "5193f786a40e"
+   "why": "Low impact, just content polish",
+   "hash": "0f254e4cbe63"
   },
   "brand-d21": {
-   "score": 5,
+   "score": 3,
    "goal": "seniors",
-   "why": "Builds community impact, content for T20, but not direct customer",
-   "hash": "e5c287d64d3b"
+   "why": "Documenting session builds brand, minimal direct impact on clinic",
+   "hash": "f1e17a09f615"
   },
   "brand-d22": {
-   "score": 2,
+   "score": 7,
    "goal": "clinic",
-   "why": "Low impact, simulated data, no real customer",
-   "hash": "01651d9ed547"
+   "why": "High-impact reel for real clinic outreach",
+   "hash": "62c895bb6afe"
   },
   "brand-d23": {
-   "score": 8,
+   "score": 6,
    "goal": "clinic",
-   "why": "Showcase AI limits, builds trust for first clinic client",
-   "hash": "386a845ba122"
+   "why": "Promotes AI receptionist, attracts paying clinic clients",
+   "hash": "8e2c4e13f54c"
   },
   "brand-d24": {
    "score": 3,
    "goal": "brand",
-   "why": "Shows real failure, builds credibility for brand",
-   "hash": "f501dd6fe746"
+   "why": "Shows real failure, boosts authenticity and engagement",
+   "hash": "47e1fac829c9"
   },
   "brand-d25": {
    "score": 2,
    "goal": "brand",
-   "why": "Promotes brand, not direct clinic acquisition",
-   "hash": "283a13b4a4c0"
+   "why": "Promotes brand, not direct client acquisition",
+   "hash": "79e638ac5dab"
   },
   "brand-d26": {
-   "score": 4,
+   "score": 3,
    "goal": "brand",
-   "why": "Shows cost comparison, boosts proof-backed content",
-   "hash": "b7030e21aef5"
+   "why": "Promotes brand, not direct revenue",
+   "hash": "294aebefb717"
   },
   "brand-d27": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
    "why": "Short reel, low impact on core goals",
-   "hash": "d1d61b38282a"
+   "hash": "f45a54f14121"
   },
   "brand-d27-post0": {
    "score": 2,
    "goal": "brand",
-   "why": "Low impact, just content creation",
-   "hash": "8d7ea2c4fba1"
+   "why": "Content creation, low immediate impact",
+   "hash": "4d5c2d94c590"
   },
   "brand-d28": {
    "score": 2,
    "goal": "brand",
-   "why": "Reflection reel, minimal direct impact on core goals",
-   "hash": "41abe6e38718"
+   "why": "Marketing content, low direct impact on core goals",
+   "hash": "d67fe8f7bb26"
   },
   "brand-d29": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Low impact, just content posting",
-   "hash": "683a86a11139"
+   "why": "Low impact marketing content, no direct customer engagement",
+   "hash": "915afbe83049"
   },
   "brand-d30": {
    "score": 2,
    "goal": "brand",
-   "why": "Reel showcases progress, but no direct customer or deadline impact",
-   "hash": "392da172722d"
+   "why": "Short reel boosts social proof, minimal direct impact on core goals",
+   "hash": "6050e6f46f6f"
   },
   "brand-d30-post0": {
    "score": 2,
    "goal": "brand",
-   "why": "Low impact, internal reflection, not customer-facing",
-   "hash": "ccaba4032078"
+   "why": "Low impact, just content creation",
+   "hash": "fefb4ff21cba"
   },
   "brand-li": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Low impact, just reposting content",
-   "hash": "6b0ff6c61dad"
+   "why": "Low impact marketing task, minimal progress toward core goals",
+   "hash": "28b8e492bfed"
   },
   "milestone": {
-   "score": 9,
+   "score": 8,
    "goal": "clinic",
-   "why": "Directly secures first paying client, gate for all other goals",
-   "hash": "83397703fced"
+   "why": "Unblocks first paying client, high weight",
+   "hash": "41acbea9cf94"
   },
   "sp-helplines": {
-   "score": 3,
+   "score": 4,
    "goal": "seniors",
-   "why": "Basic verification gates senior sessions",
-   "hash": "7514d8c6d236"
+   "why": "Verifies resources before session prep",
+   "hash": "ace0099c04bc"
   },
   "sp-clone": {
    "score": 4,
    "goal": "seniors",
-   "why": "Prepares demo for upcoming senior sessions",
-   "hash": "6c82a2ed2232"
+   "why": "Prepares demo for senior sessions, modest impact",
+   "hash": "277bc0226f6e"
   },
   "sp-test": {
-   "score": 2,
+   "score": 3,
    "goal": "seniors",
-   "why": "Pre‑test, not real audience, minimal impact",
-   "hash": "fca8c887c56f"
+   "why": "Pre‑test, minimal customer impact",
+   "hash": "efe51ec2fa4d"
   },
   "sp-card": {
-   "score": 2,
+   "score": 3,
    "goal": "seniors",
-   "why": "Pre‑work for future sessions, low immediate impact",
-   "hash": "66e699bb8f2f"
+   "why": "Prepares material for upcoming senior sessions",
+   "hash": "452711cd81f0"
   },
   "sp-deck": {
-   "score": 4,
+   "score": 3,
    "goal": "seniors",
-   "why": "Prepares content for real audience, but not yet booked",
-   "hash": "a01d95b80a7b"
+   "why": "Pre‑work for future senior sessions, low immediate impact",
+   "hash": "8f41a7751355"
   },
   "sp-logistics": {
    "score": 6,
    "goal": "seniors",
-   "why": "Prepares for real customer session, gates community impact",
-   "hash": "93a22c91d806"
+   "why": "Prepares for real customer session, gates delivery",
+   "hash": "a1a13483dccd"
   },
   "home": {
-   "score": 8,
+   "score": 6,
    "goal": "seniors",
-   "why": "Book session, real community impact",
-   "hash": "0610aba7a349"
+   "why": "Direct customer engagement, unlocks real-world content",
+   "hash": "023cecb165a5"
   },
   "clinic": {
    "score": 9,
    "goal": "clinic",
-   "why": "Directly pitches first paying client",
-   "hash": "d859c37f7354"
+   "why": "Directly pitches to first potential paying client",
+   "hash": "832fd0ba1a94"
   },
-  "d-spaceapps-check": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Quick gate check for upcoming competition deadline",
-   "hash": "27744d72f670"
-  },
-  "d-linkedin-token": {
-   "score": 1,
-   "goal": "systems",
-   "why": "Routine maintenance, minimal direct impact",
-   "hash": "34db4f9cf041"
-  },
-  "d-rise-check": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Low impact, just a preliminary check",
-   "hash": "5e83c0da6f7a"
-  },
-  "d-li-w1-setup": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Light brand visibility, minimal impact on core goals",
-   "hash": "c84a24330665"
-  },
-  "d-li-w1-mon": {
-   "score": 2,
-   "goal": "clinic",
-   "why": "Small outreach, minimal direct impact",
-   "hash": "3c7a6cf2731a"
-  },
-  "d-auto-2026-10-16-improve-revengine-ig-autoposter-script": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Minor automation tweak, limited direct impact",
-   "hash": "33a34c4841df"
-  },
-  "d-li-w1-wed": {
-   "score": 1,
-   "goal": "brand",
-   "why": "Minimal direct impact on core objectives",
-   "hash": "8335440abd52"
-  },
-  "d-auto-2026-10-28-pick-niche-for-revengineee": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Strategic planning, low immediate impact",
-   "hash": "4966dd1e099a"
-  },
-  "d-auto-2026-10-28-record-voice-clone-demo-from-own-voice": {
-   "score": 3,
-   "goal": "brand",
-   "why": "Demonstrates content creation for proof-backed brand",
-   "hash": "c7f8b6cc7349"
-  },
-  "d-li-w1-review": {
+  "d-auto-2026-11-13-call-dua-care-homes-for-scam-safety-sess": {
    "score": 4,
-   "goal": "brand",
-   "why": "Supports content pipeline, not direct client acquisition",
-   "hash": "49519405cb98"
-  },
-  "d-conrad-check": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Unblocks competition entry, critical for T20 deadlines",
-   "hash": "400a69d840a2"
+   "goal": "seniors",
+   "why": "Direct customer outreach, unlocks session delivery",
+   "hash": "1a9779672310"
   },
   "d-diamond-team": {
    "score": 8,
    "goal": "t20",
-   "why": "Unblocks competition deadlines, advancing T20 progress",
-   "hash": "965d65d32cef"
-  },
-  "d-li-comments-2026-11": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "d46fd991b8be"
-  },
-  "d-exun-minet-x": {
-   "score": 5,
-   "goal": "brand",
-   "why": "Networking boosts brand visibility and potential leads",
-   "hash": "5b56f4c7b962"
-  },
-  "d-auto-2026-11-02-call-ashirwad-elders-home-to-schedule-sa": {
-   "score": 8,
-   "goal": "seniors",
-   "why": "Schedules real session, unlocking community impact",
-   "hash": "af4e14476e75"
-  },
-  "d-auto-2026-11-03-visit-new-delhi-dental-centre": {
-   "score": 9,
-   "goal": "clinic",
-   "why": "Direct customer engagement, gate for retainer",
-   "hash": "771fb05c4b52"
+   "why": "Unblocks competition entry, advancing T20 progress",
+   "hash": "67e47113aa55"
   },
   "d-exun-national-youth-robotics-challenge-nyrc-2027": {
    "score": 8,
    "goal": "t20",
-   "why": "Unblocks competition deadline, boosts T20 credibility",
-   "hash": "d3e4521f3ce7"
-  },
-  "d-spaceapps-scope": {
-   "score": 8,
-   "goal": "t20",
-   "why": "Prepares for competition deadline, gates further progress",
-   "hash": "0aa33dc2a620"
-  },
-  "d-spaceapps-weekend": {
-   "score": 9,
-   "goal": "t20",
-   "why": "Unblocks T20 competition deadline",
-   "hash": "c8e572ad1e50"
+   "why": "Early sign‑up gates competition entry, advancing T20 progress",
+   "hash": "d3794362d870"
   },
   "d-iris-result": {
-   "score": 2,
+   "score": 8,
+   "goal": "brand",
+   "why": "Quick check gates announcement, boosts public visibility",
+   "hash": "fedc8d75897c"
+  },
+  "d-roblox-2fa": {
+   "score": 6,
+   "goal": "systems",
+   "why": "Unlocks publishing, gating future passive income",
+   "hash": "b0afe27cf9f0"
+  },
+  "d-vayuvani-answer-key": {
+   "score": 8,
    "goal": "t20",
-   "why": "Quick gate check for competition deadline",
-   "hash": "38b0e6c7f6bb"
+   "why": "Unblocks key data for T20 development",
+   "hash": "37bf7de74556"
+  },
+  "d-auto-2026-10-28-pick-niche-for-revengineee": {
+   "score": 4,
+   "goal": "brand",
+   "why": "Defines content focus, supports future brand growth",
+   "hash": "9f82030574a4"
+  },
+  "d-li-comments-2026-11": {
+   "score": 4,
+   "goal": "brand",
+   "why": "Boosts profile visibility, modest brand impact",
+   "hash": "e9b6b6ab89dc"
+  },
+  "d-li-w1-review": {
+   "score": 4,
+   "goal": "brand",
+   "why": "Supports content pipeline, not immediate customer impact",
+   "hash": "d050fab44e96"
+  },
+  "d-rise-check": {
+   "score": 1,
+   "goal": "brand",
+   "why": "Minimal impact, no direct customer or deadline",
+   "hash": "41892fa7085b"
   },
   "d-li-comments-2026-12": {
    "score": 2,
    "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "7db55757ec1b"
+   "why": "Quick visibility, low impact on core deliverables",
+   "hash": "0c741d198ab9"
   },
   "d-li-comments-2027-01": {
    "score": 2,
    "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "a1595cd1201e"
+   "why": "Low direct impact, marketing support",
+   "hash": "a6282ca84e2b"
   },
   "d-diamond-concept": {
    "score": 9,
    "goal": "t20",
-   "why": "Unblocks competition deadline, critical for T20 progress",
-   "hash": "da6c81658375"
+   "why": "Unblocks Diamond Challenge deadline, high priority",
+   "hash": "2d172d1a7786"
   },
   "d-james-hush-checkin": {
    "score": 2,
    "goal": "brand",
-   "why": "Initial outreach, minimal immediate impact",
-   "hash": "d9cc3dd93e2f"
+   "why": "Minimal direct impact, just a greeting",
+   "hash": "a7fbaaf1e84b"
   },
   "d-li-comments-2027-02": {
    "score": 2,
    "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "97b3cfb3914e"
+   "why": "Low direct impact, minor brand visibility",
+   "hash": "34e830f920ad"
   },
   "d-li-comments-2027-03": {
    "score": 2,
    "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "5b8a5b4bf9e5"
+   "why": "Low direct impact, minor brand visibility",
+   "hash": "77b44783cb5d"
   },
   "d-li-comments-2027-04": {
    "score": 2,
    "goal": "brand",
-   "why": "Low direct impact, minor brand visibility boost",
-   "hash": "cb4f0621289d"
+   "why": "Quick visibility, low impact on core deliverables",
+   "hash": "328535f43311"
   },
   "s-engage": {
-   "score": 1,
+   "score": 2,
    "goal": "brand",
-   "why": "Low impact, just engagement",
-   "hash": "628b62b964e2"
+   "why": "Low impact, just replies, no real audience",
+   "hash": "5df6137ecd53"
   },
   "handoff:h-lockin-log-check": {
-   "score": 2,
+   "score": 8,
    "goal": "clinic",
-   "why": "Minor gate check, low direct impact",
-   "hash": "6f5f1551d214"
+   "why": "Critical gate for daily review, ensures progress visibility",
+   "hash": "9b0df5c095ad"
   },
-  "handoff:h-vtuber-avatar": {
-   "score": 2,
-   "goal": "brand",
-   "why": "Adds content but minimal impact on clinic or T20",
-   "hash": "1ad4085a7446"
+  "handoff:h-vayuvani-answer-key": {
+   "score": 8,
+   "goal": "t20",
+   "why": "Quick gate for competition deadline",
+   "hash": "6fdb0fdcc590"
+  },
+  "handoff:h-roblox-creator-ready": {
+   "score": 8,
+   "goal": "systems",
+   "why": "Unlocks nightcrew games, enabling passive income",
+   "hash": "606975e6e989"
   }
  }
 }
