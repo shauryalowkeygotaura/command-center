@@ -262,10 +262,10 @@ export const HANDOFF_SEED: ChecklistItem[] = [
   },
   {
     id: "h-roblox-studio-plugin",
-    text: "P3 · OPTIONAL: install Roblox's Claude plugin so I can open Studio, playtest and screenshot games myself",
+    text: "P3 · Roblox Studio plugin is INSTALLED (2026-11-24): flip Studio's MCP switch once so I can playtest and screenshot",
     done: false,
     seeded: true,
-    note: "2026-11-24, re 'why is it asking me to install a plugin': this is NOT the nightcrew connection (that is h-nightcrew-open-cloud). It only gives me eyes in Studio on your laptop. I tried to install it, but it is only in the in-app plugin directory, not the CLI's.\n1. In Claude Code, type /plugin.\n2. Search 'Roblox Studio', install it.\n3. Open Roblox Studio, sign in, open any place.\n4. Assistant panel, ... menu, Settings, MCP Servers, turn on 'Enable Studio as MCP server'.\n5. Start a new Claude chat and say 'list my open Roblox Studio windows'.\nReply `plugin = installed` or `plugin = later`.",
+    note: "The plugin is installed (local marketplace in Resources/roblox-marketplace). This is not the nightcrew publish connection; that is h-nightcrew-open-cloud.\n1. Restart Claude Code.\n2. Open Roblox Studio, sign in, open any place.\n3. Assistant panel, ... menu, Settings, MCP Servers: turn on 'Enable Studio as MCP server'.\n4. In Claude, say 'list my open Roblox Studio windows'.\nReply `plugin = connected`.",
   },
   {
     id: "h-ca-whatsapp-template",
