@@ -708,33 +708,6 @@
       ]
     },
     {
-      "id": "d-roblox-2fa",
-      "date": "2026-11-23",
-      "track": "systems",
-      "title": "Roblox account: turn on 2FA and do the age check (nightcrew games are 16+ only until you do)",
-      "minutes": 10,
-      "how": [
-        "roblox.com > Settings > Security: turn on 2-Step Verification.",
-        "Settings > Account Info > Verify My Age (facial estimation is fine under 18).",
-        "Why: without both, every nightcrew game stays visible to 16+ players only and can never reach Roblox Kids or Select, where most players are.",
-        "Reply to Claude `roblox = 2fa + age checked`."
-      ]
-    },
-    {
-      "id": "d-vayuvani-answer-key",
-      "date": "2026-11-23",
-      "track": "t20",
-      "title": "VayuVani: send the two answer-key requests (Dr Shahzad Gani email + RTI for hourly source data)",
-      "minutes": 30,
-      "how": [
-        "Why: Kaun failed its blind test (local source calls at chance level). Only measured hourly source data can tune it toward a real accuracy number.",
-        "Open Code/vayuvani/docs/outreach/answer_key_requests.md. Both drafts are there, with what to check before sending.",
-        "Send the Dr Shahzad Gani (IIT Delhi) email from your own Gmail. It is also a mentorship and rec-letter opening, so read it once before sending.",
-        "File the RTI online for the hourly source data.",
-        "Tell Claude what came back."
-      ]
-    },
-    {
       "id": "d-auto-2026-10-28-pick-niche-for-revengineee",
       "date": "2026-11-24",
       "track": "brand",
@@ -782,6 +755,56 @@
       "how": [
         "As of 15 Oct 2026 no official 2027 deadline is online. Ages 15 to 17.",
         "Check risefortheworld.org/apply. If a date is up, write it in the outcome box and Claude adds it here. If not, tick this and it comes back when one is published."
+      ]
+    },
+    {
+      "id": "d-roblox-2fa",
+      "date": "2026-11-27",
+      "track": "systems",
+      "title": "Roblox account: turn on 2FA and do the age check (nightcrew games are 16+ only until you do)",
+      "minutes": 10,
+      "how": [
+        "roblox.com > Settings > Security: turn on 2-Step Verification.",
+        "Settings > Account Info > Verify My Age (facial estimation is fine under 18).",
+        "Why: without both, every nightcrew game stays visible to 16+ players only and can never reach Roblox Kids or Select, where most players are.",
+        "Reply to Claude `roblox = 2fa + age checked`."
+      ]
+    },
+    {
+      "id": "d-vayuvani-answer-key",
+      "date": "2026-11-27",
+      "track": "t20",
+      "title": "VayuVani: send the two answer-key requests (Dr Shahzad Gani email + RTI for hourly source data)",
+      "minutes": 30,
+      "how": [
+        "Why: Kaun failed its blind test (local source calls at chance level). Only measured hourly source data can tune it toward a real accuracy number.",
+        "Open Code/vayuvani/docs/outreach/answer_key_requests.md. Both drafts are there, with what to check before sending.",
+        "Send the Dr Shahzad Gani (IIT Delhi) email from your own Gmail. It is also a mentorship and rec-letter opening, so read it once before sending.",
+        "File the RTI online for the hourly source data.",
+        "Tell Claude what came back."
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-27-20-minute-brand-engagement-reply-to-comm",
+      "date": "2026-11-27",
+      "track": "brand",
+      "title": "20‑minute brand engagement: reply to comments/DMs on @revengineee",
+      "minutes": 20,
+      "how": [
+        "Open Instagram",
+        "Respond to each pending comment/DM"
+      ]
+    },
+    {
+      "id": "d-auto-2026-11-27-walk-to-new-delhi-dental-centre-and-intr",
+      "date": "2026-11-27",
+      "track": "clinic",
+      "title": "Walk to New Delhi Dental Centre and introduce voice‑agent demo",
+      "minutes": 45,
+      "how": [
+        "Walk to centre",
+        "Ask to meet manager",
+        "Show 2‑minute demo"
       ]
     },
     {
