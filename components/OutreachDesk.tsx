@@ -33,7 +33,12 @@ interface PublicDesk {
   funnel: Record<string, number>; sent_14d: number; bounced_14d: number; replied_14d: number;
   waiting: number; gate_blocks: number;
 }
+interface LiItem {
+  company: string; city: string; niche: string; link: string; link_type: "profile" | "search";
+  note: string; message: string; queued: string; emailed: boolean;
+}
 interface PrivateDesk extends PublicDesk {
+  linkedin_today?: LiItem[];
   waiting_on_you: Row[]; conversations: Row[]; sends: Row[]; campaigns: Camp[]; gate_rejections: Blocked[];
 }
 interface Run { ts: string; mode: string; status: string; summary: string }
@@ -53,6 +58,7 @@ const FUNNEL = ["found", "contacted", "replied", "interested", "handoff", "booke
 
 const VIEWS = [
   { id: "today", label: "Today" },
+  { id: "linkedin", label: "LinkedIn" },
   { id: "conversations", label: "Conversations" },
   { id: "sends", label: "Sends" },
   { id: "campaigns", label: "Campaigns" },
@@ -108,6 +114,70 @@ function Table({ head, rows }: { head: string[]; rows: React.ReactNode[][] }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function CopyButton({ text, label }: { text: string; label: string }) {
+  const [done, setDone] = useState(false);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(text); setDone(true); setTimeout(() => setDone(false), 1500); }
+    catch { window.prompt("Copy this:", text); }
+  };
+  return (
+    <button type="button" onClick={copy}
+      className="rounded border border-cream-dim/30 px-2 py-0.5 text-xs text-cream-dim hover:border-term/60 hover:text-term">
+      {done ? "copied" : label}
+    </button>
+  );
+}
+
+// Daily LinkedIn queue (modules/linkedin_daily.py in the pipeline). Sent BY HAND:
+// open the link, connect with the note, send the message once they accept.
+function LinkedInQueue({ items }: { items: LiItem[] }) {
+  if (!items.length) {
+    return <p className="text-cream-dim">Nothing queued yet. The morning scrape run queues 5 clinics a day.</p>;
+  }
+  return (
+    <div className="grid gap-4">
+      <p className="text-cream-dim text-xs">
+        Free LinkedIn allows only a few connection notes a month: use the note on the best ones,
+        connect without a note on the rest, then send the message once they accept.
+      </p>
+      {items.map((it) => (
+        <article key={it.company + it.queued} className="rounded border border-cream-dim/20 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span className="text-cream">{it.company}</span>
+              <span className="text-cream-dim"> · {it.city || "?"} · {it.niche || "clinic"}</span>
+              {it.emailed && <span className="ml-2"><Tag tone="idle">also emailed</Tag></span>}
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-cream-dim">queued {it.queued}</span>
+              <a href={it.link} target="_blank" rel="noopener noreferrer"
+                className="rounded bg-burgundy px-2.5 py-1 text-cream hover:bg-burgundy-bright">
+                {it.link_type === "profile" ? "open profile (check the name)" : "find on LinkedIn"}
+              </a>
+            </div>
+          </div>
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wide text-cream-dim">connection note ({it.note.length}/300)</span>
+                <CopyButton text={it.note} label="copy note" />
+              </div>
+              <p className="whitespace-pre-wrap text-cream/90">{it.note}</p>
+            </div>
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wide text-cream-dim">message after they accept</span>
+                <CopyButton text={it.message} label="copy message" />
+              </div>
+              <p className="whitespace-pre-wrap text-cream/90">{it.message}</p>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }
@@ -262,6 +332,8 @@ export function OutreachDesk() {
             </aside>
           </div>
         )}
+
+        {view === "linkedin" && needKey(<LinkedInQueue items={priv?.linkedin_today ?? []} />)}
 
         {view === "conversations" && needKey(
           <Table head={["company", "niche", "stage", "said", "objection", "when"]}
