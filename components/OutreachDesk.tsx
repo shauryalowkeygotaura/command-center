@@ -37,7 +37,12 @@ interface LiItem {
   company: string; city: string; niche: string; link: string; link_type: "profile" | "search";
   note: string; message: string; queued: string; emailed: boolean;
 }
+interface Person {
+  name: string; role: string; company: string; category: string; link: string;
+  link_type: "profile" | "search"; note: string; message: string; queued: string;
+}
 interface PrivateDesk extends PublicDesk {
+  people_today?: Person[];
   linkedin_today?: LiItem[];
   waiting_on_you: Row[]; conversations: Row[]; sends: Row[]; campaigns: Camp[]; gate_rejections: Blocked[];
 }
@@ -172,6 +177,59 @@ function LinkedInQueue({ items }: { items: LiItem[] }) {
               <div className="mb-1 flex items-center justify-between">
                 <span className="text-xs uppercase tracking-wide text-cream-dim">message after they accept</span>
                 <CopyButton text={it.message} label="copy message" />
+              </div>
+              <p className="whitespace-pre-wrap text-cream/90">{it.message}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+const CAT_LABEL: Record<string, string> = {
+  mentor: "research mentor", internship: "internship", client: "potential client", partner: "partner",
+};
+
+// High-network people (modules/people_daily.py, James Hush format). Sent BY HAND.
+function PeopleQueue({ items }: { items: Person[] }) {
+  if (!items.length) {
+    return <p className="text-cream-dim">No people queued yet. The morning scrape run queues 5 a day from the private &quot;people&quot; sheet tab.</p>;
+  }
+  return (
+    <div className="grid gap-4">
+      <p className="text-cream-dim text-xs">
+        Open the link, Connect, Add a note, paste the note. When they accept, send the follow-up
+        (swap in your demo link). The joke has to land in the first 5 words: that&apos;s all the notification shows.
+      </p>
+      {items.map((it) => (
+        <article key={it.name + it.queued} className="rounded border border-cream-dim/20 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span className="text-cream">{it.name}</span>
+              <span className="text-cream-dim"> · {it.role} · {it.company}</span>
+              <span className="ml-2"><Tag tone="good">{CAT_LABEL[it.category] ?? it.category}</Tag></span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-cream-dim">queued {it.queued}</span>
+              <a href={it.link} target="_blank" rel="noopener noreferrer"
+                className="rounded bg-burgundy px-2.5 py-1 text-cream hover:bg-burgundy-bright">
+                {it.link_type === "profile" ? "open profile" : "find on LinkedIn"}
+              </a>
+            </div>
+          </div>
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wide text-cream-dim">connection note ({it.note.length}/300)</span>
+                <CopyButton text={it.note} label="copy note" />
+              </div>
+              <p className="whitespace-pre-wrap text-cream/90">{it.note}</p>
+            </div>
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wide text-cream-dim">follow-up after they accept</span>
+                <CopyButton text={it.message} label="copy follow-up" />
               </div>
               <p className="whitespace-pre-wrap text-cream/90">{it.message}</p>
             </div>
@@ -333,7 +391,11 @@ export function OutreachDesk() {
           </div>
         )}
 
-        {view === "linkedin" && needKey(<LinkedInQueue items={priv?.linkedin_today ?? []} />)}
+        {view === "linkedin" && needKey(
+          <div className="grid gap-8">
+            <PeopleQueue items={priv?.people_today ?? []} />
+            {(priv?.linkedin_today ?? []).length > 0 && <LinkedInQueue items={priv?.linkedin_today ?? []} />}
+          </div>)}
 
         {view === "conversations" && needKey(
           <Table head={["company", "niche", "stage", "said", "objection", "when"]}
